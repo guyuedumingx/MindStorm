@@ -14,9 +14,9 @@ but.onclick = function () {
         }, // 参数(对象形式)
         header: {}, // 请求头(对象形式)
         success: function (data) {
-            if (data) {
+            if (data == 200) {
                 alert("hhhhh");
-            } else {
+            }else{
                 alert("dsfsrdfgjht");
             }
         }, // 成功函数(必填)
