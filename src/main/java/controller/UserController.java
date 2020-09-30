@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author yohoyes
+ */
 @WebServlet("/user")
 public class UserController extends BaseController{
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {

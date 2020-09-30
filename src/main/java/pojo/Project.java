@@ -2,6 +2,7 @@ package pojo;
 
 /**
  * 项目类
+ * @author yohoyes
  */
 public class Project {
     private int projectId;

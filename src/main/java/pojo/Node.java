@@ -2,6 +2,7 @@ package pojo;
 
 /**
  * 节点类
+ * @author yohoyes
  */
 public class Node {
    private int author;

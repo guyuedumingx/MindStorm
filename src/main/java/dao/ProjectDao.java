@@ -1,4 +1,10 @@
 package dao;
 
-public interface ProjectDao {
+import pojo.Project;
+
+/**
+ * @author yohoyes
+ */
+public interface ProjectDao extends BaseDao<Project>{
+
 }

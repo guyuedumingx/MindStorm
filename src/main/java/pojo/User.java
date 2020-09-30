@@ -2,6 +2,7 @@ package pojo;
 
 /**
  * 用户类
+ * @author yohoyes
  */
 public class User {
     private int userId;
