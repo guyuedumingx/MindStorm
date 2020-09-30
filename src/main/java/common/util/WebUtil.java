@@ -31,7 +31,7 @@ public class WebUtil {
             String s = JSON.toJSONString(object);
             resp.getWriter().write(s);
         }catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -45,7 +45,7 @@ public class WebUtil {
         try{
             resp.getWriter().write(text);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -83,6 +83,7 @@ public class WebUtil {
             }
             return JSON.parseObject(responseStrBuilder.toString(), clazz);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
