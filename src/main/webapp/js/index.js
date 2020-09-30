@@ -14,7 +14,7 @@ but.onclick = function () {
         }, // 参数(对象形式)
         header: {}, // 请求头(对象形式)
         success: function (data) {
-            if (data == 200) {
+            if (data==200) {
                 alert("hhhhh");
             }else{
                 alert("dsfsrdfgjht");
