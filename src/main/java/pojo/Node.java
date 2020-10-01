@@ -1,20 +1,36 @@
 package pojo;
 
+import common.annontation.DbField;
+import common.annontation.DbFieldId;
+
+import java.util.Date;
+
 /**
  * 节点类
  * @author yohoyes
  */
 public class Node {
-   private int author;
+   @DbFieldId
+   @DbField("node_id")
    private int nodeId;
+   @DbField("author")
+   private int author;
+   @DbField("star")
    private int star;
+   @DbField("last_edit_user_id")
    private int lastEditUserId;
+   @DbField("children")
    private int[] children;
+   @DbField("editable")
    private boolean editable;
+   @DbField("nameless")
    private boolean nameless;
-   private String theme;
-   private String content;
-   private String lastEditTime;
+   @DbField("theme")
+   private String theme = "";
+   @DbField("content")
+   private String content = "请输入内容";
+   @DbField("last_edit_time")
+   private String lastEditTime = new Date().toString();
 
    public int getAuthor() {
       return author;

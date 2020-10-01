@@ -1,5 +1,8 @@
 package dao;
 
+import javax.print.attribute.standard.PresentationDirection;
+import java.text.MessageFormat;
+
 /**
  * 所有Dao类的公有父类
  * @param <T>
@@ -14,17 +17,13 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
     public abstract String getTableName();
 
     @Override
-    public T insertOne(T object) {
-        return null;
-    }
-
-    @Override
     public T updateOne(T object) {
         return null;
     }
 
     @Override
     public T selectOne(T object) {
+        String base = "select * from {0} where 1=1 {1} {2}";
         return null;
     }
 

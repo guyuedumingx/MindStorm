@@ -16,7 +16,7 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
 
     @Override
     public Project insertOne(Project object) {
-        return super.insertOne(object);
+        return null;
     }
 
     @Override

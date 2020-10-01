@@ -1,20 +1,34 @@
 package pojo;
 
+import common.annontation.DbField;
+import common.annontation.DbFieldId;
+
 /**
  * 用户类
  * @author yohoyes
  */
 public class User {
+    @DbFieldId
+    @DbField("user_id")
     private int userId;
+    @DbField("exp")
     private int exp;
+    @DbField("token")
     private int token;
+    @DbField("recent_project")
     private int[] recentProject;
+    @DbField("following")
     private int[] following;
+    @DbField("follower")
     private int[] follower;
-    private String userName;
-    private String password;
-    private String userAvatar;
-    private String userSignature;
+    @DbField("user_name")
+    private String userName = "";
+    @DbField("password")
+    private String password = "";
+    @DbField("user_avatar")
+    private String userAvatar = "";
+    @DbField("user_signature")
+    private String userSignature = "";
 
     public int getUserId() {
         return userId;

@@ -1,20 +1,34 @@
 package pojo;
 
+import common.annontation.DbField;
+import common.annontation.DbFieldId;
+
 /**
  * 项目类
  * @author yohoyes
  */
 public class Project {
+    @DbFieldId
+    @DbField("project_id")
     private int projectId;
+    @DbField("project_rank")
     private int projectRank;
+    @DbField("user_id")
     private int userId;
+    @DbField("head_id")
     private int headId;
+    @DbField("contributors")
     private int[] contributors;
+    @DbField("public")
     private boolean isPublic;
-    private String introduction;
-    private String projectName;
-    private String createTime;
-    private String deadline;
+    @DbField("introduction")
+    private String introduction = "请输入内容";
+    @DbField("project_name")
+    private String projectName = "请输入内容";
+    @DbField("create_time")
+    private String createTime = "";
+    @DbField("deadline")
+    private String deadline = "";
 
     public int getProjectId() {
         return projectId;

@@ -16,7 +16,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public User insertOne(User object) {
-        return super.insertOne(object);
+        return null;
     }
 
     @Override
