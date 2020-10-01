@@ -1,16 +1,12 @@
 package pojo;
 
 import common.annontation.DbField;
-import common.annontation.DbFieldId;
 
 /**
  * 用户类
  * @author yohoyes
  */
-public class User {
-    @DbFieldId
-    @DbField("user_id")
-    private int userId;
+public class User extends BaseModel {
     @DbField("exp")
     private int exp;
     @DbField("token")
@@ -22,21 +18,13 @@ public class User {
     @DbField("follower")
     private int[] follower;
     @DbField("user_name")
-    private String userName = "";
+    private String name = "";
     @DbField("password")
     private String password = "";
     @DbField("user_avatar")
     private String userAvatar = "";
     @DbField("user_signature")
     private String userSignature = "";
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public int getExp() {
         return exp;
@@ -78,12 +66,12 @@ public class User {
         this.follower = follower;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

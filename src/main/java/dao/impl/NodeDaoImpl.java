@@ -37,6 +37,6 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
 
     @Override
     public Node selectById(int id) {
-        return null;
+        return super.selectById(id);
     }
 }

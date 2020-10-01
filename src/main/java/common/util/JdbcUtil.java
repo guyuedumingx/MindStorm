@@ -56,7 +56,6 @@ public class JdbcUtil {
             // 开启事务
             conn.setAutoCommit(false);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

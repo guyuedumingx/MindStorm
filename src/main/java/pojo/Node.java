@@ -1,35 +1,20 @@
 package pojo;
 
-import common.annontation.DbField;
-import common.annontation.DbFieldId;
-
 import java.util.Date;
 
 /**
  * 节点类
  * @author yohoyes
  */
-public class Node {
-   @DbFieldId
-   @DbField("node_id")
-   private int nodeId;
-   @DbField("author")
+public class Node extends BaseModel{
    private int author;
-   @DbField("star")
    private int star;
-   @DbField("last_edit_user_id")
-   private int lastEditUserId;
-   @DbField("children")
+   private int lastEditId;
    private int[] children;
-   @DbField("editable")
    private boolean editable;
-   @DbField("nameless")
    private boolean nameless;
-   @DbField("theme")
    private String theme = "";
-   @DbField("content")
    private String content = "请输入内容";
-   @DbField("last_edit_time")
    private String lastEditTime = new Date().toString();
 
    public int getAuthor() {
@@ -40,14 +25,6 @@ public class Node {
       this.author = author;
    }
 
-   public int getNodeId() {
-      return nodeId;
-   }
-
-   public void setNodeId(int nodeId) {
-      this.nodeId = nodeId;
-   }
-
    public int getStar() {
       return star;
    }
@@ -56,12 +33,12 @@ public class Node {
       this.star = star;
    }
 
-   public int getLastEditUserId() {
-      return lastEditUserId;
+   public int getLastEditId() {
+      return lastEditId;
    }
 
-   public void setLastEditUserId(int lastEditUserId) {
-      this.lastEditUserId = lastEditUserId;
+   public void setLastEditId(int lastEditId) {
+      this.lastEditId = lastEditId;
    }
 
    public int[] getChildren() {

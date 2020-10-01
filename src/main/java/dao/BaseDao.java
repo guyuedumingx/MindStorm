@@ -1,10 +1,12 @@
 package dao;
 
+import pojo.BaseModel;
+
 /**
  * @param <T>
  * @author yohoyes
  */
-public interface BaseDao<T> {
+public interface BaseDao<T extends BaseModel> {
 
     /**
      * 插入

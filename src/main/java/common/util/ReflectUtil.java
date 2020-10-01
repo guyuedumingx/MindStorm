@@ -2,7 +2,9 @@ package common.util;
 
 import common.annontation.DbField;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,5 +33,18 @@ public class ReflectUtil {
             }
         }
         return map;
+    }
+
+    public static <T> List<String> getParasName(T po) {
+        Class<?> clazz = po.getClass();
+        List<String> list = new ArrayList<String>();
+        for(Field f : clazz.getDeclaredFields()) {
+            f.setAccessible(true);
+            DbField dbField = f.getAnnotation(DbField.class);
+            if (dbField!=null) {
+                list.add(dbField.value());
+            }
+        }
+        return list;
     }
 }

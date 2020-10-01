@@ -1,22 +1,18 @@
 package pojo;
 
 import common.annontation.DbField;
-import common.annontation.DbFieldId;
 
 /**
  * 项目类
  * @author yohoyes
  */
-public class Project {
-    @DbFieldId
-    @DbField("project_id")
-    private int projectId;
+public class Project extends BaseModel{
     @DbField("project_rank")
-    private int projectRank;
+    private int rank;
     @DbField("user_id")
-    private int userId;
+    private int author;
     @DbField("head_id")
-    private int headId;
+    private int headNodeId;
     @DbField("contributors")
     private int[] contributors;
     @DbField("public")
@@ -24,42 +20,34 @@ public class Project {
     @DbField("introduction")
     private String introduction = "请输入内容";
     @DbField("project_name")
-    private String projectName = "请输入内容";
+    private String name = "请输入内容";
     @DbField("create_time")
     private String createTime = "";
     @DbField("deadline")
-    private String deadline = "";
+    private String ddl = "";
 
-    public int getProjectId() {
-        return projectId;
+    public int getRank() {
+        return rank;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
-    public int getProjectRank() {
-        return projectRank;
+    public int getAuthor() {
+        return author;
     }
 
-    public void setProjectRank(int projectRank) {
-        this.projectRank = projectRank;
+    public void setAuthor(int author) {
+        this.author = author;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getHeadNodeId() {
+        return headNodeId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getHeadId() {
-        return headId;
-    }
-
-    public void setHeadId(int headId) {
-        this.headId = headId;
+    public void setHeadNodeId(int headNodeId) {
+        this.headNodeId = headNodeId;
     }
 
     public int[] getContributors() {
@@ -86,12 +74,12 @@ public class Project {
         this.introduction = introduction;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCreateTime() {
@@ -102,11 +90,11 @@ public class Project {
         this.createTime = createTime;
     }
 
-    public String getDeadline() {
-        return deadline;
+    public String getDdl() {
+        return ddl;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+    public void setDdl(String ddl) {
+        this.ddl = ddl;
     }
 }
