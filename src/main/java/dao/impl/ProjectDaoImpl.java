@@ -11,12 +11,12 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
 
     @Override
     public String getTableName() {
-        return "t_project";
+        return "project";
     }
 
     @Override
-    public Project insertOne(Project object) {
-        return null;
+    public int insertOne(Project object) {
+        return 0;
     }
 
     @Override
@@ -25,8 +25,8 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
     }
 
     @Override
-    public Project selectOne(Project object) {
-        return super.selectOne(object);
+    public Project deleteOne(Project object) {
+        return super.deleteOne(object);
     }
 
     @Override
@@ -34,8 +34,4 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
         return super.selectById(object);
     }
 
-    @Override
-    public Project selectById(int id) {
-        return super.selectById(id);
-    }
 }

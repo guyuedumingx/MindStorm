@@ -13,7 +13,7 @@ public interface BaseDao<T extends BaseModel> {
      * @param object
      * @return
      */
-    T insertOne(T object);
+    int insertOne(T object);
 
     /**
      * 更新
@@ -27,7 +27,7 @@ public interface BaseDao<T extends BaseModel> {
      * @param object
      * @return
      */
-    T selectOne(T object);
+    T deleteOne(T object);
 
     /**
      * 根据id获取
@@ -35,11 +35,4 @@ public interface BaseDao<T extends BaseModel> {
      * @return
      */
     T selectById(T object);
-
-    /**
-     * 根据id获取
-     * @param id
-     * @return
-     */
-    T selectById(int id);
 }

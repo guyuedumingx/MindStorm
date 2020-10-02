@@ -11,12 +11,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public String getTableName() {
-        return "t_user";
+        return "user";
     }
 
     @Override
-    public User insertOne(User object) {
-        return null;
+    public int insertOne(User object) {
+        return 0;
     }
 
     @Override
@@ -25,17 +25,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public User selectOne(User object) {
-        return super.selectOne(object);
+    public User deleteOne(User object) {
+        return super.deleteOne(object);
     }
 
     @Override
     public User selectById(User object) {
         return super.selectById(object);
-    }
-
-    @Override
-    public User selectById(int id) {
-        return super.selectById(id);
     }
 }

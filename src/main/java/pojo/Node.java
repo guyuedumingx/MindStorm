@@ -1,5 +1,7 @@
 package pojo;
 
+import common.annontation.DbField;
+
 import java.util.Date;
 
 /**
@@ -7,14 +9,25 @@ import java.util.Date;
  * @author yohoyes
  */
 public class Node extends BaseModel{
+   @DbField("author")
    private int author;
+   @DbField("star")
    private int star;
+   @DbField("lastEditId")
    private int lastEditId;
+   @DbField("children")
    private int[] children;
+   @DbField("parent_id")
+   private int parentId;
+   @DbField("editable")
    private boolean editable;
+   @DbField("nameless")
    private boolean nameless;
+   @DbField("theme")
    private String theme = "";
+   @DbField("content")
    private String content = "请输入内容";
+   @DbField("lastEditTime")
    private String lastEditTime = new Date().toString();
 
    public int getAuthor() {
@@ -87,5 +100,13 @@ public class Node extends BaseModel{
 
    public void setLastEditTime(String lastEditTime) {
       this.lastEditTime = lastEditTime;
+   }
+
+   public int getParentId() {
+      return parentId;
+   }
+
+   public void setParentId(int parentId) {
+      this.parentId = parentId;
    }
 }
