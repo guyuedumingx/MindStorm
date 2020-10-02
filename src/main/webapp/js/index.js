@@ -1,26 +1,19 @@
-var but = document.getElementById("but");
-var em = document.getElementById("em");
-var pw = document.getElementById("pw");
-but.onclick = function () {
-    var email = em.value;
-    var password = pw.value;
+var input = getDQS('input');
+var buttom = getDQS('buttom');
+var flag = true;
+buttom.addEventListener('click', function () {
+    var id = input.value;
     ajax({
-        type: ('get'), // 请求方式
-        url: '/user', // 请求地址(必填)
+        type: 'get',
+        url: '/user',
         data: {
-            method: 'login',
-            email: email,
-            password: password
-        }, // 参数(对象形式)
-        header: {}, // 请求头(对象形式)
-        success: function (data) {
-            if (data==200) {
-                alert("hhhhh");
-            }else{
-                alert("dsfsrdfgjht");
-            }
-        }, // 成功函数(必填)
-        error: function () { } // 失败函数
+            user_id: id,
+            is_author: flag,
+            method: 'getUserInfo'
+        },
+        success: function (res) {
+            console.log(res);
+        }
     });
-}
-
+    flag = !flag;
+});
