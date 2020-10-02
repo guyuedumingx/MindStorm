@@ -9,13 +9,11 @@ import java.util.Date;
  * @author yohoyes
  */
 public class Node extends BaseModel{
-   @DbField("author")
+   @DbField("author_id")
    private int author;
-   @DbField("star")
    private int star;
-   @DbField("lastEditId")
+   @DbField("last_edit_id")
    private int lastEditId;
-   @DbField("children")
    private int[] children;
    @DbField("parent_id")
    private int parentId;
@@ -27,8 +25,21 @@ public class Node extends BaseModel{
    private String theme = "";
    @DbField("content")
    private String content = "请输入内容";
-   @DbField("lastEditTime")
-   private String lastEditTime = new Date().toString();
+   @DbField("last_edit_time")
+   private String lastEditTime = null;
+
+   public Node() {
+   }
+
+   public Node(int author, int lastEditId, int parentId, boolean editable, boolean nameless, String theme, String content) {
+      this.author = author;
+      this.lastEditId = lastEditId;
+      this.parentId = parentId;
+      this.editable = editable;
+      this.nameless = nameless;
+      this.theme = theme;
+      this.content = content;
+   }
 
    public int getAuthor() {
       return author;

@@ -11,7 +11,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public String getTableName() {
-        return "user";
+        return "t_user";
     }
 
     @Override
@@ -20,13 +20,13 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public User updateOne(User object) {
+    public int updateOne(User object) {
         return super.updateOne(object);
     }
 
     @Override
-    public User deleteOne(User object) {
-        return super.deleteOne(object);
+    public int deleteOne(int id) {
+        return super.deleteOne(id);
     }
 
     @Override

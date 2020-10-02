@@ -14,7 +14,7 @@ public class MapUtil {
     public static <T> T ModelMapper(T po,Field[] list, Map<String,Object> map) {
         for(Field f : list) {
             DbField dbField = f.getAnnotation(DbField.class);
-           if(map.containsKey(dbField.value())) {
+           if(dbField!=null && map.containsKey(dbField.value())) {
                try {
                    f.setAccessible(true);
                    f.set(po,map.get(dbField.value()));

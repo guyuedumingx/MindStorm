@@ -11,11 +11,8 @@ public class User extends BaseModel {
     private int exp;
     @DbField("token")
     private int token;
-    @DbField("recent_project")
     private int[] recentProject;
-    @DbField("following")
     private int[] following;
-    @DbField("follower")
     private int[] follower;
     @DbField("user_name")
     private String name = "";
@@ -25,6 +22,15 @@ public class User extends BaseModel {
     private String userAvatar = "";
     @DbField("user_signature")
     private String userSignature = "";
+
+    public User(int exp, int token, String name, String password, String userAvatar, String userSignature) {
+        this.exp = exp;
+        this.token = token;
+        this.name = name;
+        this.password = password;
+        this.userAvatar = userAvatar;
+        this.userSignature = userSignature;
+    }
 
     public int getExp() {
         return exp;

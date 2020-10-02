@@ -20,14 +20,13 @@ public interface BaseDao<T extends BaseModel> {
      * @param object
      * @return
      */
-    T updateOne(T object);
+    int updateOne(T object);
 
     /**
      * 获取
-     * @param object
-     * @return
+     * @param id
      */
-    T deleteOne(T object);
+    int deleteOne(int id);
 
     /**
      * 根据id获取

@@ -4,7 +4,9 @@ import common.util.JdbcUtil;
 import dao.BaseDaoImpl;
 import dao.NodeDao;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ArrayHandler;
 import pojo.Node;
+import java.math.BigInteger;
 import java.sql.SQLException;
 
 /**
@@ -14,17 +16,17 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
 
     @Override
     public String getTableName() {
-        return "node";
+        return "t_node";
     }
 
     @Override
-    public Node updateOne(Node object) {
-        return null;
+    public int updateOne(Node object) {
+        return super.updateOne(object);
     }
 
     @Override
-    public Node deleteOne(Node object) {
-        return null;
+    public int deleteOne(int id) {
+        return super.deleteOne(id);
     }
 
     @Override
@@ -35,10 +37,9 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
     @Override
     public int insertOne(Node node) {
         QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
-        String sql = "insert into node(id,author,parent_id,theme,content,editable,nameless,lastEditId,lastEditTime)" +
-                " values (?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into t_node(author_id,parent_id,theme,content,editable,nameless,last_edit_id,last_edit_time)" +
+                " values (?,?,?,?,?,?,?,?)";
         Object[] os = new Object[]{
-                node.getId(),
                 node.getAuthor(),
                 node.getParentId(),
                 node.getTheme(),
@@ -47,12 +48,13 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
                 node.isNameless(),
                 node.getLastEditId(),
                 node.getLastEditTime()};
-        int update = 0;
+        BigInteger update = new BigInteger("0");
         try {
-            update = queryRunner.update(sql, os);
+            Object[] insert = queryRunner.insert(sql, new ArrayHandler(), os);
+            update = (BigInteger)insert[0];
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return update;
+        return update.intValue();
     }
 }

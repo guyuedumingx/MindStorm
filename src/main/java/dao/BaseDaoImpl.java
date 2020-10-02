@@ -8,6 +8,8 @@ import org.apache.commons.dbutils.handlers.MapHandler;
 import pojo.BaseModel;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,14 +25,38 @@ public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
      */
     public abstract String getTableName();
 
+    /**
+     * 改
+     * @param object
+     * @return
+     */
     @Override
-    public T updateOne(T object) {
-        return null;
+    public int updateOne(T object) {
+        QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
+        String base = "update {0} {1} where id = {2}";
+        List<Object> params = new ArrayList<Object>();
+        String sql = MessageFormat.format(base, getTableName(), ReflectUtil.getSqlFragment(object, params), object.getId());
+        int update = 0;
+        try {
+            update = queryRunner.update(sql, params.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
     }
 
     @Override
-    public T deleteOne(T object) {
-        return null;
+    public int deleteOne(int id) {
+        QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
+        String base = "delete from {0} where id = ?";
+        String sql = MessageFormat.format(base,getTableName());
+        int update = 0;
+        try {
+            update = queryRunner.update(sql,new Object[]{id});
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
     }
 
     /**

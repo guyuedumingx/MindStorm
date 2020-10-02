@@ -9,11 +9,10 @@ import common.annontation.DbField;
 public class Project extends BaseModel{
     @DbField("project_rank")
     private int rank;
-    @DbField("user_id")
+    @DbField("author_id")
     private int author;
     @DbField("head_id")
     private int headNodeId;
-    @DbField("contributors")
     private int[] contributors;
     @DbField("public")
     private boolean isPublic;
@@ -24,7 +23,21 @@ public class Project extends BaseModel{
     @DbField("create_time")
     private String createTime = "";
     @DbField("deadline")
-    private String ddl = "";
+    private String deadline = "";
+
+    public Project() {}
+
+    public Project(int rank, int author, int headNodeId, int[] contributors, boolean isPublic, String introduction, String name, String createTime, String deadline) {
+        this.rank = rank;
+        this.author = author;
+        this.headNodeId = headNodeId;
+        this.contributors = contributors;
+        this.isPublic = isPublic;
+        this.introduction = introduction;
+        this.name = name;
+        this.createTime = createTime;
+        this.deadline = deadline;
+    }
 
     public int getRank() {
         return rank;
@@ -90,11 +103,11 @@ public class Project extends BaseModel{
         this.createTime = createTime;
     }
 
-    public String getDdl() {
-        return ddl;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setDdl(String ddl) {
-        this.ddl = ddl;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 }
