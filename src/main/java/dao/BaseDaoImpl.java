@@ -26,6 +26,16 @@ public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
     public abstract String getTableName();
 
     /**
+     * 查询条件
+     * @param po
+     * @return
+     */
+    public String getQueryCondition(T po) {
+        String base = "id = {0}";
+        String format = MessageFormat.format(base,po.getId());
+        return format;
+    }
+    /**
      * 改
      * @param object
      * @return
@@ -33,9 +43,9 @@ public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
     @Override
     public int updateOne(T object) {
         QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
-        String base = "update {0} {1} where id = {2}";
+        String base = "update {0} {1} where {2}";
         List<Object> params = new ArrayList<Object>();
-        String sql = MessageFormat.format(base, getTableName(), ReflectUtil.getSqlFragment(object, params), object.getId());
+        String sql = MessageFormat.format(base, getTableName(), ReflectUtil.getSqlFragment(object, params), getQueryCondition(object));
         int update = 0;
         try {
             update = queryRunner.update(sql, params.toArray());
@@ -59,6 +69,20 @@ public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
         return update;
     }
 
+    @Override
+    public int deleteOne(T po) {
+        QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
+        String base = "delete from {0} where {1}";
+        String sql = MessageFormat.format(base,getTableName(),getQueryCondition(po));
+        int update = 0;
+        try {
+            update = queryRunner.update(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
+    }
+
     /**
      * 查
      * @param object
@@ -67,8 +91,8 @@ public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
     @Override
     public T selectById(T object) {
         QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
-        String base = "select * from {0} where id = {1} limit 1";
-        String realSql = MessageFormat.format(base, getTableName(),object.getId());
+        String base = "select * from {0} where {1} limit 1";
+        String realSql = MessageFormat.format(base, getTableName(),getQueryCondition(object));
         try {
             Map<String, Object> query = queryRunner.query(realSql, new MapHandler());
             object = MapUtil.ModelMapper(object, ReflectUtil.getAllFields(object), query);

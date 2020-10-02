@@ -15,6 +15,11 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public String getQueryCondition(User po) {
+        return "id = {0}";
+    }
+
+    @Override
     public int insertOne(User object) {
         return 0;
     }

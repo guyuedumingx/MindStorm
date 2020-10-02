@@ -28,6 +28,8 @@ public interface BaseDao<T extends BaseModel> {
      */
     int deleteOne(int id);
 
+    int deleteOne(T po);
+
     /**
      * 根据id获取
      * @param object
