@@ -7,7 +7,6 @@ import common.util.ReflectUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
-
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.MessageFormat;
