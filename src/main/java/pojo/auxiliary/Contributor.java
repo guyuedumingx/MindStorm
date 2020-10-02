@@ -8,6 +8,11 @@ public class Contributor {
     @DbField("contributor_id")
     private int contributorId;
 
+    public Contributor(int projectId, int contributorId) {
+        this.projectId = projectId;
+        this.contributorId = contributorId;
+    }
+
     public int getProjectId() {
         return projectId;
     }

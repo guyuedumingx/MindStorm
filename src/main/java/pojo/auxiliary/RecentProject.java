@@ -8,6 +8,11 @@ public class RecentProject {
     @DbField("project_id")
     private int projectId;
 
+    public RecentProject(int userId, int projectId) {
+        this.userId = userId;
+        this.projectId = projectId;
+    }
+
     public int getUserId() {
         return userId;
     }

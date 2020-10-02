@@ -10,7 +10,14 @@ public class RecentEdit {
     @DbField("edit_type")
     private String editType;
     @DbField("edit_time")
-    private String eidtTime;
+    private String editTime;
+
+    public RecentEdit(int userId, int nodeId, String editType, String editTime) {
+        this.userId = userId;
+        this.nodeId = nodeId;
+        this.editType = editType;
+        this.editTime = editTime;
+    }
 
     public int getUserId() {
         return userId;
@@ -36,11 +43,11 @@ public class RecentEdit {
         this.editType = editType;
     }
 
-    public String getEidtTime() {
-        return eidtTime;
+    public String getEditTime() {
+        return editTime;
     }
 
-    public void setEidtTime(String eidtTime) {
-        this.eidtTime = eidtTime;
+    public void setEditTime(String editTime) {
+        this.editTime = editTime;
     }
 }

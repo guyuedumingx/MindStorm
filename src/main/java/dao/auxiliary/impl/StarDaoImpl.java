@@ -1,12 +1,8 @@
 package dao.auxiliary.impl;
 
-import common.util.JdbcUtil;
 import dao.BaseDaoImpl;
 import dao.auxiliary.StarDao;
-import org.apache.commons.dbutils.QueryRunner;
 import pojo.auxiliary.Star;
-
-import java.sql.SQLException;
 import java.text.MessageFormat;
 
 /**

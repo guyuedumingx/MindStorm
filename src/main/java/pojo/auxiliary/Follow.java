@@ -8,6 +8,11 @@ public class Follow {
     @DbField("following_id")
     private int following;
 
+    public Follow(int follower, int following) {
+        this.follower = follower;
+        this.following = following;
+    }
+
     public int getFollower() {
         return follower;
     }

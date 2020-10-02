@@ -1,12 +1,9 @@
 package dao.auxiliary.impl;
 
-import common.util.JdbcUtil;
 import dao.BaseDaoImpl;
 import dao.auxiliary.FollowDao;
-import org.apache.commons.dbutils.QueryRunner;
 import pojo.auxiliary.Follow;
 
-import java.sql.SQLException;
 import java.text.MessageFormat;
 
 public class FollowDaoImpl extends BaseDaoImpl<Follow> implements FollowDao {

@@ -2,8 +2,6 @@ package pojo;
 
 import common.annontation.DbField;
 
-import java.sql.Timestamp;
-
 /**
  * 节点类
  * @author yohoyes
@@ -26,7 +24,7 @@ public class Node extends BaseModel{
    @DbField("content")
    private String content = "请输入内容";
    @DbField("last_edit_time")
-   private Timestamp lastEditTime =null;
+   private String lastEditTime = "";
 
    public Node() {
    }
@@ -105,11 +103,11 @@ public class Node extends BaseModel{
       this.content = content;
    }
 
-   public Timestamp getLastEditTime() {
+   public String getLastEditTime() {
       return lastEditTime;
    }
 
-   public void setLastEditTime(Timestamp lastEditTime) {
+   public void setLastEditTime(String lastEditTime) {
       this.lastEditTime = lastEditTime;
    }
 

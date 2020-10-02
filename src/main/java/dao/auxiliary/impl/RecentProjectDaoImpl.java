@@ -3,7 +3,6 @@ package dao.auxiliary.impl;
 import dao.BaseDaoImpl;
 import dao.auxiliary.RecentProjectDao;
 import pojo.auxiliary.RecentProject;
-
 import java.text.MessageFormat;
 
 public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements RecentProjectDao {

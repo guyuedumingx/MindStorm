@@ -11,6 +11,11 @@ public class Star {
     @DbField("node_id")
     private int nodeId;
 
+    public Star(int userId, int nodeId) {
+        this.userId = userId;
+        this.nodeId = nodeId;
+    }
+
     public int getUserId() {
         return userId;
     }

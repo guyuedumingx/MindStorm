@@ -87,12 +87,13 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
      * @return
      */
     @Override
-    public T selectById(T object) {
+    public T selectOne(T object) {
         QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
         String base = "select * from {0} where {1} limit 1";
         String realSql = MessageFormat.format(base, getTableName(),getQueryCondition(object));
         try {
             Map<String, Object> query = queryRunner.query(realSql, new MapHandler());
+            if(query==null) return null;
             object = MapUtil.ModelMapper(object, ReflectUtil.getAllFields(object), query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,7 +110,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
         BigInteger bigInteger = new BigInteger("0");
         try{
             Object[] insert = queryRunner.insert(sql, new ArrayHandler(), list.toArray());
-            bigInteger = (BigInteger)insert[0];
+            if(insert.length>=1) {
+                bigInteger = (BigInteger) insert[0];
+            }else {
+                return 0;
+            }
         }catch (SQLException e) {
             e.printStackTrace();
         }

@@ -34,5 +34,5 @@ public interface BaseDao<T> {
      * @param object
      * @return
      */
-    T selectById(T object);
+    T selectOne(T object);
 }
