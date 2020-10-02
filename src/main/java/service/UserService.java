@@ -7,14 +7,14 @@ import pojo.User;
  * @author yohoyes
  */
 public interface UserService {
-    
+
     /**
      * 登录
      * @param email 登录的邮箱
      * @param pwd 登录的密码
      * @return
      */
-    int login(String email, String pwd);
+    User login(String email, String pwd);
 
     /**
      * 根据id获取用户对象

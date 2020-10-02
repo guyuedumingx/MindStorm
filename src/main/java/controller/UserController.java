@@ -34,11 +34,13 @@ public class UserController extends BaseController{
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        response.setHeader("Access-Control-Allow-Origin","*");
-        response.setHeader("Cache-Control","no-cache");
         UserService service = new UserServiceImpl();
-        int login = service.login(email, password);
-        WebUtil.renderText(response,login+"");
+        User user = service.login(email, password);
+        int isSuccess = user==null ? 404 : 200;
+        if(isSuccess==200) {
+            WebUtil.renderText(response,user.getToken()+"");
+        }
+        WebUtil.renderText(response,isSuccess+"");
     }
 
     /**
@@ -70,7 +72,6 @@ public class UserController extends BaseController{
     public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id =Integer.valueOf(request.getParameter("user_id"));
         boolean isAuthor = Boolean.valueOf(request.getParameter("is_author"));
-        response.setHeader("Access-Control-Allow-Origin","*");
         if(isAuthor){
             User user = new UserServiceImpl().getUser(id);
             WebUtil.renderJson(response,user);
