@@ -4,6 +4,8 @@ import dao.BaseDaoImpl;
 import dao.ProjectDao;
 import pojo.Project;
 
+import java.text.MessageFormat;
+
 /**
  * @author yohoyes
  */
@@ -15,23 +17,14 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
     }
 
     @Override
+    public String getQueryCondition(Project po) {
+        String base = "id = {0}";
+        String format = MessageFormat.format(base,po.getId());
+        return format;
+    }
+
+    @Override
     public int insertOne(Project object) {
         return 0;
     }
-
-    @Override
-    public int updateOne(Project object) {
-        return super.updateOne(object);
-    }
-
-    @Override
-    public int deleteOne(int id) {
-        return super.deleteOne(id);
-    }
-
-    @Override
-    public Project selectById(Project object) {
-        return super.selectById(object);
-    }
-
 }

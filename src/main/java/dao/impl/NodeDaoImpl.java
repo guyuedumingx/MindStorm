@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.handlers.ArrayHandler;
 import pojo.Node;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 
 /**
  * @author yohoyes
@@ -20,18 +21,10 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
     }
 
     @Override
-    public int updateOne(Node object) {
-        return super.updateOne(object);
-    }
-
-    @Override
-    public int deleteOne(int id) {
-        return super.deleteOne(id);
-    }
-
-    @Override
-    public Node selectById(Node object) {
-        return super.selectById(object);
+    public String getQueryCondition(Node po) {
+        String base = "id = {0}";
+        String format = MessageFormat.format(base,po.getId());
+        return format;
     }
 
     @Override

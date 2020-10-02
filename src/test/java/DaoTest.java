@@ -1,7 +1,10 @@
 import dao.NodeDao;
+import dao.auxiliary.StarDao;
 import dao.impl.NodeDaoImpl;
+import dao.auxiliary.impl.StarDaoImpl;
 import org.junit.Test;
 import pojo.Node;
+import pojo.auxiliary.Star;
 
 public class DaoTest {
     @Test
@@ -17,5 +20,15 @@ public class DaoTest {
        node.setLastEditTime(null);
        dao.updateOne(node);
        dao.deleteOne(node.getId());
+    }
+
+    @Test
+    public void StarDaoTest() {
+        StarDao dao = new StarDaoImpl();
+        Star star = new Star();
+        star.setNodeId(1);
+        star.setUserId(1);
+        dao.insertOne(star);
+        dao.selectById(star);
     }
 }

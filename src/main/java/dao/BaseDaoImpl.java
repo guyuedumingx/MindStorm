@@ -5,7 +5,6 @@ import common.util.MapUtil;
 import common.util.ReflectUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapHandler;
-import pojo.BaseModel;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.Map;
  * @param <T>
  * @author yohoyes
  */
-public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
+public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 
     /**
      * 获取表名
@@ -30,11 +29,7 @@ public abstract class BaseDaoImpl<T extends BaseModel> implements BaseDao<T>{
      * @param po
      * @return
      */
-    public String getQueryCondition(T po) {
-        String base = "id = {0}";
-        String format = MessageFormat.format(base,po.getId());
-        return format;
-    }
+    public abstract String getQueryCondition(T po);
     /**
      * 改
      * @param object

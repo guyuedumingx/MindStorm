@@ -4,6 +4,8 @@ import dao.BaseDaoImpl;
 import dao.UserDao;
 import pojo.User;
 
+import java.text.MessageFormat;
+
 /**
  * @author yohoyes
  */
@@ -16,7 +18,9 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public String getQueryCondition(User po) {
-        return "id = {0}";
+        String base = "id = {0}";
+        String format = MessageFormat.format(base,po.getId());
+        return format;
     }
 
     @Override
@@ -24,18 +28,4 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
         return 0;
     }
 
-    @Override
-    public int updateOne(User object) {
-        return super.updateOne(object);
-    }
-
-    @Override
-    public int deleteOne(int id) {
-        return super.deleteOne(id);
-    }
-
-    @Override
-    public User selectById(User object) {
-        return super.selectById(object);
-    }
 }
