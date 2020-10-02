@@ -1,6 +1,8 @@
 package controller;
 
 import common.util.WebUtil;
+import dao.impl.UserDaoImpl;
+import pojo.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
 
@@ -31,7 +33,12 @@ public class UserController extends BaseController{
 
     }
     public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        int id =Integer.valueOf(request.getParameter("user_id"));
+        boolean isAuthor = Boolean.valueOf(request.getParameter("is_author"));
+        if(isAuthor){
+            User user = new UserServiceImpl().getUser(id);
+            WebUtil.renderJson(response,user);
+        }
     }
     public void setAvatar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
