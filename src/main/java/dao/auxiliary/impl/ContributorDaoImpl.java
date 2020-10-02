@@ -1,11 +1,13 @@
 package dao.auxiliary.impl;
-
 import dao.BaseDaoImpl;
 import dao.auxiliary.ContributorDao;
 import pojo.auxiliary.Contributor;
 
 import java.text.MessageFormat;
 
+/**
+ * @author yohoyes
+ */
 public class ContributorDaoImpl extends BaseDaoImpl<Contributor> implements ContributorDao {
     @Override
     public String getTableName() {
