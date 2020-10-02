@@ -2,8 +2,6 @@ package pojo;
 
 import common.annontation.DbField;
 
-import java.util.Date;
-
 /**
  * 节点类
  * @author yohoyes
@@ -26,7 +24,7 @@ public class Node extends BaseModel{
    @DbField("content")
    private String content = "请输入内容";
    @DbField("last_edit_time")
-   private String lastEditTime = null;
+   private String lastEditTime = "";
 
    public Node() {
    }
@@ -120,4 +118,5 @@ public class Node extends BaseModel{
    public void setParentId(int parentId) {
       this.parentId = parentId;
    }
+
 }

@@ -18,4 +18,12 @@ public class DbSqlUtil {
         String base = "and {0} = ?";
         return MessageFormat.format(base, key);
     }
+
+    public static String getQuestionForInsert(int number) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<number;i++) {
+           sb.append(i==number-1 ? "?":"?,");
+        }
+        return sb.toString();
+    }
 }

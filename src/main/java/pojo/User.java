@@ -16,6 +16,8 @@ public class User extends BaseModel {
     private int[] follower;
     @DbField("user_name")
     private String name = "";
+    @DbField("user_email")
+    private String email = "";
     @DbField("password")
     private String password = "";
     @DbField("user_avatar")
@@ -23,13 +25,20 @@ public class User extends BaseModel {
     @DbField("user_signature")
     private String userSignature = "";
 
-    public User(int exp, int token, String name, String password, String userAvatar, String userSignature) {
+    public User() {}
+
+    public User(int id){
+        this.setId(id);
+    }
+
+    public User(int exp, int token, String name, String password, String userAvatar, String userSignature, String email) {
         this.exp = exp;
         this.token = token;
         this.name = name;
         this.password = password;
         this.userAvatar = userAvatar;
         this.userSignature = userSignature;
+        this.email = email;
     }
 
     public int getExp() {
@@ -102,5 +111,13 @@ public class User extends BaseModel {
 
     public void setUserSignature(String userSignature) {
         this.userSignature = userSignature;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

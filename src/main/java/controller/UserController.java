@@ -1,6 +1,10 @@
 package controller;
 
 import common.util.WebUtil;
+import dao.impl.UserDaoImpl;
+import pojo.User;
+import service.UserService;
+import service.impl.UserServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +22,9 @@ public class UserController extends BaseController{
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        boolean b = "11@qq.com".equals(email)&&"111".equals(password);
-        WebUtil.renderText(response,b?200+"":404+"");
+        UserService service = new UserServiceImpl();
+        int login = service.login(email, password);
+        WebUtil.renderText(response,login+"");
     }
     public void setUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -28,7 +33,12 @@ public class UserController extends BaseController{
 
     }
     public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        int id =Integer.valueOf(request.getParameter("user_id"));
+        boolean isAuthor = Boolean.valueOf(request.getParameter("is_author"));
+        if(isAuthor){
+            User user = new UserServiceImpl().getUser(id);
+            WebUtil.renderJson(response,user);
+        }
     }
     public void setAvatar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
