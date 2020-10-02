@@ -3,6 +3,7 @@ package pojo.auxiliary;
 import common.annontation.DbField;
 
 /**
+ * 点赞表对应的pojo
  * @author hoyoyes
  */
 public class Star {

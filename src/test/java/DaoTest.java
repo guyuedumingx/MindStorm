@@ -1,8 +1,6 @@
 import dao.NodeDao;
 import dao.ProjectDao;
 import dao.UserDao;
-import dao.auxiliary.RecentEditDao;
-import dao.auxiliary.StarDao;
 import dao.auxiliary.impl.RecentEditDaoImpl;
 import dao.impl.NodeDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
@@ -61,7 +59,7 @@ public class DaoTest {
 
     @Test
     public void StarDaoTest() {
-        StarDao dao = new StarDaoImpl();
+        StarDaoImpl dao = new StarDaoImpl();
         Star star = new Star(1,1);
         dao.insertOne(star);
         dao.selectOne(star);
@@ -71,7 +69,7 @@ public class DaoTest {
     @Test
     public void RecentEditDaoTest(){
         RecentEdit edit = new RecentEdit(1,1,"insert",new Date().toString());
-        RecentEditDao dao = new RecentEditDaoImpl();
+        RecentEditDaoImpl dao = new RecentEditDaoImpl();
         dao.insertOne(edit);
         dao.selectOne(edit);
     }

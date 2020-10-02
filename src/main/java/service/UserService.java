@@ -2,8 +2,24 @@ package service;
 
 import pojo.User;
 
+/**
+ * 提供用户操作服务
+ * @author yohoyes
+ */
 public interface UserService {
-    public int login(String email, String pwd);
+    
+    /**
+     * 登录
+     * @param email 登录的邮箱
+     * @param pwd 登录的密码
+     * @return
+     */
+    int login(String email, String pwd);
 
-    public User getUser(int id);
+    /**
+     * 根据id获取用户对象
+     * @param id 传入的id
+     * @return User对象
+     */
+    User getUser(int id);
 }

@@ -1,12 +1,13 @@
 package dao.auxiliary.impl;
 
+import dao.BaseDao;
 import dao.BaseDaoImpl;
-import dao.auxiliary.RecentEditDao;
 import pojo.auxiliary.RecentEdit;
 
-import java.text.MessageFormat;
-
-public class RecentEditDaoImpl extends BaseDaoImpl<RecentEdit> implements RecentEditDao {
+/**
+ * 处理用户最近修改表
+ */
+public class RecentEditDaoImpl extends BaseDaoImpl<RecentEdit> implements BaseDao<RecentEdit> {
     @Override
     public String getTableName() {
         return "t_edit";

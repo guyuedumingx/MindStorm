@@ -2,6 +2,8 @@ package dao;
 
 
 /**
+ * 所有dao层的公共接口
+ * 负责定义一些通用的接口
  * @param <T>
  * @author yohoyes
  */

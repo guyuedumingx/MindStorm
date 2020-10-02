@@ -1,12 +1,15 @@
 package dao.auxiliary.impl;
 
+import dao.BaseDao;
 import dao.BaseDaoImpl;
-import dao.auxiliary.FollowDao;
 import pojo.auxiliary.Follow;
 
 import java.text.MessageFormat;
 
-public class FollowDaoImpl extends BaseDaoImpl<Follow> implements FollowDao {
+/**
+ * 处理关注表
+ */
+public class FollowDaoImpl extends BaseDaoImpl<Follow> implements BaseDao<Follow> {
     @Override
     public String getTableName() {
         return "t_follow";

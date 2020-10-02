@@ -4,6 +4,7 @@ import dao.UserDao;
 import dao.impl.UserDaoImpl;
 
 /**
+ *
  * @author yohoyes
  */
 public class DaoFactory {

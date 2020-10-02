@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * 所有Dao类的公有父类
+ * BaseDao的 进一步实现的虚拟类
  * @param <T>
  * @author yohoyes
  */

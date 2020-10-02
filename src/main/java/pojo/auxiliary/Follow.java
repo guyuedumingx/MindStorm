@@ -2,6 +2,10 @@ package pojo.auxiliary;
 
 import common.annontation.DbField;
 
+/**
+ * 关注表对应的pojo
+ * @author yohoyes
+ */
 public class Follow {
     @DbField("follow_id")
     private int follower;
