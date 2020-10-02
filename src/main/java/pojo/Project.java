@@ -27,11 +27,10 @@ public class Project extends BaseModel{
 
     public Project() {}
 
-    public Project(int rank, int author, int headNodeId, int[] contributors, boolean isPublic, String introduction, String name, String createTime, String deadline) {
+    public Project(int rank, int author, int headNodeId, boolean isPublic, String introduction, String name, String createTime, String deadline) {
         this.rank = rank;
         this.author = author;
         this.headNodeId = headNodeId;
-        this.contributors = contributors;
         this.isPublic = isPublic;
         this.introduction = introduction;
         this.name = name;

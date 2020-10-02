@@ -25,19 +25,4 @@ public class StarDaoImpl extends BaseDaoImpl<Star> implements StarDao {
         String format = MessageFormat.format(base, po.getUserId(),po.getNodeId());
         return format;
     }
-
-
-    @Override
-    public int insertOne(Star object) {
-        String base = "insert into {0}(user_id,node_id) values(?,?)";
-        String sql = MessageFormat.format(base, getTableName());
-        QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
-        int update = 0;
-        try {
-            update = queryRunner.update(sql, new Object[]{object.getUserId(), object.getNodeId()});
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return update;
-    }
 }

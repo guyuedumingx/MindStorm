@@ -20,9 +20,4 @@ public class ContributorDaoImpl extends BaseDaoImpl<Contributor> implements Cont
         String format = MessageFormat.format(base, po.getProjectId(),po.getContributorId());
         return format;
     }
-
-    @Override
-    public int insertOne(Contributor object) {
-        return 0;
-    }
 }

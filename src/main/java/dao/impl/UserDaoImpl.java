@@ -22,10 +22,4 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
         String format = MessageFormat.format(base,po.getId());
         return format;
     }
-
-    @Override
-    public int insertOne(User object) {
-        return 0;
-    }
-
 }

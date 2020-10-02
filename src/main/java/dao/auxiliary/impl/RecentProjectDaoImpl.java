@@ -18,9 +18,4 @@ public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements 
         String format = MessageFormat.format(base, po.getUserId(),po.getProjectId());
         return format;
     }
-
-    @Override
-    public int insertOne(RecentProject object) {
-        return 0;
-    }
 }

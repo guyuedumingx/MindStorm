@@ -16,9 +16,4 @@ public class RecentEditDaoImpl extends BaseDaoImpl<RecentEdit> implements Recent
     public String getQueryCondition(RecentEdit po) {
         return "";
     }
-
-    @Override
-    public int insertOne(RecentEdit object) {
-        return 0;
-    }
 }

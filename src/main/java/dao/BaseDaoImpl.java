@@ -1,10 +1,14 @@
 package dao;
 
+import common.util.DbSqlUtil;
 import common.util.JdbcUtil;
 import common.util.MapUtil;
 import common.util.ReflectUtil;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
+
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -95,5 +99,21 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
             e.printStackTrace();
         }
         return object;
+    }
+
+    @Override
+    public int insertOne(T object) {
+        String base = "insert into {0} ({1}) values ({2})";
+        List<Object> list = new ArrayList<Object>();
+        String sql = MessageFormat.format(base, getTableName(), ReflectUtil.getSqlForInsert(object, list), DbSqlUtil.getQuestionForInsert(list.size()));
+        QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
+        BigInteger bigInteger = new BigInteger("0");
+        try{
+            Object[] insert = queryRunner.insert(sql, new ArrayHandler(), list.toArray());
+            bigInteger = (BigInteger)insert[0];
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bigInteger.intValue();
     }
 }

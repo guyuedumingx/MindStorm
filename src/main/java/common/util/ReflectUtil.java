@@ -59,6 +59,26 @@ public class ReflectUtil {
         return sb.toString();
     }
 
+    public static <T> String getSqlForInsert(T po, List<Object> list) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            Map<String, Object> paraForUpdate = getParaForUpdate(po);
+            Set<Map.Entry<String,Object>> set = paraForUpdate.entrySet();
+            Iterator<Map.Entry<String, Object>> iterator = set.iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Object> cur = iterator.next();
+                list.add(cur.getValue());
+                sb.append(cur.getKey());
+                if (iterator.hasNext()) {
+                    sb.append(" , ");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
     private static <T> Map<String, Object> getFieldsMap(T po, Class clazz, Map<String, Object> map) throws IllegalAccessException {
         for (Field f : clazz.getDeclaredFields()) {
             f.setAccessible(true);

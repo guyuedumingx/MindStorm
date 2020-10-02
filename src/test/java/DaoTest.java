@@ -1,10 +1,14 @@
 import dao.NodeDao;
+import dao.ProjectDao;
 import dao.auxiliary.StarDao;
 import dao.impl.NodeDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
+import dao.impl.ProjectDaoImpl;
 import org.junit.Test;
 import pojo.Node;
+import pojo.Project;
 import pojo.auxiliary.Star;
+import java.util.Date;
 
 public class DaoTest {
     @Test
@@ -20,6 +24,14 @@ public class DaoTest {
        node.setLastEditTime(null);
        dao.updateOne(node);
        dao.deleteOne(node.getId());
+    }
+
+    @Test
+    public void projectDaoImplTest() {
+        ProjectDao projectDao = new ProjectDaoImpl();
+        String time = new Date().toString();
+        Project p = new Project(1,1,1,true,"google","name name",time,time);
+        int i = projectDao.insertOne(p);
     }
 
     @Test

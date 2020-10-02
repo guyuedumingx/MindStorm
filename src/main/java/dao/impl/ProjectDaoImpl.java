@@ -22,9 +22,4 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
         String format = MessageFormat.format(base,po.getId());
         return format;
     }
-
-    @Override
-    public int insertOne(Project object) {
-        return 0;
-    }
 }
