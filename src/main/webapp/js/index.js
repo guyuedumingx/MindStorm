@@ -1,7 +1,7 @@
 var input = getDQS('input');
-var buttom = getDQS('buttom');
+var button = getDQS('button');
 var flag = true;
-buttom.addEventListener('click', function () {
+button.addEventListener('click', function () {
     var id = input.value;
     ajax({
         type: 'get',
