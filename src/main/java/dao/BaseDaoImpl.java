@@ -7,6 +7,7 @@ import common.util.ReflectUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 /**
  * 所有Dao类的公有父类
+ * BaseDao的 进一步实现的虚拟类
  * @param <T>
  * @author yohoyes
  */
@@ -95,10 +97,31 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
             Map<String, Object> query = queryRunner.query(realSql, new MapHandler());
             if(query==null) return null;
             object = MapUtil.ModelMapper(object, ReflectUtil.getAllFields(object), query);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return object;
+    }
+
+    /**
+     * 查一堆
+     * @param object
+     * @return
+     */
+    @Override
+    public List<T> selectObjectList(T object) {
+       QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
+        String base = "select * from {0} where {1}";
+        String realSql = MessageFormat.format(base, getTableName(),getQueryCondition(object));
+        List<T> res = new ArrayList<T>();
+        try {
+            List<Map<String, Object>> query = queryRunner.query(realSql, new MapListHandler());
+            if(query==null) return null;
+            res = MapUtil.ModelMapperForList(object, ReflectUtil.getAllFields(object), query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     @Override

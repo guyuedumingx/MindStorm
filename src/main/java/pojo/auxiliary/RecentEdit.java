@@ -2,6 +2,10 @@ package pojo.auxiliary;
 
 import common.annontation.DbField;
 
+/**
+ * 最近修改表对应的bean
+ * @author yohoyes
+ */
 public class RecentEdit {
     @DbField("user_Id")
     private int userId;

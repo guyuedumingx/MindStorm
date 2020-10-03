@@ -2,6 +2,10 @@ package pojo.auxiliary;
 
 import common.annontation.DbField;
 
+/**
+ * 贡献者表对应的bean
+ * @author yohoyes
+ */
 public class Contributor {
     @DbField("project_id")
     private int projectId;

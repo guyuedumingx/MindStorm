@@ -4,6 +4,7 @@ import common.annontation.DbField;
 import common.annontation.DbFieldId;
 
 /**
+ * pojo的共有父类
  * @author hoyoyes
  */
 public class BaseModel {

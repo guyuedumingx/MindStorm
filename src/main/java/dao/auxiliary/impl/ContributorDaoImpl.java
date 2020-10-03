@@ -1,14 +1,15 @@
 package dao.auxiliary.impl;
+import dao.BaseDao;
 import dao.BaseDaoImpl;
-import dao.auxiliary.ContributorDao;
 import pojo.auxiliary.Contributor;
 
 import java.text.MessageFormat;
 
 /**
+ * 处理贡献者表
  * @author yohoyes
  */
-public class ContributorDaoImpl extends BaseDaoImpl<Contributor> implements ContributorDao {
+public class ContributorDaoImpl extends BaseDaoImpl<Contributor> implements BaseDao<Contributor> {
     @Override
     public String getTableName() {
         return "t_contributor";
@@ -16,8 +17,8 @@ public class ContributorDaoImpl extends BaseDaoImpl<Contributor> implements Cont
 
     @Override
     public String getQueryCondition(Contributor po) {
-        String base = "project_id = {0} and contributor_id = {1}";
-        String format = MessageFormat.format(base, po.getProjectId(),po.getContributorId());
+        String base = "project_id = {0}";
+        String format = MessageFormat.format(base, po.getProjectId());
         return format;
     }
 }

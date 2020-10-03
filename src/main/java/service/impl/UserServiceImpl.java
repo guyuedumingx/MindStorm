@@ -8,11 +8,11 @@ import service.UserService;
 public class UserServiceImpl implements UserService {
     UserDao dao = new UserDaoImpl();
     @Override
-    public int login(String email, String pwd) {
+    public User login(String email, String pwd) {
         User u = new User();
         u.setEmail("'"+email+"'");
         u.setPassword("'"+pwd+"'");
-        return dao.selectOne(u)==null? 404:200;
+        return dao.selectOne(u);
     }
 
     @Override

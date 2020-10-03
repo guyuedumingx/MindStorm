@@ -1,7 +1,11 @@
 package dao;
 
 
+import java.util.List;
+
 /**
+ * 所有dao层的公共接口
+ * 负责定义一些通用的接口
  * @param <T>
  * @author yohoyes
  */
@@ -35,4 +39,11 @@ public interface BaseDao<T> {
      * @return
      */
     T selectOne(T object);
+
+    /**
+     *根据对象获取一堆数据并返回
+     * @param po
+     * @return
+     */
+    List<T> selectObjectList(T po);
 }

@@ -1,11 +1,15 @@
 package dao.auxiliary.impl;
 
+import dao.BaseDao;
 import dao.BaseDaoImpl;
-import dao.auxiliary.RecentProjectDao;
 import pojo.auxiliary.RecentProject;
 import java.text.MessageFormat;
 
-public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements RecentProjectDao {
+/**
+ * 处理用户最近使用的项目表
+ * @author yohoyes
+ */
+public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements BaseDao<RecentProject> {
     @Override
     public String getTableName() {
         return "t_recent_project";
@@ -13,8 +17,8 @@ public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements 
 
     @Override
     public String getQueryCondition(RecentProject po) {
-        String base = "user_id = {0} and project_id = {1}";
-        String format = MessageFormat.format(base, po.getUserId(),po.getProjectId());
+        String base = "user_id = {0}";
+        String format = MessageFormat.format(base, po.getUserId());
         return format;
     }
 }

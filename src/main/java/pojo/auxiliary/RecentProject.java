@@ -2,6 +2,10 @@ package pojo.auxiliary;
 
 import common.annontation.DbField;
 
+/**
+ * 最近项目表对应的pojo
+ * @author yohoyes
+ */
 public class RecentProject {
     @DbField("user_id")
     private int userId;
