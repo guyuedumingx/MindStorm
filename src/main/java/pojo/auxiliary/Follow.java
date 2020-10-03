@@ -7,7 +7,7 @@ import common.annontation.DbField;
  * @author yohoyes
  */
 public class Follow {
-    @DbField("follow_id")
+    @DbField("follower_id")
     private int follower;
     @DbField("following_id")
     private int following;

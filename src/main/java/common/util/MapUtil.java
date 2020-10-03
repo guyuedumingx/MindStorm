@@ -3,6 +3,9 @@ package common.util;
 import common.annontation.DbField;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +26,14 @@ public class MapUtil {
            }
        }
         return po;
+    }
+    public static <T> List<T> ModelMapperForList(T po,Field[] f, List<Map<String,Object>> list) {
+        Iterator<Map<String, Object>> iterator = list.iterator();
+        List<T> res = new ArrayList<T>();
+        while (iterator.hasNext()) {
+            T t = ModelMapper(po, f, iterator.next());
+            res.add(t);
+        }
+        return res;
     }
 }

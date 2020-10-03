@@ -4,8 +4,11 @@ import dao.BaseDao;
 import dao.BaseDaoImpl;
 import pojo.auxiliary.RecentEdit;
 
+import java.text.MessageFormat;
+
 /**
  * 处理用户最近修改表
+ * @author yohoyes
  */
 public class RecentEditDaoImpl extends BaseDaoImpl<RecentEdit> implements BaseDao<RecentEdit> {
     @Override
@@ -15,8 +18,8 @@ public class RecentEditDaoImpl extends BaseDaoImpl<RecentEdit> implements BaseDa
 
     @Override
     public String getQueryCondition(RecentEdit po) {
-        String base = " = {0} and node_id = {1}";
-        return null;
+        String base = "user_id = {0} ";
+        return MessageFormat.format(base,po.getUserId());
     }
 
     @Override
