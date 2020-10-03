@@ -2,6 +2,8 @@ package pojo.auxiliary;
 
 import common.annontation.DbField;
 
+import java.util.Stack;
+
 /**
  * 点赞表对应的pojo
  * @author hoyoyes
@@ -17,6 +19,11 @@ public class Star {
         this.nodeId = nodeId;
     }
 
+    public Star(int nodeId) {
+        this.nodeId = nodeId;
+    }
+
+    public Star() {}
     public int getUserId() {
         return userId;
     }

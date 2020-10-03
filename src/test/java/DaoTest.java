@@ -13,6 +13,7 @@ import pojo.User;
 import pojo.auxiliary.RecentEdit;
 import pojo.auxiliary.Star;
 import java.util.Date;
+import java.util.List;
 
 public class DaoTest {
     @Test
@@ -63,6 +64,8 @@ public class DaoTest {
         Star star = new Star(1,1);
         dao.insertOne(star);
         dao.selectOne(star);
+        Star s = new Star(1);
+        List<Star> stars = dao.selectObjectList(s);
         dao.deleteOne(star);
     }
 

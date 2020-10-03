@@ -13,21 +13,22 @@ import java.util.Map;
  */
 public class MapUtil {
 
-    public static <T> T ModelMapper(T po,Field[] list, Map<String,Object> map) {
+    public static <T> T ModelMapper(T po,Field[] list, Map<String,Object> map) throws Exception{
+         T o = (T)po.getClass().newInstance();
         for(Field f : list) {
             DbField dbField = f.getAnnotation(DbField.class);
            if(dbField!=null && map.containsKey(dbField.value())) {
                try {
                    f.setAccessible(true);
-                   f.set(po,map.get(dbField.value()));
+                   f.set(o,map.get(dbField.value()));
                } catch (Exception e) {
                   e.printStackTrace();
                }
            }
        }
-        return po;
+        return o;
     }
-    public static <T> List<T> ModelMapperForList(T po,Field[] f, List<Map<String,Object>> list) {
+    public static <T> List<T> ModelMapperForList(T po,Field[] f, List<Map<String,Object>> list) throws Exception {
         Iterator<Map<String, Object>> iterator = list.iterator();
         List<T> res = new ArrayList<T>();
         while (iterator.hasNext()) {

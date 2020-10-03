@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 
 /**
  * 处理用户最近使用的项目表
+ * @author yohoyes
  */
 public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements BaseDao<RecentProject> {
     @Override
