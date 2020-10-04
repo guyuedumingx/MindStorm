@@ -18,4 +18,13 @@ a {
     color: #000;
 }
 
+.topAlert {
+    position: fixed;
+    top: 15vh;
+    left: 50%;
+    font-size: 3vw;
+    font-family: '华文新魏';
+    transform: translate(-50%);
+}
+
 /*#endregion*/
