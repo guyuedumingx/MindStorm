@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Map;
 
 /**
  * 与前端交互的工具类
@@ -74,13 +73,23 @@ public class WebUtil {
      * @param <T>
      * @return
      */
-    public static <T> T getJson(HttpServletRequest request, T object) {
-        Map map = request.getParameterMap();
+    public static <T> T getJson(HttpServletRequest request, Class<T> clazz) {
         try {
-            object = (T)MapUtil.ModelMapper(object, ReflectUtil.getAllFields(object), map);
-        }catch (Exception e) {
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+            StringBuilder responseStrBuilder = new StringBuilder();
+            String inputStr;
+            while ((inputStr = streamReader.readLine()) != null) {
+                responseStrBuilder.append(inputStr);
+            }
+            // if(responseStrBuilder.length()<=0) {
+            //     return null;
+            // }
+            return JSON.parseObject(responseStrBuilder.toString(), clazz);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return object;
+
+        return null;
+
     }
 }

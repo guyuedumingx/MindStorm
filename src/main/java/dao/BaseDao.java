@@ -1,6 +1,7 @@
 package dao;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface BaseDao<T> {
      * @param object
      * @return
      */
-    int insertOne(T object);
+    int insertOne(T object) throws SQLException;
 
     /**
      * 更新
@@ -45,5 +46,5 @@ public interface BaseDao<T> {
      * @param po
      * @return
      */
-    List<T> selectObjectList(T po);
+    List<T> selectObjectList(T po) throws Exception;
 }

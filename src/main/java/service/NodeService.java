@@ -10,7 +10,7 @@ public interface NodeService {
      * 新建节点
      * @param node
      */
-    public void newNode(Node node);
+    public int newNode(Node node);
 
     /**
      * 删除节点

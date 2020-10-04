@@ -1,6 +1,8 @@
 package controller;
 
+import common.factory.DaoFactory;
 import common.util.WebUtil;
+import dao.NodeDao;
 import pojo.Node;
 
 import javax.servlet.annotation.WebServlet;
@@ -22,9 +24,7 @@ public class NodeController extends BaseController{
      * @throws IOException
      */
     public void newNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String content = request.getParameter("content");
-        Node node = WebUtil.getJson(request, new Node());
-        System.out.println(node);
+        Node node = WebUtil.getJson(request, Node.class);
     }
 
     /**
