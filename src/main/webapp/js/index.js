@@ -2,18 +2,16 @@ var input = getDQS('input');
 var button = getDQS('button');
 var flag = true;
 button.addEventListener('click', function () {
-    var id = input.value;
     ajax({
         type: 'get',
         url: '/user',
-        data: {
-            user_id: id,
-            is_author: flag,
-            method: 'getUserInfo'
-        },
+        data: {},
         success: function (res) {
+            alert(1);
             console.log(res);
+        },
+        error: function () {
+            alert(2);
         }
     });
-    flag = !flag;
 });

@@ -933,6 +933,15 @@ function judgeNumber(str) {
     return judge;
 }
 
+function judgeOnlyNumberAndLetter(str) {
+    for (var i = 0; i < str.length; i++) {
+        var ch = str.charCodeAt(i);
+        if (!((ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122))) {
+            return false;
+        }
+    }
+    return true;
+}
 /**
  * 
  * 函数功能：在数组arr的末尾添加从initials开始递增的len个字符
