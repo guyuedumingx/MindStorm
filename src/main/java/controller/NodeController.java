@@ -24,7 +24,6 @@ public class NodeController extends BaseController{
     public void newNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String content = request.getParameter("content");
         Node node = WebUtil.getJson(request, new Node());
-        System.out.println(node);
     }
 
     /**
