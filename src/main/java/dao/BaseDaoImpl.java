@@ -109,37 +109,29 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
      * @return
      */
     @Override
-    public List<T> selectObjectList(T object) {
+    public List<T> selectObjectList(T object) throws Exception{
        QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
         String base = "select * from {0} where {1}";
         String realSql = MessageFormat.format(base, getTableName(),getQueryCondition(object));
         List<T> res = new ArrayList<T>();
-        try {
             List<Map<String, Object>> query = queryRunner.query(realSql, new MapListHandler());
             if(query==null) {return null;}
             res = MapUtil.ModelMapperForList(object, ReflectUtil.getAllFields(object), query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return res;
     }
 
     @Override
-    public int insertOne(T object) {
+    public int insertOne(T object) throws SQLException{
         String base = "insert into {0} ({1}) values ({2})";
         List<Object> list = new ArrayList<Object>();
         String sql = MessageFormat.format(base, getTableName(), ReflectUtil.getSqlForInsert(object, list), DbSqlUtil.getQuestionForInsert(list.size()));
         QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
         BigInteger bigInteger = new BigInteger("0");
-        try{
-            Object[] insert = queryRunner.insert(sql, new ArrayHandler(), list.toArray());
-            if(insert.length>=1) {
-                bigInteger = (BigInteger) insert[0];
-            }else {
-                return 0;
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
+        Object[] insert = queryRunner.insert(sql, new ArrayHandler(), list.toArray());
+        if(insert.length>=1) {
+            bigInteger = (BigInteger)insert[0];
+        }else {
+            return 0;
         }
         return bigInteger.intValue();
     }

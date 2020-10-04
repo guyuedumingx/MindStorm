@@ -1,6 +1,5 @@
 package common.util;
 
-
 import common.dto.StatusCode;
 import javax.mail.*;
 import javax.mail.internet.*;

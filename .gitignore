@@ -20,6 +20,7 @@ buildNumber.properties
 *.iml
 *.iws
 out/
+.attach*
 
 # Compiled class file
 *.class
