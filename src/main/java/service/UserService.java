@@ -21,5 +21,5 @@ public interface UserService {
      * @param id 传入的id
      * @return User对象
      */
-    User getUser(int id);
+    User getUser(int id, boolean isAuthor);
 }

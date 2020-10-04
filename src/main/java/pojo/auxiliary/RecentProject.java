@@ -17,6 +17,12 @@ public class RecentProject {
         this.projectId = projectId;
     }
 
+    public RecentProject(){}
+
+    public RecentProject(int userId) {
+        this.userId = userId;
+    }
+
     public int getUserId() {
         return userId;
     }

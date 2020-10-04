@@ -24,6 +24,7 @@ public class Star {
     }
 
     public Star() {}
+
     public int getUserId() {
         return userId;
     }

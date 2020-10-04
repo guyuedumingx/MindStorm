@@ -17,6 +17,12 @@ public class Contributor {
         this.contributorId = contributorId;
     }
 
+    public Contributor(){}
+
+    public Contributor(int contributorId) {
+        this.contributorId = contributorId;
+    }
+
     public int getProjectId() {
         return projectId;
     }

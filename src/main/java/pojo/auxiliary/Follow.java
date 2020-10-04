@@ -16,6 +16,7 @@ public class Follow {
         this.follower = follower;
         this.following = following;
     }
+    public Follow(){}
 
     public int getFollower() {
         return follower;

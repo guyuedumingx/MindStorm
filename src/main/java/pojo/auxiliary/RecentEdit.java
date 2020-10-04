@@ -22,6 +22,10 @@ public class RecentEdit {
         this.editType = editType;
         this.editTime = editTime;
     }
+    public RecentEdit(){}
+    public RecentEdit(int userId){
+        this.userId = userId;
+    }
 
     public int getUserId() {
         return userId;

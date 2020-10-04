@@ -1,5 +1,6 @@
 package controller;
 
+import common.dto.StatusCode;
 import common.util.WebUtil;
 import pojo.User;
 import service.UserService;
@@ -36,8 +37,8 @@ public class UserController extends BaseController{
         String password = request.getParameter("password");
         UserService service = new UserServiceImpl();
         User user = service.login(email, password);
-        int isSuccess = user==null ? 404 : 200;
-        if(isSuccess==200) {
+        int isSuccess = StatusCode.nullObjcet(user);
+        if(isSuccess== StatusCode.OK) {
             WebUtil.renderText(response,user.getToken()+"");
         }
         WebUtil.renderText(response,isSuccess+"");
@@ -72,10 +73,8 @@ public class UserController extends BaseController{
     public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id =Integer.valueOf(request.getParameter("user_id"));
         boolean isAuthor = Boolean.valueOf(request.getParameter("is_author"));
-        if(isAuthor){
-            User user = new UserServiceImpl().getUser(id);
-            WebUtil.renderJson(response,user);
-        }
+        User user = new UserServiceImpl().getUser(id,isAuthor);
+        WebUtil.renderJson(response,user);
     }
 
     /**

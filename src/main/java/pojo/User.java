@@ -11,9 +11,9 @@ public class User extends BaseModel {
     private int exp;
     @DbField("token")
     private int token;
-    private int[] recentProject;
-    private int[] following;
-    private int[] follower;
+    private Integer[] recentProject;
+    private Integer[] following;
+    private Integer[] follower;
     @DbField("user_name")
     private String name = "";
     @DbField("user_email")
@@ -57,27 +57,27 @@ public class User extends BaseModel {
         this.token = token;
     }
 
-    public int[] getRecentProject() {
+    public Integer[] getRecentProject() {
         return recentProject;
     }
 
-    public void setRecentProject(int[] recentProject) {
+    public void setRecentProject(Integer[] recentProject) {
         this.recentProject = recentProject;
     }
 
-    public int[] getFollowing() {
+    public Integer[] getFollowing() {
         return following;
     }
 
-    public void setFollowing(int[] following) {
+    public void setFollowing(Integer[] following) {
         this.following = following;
     }
 
-    public int[] getFollower() {
+    public Integer[] getFollower() {
         return follower;
     }
 
-    public void setFollower(int[] follower) {
+    public void setFollower(Integer[] follower) {
         this.follower = follower;
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class MapUtil {
 
-    public static <T> T ModelMapper(T po,Field[] list, Map<String,Object> map) throws Exception{
+    public static <T> T ModelMapper(T po,Field[] list, Map map) throws Exception{
          T o = (T)po.getClass().newInstance();
         for(Field f : list) {
             DbField dbField = f.getAnnotation(DbField.class);

@@ -1,12 +1,14 @@
 package common.util;
 
 import com.alibaba.fastjson.JSON;
+import common.dto.StatusCode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 /**
  * 与前端交互的工具类
@@ -57,34 +59,28 @@ public class WebUtil {
     public static void setResponseType(RenderType type,HttpServletResponse resp) {
        switch (type) {
            case JSON:
-               resp.setContentType("application/json; charset=UTF-8");
+               resp.setContentType("application/json;charset=UTF-8");
                break;
            case TEXT:
-               resp.setContentType("text/html; charset=UTF-8");
+               resp.setContentType("text/html;charset=UTF-8");
                break;
        }
-       resp.setStatus(200);
+       resp.setStatus(StatusCode.OK);
     }
 
     /**
      * 从request读入对象
      * @param request
-     * @param clazz
      * @param <T>
      * @return
      */
-    public static <T> T getJson(HttpServletRequest request, Class<T> clazz) {
+    public static <T> T getJson(HttpServletRequest request, T object) {
+        Map map = request.getParameterMap();
         try {
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
-            StringBuilder responseStrBuilder = new StringBuilder();
-            String inputStr;
-            while ((inputStr = streamReader.readLine()) != null) {
-                responseStrBuilder.append(inputStr);
-            }
-            return JSON.parseObject(responseStrBuilder.toString(), clazz);
-        } catch (Exception e) {
+            object = (T)MapUtil.ModelMapper(object, ReflectUtil.getAllFields(object), map);
+        }catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return object;
     }
 }

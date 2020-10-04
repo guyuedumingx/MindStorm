@@ -1,5 +1,8 @@
 package controller;
 
+import common.util.WebUtil;
+import pojo.Node;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +22,9 @@ public class NodeController extends BaseController{
      * @throws IOException
      */
     public void newNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        String content = request.getParameter("content");
+        Node node = WebUtil.getJson(request, new Node());
+        System.out.println(node);
     }
 
     /**
