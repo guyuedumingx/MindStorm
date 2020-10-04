@@ -1,9 +1,7 @@
 package common.util;
 
 
-import antlr.debug.MessageEvent;
 import common.dto.StatusCode;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
@@ -68,11 +66,11 @@ public class EmailUtil {
     }
 
     public static int sendRegisterEmail(String to, String code){
-        String content = "    <style type=\"text/css\">\n" +
-                "        * {\n" +
-                "            margin: 0;\n" +
-                "        }\n" +
-                "    </style>\n" +
+        String content = "<style type=\"text/css\">\n" +
+                "* {\n" +
+                "margin: 0;\n" +
+                "}\n" +
+                "</style>\n" +
                 "</head>\n" +
                 "\n" +
                 "<body>\n" +
@@ -86,9 +84,34 @@ public class EmailUtil {
                 "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">感谢您注册思维风暴</p>\n" +
                 "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">以下是您的邮箱注册验证码，请将它输入到 思维风暴 的邮箱验证码输入框中:</p>\n" +
                 "        <span style=\"display: block;padding: 5px 20px;margin-top: 30px;margin-bottom: 10px;font-size: 28px;font-weight: 700;text-align: center;text-decoration: underline;color: #057082;background-color: #f3f7f5;\">"+code+"</span>\n" +
-                "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">这一封邮件包括一些您的私密的 思维风暴 账号信息，请不要回复或转发它，以免带来不必要的信息泄露风险。语</p>\n" +
+                "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">这一封邮件包括一些您的私密的 思维风暴 账号信息，请不要回复或转发它，以免带来不必要的信息泄露风险。</p>\n" +
                 "        <h6 style=\"padding: 5px 20px;margin-bottom: 30px;font-size: 8px;font-weight: 400;text-align: center;color: #999;\">广东金融学院————绝不互相甩锅队</h6>\n" +
                 "    </div>";
         return sendEmail(to, "欢迎使用思维风暴,更多新技能等你探索",content);
+    }
+
+    public static int sendChPasswordEmail(String to, String code) {
+        String content = "<style type=\"text/css\">\n" +
+                "* {\n" +
+                "margin: 0;\n" +
+                "}\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body>\n" +
+                "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;\">\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 75%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
+                "                src=\"http://120.24.111.0:8080/logo.png\">\n" +
+                "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
+                "        </div>\n" +
+                "        <h4 style=\"padding: 5px 20px;font-size: 22px;color: #057082;\">您正在修改 思维风暴 的密码</h4>\n" +
+                "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">请确保是您本人操作</p>\n" +
+                "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">以下是您的验证码，请将它输入到 思维风暴 的邮箱验证码输入框中:</p>\n" +
+                "        <span style=\"display: block;padding: 5px 20px;margin-top: 30px;margin-bottom: 10px;font-size: 28px;font-weight: 700;text-align: center;text-decoration: underline;color: #057082;background-color: #f3f7f5;\">"+code+"</span>\n" +
+                "        <p style=\"padding: 5px 20px;margin-bottom: 12px;font-size: 12px;\">这一封邮件包括一些您的私密的 思维风暴 账号信息，请不要回复或转发它，以免带来不必要的信息泄露风险。</p>\n" +
+                "        <h6 style=\"padding: 5px 20px;margin-bottom: 30px;font-size: 8px;font-weight: 400;text-align: center;color: #999;\">广东金融学院————绝不互相甩锅队</h6>\n" +
+                "    </div>";
+        return sendEmail(to, "修改密码",content);
     }
 }
