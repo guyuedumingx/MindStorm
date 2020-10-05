@@ -1047,3 +1047,32 @@ function deleteDrag(div) {
 function randomColor(l, r) {
     return 'rgb(' + getIntRandom(l, r) + ',' + getIntRandom(l, r) + ',' + getIntRandom(l, r) + ')';
 }
+
+/**
+ * 
+ * 函数功能：在屏幕顶部显示一段慢慢消失的文字(需要搭配topAlert样式使用)
+ * 
+ * @param {*} str 要显示的文字
+ * @author 60rzvvbj
+ */
+function topAlert(str) {
+    // 创建一个div节点
+    var div = document.createElement('div');
+    var html = getHtml();
+    // 设置文本和属性
+    div.innerHTML = str;
+    div.style.color = randomColor(120, 220);
+    addClass(div, 'topAlert');
+    html.appendChild(div);
+    var i = 0;
+    div.timer = setInterval(function () {
+        if (i == 30) {
+            clearInterval(div.timer);
+            html.removeChild(div);
+        } else {
+            i++;
+            div.style.opacity = 1 / 30 * (30 - i) + '';
+            div.style.top = 15 - 10 / 30 * i + 'vh';
+        }
+    }, 25);
+}
