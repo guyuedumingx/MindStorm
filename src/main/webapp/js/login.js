@@ -16,7 +16,7 @@ loginSubmit.addEventListener('click', function () {
             method: 'login'
         },
         success: function (res) {
-            if (res == '200') {
+            if (res.status_code == '200') {
                 topAlert('登录成功');
             } else {
                 topAlert('邮箱或密码不正确');
@@ -40,15 +40,15 @@ registerEmail.judge = true;
 function judgePassword(node) {
     var str = node.value;
     if (!/.*[a-zA-Z]+.*/.test(str)) {
-        console.log('密码中要包含字母');
+        console.log('密码中至少包含一个字母');
         return false;
     }
     if (!/.*[0-9]+.*/.test(str)) {
-        console.log('密码中要包含数字');
+        console.log('密码中至少包含一个数字');
         return false;
     }
     if (!/^[a-zA-Z0-9]*$/.test(str)) {
-        console.log('密码只能包含字母和数字');
+        console.log('密码只能由字母和数字组成');
         return false;
     }
     if (!/^[a-zA-Z0-9]{8,18}$/.test(str)) {
@@ -71,7 +71,7 @@ function judgeVerificationCode(node1, value) {
 function judgeCPassword(node1, node2) {
     var str1 = node1.value;
     var str2 = node2.value;
-    if (judgePassword(str1) && str1 == str2) {
+    if (judgePassword(node1) && str1 == str2) {
         return true;
     } else {
         console.log('两次输入密码不一致');
@@ -81,8 +81,12 @@ function judgeCPassword(node1, node2) {
 
 function judgeUserName(node) {
     var str = node.value;
+    if (str.length == 0) {
+        console.log('用户名不能为空');
+        return false;
+    }
     if (!/\w{1,20}/.test(str)) {
-        console.log('用户名长度要在1-20之间');
+        console.log('用户名长度不能超过20个字符');
         return false;
     }
     return true;
@@ -94,132 +98,103 @@ function judgeEmail(node) {
         console.log('邮箱格式不正确');
         return false;
     }
-    // 判断邮箱是否存在
-    ajax({
-        type: 'get',
-        url: '',
-        data: {
-
-        },
-        success: function (res) {
-            node.judge = res;
-        }
-    })
+    return true;
 }
 
-function judgeExistenceEmail(node) {
-
+function setEmailJudge(node) {
+    if (judgeEmail(node)) {
+        ajax({
+            type: 'get',
+            url: '/util',
+            data: {
+                email: node.value,
+                method: 'isExist'
+            },
+            success: function (res) {
+                if (res == '200') {
+                    node.judge = true;
+                    console.log('用户名已存在');
+                } else {
+                    node.judge = false;
+                    console.log('√');
+                }
+            }
+        });
+    }
 }
 
-function getVC(node) {
-    console.log('获取验证码'); //开发中;
+function registerGetVC(node) {
+    if (judgeEmail(node) && node.judge == false) {
+        ajax({
+            type: 'get',
+            url: '/util',
+            data: {
+                email: node.value,
+                method: 'sendEmail',
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    registerRealVerificationCode = res.auth_code;
+                } else {
+                    console.log('验证码发送失败');
+                }
+            }
+        });
+    }
 }
+
 /**
  * 判断表单填写验证等是否合法，若不合法则给出相对应的处理
  */
 function registerJudge() {
-    var em = registerEmail.value;
-    var userName = registerUserName.value;
-    var psd = registerPassword.value;
-    var cpsd = registerConfirmPassword.value;
-    var inVC = registerVerificationCode.value;
-    // return true;
     if (judgeUserName(registerUserName)) {
         if (registerEmail.judge == false) {
-            if (judgeVerificationCode(registerVerificationCodec, registerRealVerificationCode)) {
+            if (judgeVerificationCode(registerVerificationCode, registerRealVerificationCode)) {
                 if (judgeCPassword(registerPassword, registerConfirmPassword)) {
-                    ajax({
-                        type: 'post',
-                        url: '/user',
-                        data: {
-                            email: em,
-                            user_name: userName,
-                            password: psd,
-                            method: 'register'
-                        },
-                        success: function (res) {
-                            console.log('res:' + res);
-                            if (res == 200) {
-                                console.log('注册成功');
-                            } else {
-                                console.log('注册失败');
-                            }
-                        }
-                    });
+                    return true;
                 }
             }
         }
     }
+    return false;
 }
 
 registerUserName.addEventListener('blur', function () {
-    var UN = registerUserName.value;
-    console.log(UN.length);
-    if (UN.length == 0) {
-        console.log('用户名不能为空'); // 开发中
-    }
+    judgeUserName(this);
 });
 registerEmail.addEventListener('blur', function () {
-    judgeEmail(this);
+    setEmailJudge(this);
 });
 registerGetVerificationCode.addEventListener('click', function () {
-    getVC(registerEmail);
+    registerGetVC(registerEmail);
 });
 registerPassword.addEventListener('blur', function () {
-    if (judgePassword(this)) {
-        console.log(true);
-    }
+    judgePassword(this);
 });
 registerConfirmPassword.addEventListener('blur', function () {
-    if (judgeCPassword(registerPassword, this)) {
-        console.log(true);
-    }
+    judgeCPassword(registerPassword, this);
 });
 registerSubmit.addEventListener('click', function () {
     if (registerJudge()) {
+        var em = registerEmail.value;
+        var userName = registerUserName.value;
+        var psd = registerPassword.value;
         ajax({
             type: 'post',
             url: '/user',
-            data: {},
+            data: {
+                email: em,
+                user_name: userName,
+                password: psd,
+                method: 'register'
+            },
             success: function (res) {
-                console.log(res);
+                if (res == '200') {
+                    topAlert('注册成功');
+                } else {
+                    topAlert('注册失败');
+                }
             }
-        });
-    }
-});
-
-// 忘记密码
-var retrievePassword = getDQS('.retrievePassword');
-var retrievePasswordInput = getDQSA('input', retrievePassword);
-var rePEmail = retrievePasswordInput[0];
-var rePVC = retrievePasswordInput[1];
-var rePGetVC = retrievePasswordInput[2];
-var rePPassword = retrievePasswordInput[3];
-var rePConfirmPassword = retrievePasswordInput[4];
-var rePSubmit = retrievePasswordInput[5];
-
-/**
- * 验证找回密码信息是否合法
- */
-function rePJudge() {
-
-}
-rePEmail.addEventListener('blur', function () {
-    judgeEmail(this);
-});
-rePGetVC.addEventListener('click', function () {
-    getVC(rePEmail);
-});
-rePPassword.addEventListener('blur', function () {
-    judgePassword(this);
-});
-rePConfirmPassword.addEventListener('blur', function () {
-    judgeCPassword(rePPassword, this);
-});
-rePSubmit.addEventListener('click', function () {
-    if (rePJudge()) {
-        ajax({
-
         });
     }
 });
