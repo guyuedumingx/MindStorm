@@ -1,6 +1,7 @@
 package common.util;
 
 import com.alibaba.fastjson.JSON;
+import common.dto.Result;
 import common.dto.StatusCode;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,18 @@ public class WebUtil {
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 渲染字符串
+     * @param resp
+     * @param key
+     * @param value
+     */
+    public static void renderMap(HttpServletResponse resp, String key, String value) {
+        Result result = new Result();
+        result.put(key,value);
+        renderJson(resp,result.getMap());
     }
 
     /**

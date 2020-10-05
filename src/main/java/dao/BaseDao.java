@@ -17,7 +17,7 @@ public interface BaseDao<T> {
      * @param object
      * @return
      */
-    int insertOne(T object) throws SQLException;
+    int insertOne(T object);
 
     /**
      * 更新
@@ -46,5 +46,5 @@ public interface BaseDao<T> {
      * @param po
      * @return
      */
-    List<T> selectObjectList(T po) throws Exception;
+    List<T> selectObjectList(T po);
 }

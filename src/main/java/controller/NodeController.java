@@ -1,14 +1,19 @@
 package controller;
 
+import common.dto.Result;
+import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import common.util.WebUtil;
 import dao.NodeDao;
 import pojo.Node;
+import service.NodeService;
+import service.impl.NodeServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 负责处理有关于节点的请求
@@ -25,6 +30,13 @@ public class NodeController extends BaseController{
      */
     public void newNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Node node = WebUtil.getJson(request, Node.class);
+        NodeService service = new NodeServiceImpl();
+        int id = service.newNode(node);
+        int statusCode = StatusCode.isZero(id);
+        Result result = new Result();
+        result.put("node_id",id);
+        result.put("status_code",statusCode);
+        WebUtil.renderJson(response,result.getMap());
     }
 
     /**

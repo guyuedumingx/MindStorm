@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * user服务的实现类
+ * @author yohoyes
  */
 public class UserServiceImpl implements UserService {
     UserDao userDao = DaoFactory.getUserDao();
@@ -34,6 +35,15 @@ public class UserServiceImpl implements UserService {
         List<Follow> followings = followDao.selectObjectList(new Follow(0,user.getId()));
         Integer[] following = IntListUtil.getIntList(follows, "follower");
         user.setFollowing(following);
+        user.setPassword("");
+        if(!isAuthor){
+            user.setToken("");
+        }
         return user;
+    }
+
+    @Override
+    public User getUser(String email) {
+       return userDao.selectOne(new User("'"+email+"'"));
     }
 }
