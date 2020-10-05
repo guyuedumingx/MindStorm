@@ -12,12 +12,7 @@ public class NodeServiceImpl implements NodeService {
     public int newNode(Node node) {
         NodeDao nodeDao = DaoFactory.getNodeDao();
         int id = 0;
-        try {
-            id = nodeDao.insertOne(node);
-
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
+        id = nodeDao.insertOne(node);
         return id;
     }
 

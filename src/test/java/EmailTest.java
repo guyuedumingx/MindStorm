@@ -5,6 +5,7 @@ import org.junit.Test;
 public class EmailTest {
     @Test
     public void sendEmailTest() {
-        EmailUtil.sendChPasswordEmail("1131993675@qq.com", AuthCodeUtil.getAuthCodeUtil());
+        EmailUtil.sendChPasswordEmail("1808078515@qq.com", AuthCodeUtil.getAuthCodeUtil());
+        EmailUtil.sendRegisterEmail("1808078515@qq.com", AuthCodeUtil.getAuthCodeUtil());
     }
 }

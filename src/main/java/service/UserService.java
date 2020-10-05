@@ -22,4 +22,11 @@ public interface UserService {
      * @return User对象
      */
     User getUser(int id, boolean isAuthor);
+
+    /**
+     * 根据email 获取user
+     * @param email
+     * @return
+     */
+    User getUser(String email);
 }

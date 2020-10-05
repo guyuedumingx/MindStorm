@@ -10,7 +10,7 @@ public class User extends BaseModel {
     @DbField("exp")
     private int exp;
     @DbField("token")
-    private int token;
+    private String token;
     private Integer[] recentProject;
     private Integer[] following;
     private Integer[] follower;
@@ -31,7 +31,9 @@ public class User extends BaseModel {
         this.setId(id);
     }
 
-    public User(int exp, int token, String name, String password, String userAvatar, String userSignature, String email) {
+    public User(String email) {this.email = email;}
+
+    public User(int exp, String token, String name, String password, String userAvatar, String userSignature, String email) {
         this.exp = exp;
         this.token = token;
         this.name = name;
@@ -49,11 +51,11 @@ public class User extends BaseModel {
         this.exp = exp;
     }
 
-    public int getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(String token) {
         this.token = token;
     }
 

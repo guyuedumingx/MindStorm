@@ -48,7 +48,7 @@ public class DaoTest {
     @Test
     public void userDaoImplTest() {
         UserDao dao = new UserDaoImpl();
-        User user = new User(0, 1, "yohoyes", "111", "default.png", "gooel","11@qq.com");
+        User user = new User(0, "ASDFASDFAS", "yohoyes", "111", "default.png", "gooel","11@qq.com");
         int i = dao.insertOne(user);
         User u = new User(i);
         u.setId(20);

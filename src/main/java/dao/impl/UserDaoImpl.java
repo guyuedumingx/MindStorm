@@ -22,9 +22,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
         if(po.getId()!=0) {
             String base = "id = {0}";
             format = MessageFormat.format(base, po.getId());
+        }else if(!"".equals(po.getEmail())){
+            String base = "user_email = {0}";
+            format = MessageFormat.format(base,po.getEmail());
         }else {
-           String base = "user_email = {0} and password = {1}";
-           format = MessageFormat.format(base,po.getEmail(),po.getPassword());
+            String base = "user_email = {0} and password = {1}";
+            format = MessageFormat.format(base,po.getEmail(),po.getPassword());
         }
         return format;
     }

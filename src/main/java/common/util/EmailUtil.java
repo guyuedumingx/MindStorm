@@ -1,6 +1,9 @@
 package common.util;
 
 import common.dto.StatusCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
@@ -13,16 +16,19 @@ import java.util.Properties;
 public class EmailUtil {
     static String from = "";
     static String password = "";
+    static Logger logger;
 
     static {
         try {
+            logger = LoggerFactory.getLogger(EmailUtil.class);
             Properties pro = new Properties();
             InputStream is = EmailUtil.class.getClassLoader().getResourceAsStream("email.properties");
             pro.load(is);
             from = pro.getProperty("sender");
             password = pro.getProperty("password");
+            logger.debug("nihao");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("This is a debug message");
         }
     }
 
@@ -73,8 +79,8 @@ public class EmailUtil {
                 "</head>\n" +
                 "\n" +
                 "<body>\n" +
-                "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;\">\n" +
-                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 75%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden;\">\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
                 "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
                 "                src=\"http://120.24.111.0:8080/logo.png\">\n" +
                 "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
@@ -98,8 +104,8 @@ public class EmailUtil {
                 "</head>\n" +
                 "\n" +
                 "<body>\n" +
-                "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;\">\n" +
-                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 75%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden\">\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
                 "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
                 "                src=\"http://120.24.111.0:8080/logo.png\">\n" +
                 "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
