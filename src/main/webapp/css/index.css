@@ -2,7 +2,11 @@
 /*#region*/
 /* 头部容器样式 */
 body .header{
-    margin: 0 60px;
+    position: fixed;
+    top: 0;
+    padding: 0 60px;
+    box-sizing: border-box;
+    width: 100%;
     height: 60px;
 }
 /* logo位置 */
@@ -30,7 +34,7 @@ body .header{
 /*#region*/
 /* 容器 */
 body .mainBox{
-    margin-top:230px;
+    margin-top:15%;
 }
 /* 框框的盒子 */
 .mainBox .Box{
@@ -47,3 +51,17 @@ body .mainBox{
     border-radius: 10px;
 }
 /*#endregion*/
+
+body .footer{
+    position: fixed;
+    bottom: 0;
+    padding: 0 60px;
+    border: solid;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+}
+.footer .foot_icon{
+    float: right;
+    
+}
