@@ -1,0 +1,25 @@
+/* 头部容器样式 */
+body .header{
+    margin: 0 60px;
+    height: 60px;
+}
+/* logo位置 */
+.header .logo{
+     float: left;
+     margin-top: 6px;
+}
+/* logo大小 */
+.header .logo img{
+    width: 42px;
+}
+/* 登录注册容器 */
+.header .logOn{
+    float: right;
+}
+/* 字体大小位置设置 */
+.header .logOn a{
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 60px;
+    color: #214B5B;
+}

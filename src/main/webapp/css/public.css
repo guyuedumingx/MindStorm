@@ -28,3 +28,11 @@ a {
 }
 
 /*#endregion*/
+
+/*高度塌陷处理*/
+.cleafix::before,
+.cleafix::after{
+    display: table;
+    content: "";
+    clear: both;
+}
