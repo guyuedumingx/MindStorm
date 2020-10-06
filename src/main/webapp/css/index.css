@@ -1,4 +1,5 @@
 /*--------------------- 头部--------------------- */
+/*#region*/
 /* 头部容器样式 */
 body .header{
     margin: 0 60px;
@@ -24,7 +25,9 @@ body .header{
     line-height: 60px;
     color: #214B5B;
 }
+/*#endregion*/
 /* ---------------主要内容---------------------- */
+/*#region*/
 /* 容器 */
 body .mainBox{
     margin-top:230px;
@@ -43,3 +46,4 @@ body .mainBox{
     border: solid 1px #6AC1ED;
     border-radius: 10px;
 }
+/*#endregion*/
