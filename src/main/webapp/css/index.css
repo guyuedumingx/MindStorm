@@ -51,17 +51,46 @@ body .mainBox{
     border-radius: 10px;
 }
 /*#endregion*/
-
+/*#region*/
+/* ----------------底部---------------- */
 body .footer{
     position: fixed;
     bottom: 0;
     padding: 0 60px;
-    border: solid;
     box-sizing: border-box;
     width: 100%;
     height: 60px;
 }
+/* 图标容器 */
 .footer .foot_icon{
     float: right;
-    
+    height: 60px;
 }
+/* 链接位置大小 */
+.footer .foot_icon a{
+    display: inline-block;
+    margin-top: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50px;
+    background-size: 32px;
+    background-position: center;
+}
+/* 帮助图标 */
+.footer .foot_icon .help{
+    background-image: url(../img/public_help999.png);
+}
+.footer .foot_icon .help:hover{
+    background-image: url(../img/public_help.png);
+    box-shadow:0px 0px 3px 0px #214B5B;
+}
+/* 快捷键图标 */
+.footer .foot_icon .shortcutKey{
+    background-image: url(../img/public_shortcutKey999.png);
+    margin-right: 10px;
+}
+.footer .foot_icon .shortcutKey:hover{
+    background-image: url(../img/public_shortcutKey.png);
+    box-shadow:0px 0px 3px 0px #214B5B;
+}
+/*#endregion*/
