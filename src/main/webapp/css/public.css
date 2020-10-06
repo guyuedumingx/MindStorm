@@ -1,0 +1,30 @@
+/* —————————————————————————————————————初始化———————————————————————————————————— */
+/*#region*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+input {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.topAlert {
+    position: fixed;
+    top: 15vh;
+    left: 50%;
+    font-size: 3vw;
+    font-family: '华文新魏';
+    transform: translate(-50%);
+}
+
+/*#endregion*/

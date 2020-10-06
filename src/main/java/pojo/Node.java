@@ -1,19 +1,43 @@
 package pojo;
 
+import common.annontation.DbField;
+
 /**
  * 节点类
+ * @author yohoyes
  */
-public class Node {
+public class Node extends BaseModel{
+   @DbField("author_id")
    private int author;
-   private int nodeId;
    private int star;
-   private int lastEditUserId;
+   @DbField("last_edit_id")
+   private int lastEditId;
    private int[] children;
+   @DbField("parent_id")
+   private int parentId;
+   @DbField("editable")
    private boolean editable;
+   @DbField("nameless")
    private boolean nameless;
-   private String theme;
-   private String content;
-   private String lastEditTime;
+   @DbField("theme")
+   private String theme = "";
+   @DbField("content")
+   private String content = "请输入内容";
+   @DbField("last_edit_time")
+   private String lastEditTime = "";
+
+   public Node() {
+   }
+
+   public Node(int author, int lastEditId, int parentId, boolean editable, boolean nameless, String theme, String content) {
+      this.author = author;
+      this.lastEditId = lastEditId;
+      this.parentId = parentId;
+      this.editable = editable;
+      this.nameless = nameless;
+      this.theme = theme;
+      this.content = content;
+   }
 
    public int getAuthor() {
       return author;
@@ -21,14 +45,6 @@ public class Node {
 
    public void setAuthor(int author) {
       this.author = author;
-   }
-
-   public int getNodeId() {
-      return nodeId;
-   }
-
-   public void setNodeId(int nodeId) {
-      this.nodeId = nodeId;
    }
 
    public int getStar() {
@@ -39,12 +55,12 @@ public class Node {
       this.star = star;
    }
 
-   public int getLastEditUserId() {
-      return lastEditUserId;
+   public int getLastEditId() {
+      return lastEditId;
    }
 
-   public void setLastEditUserId(int lastEditUserId) {
-      this.lastEditUserId = lastEditUserId;
+   public void setLastEditId(int lastEditId) {
+      this.lastEditId = lastEditId;
    }
 
    public int[] getChildren() {
@@ -94,4 +110,13 @@ public class Node {
    public void setLastEditTime(String lastEditTime) {
       this.lastEditTime = lastEditTime;
    }
+
+   public int getParentId() {
+      return parentId;
+   }
+
+   public void setParentId(int parentId) {
+      this.parentId = parentId;
+   }
+
 }

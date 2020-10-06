@@ -1,50 +1,66 @@
 package pojo;
 
+import common.annontation.DbField;
+
+
 /**
  * 项目类
+ * @author yohoyes
  */
-public class Project {
-    private int projectId;
-    private int projectRank;
-    private int userId;
-    private int headId;
+public class Project extends BaseModel{
+    @DbField("project_rank")
+    private int rank;
+    @DbField("author_id")
+    private int author;
+    @DbField("head_id")
+    private int headNodeId;
     private int[] contributors;
+    @DbField("public")
     private boolean isPublic;
-    private String introduction;
-    private String projectName;
-    private String createTime;
-    private String deadline;
+    @DbField("introduction")
+    private String introduction = "请输入内容";
+    @DbField("project_name")
+    private String name = "请输入内容";
+    @DbField("create_time")
+    private String createTime = "";
+    @DbField("deadline")
+    private String deadline = "";
 
-    public int getProjectId() {
-        return projectId;
+    public Project() {}
+
+    public Project(int rank, int author, int headNodeId, boolean isPublic, String introduction, String name, String createTime, String deadline) {
+        this.rank = rank;
+        this.author = author;
+        this.headNodeId = headNodeId;
+        this.isPublic = isPublic;
+        this.introduction = introduction;
+        this.name = name;
+        this.createTime = createTime;
+        this.deadline = deadline;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public int getRank() {
+        return rank;
     }
 
-    public int getProjectRank() {
-        return projectRank;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
-    public void setProjectRank(int projectRank) {
-        this.projectRank = projectRank;
+    public int getAuthor() {
+        return author;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setAuthor(int author) {
+        this.author = author;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getHeadNodeId() {
+        return headNodeId;
     }
 
-    public int getHeadId() {
-        return headId;
-    }
-
-    public void setHeadId(int headId) {
-        this.headId = headId;
+    public void setHeadNodeId(int headNodeId) {
+        this.headNodeId = headNodeId;
     }
 
     public int[] getContributors() {
@@ -71,12 +87,12 @@ public class Project {
         this.introduction = introduction;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCreateTime() {

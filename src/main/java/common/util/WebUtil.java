@@ -1,6 +1,8 @@
 package common.util;
 
 import com.alibaba.fastjson.JSON;
+import common.dto.Result;
+import common.dto.StatusCode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +38,18 @@ public class WebUtil {
     }
 
     /**
+     * 渲染字符串
+     * @param resp
+     * @param key
+     * @param value
+     */
+    public static void renderMap(HttpServletResponse resp, String key, String value) {
+        Result result = new Result();
+        result.put(key,value);
+        renderJson(resp,result.getMap());
+    }
+
+    /**
      * 渲染String
      * @param resp
      * @param text
@@ -57,19 +71,18 @@ public class WebUtil {
     public static void setResponseType(RenderType type,HttpServletResponse resp) {
        switch (type) {
            case JSON:
-               resp.setContentType("application/json; charset=UTF-8");
+               resp.setContentType("application/json;charset=UTF-8");
                break;
            case TEXT:
-               resp.setContentType("text/html; charset=UTF-8");
+               resp.setContentType("text/html;charset=UTF-8");
                break;
        }
-       resp.setStatus(200);
+       resp.setStatus(StatusCode.OK);
     }
 
     /**
      * 从request读入对象
      * @param request
-     * @param clazz
      * @param <T>
      * @return
      */
@@ -81,10 +94,15 @@ public class WebUtil {
             while ((inputStr = streamReader.readLine()) != null) {
                 responseStrBuilder.append(inputStr);
             }
+            // if(responseStrBuilder.length()<=0) {
+            //     return null;
+            // }
             return JSON.parseObject(responseStrBuilder.toString(), clazz);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
+
     }
 }

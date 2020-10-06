@@ -1,26 +1,46 @@
 package pojo;
 
+import common.annontation.DbField;
+
 /**
  * 用户类
+ * @author yohoyes
  */
-public class User {
-    private int userId;
+public class User extends BaseModel {
+    @DbField("exp")
     private int exp;
-    private int token;
-    private int[] recentProject;
-    private int[] following;
-    private int[] follower;
-    private String userName;
-    private String password;
-    private String userAvatar;
-    private String userSignature;
+    @DbField("token")
+    private String token;
+    private Integer[] recentProject;
+    private Integer[] following;
+    private Integer[] follower;
+    @DbField("user_name")
+    private String name = "";
+    @DbField("user_email")
+    private String email = "";
+    @DbField("password")
+    private String password = "";
+    @DbField("user_avatar")
+    private String userAvatar = "";
+    @DbField("user_signature")
+    private String userSignature = "";
 
-    public int getUserId() {
-        return userId;
+    public User() {}
+
+    public User(int id){
+        this.setId(id);
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public User(String email) {this.email = email;}
+
+    public User(int exp, String token, String name, String password, String userAvatar, String userSignature, String email) {
+        this.exp = exp;
+        this.token = token;
+        this.name = name;
+        this.password = password;
+        this.userAvatar = userAvatar;
+        this.userSignature = userSignature;
+        this.email = email;
     }
 
     public int getExp() {
@@ -31,44 +51,44 @@ public class User {
         this.exp = exp;
     }
 
-    public int getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
-    public int[] getRecentProject() {
+    public Integer[] getRecentProject() {
         return recentProject;
     }
 
-    public void setRecentProject(int[] recentProject) {
+    public void setRecentProject(Integer[] recentProject) {
         this.recentProject = recentProject;
     }
 
-    public int[] getFollowing() {
+    public Integer[] getFollowing() {
         return following;
     }
 
-    public void setFollowing(int[] following) {
+    public void setFollowing(Integer[] following) {
         this.following = following;
     }
 
-    public int[] getFollower() {
+    public Integer[] getFollower() {
         return follower;
     }
 
-    public void setFollower(int[] follower) {
+    public void setFollower(Integer[] follower) {
         this.follower = follower;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -93,5 +113,13 @@ public class User {
 
     public void setUserSignature(String userSignature) {
         this.userSignature = userSignature;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
