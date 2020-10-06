@@ -1,3 +1,4 @@
+/*--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header{
     margin: 0 60px;
@@ -22,4 +23,23 @@ body .header{
     font-size: 16px;
     line-height: 60px;
     color: #214B5B;
+}
+/* ---------------主要内容---------------------- */
+/* 容器 */
+body .mainBox{
+    margin-top:230px;
+}
+/* 框框的盒子 */
+.mainBox .Box{
+    margin: 0 auto;
+    width: 728px;/*---56*4边距+4边线+250*2宽度--*/
+}
+/* 点击的框框 */
+.mainBox .Box div{
+    float: left;
+    width: 250px;
+    height: 300px;
+    margin: 0 56px;
+    border: solid 1px #6AC1ED;
+    border-radius: 10px;
 }
