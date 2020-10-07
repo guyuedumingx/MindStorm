@@ -70,18 +70,18 @@ body .header{
 /* 容器 */
 body .mainBox{
     position: relative;
-    height: 300px;
     top: 50%;
     transform: translateY(-50%);
 }
 /* 框框的盒子 */
 .mainBox .Box{
+    display: table;
     margin: 0 auto;
-    width: 728px;/*---56*4边距+4边线+250*2宽度--*/
+    /* width: 728px;---56*4边距+4边线+250*2宽度-- */
 }
 /* 点击的框框 */
 .mainBox .Box>div{
-    float: left;
+    display: inline-block;
     margin: 0 56px;
     border: solid 1px #6AC1ED;
     border-radius: 10px;
@@ -90,14 +90,15 @@ body .mainBox{
     box-shadow: 0px 0px 20px 0px #6AC1ED;
 }
 /* 链接 */
-.mainBox .Box>div a{
+.mainBox .Box .smallBox{
     display: inline-block;
     width: 250px;
     height: 300px;
     border-radius: 10px;
+    display: none;
 }
 /* 图标 */
-.mainBox .Box a div{
+.mainBox .Box .est_icon,.mainBox .Box .join_icon{
     position: relative;
     display:block;
     top: 50%;
@@ -107,11 +108,64 @@ body .mainBox{
     transform: translateY(-50%);
     background-size: contain;
 }
-.mainBox .Box .establish a div{
-    background-image: url(../img/index_establish\ .png);
+.mainBox .Box .establish .est_icon{
+    background-image: url(../img/index_establish.png);
 }
-.mainBox .Box .join a div{
+.mainBox .Box .join .join_icon{
     background-image: url(../img/index_join.png);
+}
+/* 新建大盒子 */
+.mainBox .Box .join_bigBox{
+    width: 500px;
+    height: 300px;
+}
+/* 输入盒子 */
+.mainBox .Box .join_bigBox .input_nav{
+    position: relative;
+    border: solid;
+    top: 50%;
+    width: 310px;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    border: solid #517c8d;
+    border-radius: 5px;
+}
+.mainBox .Box .join_bigBox .input_nav:hover{
+    border:solid #214B5B;
+}
+/* 输入框 */
+.mainBox .Box .join_bigBox input{
+    display: inline-block;
+    height: 60px;
+    width: 230px;
+    padding-left: 10px;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+}
+/* 点击进入 */
+.mainBox .Box .join_bigBox .click_join{
+    float: right;
+    width: 60px;
+    height: 60px;
+    background-image: url(../img/join_join_q.png);
+    background-size: contain;
+}
+.mainBox .Box .join_bigBox .click_join:hover{
+    background-image: url(../img/join_join.png);
+}
+/* 返回按钮 */
+.mainBox .Box .join_bigBox .back{
+    position: relative;
+    margin-top: 190px;
+    margin-left: 450px;
+    width: 28px;
+    height: 28px;
+    background-image: url(../img/back_q.png);
+    background-size: contain;
+}
+.mainBox .Box .join_bigBox .back:hover{
+    background-image: url(../img/back.png);
 }
 
 
