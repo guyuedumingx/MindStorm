@@ -21,16 +21,102 @@ body .header {
 
 /* #endregion */
 /* #region —————————————————————mainBox——————————————————————— */
+body {
+    perspective: 2000px;
+}
+
+body::before,
+body::after {
+    display: table;
+    content: "";
+    clear: both;
+}
+
 .mainBox {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: relative;
     width: 450px;
     height: 560px;
+    margin: 100px auto 0px;
     border: 1px solid #90d1f1;
     box-shadow: 0px 2px 5px #999;
     box-sizing: border-box;
-    transform: translate(-50%, -50%);
+    background-color: #fff;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.mainBox:hover {
+    transform: rotateY(-180deg);
+}
+
+.mainBox .login {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 50px 85px;
+    box-sizing: border-box;
+}
+
+.mainBox .login h4 {
+    height: 46px;
+    font-size: 46px;
+    line-height: 46px;
+    text-align: center;
+    color: #214b5b;
+    transform: translateZ(40px);
+}
+
+.mainBox .login span {
+    display: block;
+    margin-top: 36px;
+    font-size: 18px;
+    color: #214b5b;
+    transform: translateZ(60px);
+}
+
+.mainBox .login input {
+    display: block;
+    width: 100%;
+    height: 20px;
+    padding-bottom: 5px;
+    border: 0px;
+    border-bottom: 1px solid #3a6c65;
+    margin-top: 32px;
+    margin-bottom: 56px;
+    font-size: 20px;
+    text-indent: 0.2em;
+    background-color: transparent;
+    transform: translateZ(60px);
+}
+
+.mainBox .login input[type=button] {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 20;
+    height: 55px;
+    border-radius: 5px;
+    margin-top: 63px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 55px;
+    color: #fff;
+    background-color: #101f30;
+    cursor: pointer;
+    transform: translateZ(40px);
+}
+
+.mainBox .register {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    transform: rotateY(180deg);
 }
 
 /* #endregion */
