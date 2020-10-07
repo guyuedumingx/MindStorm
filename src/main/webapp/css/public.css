@@ -15,6 +15,7 @@ input {
 a {
     text-decoration: none;
     color: #000;
+    cursor: pointer;
 }
 
 /* 自制屏幕顶部alert样式 */

@@ -1,6 +1,6 @@
 // 忘记密码
-var retrievePassword = getDQS('.retrievePassword');
-var retrievePasswordInput = getDQSA('input', retrievePassword);
+var retrievePassword = getDom('.retrievePassword');
+var retrievePasswordInput = getDomA('input', retrievePassword);
 var rePEmail = retrievePasswordInput[0];
 var rePVC = retrievePasswordInput[1];
 var rePGetVC = retrievePasswordInput[2];

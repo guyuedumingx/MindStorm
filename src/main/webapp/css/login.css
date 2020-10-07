@@ -46,7 +46,7 @@ body::after {
 }
 
 .mainBox:hover {
-    transform: rotateY(-180deg);
+    /* transform: rotateY(-180deg); */
 }
 
 .mainBox .login {
@@ -89,6 +89,11 @@ body::after {
     text-indent: 0.2em;
     background-color: transparent;
     transform: translateZ(60px);
+    transition: border-bottom .3s, box-shadow .3s;
+}
+
+.mainBox .login input:focus {
+    border-bottom: 1px solid #101f30;
 }
 
 .mainBox .login input[type=button] {
@@ -99,14 +104,68 @@ body::after {
     height: 55px;
     border-radius: 5px;
     margin-top: 63px;
+    margin-bottom: 16px;
     text-align: center;
     font-size: 18px;
     font-weight: 700;
     line-height: 55px;
     color: #fff;
-    background-color: #101f30;
+    background-color: #214b5b;
     cursor: pointer;
     transform: translateZ(40px);
+    transition: background-color .3s;
+}
+
+.mainBox .login input[type=button]:hover {
+    background-color: #101f30;
+}
+
+.mainBox .login .link {
+    position: relative;
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    transform: translateZ(35px);
+}
+
+.mainBox .login .link a {
+    position: absolute;
+    top: 0px;
+    height: 25px;
+    font-size: 15px;
+    line-height: 25px;
+    color: #335867;
+    transition: color .3s;
+}
+
+.mainBox .login .link a:hover {
+    color: #101f30;
+}
+
+.mainBox .login .link a:after {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-left: 15px;
+    vertical-align: top;
+    background-color: skyblue;
+    content: '';
+}
+
+.mainBox .login .link a:first-child {
+    left: -2px;
+}
+
+.mainBox .login .link a:first-child:after {
+    content: '';
+}
+
+.mainBox .login .link a:last-child {
+    right: -2px;
+}
+
+.mainBox .login .link a:last-child:after {
+    content: '';
 }
 
 .mainBox .register {

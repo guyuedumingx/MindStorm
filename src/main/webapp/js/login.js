@@ -1,6 +1,6 @@
 // 登录
-var login = getDQS('.login');
-var loginInput = getDQSA('input', login);
+var login = getDom('.login');
+var loginInput = getDomA('input', login);
 var loginEmail = loginInput[0];
 var loginPassword = loginInput[1];
 var loginSubmit = loginInput[2];
@@ -25,8 +25,8 @@ loginSubmit.addEventListener('click', function () {
     })
 });
 // 注册
-var register = getDQS('.register');
-var registerInput = getDQSA('input', register);
+var register = getDom('.register');
+var registerInput = getDomA('input', register);
 var registerUserName = registerInput[0]; // 用户名
 var registerEmail = registerInput[1]; // 邮箱
 var registerVerificationCode = registerInput[2]; //输入验证码
