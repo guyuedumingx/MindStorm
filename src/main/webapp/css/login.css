@@ -38,15 +38,12 @@ body::after {
     height: 560px;
     margin: 100px auto 0px;
     border: 1px solid #90d1f1;
+    border-radius: 5px;
     box-shadow: 0px 2px 5px #999;
     box-sizing: border-box;
     background-color: #fff;
     transition: transform 1s;
     transform-style: preserve-3d;
-}
-
-.mainBox:hover {
-    /* transform: rotateY(-180deg); */
 }
 
 .mainBox .login {
@@ -56,6 +53,7 @@ body::after {
     width: 100%;
     height: 100%;
     padding: 50px 85px;
+    border-radius: 5px;
     box-sizing: border-box;
 }
 
@@ -76,35 +74,55 @@ body::after {
     transform: translateZ(60px);
 }
 
+.mainBox .login span::before {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    vertical-align: top;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    content: '';
+}
+
+.mainBox .login .email::before {
+    background-image: url(../img/login_email.png);
+}
+
+.mainBox .login .password::before {
+    background-image: url(../img/login_password.png);
+}
+
 .mainBox .login input {
     display: block;
     width: 100%;
     height: 20px;
     padding-bottom: 5px;
     border: 0px;
-    border-bottom: 1px solid #3a6c65;
-    margin-top: 32px;
-    margin-bottom: 56px;
+    border-bottom: 1.5px solid #3a6c65;
+    margin-top: 28px;
+    margin-bottom: 58px;
     font-size: 20px;
     text-indent: 0.2em;
     background-color: transparent;
     transform: translateZ(60px);
-    transition: border-bottom .3s, box-shadow .3s;
+    transition: border-bottom .3s;
 }
 
 .mainBox .login input:focus {
-    border-bottom: 1px solid #101f30;
+    border-bottom: 1.5px solid #101f30;
 }
 
 .mainBox .login input[type=button] {
     position: relative;
     top: 0px;
     left: 0px;
-    z-index: 20;
     height: 55px;
+    border: 0px;
     border-radius: 5px;
     margin-top: 63px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     text-align: center;
     font-size: 18px;
     font-weight: 700;
@@ -146,9 +164,11 @@ body::after {
     display: inline-block;
     width: 25px;
     height: 25px;
-    margin-left: 15px;
+    margin-left: 10px;
     vertical-align: top;
-    background-color: skyblue;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: center;
     content: '';
 }
 
@@ -157,6 +177,7 @@ body::after {
 }
 
 .mainBox .login .link a:first-child:after {
+    background-image: url(../img/login_forgetPassword.png);
     content: '';
 }
 
@@ -165,6 +186,7 @@ body::after {
 }
 
 .mainBox .login .link a:last-child:after {
+    background-image: url(../img/login_rigister.png);
     content: '';
 }
 
@@ -174,8 +196,111 @@ body::after {
     left: 0px;
     width: 100%;
     height: 100%;
+    padding: 50px 85px;
+    border-radius: 5px;
+    box-sizing: border-box;
     background-color: #fff;
     transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+
+.mainBox .register h4 {
+    height: 46px;
+    padding-bottom: 10px;
+    font-size: 46px;
+    line-height: 46px;
+    text-align: center;
+    color: #214b5b;
+    transform: translateZ(40px);
+}
+
+.mainBox .register input {
+    display: block;
+    width: 100%;
+    height: 20px;
+    padding-bottom: 5px;
+    border: 0px;
+    border-bottom: 1.5px solid #3a6c65;
+    margin-top: 25px;
+    font-size: 20px;
+    text-indent: 0.2em;
+    background-color: transparent;
+    transform: translateZ(60px);
+    transition: border-bottom .3s, box-shadow .3s;
+}
+
+.mainBox .register input:focus {
+    border-bottom: 1.5px solid #101f30;
+}
+
+.mainBox .register .vc {
+    width: 100%;
+    height: 25px;
+    margin-top: 25px;
+}
+
+.mainBox .register .VC {
+    float: left;
+    margin: 0px;
+    width: 50%;
+}
+
+.mainBox .register .getVC {
+    float: right;
+    width: 42%;
+    height: 38px;
+    padding: 0px;
+    border-radius: 4px;
+    margin-top: -10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transform: translateZ(60px);
+    transition: background-color .3s;
+}
+
+.mainBox .register .getVC:hover {
+    background-color: #101f30;
+}
+
+.mainBox .register .submit {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 55px;
+    border-radius: 5px;
+    margin-top: 48px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 55px;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transform: translateZ(40px);
+    transition: background-color .3s;
+}
+
+.mainBox .register .submit:hover {
+    background-color: #101f30;
+}
+
+.mainBox .register a {
+    display: block;
+    width: 135px;
+    height: 25px;
+    margin: auto;
+    font-size: 15px;
+    line-height: 25px;
+    color: #335867;
+    transform: translateZ(35px);
+    transition: color .3s;
+}
+
+.mainBox .register a:hover {
+    color: #101f30;
 }
 
 /* #endregion */
