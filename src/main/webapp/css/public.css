@@ -26,6 +26,10 @@ a {
     font-family: '华文新魏';
     transform: translate(-50%);
 }
+/* 设置祖先元素的高度 */
+html,body{
+    height: 100%;
+}
 
 /*高度塌陷处理*/
 .cleafix::before,

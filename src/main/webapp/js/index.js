@@ -1,17 +1,16 @@
-var input = getDQS('input');
-var button = getDQS('button');
-var flag = true;
-button.addEventListener('click', function () {
-    ajax({
-        type: 'get',
-        url: '/user',
-        data: {},
-        success: function (res) {
-            alert(1);
-            console.log(res);
-        },
-        error: function () {
-            alert(2);
-        }
-    });
-});
+
+// 引入工具类js
+document.write("<script language='javascript' src='js/concise.js'></script>");
+
+window.onload = function () {
+    // 获取快捷键按钮
+    var shortcut = getDQS(".shortcutKey");
+    // 获取帮助按钮
+    var help = getDQS('.help');
+    //获取快捷键框
+    var shotcutNav = getDQS(".shortcut_nav");
+
+    shortcut.addEventListener("click", function () {
+        shotcutNav.style.display = "block";
+    })
+}
