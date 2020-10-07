@@ -42,7 +42,7 @@ public class UserController extends BaseController{
         UserService service = new UserServiceImpl();
         User user = service.login(email, password);
         int isSuccess = StatusCode.nullObjcet(user);
-        WebUtil.renderText(response,isSuccess+"");
+        WebUtil.renderMap(response,"status_code",isSuccess+"");
     }
 
     /**

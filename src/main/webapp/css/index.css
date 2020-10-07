@@ -114,7 +114,10 @@ body .mainBox{
 .mainBox .Box .join .join_icon{
     background-image: url(../img/index_join.png);
 }
-/* 新建大盒子 */
+/*---- 加入大盒子 ---*/
+/* .mainBox .Box .establish{
+    display: none;
+} */
 .mainBox .Box .join_bigBox{
     width: 500px;
     height: 300px;
@@ -167,8 +170,91 @@ body .mainBox{
 .mainBox .Box .join_bigBox .back:hover{
     background-image: url(../img/back.png);
 }
-
-
+/* ----新建大盒子--- */
+.mainBox .Box .join{
+    display: none;
+}
+.mainBox .Box .est_bigBox{
+    position: relative;
+    width: 650px;
+    height: 420px;
+}
+/* 位置 */
+.mainBox .est_bigBox>div{
+    display: table;
+    margin: 30px auto 0 auto;
+    font-size: 20px;
+    font-weight: bold;
+    color: #214B5B;
+}
+/* 名称输入框 */
+.mainBox .Box .est_bigBox .project_name input{
+    padding-left: 10px;
+    font-size: 18px;
+    height: 40px;
+    width: 400px;
+    vertical-align: middle;
+}
+.mainBox .Box .est_bigBox .project_name span{
+    /* float: left; */
+    vertical-align: middle;
+}
+/* 简介输入框 */
+.mainBox .Box .est_bigBox .introduction textarea{
+    height: 190px;
+    width: 395px;
+    padding: 10px;
+    line-height: 24px;
+    font-size: 16px;
+    resize: none;/*不可调节*/
+}
+.mainBox .Box .est_bigBox .introduce{
+    float: left;
+    letter-spacing: 3px;
+}
+/* 选择 */
+.mainBox .Box .est_bigBox .choice{
+    margin-top: 0px;
+}
+.mainBox .Box .est_bigBox .choice span{
+    font-weight: normal;
+    font-size: 16px;
+}
+.mainBox .Box .est_bigBox .choice i{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
+.mainBox .Box .est_bigBox .est_but input{
+    display: inline-block;
+    margin:0px auto;
+    width: 150px;
+    height: 40px;
+    border: none;
+    background-color:#214B5B;
+    color: #EEF7F2;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 5px;
+    border-radius: 5px;
+}
+.mainBox .Box .est_bigBox .est_but input:hover{
+    background-color: #132C33;
+    box-shadow:0px 0px 3px 0px #214B5B;
+}
+/* 返回按钮 */
+.mainBox .Box .est_bigBox .back{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 28px;
+    height: 28px;
+    background-image: url(../img/back_q.png);
+    background-size: contain;
+}
+.mainBox .Box .est_bigBox .back:hover{
+    background-image: url(../img/back.png);
+}
 /*#endregion*/
 /*#region ----------------底部----------------*/
 body .footer{
