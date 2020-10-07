@@ -5,7 +5,7 @@
 class Tool {
     constructor(document, window) {
         function textProhibition(documen, window) {
-            var wildcard = getDQSA('*');
+            var wildcard = getDomA('*');
             for (var i = 0; i < wildcard.length; i++) {
                 wildcard[i].addEventListener('selectstart', function (e) {
                     e.preventDefault();
@@ -129,7 +129,7 @@ class Discoloration {
 class InsertDot {
     constructor(document, window) {
         var discoloration = new Discoloration();
-        var body = getDQS('body');
+        var body = getDom('body');
 
         /**
          * 在指定位置添加逐渐消失的小圆点

@@ -14,12 +14,12 @@ function getHtml() {
  * 函数功能:获取单个元素
  * 
  * @param {String} str 元素的选择器
- * @param {Node} obj 获取的元素的父节点，不传入默认为document
+ * @param {Node} node 获取的元素的父节点，不传入默认为document
  * @returns 返回选择器所对应的对象
  * @author 60rzvvbj
  */
-function getDQS(str, obj) {
-    return obj ? obj.querySelector(str) : document.querySelector(str);
+function getDom(str, node) {
+    return node ? node.querySelector(str) : document.querySelector(str);
 }
 
 /**
@@ -27,12 +27,12 @@ function getDQS(str, obj) {
  * 函数功能:获取一坨元素
  * 
  * @param {String} str 元素的选择器
- * @param {Node} obj 获取的元素的父节点，不传入默认为document
+ * @param {Node} node 获取的元素的父节点，不传入默认为document
  * @returns 返回选择器所对应的对象所组成的数组
  * @author 60rzvvbj
  */
-function getDQSA(str, obj) {
-    return obj ? obj.querySelectorAll(str) : document.querySelectorAll(str);
+function getDomA(str, node) {
+    return node ? node.querySelectorAll(str) : document.querySelectorAll(str);
 }
 
 /**
