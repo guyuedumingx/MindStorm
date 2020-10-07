@@ -1,3 +1,18 @@
+// 页面切换
+var loginLink = getDomA('.link a');
+var forgetPasswoed = loginLink[0];
+var goRegister = loginLink[1];
+var goLogin = getDom('.register a');
+var mainBox = getDom('.mainBox');
+goRegister.addEventListener('click', function () {
+    mainBox.style.transform = 'rotateY(-180deg)';
+});
+goLogin.addEventListener('click', function () {
+    mainBox.style.transform = 'rotateY(0deg)';
+});
+
+
+
 // 登录
 var login = getDom('.login');
 var loginInput = getDomA('input', login);
