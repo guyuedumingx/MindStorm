@@ -21,6 +21,7 @@ body .header{
 /* 登录注册容器 */
 .header .logOn{
     float: right;
+    display: none;
 }
 /* 字体大小位置设置 */
 .header .logOn a{
@@ -28,6 +29,41 @@ body .header{
     font-size: 16px;
     line-height: 60px;
     color: #214B5B;
+}
+/* 个人头像等容器 */
+.header .personal{
+    float: right;
+}
+.header .personal div{
+    display: inline-block;
+}
+/* 头像 */
+.header .personal .head{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 10px 10px 0 0;
+    border: solid;
+    border-radius: 50px;
+}
+/* 昵称 */
+.header .personal .head_nav span{
+    float: right;
+    line-height: 60px;
+    color: #214B5B;
+}
+/* 消息通知 */
+.header .personal .message{
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    border-radius: 50px;
+    background-image: url(../img/public_help.png);
+    background-repeat: no-repeat;
+    background-position: center ;
+}
+.header .personal .message:hover{
+    box-shadow:0px 0px 3px 0px #214B5B;
 }
 /*#endregion*/
 /*#region---------------主要内容----------------------*/
