@@ -1,5 +1,4 @@
-/* —————————————————————————————————————初始化———————————————————————————————————— */
-/*#region*/
+/*#region —————————————————————————————————————初始化———————————————————————————————————— */
 * {
     margin: 0;
     padding: 0;
@@ -18,6 +17,7 @@ a {
     color: #000;
 }
 
+/* 自制屏幕顶部alert样式 */
 .topAlert {
     position: fixed;
     top: 15vh;
@@ -25,6 +25,14 @@ a {
     font-size: 3vw;
     font-family: '华文新魏';
     transform: translate(-50%);
+}
+
+/*高度塌陷处理*/
+.cleafix::before,
+.cleafix::after {
+    display: table;
+    content: "";
+    clear: both;
 }
 
 /*#endregion*/

@@ -1,0 +1,105 @@
+/*--------------------- 头部--------------------- */
+/*#region*/
+/* 头部容器样式 */
+body .header{
+    position: fixed;
+    top: 0;
+    padding: 0 60px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+}
+/* logo位置 */
+.header .logo{
+     float: left;
+     margin-top: 6px;
+     width: 42px;
+     height: 42px;
+     background-image: url(../img/logo1.png);
+     background-size: contain;
+}
+
+/* 登录注册容器 */
+.header .logOn{
+    float: right;
+}
+/* 字体大小位置设置 */
+.header .logOn a{
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 60px;
+    color: #214B5B;
+}
+/*#endregion*/
+/* ---------------主要内容---------------------- */
+/*#region*/
+/* 容器 */
+body .mainBox{
+    margin-top:15%;
+}
+/* 框框的盒子 */
+.mainBox .Box{
+    margin: 0 auto;
+    width: 728px;/*---56*4边距+4边线+250*2宽度--*/
+}
+/* 点击的框框 */
+.mainBox .Box div{
+    float: left;
+    width: 250px;
+    height: 300px;
+    margin: 0 56px;
+    border: solid 1px #6AC1ED;
+    border-radius: 10px;
+}
+/* 链接 */
+.mainBox .Box div a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/*#endregion*/
+/*#region*/
+/* ----------------底部---------------- */
+body .footer{
+    position: fixed;
+    bottom: 0;
+    padding: 0 60px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+}
+/* 图标容器 */
+.footer .foot_icon{
+    float: right;
+    height: 60px;
+}
+/* 链接位置大小 */
+.footer .foot_icon a{
+    display: inline-block;
+    margin-top: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50px;
+    background-size: 32px;
+    background-position: center;
+}
+/* 帮助图标 */
+.footer .foot_icon .help{
+    background-image: url(../img/public_help999.png);
+}
+.footer .foot_icon .help:hover{
+    background-image: url(../img/public_help.png);
+    box-shadow:0px 0px 3px 0px #214B5B;
+}
+/* 快捷键图标 */
+.footer .foot_icon .shortcutKey{
+    background-image: url(../img/public_shortcutKey999.png);
+    margin-right: 10px;
+}
+.footer .foot_icon .shortcutKey:hover{
+    background-image: url(../img/public_shortcutKey.png);
+    box-shadow:0px 0px 3px 0px #214B5B;
+}
+/*#endregion*/
