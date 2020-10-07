@@ -16,7 +16,6 @@ window.onload = function () {
     document.onclick = function (event) {
         var event = event || window.event;
         var target = event.target.className;
-        console.log(target);
         // 看明白这个写法
 
         if (target != "shortcutKey" && target != "shortcut_nav")  // 不等于当前点点击的名字
