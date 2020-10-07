@@ -52,6 +52,7 @@ var registerPassword = registerInput[4]; //输入密码
 var registerConfirmPassword = registerInput[5]; //确认密码
 var registerSubmit = registerInput[6]; // 提交
 var registerRealVerificationCode; //后端返回的验证码
+var registerGetVerificationCodeState = true;
 registerEmail.judge = true;
 inputTips(registerUserName, '请输入昵称');
 inputTips(registerEmail, '请输入邮箱');
@@ -73,43 +74,47 @@ function reportError(node, errorTips) {
 function clearError(node) {
     var nodeFather = node.parentNode;
     if (node.errorDiv) {
-        nodeFather.removeChild(node.errorDiv);
+        try {
+            nodeFather.removeChild(node.errorDiv);
+        } catch (e) {
+
+        }
     }
 }
-reportError(registerEmail, '邮箱格式不正确');
-clearError(registerEmail);
 
 function judgePassword(node) {
     var str = node.value;
     if (str != '请输入密码') {
         if (!/.*[a-zA-Z]+.*/.test(str)) {
-            console.log('密码中至少包含一个字母');
+            reportError(node, '密码中至少包含一个字母');
             return false;
         }
         if (!/.*[0-9]+.*/.test(str)) {
-            console.log('密码中至少包含一个数字');
+            reportError(node, '密码中至少包含一个数字');
             return false;
         }
         if (!/^[a-zA-Z0-9]*$/.test(str)) {
-            console.log('密码只能由字母和数字组成');
+            reportError(node, '密码只能由字母和数字组成');
             return false;
         }
         if (!/^[a-zA-Z0-9]{8,18}$/.test(str)) {
-            console.log('密码长度应为8-18位');
+            reportError(node, '密码长度应为8-18位');
             return false;
         }
+        clearError(node);
         return true;
     }
     return false;
 }
 
-function judgeVerificationCode(node1, value) {
+function judgeVerificationCode(node, value) {
     if (value) {
-        var ivc = node1.value;
+        var ivc = node.value;
         if (ivc == value) {
+            clearError(node);
             return true;
         } else {
-            console.log('验证码不正确');
+            reportError(node, '验证码不正确');
             return false;
         }
     }
@@ -121,9 +126,10 @@ function judgeCPassword(node1, node2) {
     var str2 = node2.value;
     if (str2 != '请确认密码') {
         if (judgePassword(node1) && str1 == str2) {
+            clearError(node2);
             return true;
         } else {
-            console.log('两次输入密码不一致');
+            reportError(node2, '两次输入密码不一致');
             return false;
         }
     }
@@ -135,13 +141,14 @@ function judgeUserName(node) {
         return false;
     }
     if (str.length == 0) {
-        console.log('用户名不能为空');
+        reportError(node, '用户名不能为空');
         return false;
     }
     if (str.length > 20) {
-        console.log('用户名长度不能超过20个字符');
+        reportError(node, '用户名不能超过20个字符');
         return false;
     }
+    clearError(node);
     return true;
 }
 
@@ -149,9 +156,10 @@ function judgeEmail(node) {
     var str = node.value;
     if (str != '请输入邮箱') {
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(str)) {
-            console.log('邮箱格式不正确');
+            reportError(node, '邮箱格式不正确');
             return false;
         }
+        clearError(node);
         return true;
     }
     return false;
@@ -169,10 +177,10 @@ function setEmailJudge(node) {
             success: function (res) {
                 if (res == '200') {
                     node.judge = true;
-                    console.log('用户名已存在');
+                    reportError(node, '用户名已存在');
                 } else {
+                    clearError(node);
                     node.judge = false;
-                    console.log('√');
                 }
             }
         });
@@ -181,6 +189,22 @@ function setEmailJudge(node) {
 
 function registerGetVC(node) {
     if (judgeEmail(node) && node.judge == false) {
+        registerGetVerificationCode.style.backgroundColor = '#b7cfd8';
+        registerGetVerificationCode.style.backgroundColor = '#b7cfd8';
+        registerGetVerificationCode.style.cursor = 'not-allowed';
+        console.log(registerGetVerificationCode.style.backgroundColor);
+        registerGetVerificationCode.timerI = 60;
+        registerGetVerificationCodeState = false;
+        registerGetVerificationCode.timer = setInterval(function () {
+            registerGetVerificationCode.value = registerGetVerificationCode.timerI-- + 's后重新发送';
+            if (registerGetVerificationCode.timerI == 1) {
+                registerGetVerificationCode.style.backgroundColor = '#214b5b';
+                registerGetVerificationCode.style.cursor = 'pointer';
+                registerGetVerificationCode.value = '重新获取验证码';
+                registerGetVerificationCodeState = true;
+                clearInterval(registerGetVerificationCode.timer);
+            }
+        }, 1000);
         ajax({
             type: 'get',
             url: '/util',
@@ -192,13 +216,13 @@ function registerGetVC(node) {
                 if (res.status_code == '200') {
                     registerRealVerificationCode = res.auth_code;
                 } else {
-                    console.log('验证码发送失败');
+                    topAlert('验证码发送失败');
                 }
             }
         });
     } else {
         if (registerEmail.value == '请输入邮箱') {
-            console.log('请输入邮箱');
+            reportError(registerEmail, '请输入邮箱');
         }
     }
 }
@@ -214,28 +238,28 @@ function registerJudge() {
                     return true;
                 } else {
                     if (registerPassword.value == '请输入密码') {
-                        console.log('请输入密码');
+                        reportError(registerPassword, '请输入密码');
                     } else if (registerConfirmPassword.value == '请确认密码') {
-                        console.log('请确认密码');
+                        reportError(registerConfirmPassword, '请确认密码');
                     }
                 }
             } else {
                 if (registerVerificationCode.value == '请输入验证码') {
-                    console.log('请输入验证码');
+                    reportError(registerVerificationCode, '请输入验证码码');
                 } else if (!registerRealVerificationCode) {
-                    console.log('验证码有误');
+                    reportError(registerVerificationCode, '验证码有误');
                 }
             }
         } else {
             if (registerEmail.value == '请输入邮箱') {
-                console.log('请输入邮箱');
+                reportError(registerEmail, '请输入邮箱');
             } else {
-                console.log('邮箱格式不正确');
+                reportError(registerEmail, '邮箱格式不正确');
             }
         }
     } else {
         if (registerUserName.value == '请输入昵称') {
-            console.log('请输入昵称');
+            reportError(registerUserName, '请输入昵称');
         }
     }
     return false;
@@ -248,7 +272,19 @@ registerEmail.addEventListener('blur', function () {
     setEmailJudge(this);
 });
 registerGetVerificationCode.addEventListener('click', function () {
-    registerGetVC(registerEmail);
+    if (registerGetVerificationCodeState) {
+        registerGetVC(registerEmail);
+    }
+});
+registerGetVerificationCode.addEventListener('mouseover', function () {
+    if (registerGetVerificationCodeState) {
+        this.style.backgroundColor = '#101f30';
+    }
+});
+registerGetVerificationCode.addEventListener('mouseout', function () {
+    if (registerGetVerificationCodeState) {
+        this.style.backgroundColor = '#214b5b';
+    }
 });
 registerPassword.addEventListener('blur', function () {
     judgePassword(this);
