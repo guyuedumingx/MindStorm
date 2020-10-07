@@ -148,7 +148,9 @@ body::after {
     height: 25px;
     margin-left: 15px;
     vertical-align: top;
-    background-color: skyblue;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: center;
     content: '';
 }
 
@@ -157,6 +159,7 @@ body::after {
 }
 
 .mainBox .login .link a:first-child:after {
+    background-image: url(../img/login_forgetPassword.png);
     content: '';
 }
 
@@ -165,6 +168,7 @@ body::after {
 }
 
 .mainBox .login .link a:last-child:after {
+    background-image: url(../img/login_rigister.png);
     content: '';
 }
 
