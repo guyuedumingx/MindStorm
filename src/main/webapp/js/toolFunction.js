@@ -1061,7 +1061,7 @@ function topAlert(str) {
     var html = getHtml();
     // 设置文本和属性
     div.innerHTML = str;
-    div.style.color = randomColor(120, 220);
+    div.style.color = randomColor(100, 180);
     addClass(div, 'topAlert');
     html.appendChild(div);
     var i = 0;

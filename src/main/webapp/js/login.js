@@ -10,6 +10,10 @@ goRegister.addEventListener('click', function () {
 goLogin.addEventListener('click', function () {
     mainBox.style.transform = 'rotateY(0deg)';
 });
+forgetPasswoed.addEventListener('click', function (e) {
+    e.preventDefault();
+    topAlert('密码忘了活该');
+});
 
 
 
