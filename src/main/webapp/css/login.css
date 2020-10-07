@@ -204,6 +204,12 @@ body::after {
     transform-style: preserve-3d;
 }
 
+.mainBox .register div {
+    position: relative;
+    height: 26.5px;
+    margin-top: 25px;
+}
+
 .mainBox .register h4 {
     height: 46px;
     padding-bottom: 10px;
@@ -222,7 +228,7 @@ body::after {
     border: 0px;
     border-bottom: 1.5px solid #3a6c65;
     margin-top: 25px;
-    font-size: 20px;
+    font-size: 14px;
     text-indent: 0.2em;
     background-color: transparent;
     transform: translateZ(60px);
@@ -251,7 +257,7 @@ body::after {
     height: 38px;
     padding: 0px;
     border-radius: 4px;
-    margin-top: -10px;
+    margin-top: -37px;
     font-size: 14px;
     color: #fff;
     background-color: #214b5b;
@@ -301,6 +307,31 @@ body::after {
 
 .mainBox .register a:hover {
     color: #101f30;
+}
+
+.mainBox .register .errorTips {
+    position: absolute;
+    bottom: -28px;
+    left: 2px;
+    padding-left: 12px;
+    margin: 0px;
+    font-size: 10px;
+    line-height: 12px;
+    color: #aa0000;
+    transform: translateZ(60px);
+}
+
+.errorTips::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 12px;
+    height: 12px;
+    background-image: url(../img/login_error.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    content: '';
 }
 
 /* #endregion */

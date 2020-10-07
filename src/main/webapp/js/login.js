@@ -15,8 +15,6 @@ forgetPasswoed.addEventListener('click', function (e) {
     topAlert('密码忘了活该');
 });
 
-
-
 // 登录
 var login = getDom('.login');
 var loginInput = getDomA('input', login);
@@ -55,56 +53,76 @@ var registerConfirmPassword = registerInput[5]; //确认密码
 var registerSubmit = registerInput[6]; // 提交
 var registerRealVerificationCode; //后端返回的验证码
 registerEmail.judge = true;
+inputTips(registerUserName, '请输入昵称');
+inputTips(registerEmail, '请输入邮箱');
+inputTips(registerVerificationCode, '请输入验证码');
+inputTips(registerPassword, '请输入密码');
+inputTips(registerConfirmPassword, '请确认密码');
+
+function reportError(node, errorTips) {
+
+}
 
 function judgePassword(node) {
     var str = node.value;
-    if (!/.*[a-zA-Z]+.*/.test(str)) {
-        console.log('密码中至少包含一个字母');
-        return false;
+    if (str != '请输入密码') {
+        if (!/.*[a-zA-Z]+.*/.test(str)) {
+            console.log('密码中至少包含一个字母');
+            return false;
+        }
+        if (!/.*[0-9]+.*/.test(str)) {
+            console.log('密码中至少包含一个数字');
+            return false;
+        }
+        if (!/^[a-zA-Z0-9]*$/.test(str)) {
+            console.log('密码只能由字母和数字组成');
+            return false;
+        }
+        if (!/^[a-zA-Z0-9]{8,18}$/.test(str)) {
+            console.log('密码长度应为8-18位');
+            return false;
+        }
+        return true;
     }
-    if (!/.*[0-9]+.*/.test(str)) {
-        console.log('密码中至少包含一个数字');
-        return false;
-    }
-    if (!/^[a-zA-Z0-9]*$/.test(str)) {
-        console.log('密码只能由字母和数字组成');
-        return false;
-    }
-    if (!/^[a-zA-Z0-9]{8,18}$/.test(str)) {
-        console.log('密码长度应为8-18位');
-        return false;
-    }
-    return true;
+    return false;
 }
 
 function judgeVerificationCode(node1, value) {
-    var ivc = node1.value;
-    if (ivc == value) {
-        return true;
-    } else {
-        console.log('验证码不正确');
-        return false;
+    if (value) {
+        var ivc = node1.value;
+        if (ivc == value) {
+            return true;
+        } else {
+            console.log('验证码不正确');
+            return false;
+        }
     }
+    return false;
 }
 
 function judgeCPassword(node1, node2) {
     var str1 = node1.value;
     var str2 = node2.value;
-    if (judgePassword(node1) && str1 == str2) {
-        return true;
-    } else {
-        console.log('两次输入密码不一致');
-        return false;
+    if (str2 != '请确认密码') {
+        if (judgePassword(node1) && str1 == str2) {
+            return true;
+        } else {
+            console.log('两次输入密码不一致');
+            return false;
+        }
     }
 }
 
 function judgeUserName(node) {
     var str = node.value;
+    if (str == '请输入昵称') {
+        return false;
+    }
     if (str.length == 0) {
         console.log('用户名不能为空');
         return false;
     }
-    if (!/\w{1,20}/.test(str)) {
+    if (str.length > 20) {
         console.log('用户名长度不能超过20个字符');
         return false;
     }
@@ -113,11 +131,14 @@ function judgeUserName(node) {
 
 function judgeEmail(node) {
     var str = node.value;
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(str)) {
-        console.log('邮箱格式不正确');
-        return false;
+    if (str != '请输入邮箱') {
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(str)) {
+            console.log('邮箱格式不正确');
+            return false;
+        }
+        return true;
     }
-    return true;
+    return false;
 }
 
 function setEmailJudge(node) {
@@ -159,6 +180,10 @@ function registerGetVC(node) {
                 }
             }
         });
+    } else {
+        if (registerEmail.value == '请输入邮箱') {
+            console.log('请输入邮箱');
+        }
     }
 }
 
@@ -171,8 +196,30 @@ function registerJudge() {
             if (judgeVerificationCode(registerVerificationCode, registerRealVerificationCode)) {
                 if (judgeCPassword(registerPassword, registerConfirmPassword)) {
                     return true;
+                } else {
+                    if (registerPassword.value == '请输入密码') {
+                        console.log('请输入密码');
+                    } else if (registerConfirmPassword.value == '请确认密码') {
+                        console.log('请确认密码');
+                    }
+                }
+            } else {
+                if (registerVerificationCode.value == '请输入验证码') {
+                    console.log('请输入验证码');
+                } else if (!registerRealVerificationCode) {
+                    console.log('验证码有误');
                 }
             }
+        } else {
+            if (registerEmail.value == '请输入邮箱') {
+                console.log('请输入邮箱');
+            } else {
+                console.log('邮箱格式不正确');
+            }
+        }
+    } else {
+        if (registerUserName.value == '请输入昵称') {
+            console.log('请输入昵称');
         }
     }
     return false;

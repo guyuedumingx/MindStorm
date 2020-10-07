@@ -1076,3 +1076,34 @@ function topAlert(str) {
         }
     }, 25);
 }
+
+function inputTips(input, tipsText) {
+    if (input.type == 'password') {
+        input.value = tipsText;
+        input.type = 'text';
+        input.addEventListener('focus', function () {
+            if (input.value == tipsText) {
+                input.value = '';
+                input.type = 'password';
+            }
+        });
+        input.addEventListener('blur', function () {
+            if (input.value == '') {
+                input.value = tipsText;
+                input.type = 'text';
+            }
+        });
+    } else {
+        input.value = tipsText;
+        input.addEventListener('focus', function () {
+            if (input.value == tipsText) {
+                input.value = '';
+            }
+        });
+        input.addEventListener('blur', function () {
+            if (input.value == '') {
+                input.value = tipsText;
+            }
+        });
+    }
+}
