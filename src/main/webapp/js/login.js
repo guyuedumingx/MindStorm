@@ -21,6 +21,7 @@ var loginInput = getDomA('input', login);
 var loginEmail = loginInput[0];
 var loginPassword = loginInput[1];
 var loginSubmit = loginInput[2];
+clickOpenBlankClose(loginSubmit, loginPassword);
 loginSubmit.addEventListener('click', function () {
     var em = loginEmail.value;
     var pa = loginPassword.value;

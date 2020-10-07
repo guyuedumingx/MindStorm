@@ -1052,7 +1052,7 @@ function randomColor(l, r) {
  * 
  * 函数功能：在屏幕顶部显示一段慢慢消失的文字(需要搭配topAlert样式使用)
  * 
- * @param {*} str 要显示的文字
+ * @param {string} str 要显示的文字
  * @author 60rzvvbj
  */
 function topAlert(str) {
@@ -1077,6 +1077,14 @@ function topAlert(str) {
     }, 25);
 }
 
+/**
+ * 
+ * 函数功能：设置input标签提示文字
+ * 
+ * @param {Node} input input标签
+ * @param {string} tipsText 提示文字
+ * @author 60rzvvbj
+ */
 function inputTips(input, tipsText) {
     if (input.type == 'password') {
         input.value = tipsText;
@@ -1106,4 +1114,44 @@ function inputTips(input, tipsText) {
             }
         });
     }
+}
+
+/**
+ * 
+ * 函数功能：判断一个节点是否为另一个节点的子节点
+ * 
+ * @param {Node} node 一个节点
+ * @param {Node} parentNode 另一个节点
+ * @author 60rzvvbj
+ */
+function isParent(node, parentNode) {
+    while (node != undefined && node != null && node.tagName.toUpperCase() != 'BODY') {
+        if (node == parentNode) {
+            return true;
+        }
+        node = node.parentNode;
+    }
+    return false;
+}
+
+/**
+ * 
+ * 函数功能：给按钮和盒子添加点击按钮打开盒子，点击空白关闭盒子的效果
+ * 
+ * @param {Node} button 按钮
+ * @param {Node} box 盒子
+ */
+function clickOpenBlankClose(button, box) {
+    box.style.display = 'none';
+    button.addEventListener('click', function () {
+        console.log(1);
+        box.style.display = 'block';
+    });
+    document.addEventListener('click', function (e) {
+        // console.log(1);
+        e = e || window.event;
+        if (!isParent(e.target, box) && e.target != button) {
+            box.style.display = 'none';
+        }
+    });
 }
