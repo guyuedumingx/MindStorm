@@ -60,8 +60,24 @@ inputTips(registerPassword, '请输入密码');
 inputTips(registerConfirmPassword, '请确认密码');
 
 function reportError(node, errorTips) {
-
+    var nodeFather = node.parentNode;
+    if (node.errorDiv) {
+        nodeFather.removeChild(node.errorDiv);
+    }
+    node.errorDiv = document.createElement('div');
+    addClass(node.errorDiv, 'errorTips');
+    node.errorDiv.innerHTML = errorTips;
+    nodeFather.appendChild(node.errorDiv);
 }
+
+function clearError(node) {
+    var nodeFather = node.parentNode;
+    if (node.errorDiv) {
+        nodeFather.removeChild(node.errorDiv);
+    }
+}
+reportError(registerEmail, '邮箱格式不正确');
+clearError(registerEmail);
 
 function judgePassword(node) {
     var str = node.value;
