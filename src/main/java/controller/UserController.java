@@ -23,7 +23,11 @@ public class UserController extends BaseController{
      * @throws IOException
      */
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        User usr = WebUtil.getJson(request, User.class);
+        UserService userService = new UserServiceImpl();
+        User register = userService.register(usr);
+        int i = StatusCode.nullObjcet(register);
+        WebUtil.renderText(response,i+"");
     }
 
     /**
@@ -38,9 +42,6 @@ public class UserController extends BaseController{
         UserService service = new UserServiceImpl();
         User user = service.login(email, password);
         int isSuccess = StatusCode.nullObjcet(user);
-        if(isSuccess== StatusCode.OK) {
-            WebUtil.renderText(response,user.getToken()+"");
-        }
         WebUtil.renderText(response,isSuccess+"");
     }
 

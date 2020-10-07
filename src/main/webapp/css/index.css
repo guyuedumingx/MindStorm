@@ -1,5 +1,4 @@
-/*--------------------- 头部--------------------- */
-/*#region*/
+/*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header{
     position: fixed;
@@ -31,11 +30,13 @@ body .header{
     color: #214B5B;
 }
 /*#endregion*/
-/* ---------------主要内容---------------------- */
-/*#region*/
+/*#region---------------主要内容----------------------*/
 /* 容器 */
 body .mainBox{
-    margin-top:15%;
+    position: relative;
+    height: 300px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 /* 框框的盒子 */
 .mainBox .Box{
@@ -43,25 +44,43 @@ body .mainBox{
     width: 728px;/*---56*4边距+4边线+250*2宽度--*/
 }
 /* 点击的框框 */
-.mainBox .Box div{
+.mainBox .Box>div{
     float: left;
-    width: 250px;
-    height: 300px;
     margin: 0 56px;
     border: solid 1px #6AC1ED;
     border-radius: 10px;
 }
+.mainBox .Box>div:hover{
+    box-shadow: 0px 0px 20px 0px #6AC1ED;
+}
 /* 链接 */
-.mainBox .Box div a{
+.mainBox .Box>div a{
     display: inline-block;
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 300px;
     border-radius: 10px;
 }
+/* 图标 */
+.mainBox .Box a div{
+    position: relative;
+    display:block;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    background-size: contain;
+}
+.mainBox .Box .establish a div{
+    background-image: url(../img/index_establish\ .png);
+}
+.mainBox .Box .join a div{
+    background-image: url(../img/index_join.png);
+}
+
 
 /*#endregion*/
-/*#region*/
-/* ----------------底部---------------- */
+/*#region ----------------底部----------------*/
 body .footer{
     position: fixed;
     bottom: 0;
@@ -101,5 +120,15 @@ body .footer{
 .footer .foot_icon .shortcutKey:hover{
     background-image: url(../img/public_shortcutKey.png);
     box-shadow:0px 0px 3px 0px #214B5B;
+}
+/* 显示框 */
+.footer .shortcut_nav{
+    position: absolute;
+    top: -280px;
+    right: 60px;
+    width: 200px;
+    height: 280px;
+    background-color: #F3F7F5;
+    display: none;
 }
 /*#endregion*/

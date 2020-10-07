@@ -29,4 +29,11 @@ public interface UserService {
      * @return
      */
     User getUser(String email);
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    User register(User user);
 }

@@ -9,7 +9,6 @@ import pojo.auxiliary.Follow;
 import service.UserService;
 import java.util.List;
 
-
 /**
  * user服务的实现类
  * @author yohoyes
@@ -45,5 +44,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String email) {
        return userDao.selectOne(new User("'"+email+"'"));
+    }
+
+    @Override
+    public User register(User user) {
+        user.setExp(0);
+        user.setUserAvatar("default.png");
+        user.setUserSignature("这家伙很懒,什么也没留下!");
+        int i = userDao.insertOne(user);
+        if(i!=0) {
+            user.setId(i);
+            return user;
+        }else {
+            return null;
+        }
     }
 }
