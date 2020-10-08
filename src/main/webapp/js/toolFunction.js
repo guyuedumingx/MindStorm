@@ -2,59 +2,97 @@
  * 
  * 函数功能：给元素添加一个类名
  * 
- * @param {Node} obj 要添加类名的对象
+ * @param {Node} node 要添加类名的对象
  * @param {string} theClass 要添加的类名
+ * @returns 当前对象
  * @author 60rzvvbj
  */
-function addClass(obj, theClass) {
-    if (obj) {
-        var str = obj.getAttribute('class');
-        if (str != null && str != '') {
-            obj.setAttribute('class', str + ' ' + theClass);
-        } else {
-            obj.setAttribute('class', theClass);
+function addClass(node, theClass) {
+    if (node) {
+        var str = node.getAttribute('class');
+        var arr = str.split(' ');
+        var res = '';
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == theClass) {
+                return node;
+            }
+            res += arr[i] + ' ';
         }
+        res += theClass;
+        node.setAttribute('class', res);
     }
+    return node;
 }
 
 /**
  * 
  * 函数功能：删除元素的一个类名
  * 
- * @param {Node} obj 要删除类名的对象
+ * @param {Node} node 要删除类名的对象
  * @param {string} theClass 要删除的类名
+ * @returns 当前对象
  * @author 60rzvvbj
  */
-function removeClass(obj, theClass) {
-    if (obj) {
-        var str = obj.getAttribute('class');
-        if (str != null) {
-            str = str + ' ';
-            str = str.replace(theClass + ' ', '');
-            if (str != null && str != '') {
-                str = str.substring(0, str.length - 1);
-                obj.className = str;
-            } else {
-                obj.className = '';
+function removeClass(node, theClass) {
+    if (node) {
+        var str = node.getAttribute('class');
+        var arr = str.split(' ');
+        var res = '';
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] != theClass) {
+                res += arr[i] + ' ';
             }
-        } else {
-            obj.className = '';
         }
+        res = res.substring(0, res.length - 1);
+        node.setAttribute('class', res);
     }
+    return node;
+}
+
+/**
+ * 
+ * 函数功能：切换元素的一个类名
+ * 
+ * @param {Node} node 要切换类名的对象
+ * @param {string} theClass 要切换的类名
+ * @returns 当前对象
+ * @author 60rzvvbj
+ */
+function toggleClass(node, theClass) {
+    if (node) {
+        var str = node.getAttribute('class');
+        var arr = str.split(' ');
+        var res = '';
+        var state = true;
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == theClass) {
+                state = false;
+                continue;
+            }
+            res += arr[i] + ' ';
+        }
+        if (state) {
+            res += theClass + ' ';
+        }
+        res = res.substring(0, res.length - 1);
+        node.setAttribute('class', res);
+    }
+    return node;
 }
 
 /**
  * 
  * 函数功能：替换元素的一个类名
  * 
- * @param {Node} obj 要替换类名的对象
+ * @param {Node} node 要替换类名的对象
  * @param {string} oldClass 要被替换的类名
  * @param {string} newClass 替换的新类名
+ * @returns 当前对象
  * @author 60rzvvbj
  */
-function replaceClass(obj, oldClass, newClass) {
-    if (obj) {
-        var str = obj.getAttribute('class');
+function replaceClass(node, oldClass, newClass) {
+    if (node) {
+        var str = node.getAttribute('class');
         var arr = str.split(' ');
         var res = '';
         for (var i = 0; i < arr.length; i++) {
@@ -65,8 +103,9 @@ function replaceClass(obj, oldClass, newClass) {
             }
         }
         res = res.substring(0, res.length - 1);
-        obj.setAttribute('class', res);
+        node.setAttribute('class', res);
     }
+    return node;
 }
 
 /**
@@ -1039,8 +1078,8 @@ function deleteDrag(div) {
  * 
  * 函数功能：获取(l,r)范围内随机颜色
  * 
- * @param {*} l 左端点
- * @param {*} r 右端点
+ * @param {number} l 左端点
+ * @param {number} r 右端点
  * @returns 返回一个rgb字符串
  * @author 60rzvvbj
  */
@@ -1144,11 +1183,13 @@ function isParent(node, parentNode) {
 function clickOpenBlankClose(button, box) {
     box.style.display = 'none';
     button.addEventListener('click', function () {
-        console.log(1);
-        box.style.display = 'block';
+        if (box.style.display == 'block') {
+            box.style.display = 'none';
+        } else {
+            box.style.display = 'block';
+        }
     });
     document.addEventListener('click', function (e) {
-        // console.log(1);
         e = e || window.event;
         if (!isParent(e.target, box) && e.target != button) {
             box.style.display = 'none';
