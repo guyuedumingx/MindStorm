@@ -219,16 +219,15 @@ body .mainBox{
 }
 .mainBox .Box .est_bigBox .choice span{
     display: inline-block;
+    margin-right: 20px;
     font-weight: normal;
     font-size: 16px;
 }
 .mainBox .Box .est_bigBox .choice i{
     display: inline-block;
+    margin-left: 5px;
 }
 /* 是否选择 */
-.mainBox .Box .est_bigBox .choice .open{
-    margin-right: 20px;
-}
 /* 按钮 */
 .mainBox .Box .est_bigBox .open .openBut{
     width: 28px;
