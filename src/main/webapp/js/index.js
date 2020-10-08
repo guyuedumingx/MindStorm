@@ -28,4 +28,18 @@ window.onload = function () {
     // =======
     // clickOpenBlankClose(shortcut, shotcutNav);
     // >>>>>>> 调用封装好的函数的代码
+    var openBut = getDom(".openBut");
+    var openX = 1;
+    openBut.addEventListener("click", function () {
+        if (openX % 2 != 0) {
+            openBut.style.backgroundImage = "url(./img/lamp_yellow.png)";
+            openBut.style.boxShadow = "inset 0px 0px 5px 0px #f9f28b";
+        }
+        else {
+            openBut.style.backgroundImage = "url(./img/lamp_blue.png)";
+            openBut.style.boxShadow = "";
+        }
+        openX++;
+    })
+
 }

@@ -214,16 +214,31 @@ body .mainBox{
 }
 /* 选择 */
 .mainBox .Box .est_bigBox .choice{
+    width: 520px;
     margin-top: 0px;
 }
 .mainBox .Box .est_bigBox .choice span{
+    display: inline-block;
     font-weight: normal;
     font-size: 16px;
 }
 .mainBox .Box .est_bigBox .choice i{
     display: inline-block;
-    width: 10px;
-    height: 10px;
+}
+/* 是否选择 */
+.mainBox .Box .est_bigBox .choice .open{
+    margin-right: 20px;
+}
+/* 按钮 */
+.mainBox .Box .est_bigBox .open .openBut{
+    width: 28px;
+    height: 28px;
+    border-radius: 50px;
+    vertical-align: middle;
+    background-image: url(../img/lamp_blue.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 0.5s;
 }
 .mainBox .Box .est_bigBox .est_but input{
     display: inline-block;
@@ -250,10 +265,11 @@ body .mainBox{
     width: 28px;
     height: 28px;
     background-image: url(../img/back_q.png);
-    background-size: contain;
+    background-size:contain;
 }
 .mainBox .Box .est_bigBox .back:hover{
     background-image: url(../img/back.png);
+
 }
 /*#endregion*/
 /*#region ----------------底部----------------*/
