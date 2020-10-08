@@ -106,7 +106,7 @@ body .mainBox{
     /* display: none; */
 }
 
-@-webkit-keyframes move
+@keyframes move
 {
 	65%{ 
 	  -webkit-transform:rotate(0deg);
@@ -173,9 +173,9 @@ body .mainBox{
     background-image: url(../img/index_join.png);
 }
 /*---- 加入大盒子 ---*/
-.mainBox .Box .establish{
-    /* display: none; */
-}
+/* .mainBox .Box .establish{
+    display: none;
+} */
 .mainBox .Box .join_bigBox{
     position: relative;
     width: 500px;
@@ -223,9 +223,9 @@ body .mainBox{
 }
 
 /* ----新建大盒子--- */
-.mainBox .Box .join{
-    /* display: none; */
-}
+/* .mainBox .Box .join{
+    display: none;
+} */
 .mainBox .Box .est_bigBox{
     position: relative;
     width: 650px;

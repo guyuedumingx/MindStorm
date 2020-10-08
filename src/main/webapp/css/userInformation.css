@@ -37,11 +37,14 @@ body .header{
 }
 /*#endregion*/
 /**#region------------个人情况----------- */
+body .emptyBox{
+    height: 60px;
+}
 /* 大框架 */
 body .personalBox{
     position: relative;
     display: block;
-    margin-top: 60px;
+    
     background-color: #EEF7F2;
 }
 /* 容器居中 */
@@ -97,21 +100,65 @@ body .personalBox{
 
 /*#endregion*/
 /* #region---------参加过的项目 ---------------*/
-body .projectsBox{
-    
-}
 .projectsBox .projects{
     border:solid #EEF7F2;
     margin: 0 auto;
     width: 770px;
     height: 520px;
-}
+} *
+/* 背景 */
 .projectsBox .projects .backLogo{
+    position: absolute;
     width: 770px;
-    height: 520px;
+    height: 40px;
     background-image: url(../img/logo.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.05;
+}
+/* 项目列表 */
+ .projectsBox .projectLi li{
+     padding:5px 15px;
+    margin: 20px auto;
+    width: 700px;
+    height: 70px;
+    color: #214B5B;
+    border: solid #6AC1ED 1px;
+    border-radius: 5px;
+} 
+.projectsBox .projectLi li .txt_name{
+    display:block;
+    margin-bottom: 3px;
+    font-weight: 600;
+}
+.projectsBox .projectLi li .txt{
+    font-size: 12px;
+    margin: auto;
+    width: 700px;
+    height: 30px;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box; 
+   -webkit-box-orient: vertical; 
+   -webkit-line-clamp: 2
+}
+.projectsBox .projectLi li .pro_date,.projectsBox .projectLi li .team_num{
+    vertical-align: middle;
+    font-size: 10px;
+    color: #2a2a2b;
+}
+
+.projectsBox .projectLi li i{
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 5px ;
+    width: 12px;
+    height: 12px;
+    background-image: url(../img/team.png);
+    background-size: contain;
+}
+.projectsBox .projectLi li .date{
+    background-image: url(../img/date.png);
+    margin-left: 0;
 }
