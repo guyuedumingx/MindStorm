@@ -51,6 +51,37 @@ function removeClass(node, theClass) {
 
 /**
  * 
+ * 函数功能：切换元素的一个类名
+ * 
+ * @param {Node} node 要切换类名的对象
+ * @param {string} theClass 要切换的类名
+ * @returns 当前对象
+ * @author 60rzvvbj
+ */
+function toggleClass(node, theClass) {
+    if (node) {
+        var str = node.getAttribute('class');
+        var arr = str.split(' ');
+        var res = '';
+        var state = true;
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == theClass) {
+                state = false;
+                continue;
+            }
+            res += arr[i] + ' ';
+        }
+        if (state) {
+            res += theClass + ' ';
+        }
+        res = res.substring(0, res.length - 1);
+        node.setAttribute('class', res);
+    }
+    return node;
+}
+
+/**
+ * 
  * 函数功能：替换元素的一个类名
  * 
  * @param {Node} node 要替换类名的对象
