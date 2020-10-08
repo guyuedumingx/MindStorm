@@ -1196,3 +1196,15 @@ function clickOpenBlankClose(button, box) {
         }
     });
 }
+Node.prototype.addClass = function (theClass) {
+    return addClass(this, theClass);
+}
+Node.prototype.removeClass = function (theClass) {
+    return removeClass(this, theClass);
+}
+Node.prototype.toggleClass = function (theClass) {
+    return toggleClass(this, theClass);
+}
+Node.prototype.replaceClass = function (oldClass, newClass) {
+    return replaceClass(this, oldClass, newClass);
+}

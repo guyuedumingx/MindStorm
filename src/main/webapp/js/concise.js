@@ -52,3 +52,9 @@ String.prototype.replaceAll = function (oldStr, newStr) {
     }
     return str;
 }
+Node.prototype.getDom = function (str) {
+    return getDom(str, this);
+}
+Node.prototype.getDomA = function (str) {
+    return getDomA(str, this);
+}
