@@ -75,3 +75,180 @@ body .header {
 }
 
 /*#endregion*/
+/*#region--------------------- mainBox --------------------- */
+.emptyLine {
+    width: 100%;
+    height: 60px;
+}
+
+.mainBox {
+    width: 100%;
+    height: 600px;
+    padding: 0px 60px;
+    box-sizing: border-box;
+}
+
+.mainBox .mainBoxLeft {
+    float: left;
+    width: 10%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.mainBoxLeft .controller {
+    width: 85%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: #eeeeee;
+}
+
+.mainBox .mainBoxMiddle {
+    float: left;
+    width: 70%;
+    height: 100%;
+}
+
+.mainBoxMiddle .progressBar {
+    width: 98%;
+    height: 60px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+}
+
+.mainBoxMiddle .treeBox {
+    width: 98%;
+    height: 530px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #eeeeee;
+}
+
+.mainBox .mainBoxRight {
+    float: left;
+    width: 20%;
+    height: 100%;
+}
+
+.mainBoxRight .creator {
+    width: 100%;
+    height: 60px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+}
+
+.mainBoxRight .creator h4 {
+    padding: 0px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 60px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #214b5b;
+}
+
+.mainBoxRight .creator h4 span {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.mainBoxRight .introduce {
+    width: 100%;
+    height: 180px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #eeeeee;
+}
+
+.mainBoxRight .introduce h4 {
+    padding: 10px 20px 0px;
+    font-size: 20px;
+    color: #214b5b;
+}
+
+.mainBoxRight .introduce p {
+    padding: 10px 20px 0px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 24px;
+    color: #214b5b;
+}
+
+.mainBoxRight .participant {
+    width: 100%;
+    height: 340px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #eeeeee;
+}
+
+.mainBoxRight .participant h4 {
+    padding: 10px 20px 0px;
+    font-size: 20px;
+    color: #214b5b;
+}
+
+.mainBoxRight .participant ul {
+    height: 270px;
+    padding: 10px 20px 10px;
+    overflow: hidden;
+}
+
+.mainBoxRight .participant ul li {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    padding-left: 45px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+}
+
+.participant ul li .userPhoto {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: skyblue;
+}
+
+.participant ul li .userName {
+    width: 68%;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 40px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #214B5B;
+    cursor: pointer;
+}
+
+.participant ul li:hover .userName {
+    color: #f00;
+}
+
+.participant ul li span {
+    position: absolute;
+    top: 8px;
+    right: 0px;
+    width: 60px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: skyblue;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity .5s;
+}
+
+.participant ul li:hover span {
+    opacity: 1;
+}
+
+/*#endregion*/
