@@ -1,5 +1,22 @@
-var introduce = getDom('.mainBoxRight .introduce p');
-var str = introduce.innerHTML;
-console.log(str.length);
-var s = '回答是开放\n八分饱发\n阿克a';
-introduce.innerText = s;
+var introduceP = getDom('.mainBoxRight .introduce p');
+var str = introduceP.innerHTML;
+var s = '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹';
+introduceP.innerText = s;
+
+// ——————————————————右侧简介——————————————————
+var introduceOpen = getDom('.mainBoxRight .introduce a');
+var introduce = getDom('.mainBoxRight .introduce .introduceMain');
+var introduceState = false;
+introduceOpen.addEventListener('click', function () {
+    if (introduceState) {
+        this.innerText = '展开';
+        introduce.style.height = '180px';
+        introduceP.style.webkitLineClamp = '5';
+        introduceState = false;
+    } else {
+        this.innerText = '收起';
+        introduce.style.height = '530px';
+        introduceP.style.webkitLineClamp = '20';
+        introduceState = true;
+    }
+});
