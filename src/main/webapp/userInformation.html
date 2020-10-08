@@ -5,15 +5,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人中心</title>
+    <!-- 引入本页样式 -->
     <link rel="stylesheet" href="css/userInformation.css">
+    <!--网页logo设置-->
+    <link rel="icon" href="img/logo1.png">
 </head>
 
 <body>
-    <script src="js/concise.js"></script>
-    <script src="js/toolFunction.js"></script>
-    <script src="js/toolClass.js"></script>
-    <script src="js/ajax.js"></script>
-    <script src="js/userInformation.js"></script>
+    <!-----------头部----------->
+    <div class="header">
+        <!--左边logo-->
+        <div class="logo">
+        </div>
+        <!--右边返回主页-->
+        <div class="reindex">
+            <a href="index.html"></a>
+        </div>
+    </div>
+    <!------------- 个人情况----------- -->
+    <!-- 大框架 -->
+    <div class="personalBox">
+        <!-- 主要信息 -->
+        <div class="main_mes">
+            <!-- 个人 -->
+            <div class="person">
+                <!-- 头像 -->
+                <i class="head"></i>
+                <!-- 昵称 -->
+                <span class="name">决不互相甩锅队</span>
+                <!-- 等级 -->
+                <span class="rank">等级</span>
+            </div>
+            <!-- 关注 -->
+            <div class="attention">
+                <!-- 粉丝 -->
+                <span class="fans">粉丝数：<span>2</span></span>
+                <!-- 关注 -->
+                <span class="follow">关注数：<span>3</span></span>
+            </div>
+            <!-- 简介 -->
+            <div class="introduce">
+                <span>简介：</span><span class="intro_text">这个人很懒什么都没留下哈哈哈哈哈哈哈哈</span>
+            </div>
+        </div>
+        <div class="tree"></div>
+        </div>
+
+        <!-- -------------------参加过的项目----------------- -->
+        <div class="projectsBox">
+            <div class="projects">
+                <div class="backLogo">
+
+                </div>
+            </div>
+        </div>
+
+
+        <script src="js/concise.js"></script>
+        <script src="js/toolFunction.js"></script>
+        <script src="js/toolClass.js"></script>
+        <script src="js/ajax.js"></script>
+        <script src="js/userInformation.js"></script>
 </body>
 
 </html>

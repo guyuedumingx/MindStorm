@@ -58,11 +58,13 @@ body .header{
     height: 28px;
     margin-right: 10px;
     border-radius: 50px;
-    background-image: url(../img/public_help.png);
+    background-image: url(../img/message_q.png);
     background-repeat: no-repeat;
+    background-size: contain;
     background-position: center ;
 }
 .header .personal .message:hover{
+    background-image: url(../img/message.png);
     box-shadow:0px 0px 3px 0px #214B5B;
 }
 /*#endregion*/
