@@ -1183,11 +1183,13 @@ function isParent(node, parentNode) {
 function clickOpenBlankClose(button, box) {
     box.style.display = 'none';
     button.addEventListener('click', function () {
-        console.log(1);
-        box.style.display = 'block';
+        if (box.style.display == 'block') {
+            box.style.display = 'none';
+        } else {
+            box.style.display = 'block';
+        }
     });
     document.addEventListener('click', function (e) {
-        // console.log(1);
         e = e || window.event;
         if (!isParent(e.target, box) && e.target != button) {
             box.style.display = 'none';
