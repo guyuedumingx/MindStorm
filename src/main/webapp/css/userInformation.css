@@ -1,0 +1,164 @@
+/*#region--------------------- 头部--------------------- */
+/* 头部容器样式 */
+body .header{
+    position: fixed;
+    top: 0;
+    padding: 0 60px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+}
+/* logo位置 */
+.header .logo{
+    float: left;
+    margin-top: 6px;
+    width: 42px;
+    height: 42px;
+    background-image: url(../img/logo1.png);
+    background-size: contain;
+}
+/* 返回首页 */
+.header .reindex{
+    float: right;
+    margin-top: 12px;
+}
+.header .reindex a{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    background-image: url(../img/indexlogo_q.png);
+    background-position: center;
+    background-size: 34px;
+}
+.header .reindex a:hover{
+    background-image: url(../img/indexlogo.png);
+    box-shadow:0px 0px 3px 0px #214B5B;
+}
+/*#endregion*/
+/**#region------------个人情况----------- */
+body .emptyBox{
+    height: 60px;
+}
+/* 大框架 */
+body .personalBox{
+    position: relative;
+    display: block;
+    
+    background-color: #EEF7F2;
+}
+/* 容器居中 */
+.personalBox .main_mes{
+    display: table;
+    margin: 0 auto;
+}
+.personalBox .main_mes>div{
+    text-align: center;
+    margin: 20px 0;
+}
+.personalBox .main_mes>div>span{
+    display: inline-block;
+    margin: 0 15px;
+    letter-spacing: 2px;
+    vertical-align: middle; 
+    color: #214B5B;
+}
+/* 头像 */
+.personalBox .main_mes .head{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: solid;
+    border-radius: 50px;
+    vertical-align: middle;
+}
+/* 昵称 */
+.personalBox .main_mes .name{
+    font-size: 20px;
+    font-weight: bold;
+}
+/* 简介内容 */
+.personalBox .introduce .intro_text{
+    display: inline-block;
+    margin-left: -10px;
+    width: 320px;
+    vertical-align: middle; 
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+/* 树苗 */
+.tree{
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    bottom: -3px;
+    left:400px;
+    background: url(../img/tree.png) no-repeat  center;
+    background-size: contain;
+}
+
+/*#endregion*/
+/* #region---------参加过的项目 ---------------*/
+.projectsBox .projects{
+    border:solid #EEF7F2;
+    margin: 0 auto;
+    width: 770px;
+    height: 520px;
+} *
+/* 背景 */
+.projectsBox .projects .backLogo{
+    position: absolute;
+    width: 770px;
+    height: 40px;
+    background-image: url(../img/logo.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05;
+}
+/* 项目列表 */
+ .projectsBox .projectLi li{
+     padding:5px 15px;
+    margin: 20px auto;
+    width: 700px;
+    height: 70px;
+    color: #214B5B;
+    border: solid #6AC1ED 1px;
+    border-radius: 5px;
+} 
+.projectsBox .projectLi li .txt_name{
+    display:block;
+    margin-bottom: 3px;
+    font-weight: 600;
+}
+.projectsBox .projectLi li .txt{
+    font-size: 12px;
+    margin: auto;
+    width: 700px;
+    height: 30px;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box; 
+   -webkit-box-orient: vertical; 
+   -webkit-line-clamp: 2
+}
+.projectsBox .projectLi li .pro_date,.projectsBox .projectLi li .team_num{
+    vertical-align: middle;
+    font-size: 10px;
+    color: #2a2a2b;
+}
+
+.projectsBox .projectLi li i{
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 5px ;
+    width: 12px;
+    height: 12px;
+    background-image: url(../img/team.png);
+    background-size: contain;
+}
+.projectsBox .projectLi li .date{
+    background-image: url(../img/date.png);
+    margin-left: 0;
+}

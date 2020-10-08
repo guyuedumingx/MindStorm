@@ -12,21 +12,21 @@ window.onload = function () {
     var shotcutNav = getDom(".shortcut_nav");
 
     // <<<<<<< 原来的原生代码
-    shortcut.addEventListener("click", function () {
-        shotcutNav.style.display = "block";
-    })
-    // 点击消失
-    document.onclick = function (event) {
-        var event = event || window.event;
-        var target = event.target.className;
+    // shortcut.addEventListener("click", function () {
+    //     shotcutNav.style.display = "block";
+    // })
+    // // 点击消失
+    // document.onclick = function (event) {
+    //     var event = event || window.event;
+    //     var target = event.target.className;
 
-        // 看明白这个写法
-        if (target != "shortcutKey" && target != "shortcut_nav") { // 不等于当前点点击的名字
-            shotcutNav.style.display = "none";
-        }
-    }
+    //     // 看明白这个写法
+    //     if (target != "shortcutKey" && target != "shortcut_nav") { // 不等于当前点点击的名字
+    //         shotcutNav.style.display = "none";
+    //     }
+    // }
     // =======
-    // clickOpenBlankClose(shortcut, shotcutNav);
+    clickOpenBlankClose(shortcut, shotcutNav);
     // >>>>>>> 调用封装好的函数的代码
     var openBut = getDom(".openBut");
     var openX = 1;

@@ -58,11 +58,13 @@ body .header{
     height: 28px;
     margin-right: 10px;
     border-radius: 50px;
-    background-image: url(../img/public_help.png);
+    background-image: url(../img/message_q.png);
     background-repeat: no-repeat;
+    background-size: contain;
     background-position: center ;
 }
 .header .personal .message:hover{
+    background-image: url(../img/message.png);
     box-shadow:0px 0px 3px 0px #214B5B;
 }
 /*#endregion*/
@@ -75,12 +77,14 @@ body .mainBox{
 }
 /* 框框的盒子 */
 .mainBox .Box{
+    position: relative;
     display: table;
     margin: 0 auto;
     /* width: 728px;---56*4边距+4边线+250*2宽度-- */
 }
 /* 点击的框框 */
 .mainBox .Box>div{
+    animation:move 3s 0s ;
     display: inline-block;
     margin: 0 56px;
     border: solid 1px #6AC1ED;
@@ -89,13 +93,67 @@ body .mainBox{
 .mainBox .Box>div:hover{
     box-shadow: 0px 0px 20px 0px #6AC1ED;
 }
+/* 隐藏 */
+.mainBox .Box .est_bigBox,.mainBox .Box .join_bigBox{
+    display: none;
+}
 /* 链接 */
 .mainBox .Box .smallBox{
     display: inline-block;
     width: 250px;
     height: 300px;
     border-radius: 10px;
+    /* display: none; */
+}
+
+@keyframes move
+{
+	65%{ 
+	  -webkit-transform:rotate(0deg);
+	  transform:rotate(0deg);
+	}
+	0%, 70% {  
+	  -webkit-transform:rotate(6deg);
+	  transform:rotate(6deg);
+	}
+	75% {  
+	  -webkit-transform:rotate(-6deg);
+	  transform:rotate(-6deg);
+	}
+	80% {  
+	  -webkit-transform:rotate(6deg);
+	  transform:rotate(6deg);
+	}
+	85% {  
+	  -webkit-transform:rotate(-6deg);
+	  transform:rotate(-6deg);
+	}
+	90% {  
+	  -webkit-transform:rotate(6deg);
+	  transform:rotate(6deg);
+	}
+	95% {  
+	  -webkit-transform:rotate(-6deg);
+	  transform:rotate(-6deg);
+	}
+	100% {  
+	  -webkit-transform:rotate(0deg);
+	  transform:rotate(0deg);
+	}
+}
+/* 提示 */
+.mainBox .Box .smallBox .est_tips,.mainBox .Box .smallBox .join_tips{
+    position: absolute;
+    color: #b7c8ce;
+    letter-spacing: 10px;
+    font-weight: bold;
+    font-size: 36px;
+    top: -120px;
+    left: 280px;
     display: none;
+}
+.mainBox .Box .establish:hover .est_tips,.mainBox .Box .join:hover .join_tips{
+    display: block;
 }
 /* 图标 */
 .mainBox .Box .est_icon,.mainBox .Box .join_icon{
@@ -119,17 +177,23 @@ body .mainBox{
     display: none;
 } */
 .mainBox .Box .join_bigBox{
+    position: relative;
     width: 500px;
     height: 300px;
 }
+/* 标题 */
+.mainBox .Box .join_bigBox .join_til{
+    display: table;
+    margin: 30px auto 60px auto;
+    font-weight: bold;
+    font-size: 28px;
+    color: #101F30;
+}
 /* 输入盒子 */
 .mainBox .Box .join_bigBox .input_nav{
-    position: relative;
     border: solid;
-    top: 50%;
     width: 310px;
     margin: 0 auto;
-    transform: translateY(-50%);
     border: solid #517c8d;
     border-radius: 5px;
 }
@@ -157,27 +221,15 @@ body .mainBox{
 .mainBox .Box .join_bigBox .click_join:hover{
     background-image: url(../img/join_join.png);
 }
-/* 返回按钮 */
-.mainBox .Box .join_bigBox .back{
-    position: relative;
-    margin-top: 190px;
-    margin-left: 450px;
-    width: 28px;
-    height: 28px;
-    background-image: url(../img/back_q.png);
-    background-size: contain;
-}
-.mainBox .Box .join_bigBox .back:hover{
-    background-image: url(../img/back.png);
-}
+
 /* ----新建大盒子--- */
-.mainBox .Box .join{
+/* .mainBox .Box .join{
     display: none;
-}
+} */
 .mainBox .Box .est_bigBox{
     position: relative;
     width: 650px;
-    height: 420px;
+    height: 520px;
 }
 /* 位置 */
 .mainBox .est_bigBox>div{
@@ -186,6 +238,11 @@ body .mainBox{
     font-size: 20px;
     font-weight: bold;
     color: #214B5B;
+}
+/* 标题 */
+.mainBox .est_bigBox .est_til{
+    font-size: 28px;
+    color: #101F30;
 }
 /* 名称输入框 */
 .mainBox .Box .est_bigBox .project_name input{
@@ -219,16 +276,15 @@ body .mainBox{
 }
 .mainBox .Box .est_bigBox .choice span{
     display: inline-block;
+    margin-right: 20px;
     font-weight: normal;
     font-size: 16px;
 }
 .mainBox .Box .est_bigBox .choice i{
     display: inline-block;
+    margin-left: 5px;
 }
 /* 是否选择 */
-.mainBox .Box .est_bigBox .choice .open{
-    margin-right: 20px;
-}
 /* 按钮 */
 .mainBox .Box .est_bigBox .open .openBut{
     width: 28px;
@@ -258,7 +314,7 @@ body .mainBox{
     box-shadow:0px 0px 3px 0px #214B5B;
 }
 /* 返回按钮 */
-.mainBox .Box .est_bigBox .back{
+.mainBox .Box .back{
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -267,7 +323,7 @@ body .mainBox{
     background-image: url(../img/back_q.png);
     background-size:contain;
 }
-.mainBox .Box .est_bigBox .back:hover{
+.mainBox .Box .back:hover{
     background-image: url(../img/back.png);
 
 }
