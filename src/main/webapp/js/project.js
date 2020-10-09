@@ -20,3 +20,16 @@ introduceOpen.addEventListener('click', function () {
         introduceState = true;
     }
 });
+window.onload = function () {
+    ajax({
+        type: 'get',
+        url: '/project',
+        data: {
+            id: 0,
+            method: 'enterProject'
+        },
+        success: function (res) {
+
+        }
+    });
+}
