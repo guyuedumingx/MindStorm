@@ -32,6 +32,15 @@ public class EmailUtil {
         }
     }
 
+    public static int send(String sendFor, String to, String code){
+        if("register".equals(sendFor)){
+            return sendRegisterEmail(to,code);
+        }else if("chpwd".equals(sendFor)){
+            return sendChPasswordEmail(to, code);
+        }
+        return StatusCode.ERROR;
+    }
+
     public static int sendEmail(String to,String head,String content) {
         Properties props = new Properties();
         props.setProperty("mail.smtp.auth", "true");
