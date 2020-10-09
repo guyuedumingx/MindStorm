@@ -44,7 +44,6 @@ body .emptyBox{
 body .personalBox{
     position: relative;
     display: block;
-    
     background-color: #EEF7F2;
 }
 /* 容器居中 */
@@ -101,16 +100,34 @@ body .personalBox{
 /*#endregion*/
 /* #region---------参加过的项目 ---------------*/
 .projectsBox .projects{
+    position: relative;
     border:solid #EEF7F2;
     margin: 0 auto;
     width: 770px;
-    height: 520px;
-} *
+    height: 550px;
+} 
+.projectsBox .projects:hover .history{
+    animation: show 1s;
+    animation-fill-mode:forwards;
+}
+/* 历史记录标题 */
+.projectsBox .history{
+    position: absolute;
+    left: -50px;
+    top: 40%;
+    padding: 10px;
+    width: 30px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #EEF7F2;
+    color: #214B5B;
+    opacity: 0;
+}
 /* 背景 */
 .projectsBox .projects .backLogo{
     position: absolute;
     width: 770px;
-    height: 40px;
+    height: 550px;
     background-image: url(../img/logo.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -119,19 +136,22 @@ body .personalBox{
 }
 /* 项目列表 */
  .projectsBox .projectLi li{
-     padding:5px 15px;
+    padding:5px 15px;
     margin: 20px auto;
     width: 700px;
     height: 70px;
+    background-color: #f8fcfa;
     color: #214B5B;
-    border: solid #6AC1ED 1px;
+    /* border: solid #6AC1ED 1px; */
     border-radius: 5px;
 } 
+/* 标题 */
 .projectsBox .projectLi li .txt_name{
     display:block;
     margin-bottom: 3px;
     font-weight: 600;
 }
+/* 简介内容 */
 .projectsBox .projectLi li .txt{
     font-size: 12px;
     margin: auto;
@@ -143,12 +163,13 @@ body .personalBox{
    -webkit-box-orient: vertical; 
    -webkit-line-clamp: 2
 }
+/* 日期和人数 */
 .projectsBox .projectLi li .pro_date,.projectsBox .projectLi li .team_num{
     vertical-align: middle;
     font-size: 10px;
     color: #2a2a2b;
 }
-
+/* 小图标logo */
 .projectsBox .projectLi li i{
     vertical-align: middle;
     display: inline-block;
@@ -158,7 +179,10 @@ body .personalBox{
     background-image: url(../img/team.png);
     background-size: contain;
 }
+/* 日期logo */
 .projectsBox .projectLi li .date{
     background-image: url(../img/date.png);
     margin-left: 0;
 }
+
+

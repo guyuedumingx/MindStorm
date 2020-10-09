@@ -150,10 +150,11 @@ body .mainBox{
     font-size: 36px;
     top: -120px;
     left: 280px;
-    display: none;
+    opacity: 0;
 }
 .mainBox .Box .establish:hover .est_tips,.mainBox .Box .join:hover .join_tips{
-    display: block;
+    animation: show 1s;
+    animation-fill-mode:forwards;
 }
 /* 图标 */
 .mainBox .Box .est_icon,.mainBox .Box .join_icon{
