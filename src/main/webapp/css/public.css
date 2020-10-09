@@ -27,8 +27,10 @@ a {
     font-family: '华文新魏';
     transform: translate(-50%);
 }
+
 /* 设置祖先元素的高度 */
-html,body{
+html,
+body {
     height: 100%;
 }
 
