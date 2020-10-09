@@ -1,6 +1,6 @@
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
-body .header{
+body .header {
     position: fixed;
     top: 0;
     padding: 0 60px;
@@ -8,8 +8,9 @@ body .header{
     width: 100%;
     height: 60px;
 }
+
 /* logo位置 */
-.header .logo{
+.header .logo {
     float: left;
     margin-top: 6px;
     width: 42px;
@@ -17,12 +18,14 @@ body .header{
     background-image: url(../img/logo1.png);
     background-size: contain;
 }
+
 /* 返回首页 */
-.header .reindex{
+.header .reindex {
     float: right;
     margin-top: 12px;
 }
-.header .reindex a{
+
+.header .reindex a {
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -31,39 +34,46 @@ body .header{
     background-position: center;
     background-size: 34px;
 }
-.header .reindex a:hover{
+
+.header .reindex a:hover {
     background-image: url(../img/indexlogo.png);
-    box-shadow:0px 0px 3px 0px #214B5B;
+    box-shadow: 0px 0px 3px 0px #214B5B;
 }
+
 /*#endregion*/
 /**#region------------个人情况----------- */
-body .emptyBox{
+body .emptyBox {
     height: 60px;
 }
+
 /* 大框架 */
-body .personalBox{
+body .personalBox {
     position: relative;
     display: block;
     background-color: #EEF7F2;
 }
+
 /* 容器居中 */
-.personalBox .main_mes{
+.personalBox .main_mes {
     display: table;
     margin: 0 auto;
 }
-.personalBox .main_mes>div{
+
+.personalBox .main_mes>div {
     text-align: center;
     margin: 20px 0;
 }
-.personalBox .main_mes>div>span{
+
+.personalBox .main_mes>div>span {
     display: inline-block;
     margin: 0 15px;
     letter-spacing: 2px;
-    vertical-align: middle; 
+    vertical-align: middle;
     color: #214B5B;
 }
+
 /* 头像 */
-.personalBox .main_mes .head{
+.personalBox .main_mes .head {
     display: inline-block;
     width: 60px;
     height: 60px;
@@ -71,47 +81,52 @@ body .personalBox{
     border-radius: 50px;
     vertical-align: middle;
 }
+
 /* 昵称 */
-.personalBox .main_mes .name{
+.personalBox .main_mes .name {
     font-size: 20px;
     font-weight: bold;
 }
+
 /* 简介内容 */
-.personalBox .introduce .intro_text{
+.personalBox .introduce .intro_text {
     display: inline-block;
     margin-left: -10px;
     width: 320px;
-    vertical-align: middle; 
+    vertical-align: middle;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 /* 树苗 */
-.tree{
+.tree {
     position: absolute;
     width: 70px;
     height: 70px;
     bottom: -3px;
-    left:400px;
-    background: url(../img/tree.png) no-repeat  center;
+    left: 400px;
+    background: url(../img/tree.png) no-repeat center;
     background-size: contain;
 }
 
 /*#endregion*/
 /* #region---------参加过的项目 ---------------*/
-.projectsBox .projects{
+.projectsBox .projects {
     position: relative;
-    border:solid #EEF7F2;
+    border: solid #EEF7F2;
     margin: 0 auto;
     width: 770px;
     height: 550px;
-} 
-.projectsBox .projects:hover .history{
-    animation: show 1s;
-    animation-fill-mode:forwards;
 }
+
+.projectsBox .projects:hover .history {
+    animation: show 1s;
+    animation-fill-mode: forwards;
+}
+
 /* 历史记录标题 */
-.projectsBox .history{
+.projectsBox .history {
     position: absolute;
     left: -50px;
     top: 40%;
@@ -123,8 +138,9 @@ body .personalBox{
     color: #214B5B;
     opacity: 0;
 }
+
 /* 背景 */
-.projectsBox .projects .backLogo{
+.projectsBox .projects .backLogo {
     position: absolute;
     width: 770px;
     height: 550px;
@@ -133,10 +149,12 @@ body .personalBox{
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.05;
+    pointer-events: none;
 }
+
 /* 项目列表 */
- .projectsBox .projectLi li{
-    padding:5px 15px;
+.projectsBox .projectLi li {
+    padding: 5px 15px;
     margin: 20px auto;
     width: 700px;
     height: 70px;
@@ -144,45 +162,87 @@ body .personalBox{
     color: #214B5B;
     /* border: solid #6AC1ED 1px; */
     border-radius: 5px;
-} 
+}
+
 /* 标题 */
-.projectsBox .projectLi li .txt_name{
-    display:block;
+.projectsBox .projectLi li .txt_name {
+    display: block;
     margin-bottom: 3px;
     font-weight: 600;
 }
+
 /* 简介内容 */
-.projectsBox .projectLi li .txt{
+.projectsBox .projectLi li .txt {
     font-size: 12px;
     margin: auto;
     width: 700px;
     height: 30px;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    display: -webkit-box; 
-   -webkit-box-orient: vertical; 
-   -webkit-line-clamp: 2
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
 }
+
 /* 日期和人数 */
-.projectsBox .projectLi li .pro_date,.projectsBox .projectLi li .team_num{
+.projectsBox .projectLi li .pro_date,
+.projectsBox .projectLi li .team_num {
     vertical-align: middle;
     font-size: 10px;
     color: #2a2a2b;
 }
+
 /* 小图标logo */
-.projectsBox .projectLi li i{
+.projectsBox .projectLi li i {
     vertical-align: middle;
     display: inline-block;
-    margin: 0 5px ;
+    margin: 0 5px;
     width: 12px;
     height: 12px;
     background-image: url(../img/team.png);
     background-size: contain;
 }
+
 /* 日期logo */
-.projectsBox .projectLi li .date{
+.projectsBox .projectLi li .date {
     background-image: url(../img/date.png);
     margin-left: 0;
 }
-
-
+/* 分页----------- */
+.projectsBox .pagination{
+    display: table;
+    margin: 0 auto;
+}
+.projectsBox .pagination ul{
+    display: inline-block;
+    vertical-align: middle;
+}
+.projectsBox .pagination li{
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    border-radius: 50px;
+    font-size: 14px;
+    color: #214B5B;
+    text-align: center;
+    background-color: #f8fcfa;
+}
+.projectsBox .pagination span{
+    display: inline-block;
+    vertical-align: middle;
+    width: 22px;
+    height: 22px;
+    border-radius: 50px;
+    background-image: url(../img/left_q.png);
+    background-size: contain;
+}
+.projectsBox .pagination .rig{
+    background-image: url(../img//rig_q.png);
+}
+.projectsBox .pagination span:hover{
+    background-image: url(../img/left.png);
+}
+.projectsBox .pagination .rig:hover{
+    background-image: url(../img/rig.png);
+}

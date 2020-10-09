@@ -37,7 +37,7 @@ window.onload = function () {
         }
         else {
             openBut.style.backgroundImage = "url(./img/lamp_blue.png)";
-            openBut.style.boxShadow = "";
+            openBut.style.backgroundImage = "#214B5B";
         }
         openX++;
     })
