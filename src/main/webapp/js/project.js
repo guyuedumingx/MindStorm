@@ -1,6 +1,6 @@
 // ——————————————————右侧简介——————————————————
-var introduceOpen = getDom('.mainBoxRight .introduce a');
-var introduce = getDom('.mainBoxRight .introduce .introduceMain');
+var introduceOpen = getDom('.mainBoxLeft .introduce a');
+var introduce = getDom('.mainBoxLeft .introduce .introduceMain');
 var introduceP = introduce.getDom('p');
 var introduceState = false;
 var str = introduceP.innerHTML;
