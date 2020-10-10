@@ -6,8 +6,9 @@ body {
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {
-    position: fixed;
+    position: absolute;
     top: 0;
+    z-index: 100;
     min-width: 800px;
     padding: 0 60px;
     box-sizing: border-box;
@@ -282,6 +283,7 @@ body .header {
 .progressBar .projectName {
     position: absolute;
     top: -48px;
+    z-index: 101;
     left: 50%;
     font-size: 24px;
     font-weight: 700;
@@ -312,8 +314,8 @@ body .header {
     position: relative;
     width: 70%;
     height: 10px;
-    margin-top: 12.5px;
     border-radius: 7.5px;
+    margin-top: 12.5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     background-color: #fff;
     overflow: hidden;
@@ -322,6 +324,7 @@ body .header {
 .progressBar .progressBarTop .progressBox .progressContent {
     width: 70%;
     height: 100%;
+    border-radius: 7.5px;
     background-color: #214B5B;
 }
 

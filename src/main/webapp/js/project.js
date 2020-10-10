@@ -4,9 +4,7 @@ var introduce = getDom('.mainBoxLeft .introduce .introduceMain');
 var introduceP = introduce.getDom('p');
 var introduceState = false;
 var str = introduceP.innerHTML;
-var s = '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹';
-introduceP.innerText = s;
-
+var projectName = getDom('.progressBar .projectName');
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
         this.innerText = '展开';
@@ -20,6 +18,13 @@ introduceOpen.addEventListener('click', function () {
         introduceState = true;
     }
 });
+// projectName.style.top = window.pageYOffset - 48 + 'px';
+// window.addEventListener('scroll', function () {
+//     projectName.style.top = window.pageYOffset - 48 + 'px';
+//     // console.log(window.pageYOffset);
+// });
+// window.scroll(0, 1);
+// window.scroll(0, 0);
 window.onload = function () {
     ajax({
         type: 'get',
@@ -29,7 +34,8 @@ window.onload = function () {
             method: 'enterProject'
         },
         success: function (res) {
-            console.log(res);
+            introduceP.innerText = res.introdution;
+            projectName.innerText = res.name;
         }
     });
 }
