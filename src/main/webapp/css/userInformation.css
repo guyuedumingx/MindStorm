@@ -117,7 +117,7 @@ body .personalBox {
     border: solid #EEF7F2;
     margin: 0 auto;
     width: 770px;
-    height: 550px;
+    height: 450px;
 }
 
 .projectsBox .projects:hover .history {
@@ -126,24 +126,30 @@ body .personalBox {
 }
 
 /* 历史记录标题 */
-.projectsBox .history {
+.projectsBox .history,.projectsBox .fans_til,.projectsBox .follow_til {
     position: absolute;
     left: -50px;
-    top: 40%;
+    top: 5%;
     padding: 10px;
     width: 30px;
     text-align: center;
     border-radius: 5px;
     background-color: #EEF7F2;
     color: #214B5B;
-    opacity: 0;
+    opacity: 1;
+}
+.projectsBox .fans_til{
+    top: 42%;
+}
+.projectsBox .follow_til{
+    top: 70%;
 }
 
 /* 背景 */
 .projectsBox .projects .backLogo {
     position: absolute;
     width: 770px;
-    height: 550px;
+    height: 450px;
     background-image: url(../img/logo.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -208,41 +214,46 @@ body .personalBox {
     background-image: url(../img/date.png);
     margin-left: 0;
 }
-/* 分页----------- */
-.projectsBox .pagination{
+
+/* 分页 */
+.projectsBox .pagination {
     display: table;
     margin: 0 auto;
 }
-.projectsBox .pagination ul{
+/* 左右 */
+.projectsBox .pagination span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 22px;
+    height: 22px;
+    background-image: url(../img/left_q.png);
+    background-size: contain;
+}
+
+.projectsBox .pagination .rig {
+    background-image: url(../img/rig_q.png);
+}
+
+.projectsBox .pagination .rig:hover {
+    background-image: url(../img/rig.png);
+}
+
+.projectsBox .pagination .lef:hover {
+    background-image: url(../img/left.png);
+}
+/* 页数 */
+.projectsBox .pagination  ul{
     display: inline-block;
     vertical-align: middle;
 }
 .projectsBox .pagination li{
     float: left;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     margin: 0 10px;
-    border-radius: 50px;
-    font-size: 14px;
-    color: #214B5B;
     text-align: center;
-    background-color: #f8fcfa;
-}
-.projectsBox .pagination span{
-    display: inline-block;
-    vertical-align: middle;
-    width: 22px;
-    height: 22px;
+    font-size: 12px;
+    color: #214B5B;
     border-radius: 50px;
-    background-image: url(../img/left_q.png);
-    background-size: contain;
-}
-.projectsBox .pagination .rig{
-    background-image: url(../img//rig_q.png);
-}
-.projectsBox .pagination span:hover{
-    background-image: url(../img/left.png);
-}
-.projectsBox .pagination .rig:hover{
-    background-image: url(../img/rig.png);
+    border: solid 1px #6AC1ED;
 }

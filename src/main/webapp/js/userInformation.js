@@ -13,9 +13,9 @@ window.onload = function () {
             pArr[i].index = i;
             pArr[i].addEventListener("click", function () {
                 for (var j = 0; j < pArr.length; j++){
-                    pArr[j].style.backgroundColor = "";
+                    pArr[j].style.backgroundColor= "";
                 }
-                pArr[this.index].style.backgroundColor = "#D3E3DB";
+                pArr[this.index].style.backgroundColor = "#f8fcfa";
             })
         }
 

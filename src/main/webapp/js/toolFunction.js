@@ -10,16 +10,20 @@
 function addClass(node, theClass) {
     if (node) {
         var str = node.getAttribute('class');
-        var arr = str.split(' ');
-        var res = '';
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] == theClass) {
-                return node;
+        if (str) {
+            var arr = str.split(' ');
+            var res = '';
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == theClass) {
+                    return node;
+                }
+                res += arr[i] + ' ';
             }
-            res += arr[i] + ' ';
+            res += theClass;
+            node.setAttribute('class', res);
+        } else {
+            node.setAttribute('class', theClass);
         }
-        res += theClass;
-        node.setAttribute('class', res);
     }
     return node;
 }
@@ -61,21 +65,25 @@ function removeClass(node, theClass) {
 function toggleClass(node, theClass) {
     if (node) {
         var str = node.getAttribute('class');
-        var arr = str.split(' ');
-        var res = '';
-        var state = true;
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] == theClass) {
-                state = false;
-                continue;
+        if (str) {
+            var arr = str.split(' ');
+            var res = '';
+            var state = true;
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == theClass) {
+                    state = false;
+                    continue;
+                }
+                res += arr[i] + ' ';
             }
-            res += arr[i] + ' ';
+            if (state) {
+                res += theClass + ' ';
+            }
+            res = res.substring(0, res.length - 1);
+            node.setAttribute('class', res);
+        } else {
+            node.setAttribute('class', theClass);
         }
-        if (state) {
-            res += theClass + ' ';
-        }
-        res = res.substring(0, res.length - 1);
-        node.setAttribute('class', res);
     }
     return node;
 }
