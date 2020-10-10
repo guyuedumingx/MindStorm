@@ -29,7 +29,7 @@ window.onload = function () {
             method: 'enterProject'
         },
         success: function (res) {
-
+            console.log(res);
         }
     });
 }
