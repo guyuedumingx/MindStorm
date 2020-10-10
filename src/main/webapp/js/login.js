@@ -210,6 +210,7 @@ function registerGetVC(node) {
             url: '/util',
             data: {
                 email: node.value,
+                sendFor: 'register',
                 method: 'sendEmail',
             },
             success: function (res) {
