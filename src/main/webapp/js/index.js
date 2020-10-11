@@ -11,23 +11,10 @@ window.onload = function () {
     // 获取快捷键框
     var shotcutNav = getDom(".shortcut_nav");
 
-    // <<<<<<< 原来的原生代码
-    // shortcut.addEventListener("click", function () {
-    //     shotcutNav.style.display = "block";
-    // })
-    // // 点击消失
-    // document.onclick = function (event) {
-    //     var event = event || window.event;
-    //     var target = event.target.className;
-
-    //     // 看明白这个写法
-    //     if (target != "shortcutKey" && target != "shortcut_nav") { // 不等于当前点点击的名字
-    //         shotcutNav.style.display = "none";
-    //     }
-    // }
-    // =======
+    //快捷键显示
     clickOpenBlankClose(shortcut, shotcutNav);
-    // >>>>>>> 调用封装好的函数的代码
+
+    //是否公开
     var openBut = getDom(".openBut");
     var openX = 1;
     openBut.addEventListener("click", function () {
@@ -37,9 +24,41 @@ window.onload = function () {
         }
         else {
             openBut.style.backgroundImage = "url(./img/lamp_blue.png)";
-            openBut.style.backgroundImage = "#214B5B";
+            openBut.style.boxShadow = "";
         }
         openX++;
     })
+
+    //放大新建
+
+    // 获取新建盒子
+    var changeEst = getDom(".change_est");
+    // 获取加入盒子
+    var changeJoin = getDom(".change_join");
+    //获取新建输入大盒子
+    var estBig = getDom(".est_bigBox");
+    //获取加入盒子
+    var join = getDom(".join");
+
+    changeEst.addEventListener("click", function () {
+        changeEst.style.animation = "toBig 1s ease-in-out 0s forwards  normal";
+        changeJoin.style.animation = "toSmall 1s ease-in-out 0s forwards normal";
+        setTimeout(function () {
+            changeEst.style.display = "none";
+            join.style.display = "none";
+            estBig.style.display = "block";
+        }, 1000);
+    })
+
+    var back = getDom(".back");
+    back.addEventListener("click", function () {
+        changeEst.style.animation = "";
+        changeJoin.style.animation = "";
+        changeEst.style.display = "inline-block";
+            join.style.display = "inline-block";
+            estBig.style.display = "none";
+    })
+
+    
 
 }
