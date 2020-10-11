@@ -302,9 +302,11 @@ registerSubmit.addEventListener('click', function () {
             type: 'post',
             url: '/user',
             data: {
-                email: em,
-                user_name: userName,
-                password: psd,
+                obj: {
+                    email: em,
+                    user_name: userName,
+                    password: psd
+                },
                 method: 'register'
             },
             success: function (res) {
