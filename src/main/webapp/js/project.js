@@ -42,7 +42,7 @@ function onOffChange(onOff) {
         onOff.state = false;
         onOff.style.backgroundColor = '#2c3e50';
         onOff.children[0].style.left = '1.5px';
-        onOff.children[0].style.backgroundColor = '#34495e';
+        onOff.children[0].style.backgroundColor = ' #46607b';
         onOff.children[0].innerText = 'x';
     } else {
         onOff.state = true;
