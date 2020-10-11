@@ -89,6 +89,9 @@ body .header {
 }
 
 .mainBox {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
     width: 100%;
     height: 600px;
     padding: 0px 60px;
@@ -96,7 +99,7 @@ body .header {
 }
 
 .mainBox .mainBoxLeft {
-    float: left;
+    min-width: 180px;
     width: 20%;
     height: 100%;
 }
@@ -259,14 +262,13 @@ body .header {
     float: left;
     width: 70%;
     height: 100%;
+    padding-left: 10px;
 }
 
 .mainBoxMiddle .progressBar {
     position: relative;
-    width: 98%;
     height: 60px;
     border-radius: 5px;
-    margin-left: 2%;
     background-color: #f5f5f5;
 }
 
@@ -383,26 +385,40 @@ body .header {
 }
 
 .mainBoxMiddle .treeBox {
-    width: 98%;
     height: 530px;
     border-radius: 5px;
     margin-top: 10px;
-    margin-left: 2%;
     background-color: #f5f5f5;
 }
 
 .mainBox .mainBoxRight {
-    float: left;
-    width: 10%;
-    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 130px;
+    padding-left: 10px;
     box-sizing: border-box;
 }
 
-.mainBoxRight .controller {
-    width: 85%;
-    height: 100%;
+.mainBoxRight .projectLevel {
+    height: 60px;
     border-radius: 5px;
-    margin-left: 15%;
+    background-color: #f5f5f5;
+}
+
+.mainBoxRight .controller {
+    flex: 1;
+    height: 200px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #f5f5f5;
+}
+
+.mainBoxRight .nowNode {
+    height: 120px;
+    border-radius: 5px;
+    margin-top: 10px;
     background-color: #f5f5f5;
 }
 
