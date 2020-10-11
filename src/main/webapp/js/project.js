@@ -1,9 +1,17 @@
+// ——————————————————头部——————————————————
+// projectName.style.top = window.pageYOffset - 48 + 'px';
+// window.addEventListener('scroll', function () {
+//     projectName.style.top = window.pageYOffset - 48 + 'px';
+//     // console.log(window.pageYOffset);
+// });
+// window.scroll(0, 1);
+// window.scroll(0, 0);
+
 // ——————————————————左侧——————————————————
 var introduceOpen = getDom('.mainBoxLeft .introduce a'); // 项目简介展开的开关
 var introduce = getDom('.mainBoxLeft .introduce .introduceMain'); // 项目简介内容盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
-var projectName = getDom('.progressBar .projectName'); // 项目名
 
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
@@ -20,13 +28,10 @@ introduceOpen.addEventListener('click', function () {
     }
 });
 
-// projectName.style.top = window.pageYOffset - 48 + 'px';
-// window.addEventListener('scroll', function () {
-//     projectName.style.top = window.pageYOffset - 48 + 'px';
-//     // console.log(window.pageYOffset);
-// });
-// window.scroll(0, 1);
-// window.scroll(0, 0);
+// ——————————————————中间——————————————————
+var projectName = getDom('.progressBar .projectName'); // 项目名
+var creationDate = getDom('.progressBar .progressBarTop .creationDate');
+var closingDate = getDom('.progressBar .progressBarTop .closingDate');
 
 // ——————————————————有侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
@@ -66,6 +71,8 @@ window.onload = function () {
             introduceP.innerText = res.introdution;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
+            creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
+            closingDate.innerText = new Date(res.ddl).toLocaleDateString();
         }
     });
 }

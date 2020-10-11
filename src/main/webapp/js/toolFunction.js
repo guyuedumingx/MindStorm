@@ -1222,6 +1222,7 @@ Node.prototype.replaceClass = function (oldClass, newClass) {
  * 函数功能：使元素全屏显示
  * 
  * @param {*} node 要全屏显示的元素
+ * @author 60rzvvbj
  */
 function domFullScreen(node) {
     if (node.requestFullscreen) {
