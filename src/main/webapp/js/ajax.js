@@ -9,7 +9,7 @@
  * 传入的对象应满足此格式↓
  * ```js
  * {
- *      type: ('get'/'set'), // 请求方式
+ *      type: ('get'/'post'), // 请求方式
  *      url: '', // 请求地址(必填)
  *      data: {}, // 参数(对象形式)
  *      header: {}, // 请求头(对象形式)
@@ -45,7 +45,7 @@ function ajax(options) {
     parameter = parameter.substring(0, parameter.length - 1);
 
     // 判断请求方式，并根据请求方式做不同的处理
-    if (defaults.type == 'get') {
+    if (defaults.type != 'post') {
         defaults.url = defaults.url + '?' + parameter;
         xhr.open(defaults.type, defaults.url);
         xhr.send();

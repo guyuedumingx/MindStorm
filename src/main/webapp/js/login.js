@@ -246,7 +246,7 @@ function registerJudge() {
                 }
             } else {
                 if (registerVerificationCode.value == '请输入验证码') {
-                    reportError(registerVerificationCode, '请输入验证码码');
+                    reportError(registerVerificationCode, '请输入验证码');
                 } else if (!registerRealVerificationCode) {
                     reportError(registerVerificationCode, '验证码有误');
                 }
@@ -309,6 +309,9 @@ registerSubmit.addEventListener('click', function () {
                 },
                 method: 'register'
             },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
             success: function (res) {
                 if (res == '200') {
                     topAlert('注册成功');

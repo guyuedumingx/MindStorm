@@ -40,10 +40,16 @@ var onOffArr = getDomA('.onOffBox .onOff .onOffBorder');
 function onOffChange(onOff) {
     if (onOff.state) {
         onOff.state = false;
-        onOff.children[0].style.left = '0px';
+        onOff.style.backgroundColor = '#2c3e50';
+        onOff.children[0].style.left = '1.5px';
+        onOff.children[0].style.backgroundColor = ' #46607b';
+        onOff.children[0].innerText = 'x';
     } else {
         onOff.state = true;
-        onOff.children[0].style.left = '22px';
+        onOff.style.backgroundColor = '#16a085';
+        onOff.children[0].style.left = '23.5px';
+        onOff.children[0].style.backgroundColor = '#1abc9c';
+        onOff.children[0].innerText = '✔';
     }
 }
 
