@@ -27,6 +27,7 @@ public class Project extends BaseModel{
     private String deadline = "";
 
     public Project() {}
+    public Project(int id) {this.id = id;}
 
     public Project(int rank, int author, int headNodeId, boolean isPublic, String introduction, String name, String createTime, String deadline) {
         this.rank = rank;

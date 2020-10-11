@@ -32,6 +32,7 @@ public class UtilController extends BaseController {
       String email = request.getParameter("email");
       String sendFor = request.getParameter("sendFor");
       int statusCode = EmailUtil.send(sendFor,email, code);
+
       Result result = new Result();
       result.setStatus_code(statusCode);
       result.put("auth_code",code);

@@ -9,6 +9,8 @@ import common.annontation.DbField;
 public class Node extends BaseModel{
    @DbField("author_id")
    private int author;
+   @DbField("project_id")
+   private int projectId;
    private int star;
    @DbField("last_edit_id")
    private int lastEditId;
@@ -27,6 +29,9 @@ public class Node extends BaseModel{
    private String lastEditTime = "";
 
    public Node() {
+   }
+   public Node(int id) {
+      this.id = id;
    }
 
    public Node(int author, int lastEditId, int parentId, boolean editable, boolean nameless, String theme, String content) {
@@ -119,4 +124,11 @@ public class Node extends BaseModel{
       this.parentId = parentId;
    }
 
+   public int getProjectId() {
+      return projectId;
+   }
+
+   public void setProjectId(int projectId) {
+      this.projectId = projectId;
+   }
 }

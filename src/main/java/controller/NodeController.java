@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -22,6 +23,14 @@ import java.util.Map;
  */
 @WebServlet("/node")
 public class NodeController extends BaseController{
+    int userId = 0;
+    NodeService service = new NodeServiceImpl();
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        //获取用户id
+        HttpSession session = req.getSession();
+        userId = (Integer)session.getAttribute("user_id");
+    }
 
     /**
      * 新建节点
@@ -32,11 +41,12 @@ public class NodeController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Node node = WebUtil.getJson(req, Node.class);
-        NodeService service = new NodeServiceImpl();
-        int id = service.newNode(node);
-        int statusCode = StatusCode.isZero(id);
+        node.setAuthor(userId);
+        int nodeId = service.newNode(node);
+        int statusCode = StatusCode.isZero(nodeId);
+
         Result result = new Result();
-        result.put("node_id",id);
+        result.put("node_id",nodeId);
         result.setStatus_code(statusCode);
         WebUtil.renderJson(resp,result);
     }
@@ -49,7 +59,9 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        String nodeId = request.getParameter("nodeId");
+        int statusCode = service.delNode(Integer.valueOf(nodeId), userId);
+        WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
     /**
@@ -60,7 +72,9 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        Node node = WebUtil.getJson(request, Node.class);
+        int statusCode = service.chNode(node);
+        WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
     /**
@@ -71,7 +85,9 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        String nodeId = request.getParameter("nodeId");
+        Node node = service.getNode(Integer.valueOf(nodeId));
+        WebUtil.renderJson(response,node);
     }
 
     /**

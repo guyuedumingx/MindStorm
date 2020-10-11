@@ -1,5 +1,6 @@
 package controller;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,5 +44,17 @@ public class ProjectController extends BaseController{
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    }
+
+    /**
+     * 获取项目信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp);
     }
 }
