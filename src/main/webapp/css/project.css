@@ -1,12 +1,14 @@
-html {
+html,
+body {
     min-width: 800px;
 }
 
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {
-    position: fixed;
+    position: absolute;
     top: 0;
+    z-index: 100;
     min-width: 800px;
     padding: 0 60px;
     box-sizing: border-box;
@@ -87,6 +89,9 @@ body .header {
 }
 
 .mainBox {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
     width: 100%;
     height: 600px;
     padding: 0px 60px;
@@ -94,28 +99,170 @@ body .header {
 }
 
 .mainBox .mainBoxLeft {
-    float: left;
-    width: 10%;
+    min-width: 180px;
+    width: 20%;
     height: 100%;
-    box-sizing: border-box;
 }
 
-.mainBoxLeft .controller {
-    width: 85%;
-    height: 100%;
+.mainBoxLeft .creator {
+    width: 100%;
+    height: 60px;
     border-radius: 5px;
     background-color: #f5f5f5;
 }
 
+.mainBoxLeft .creator h4 {
+    padding: 0px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 60px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #214b5b;
+}
+
+.mainBoxLeft .creator h4 span {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.mainBoxLeft .introduce {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #f5f5f5;
+}
+
+.mainBoxLeft .introduce .introduceMain {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 5;
+    width: 100%;
+    height: 180px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    transition: height .5s;
+}
+
+.mainBoxLeft .introduce h4 {
+    padding: 10px 20px 0px;
+    font-size: 20px;
+    color: #214b5b;
+}
+
+.mainBoxLeft .introduce p {
+    height: calc(100% - 65px);
+    padding: 5px 20px 0px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 24px;
+    overflow: hidden;
+    color: #214b5b;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+}
+
+.mainBoxLeft .introduce a {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    font-size: 12px;
+    transform: translate(-50%, 0);
+}
+
+.mainBoxLeft .introduce a:hover {
+    color: #f00;
+}
+
+.mainBoxLeft .participant {
+    width: 100%;
+    height: 340px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #f5f5f5;
+}
+
+.mainBoxLeft .participant h4 {
+    padding: 10px 20px 0px;
+    font-size: 20px;
+    color: #214b5b;
+}
+
+.mainBoxLeft .participant ul {
+    height: 270px;
+    padding: 10px 20px 10px;
+    overflow: hidden;
+}
+
+.mainBoxLeft .participant ul li {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+}
+
+.participant ul li .userPhoto {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: skyblue;
+}
+
+.participant ul li .userName {
+    flex: 1;
+    height: 40px;
+    margin: 0px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 40px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #214B5B;
+    cursor: pointer;
+}
+
+.participant ul li:hover .userName {
+    color: #f00;
+}
+
+.participant ul li span {
+    width: 60px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: skyblue;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity .5s;
+}
+
+.participant ul li:hover span {
+    opacity: 1;
+}
+
 .mainBox .mainBoxMiddle {
-    float: left;
-    width: 70%;
+    flex: 1;
     height: 100%;
+    padding-left: 10px;
 }
 
 .mainBoxMiddle .progressBar {
     position: relative;
-    width: 98%;
     height: 60px;
     border-radius: 5px;
     background-color: #f5f5f5;
@@ -134,6 +281,7 @@ body .header {
 .progressBar .projectName {
     position: absolute;
     top: -48px;
+    z-index: 101;
     left: 50%;
     font-size: 24px;
     font-weight: 700;
@@ -164,8 +312,8 @@ body .header {
     position: relative;
     width: 70%;
     height: 10px;
-    margin-top: 12.5px;
     border-radius: 7.5px;
+    margin-top: 12.5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     background-color: #fff;
     overflow: hidden;
@@ -174,6 +322,7 @@ body .header {
 .progressBar .progressBarTop .progressBox .progressContent {
     width: 70%;
     height: 100%;
+    border-radius: 7.5px;
     background-color: #214B5B;
 }
 
@@ -188,7 +337,6 @@ body .header {
 }
 
 .progressBar .progressBarTop .progressBox .wave {
-    /* display: none; */
     position: absolute;
     top: -2.5px;
     left: 70%;
@@ -208,7 +356,6 @@ body .header {
     height: 100%;
     border-radius: 42% 46% 37% 40%;
     background-color: rgba(33, 75, 91, 0.7);
-    ;
     content: '';
 }
 
@@ -225,16 +372,15 @@ body .header {
 
 .progressBar .countDown {
     position: absolute;
-    bottom: 0px;
+    bottom: 5px;
     left: 50%;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     color: #214B5B;
     transform: translate(-50%, 0);
 }
 
 .mainBoxMiddle .treeBox {
-    width: 98%;
     height: 530px;
     border-radius: 5px;
     margin-top: 10px;
@@ -242,22 +388,24 @@ body .header {
 }
 
 .mainBox .mainBoxRight {
-    float: left;
-    width: 20%;
-    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 130px;
+    padding-left: 10px;
+    box-sizing: border-box;
 }
 
-.mainBoxRight .creator {
-    width: 100%;
+.mainBoxRight .projectLevel {
     height: 60px;
     border-radius: 5px;
     background-color: #f5f5f5;
 }
 
-.mainBoxRight .creator h4 {
+.mainBoxRight .projectLevel h4 {
     padding: 0px 20px;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 14px;
     line-height: 60px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -265,140 +413,171 @@ body .header {
     color: #214b5b;
 }
 
-.mainBoxRight .creator h4 span {
-    font-weight: 700;
-    font-size: 20px;
+.mainBoxRight .projectLevel h4 span {
+    font-size: 16px;
+    color: rgb(255, 167, 15);
 }
 
-.mainBoxRight .introduce {
-    position: relative;
-    width: 100%;
-    height: 180px;
+.mainBoxRight .controller {
+    flex: 1;
+    height: 200px;
     border-radius: 5px;
     margin-top: 10px;
     background-color: #f5f5f5;
 }
 
-.mainBoxRight .introduce .introduceMain {
+.mainBoxRight .controller .btnBox {
+    width: 27px;
+    height: 195px;
+    margin: 0px auto;
+}
+
+.mainBoxRight .controller .btnBox .btn {
+    position: relative;
+    width: 27px;
+    height: 27px;
+    border-radius: 13.5px;
+    margin-top: 12px;
+    text-align: center;
+    line-height: 27px;
+    color: #fff;
+    background-color: #aaa;
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+.mainBoxRight .controller .btnBox .btn:hover {
+    background-color: #666;
+}
+
+@keyframes btnTipsDisplay {
+    0% {
+        transform: scale(0.5, 0.5);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.mainBoxRight .controller .btnBox .btn .btnTips {
+    display: none;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 5;
-    width: 100%;
-    height: 180px;
-    border-radius: 5px;
-    background-color: #f5f5f5;
-    transition: height .5s;
-}
-
-.mainBoxRight .introduce h4 {
-    padding: 10px 20px 0px;
-    font-size: 20px;
-    color: #214b5b;
-}
-
-.mainBoxRight .introduce p {
-    height: calc(100% - 65px);
-    padding: 5px 20px 0px;
-    font-size: 14px;
-    letter-spacing: 2px;
-    line-height: 24px;
-    overflow: hidden;
-    color: #214b5b;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
-    overflow: hidden;
-}
-
-.mainBoxRight .introduce a {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
+    top: 3px;
+    left: 35px;
+    width: 60px;
+    height: 20px;
     font-size: 12px;
-    transform: translate(-50%, 0);
-}
-
-.mainBoxRight .introduce a:hover {
-    color: #f00;
-}
-
-.mainBoxRight .participant {
-    width: 100%;
-    height: 340px;
+    line-height: 20px;
     border-radius: 5px;
-    margin-top: 10px;
-    background-color: #f5f5f5;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    color: #214B5B;
+    background-color: #fff;
+    animation-name: btnTipsDisplay;
+    animation-duration: .2s;
 }
 
-.mainBoxRight .participant h4 {
-    padding: 10px 20px 0px;
-    font-size: 20px;
-    color: #214b5b;
+.mainBoxRight .controller .btnBox .btn:hover .btnTips {
+    display: block;
 }
 
-.mainBoxRight .participant ul {
-    height: 270px;
-    padding: 10px 20px 10px;
+.btnBox .btn .btnTips::before {
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-right-color: #ccc;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.btnBox .btn .btnTips::after {
+    position: absolute;
+    top: 50%;
+    left: -4px;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-right-color: #fff;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.mainBoxRight .controller .onOffBox {
+    width: 100%;
+    height: 180px;
+    margin: 12px auto;
     overflow: hidden;
 }
 
-.mainBoxRight .participant ul li {
-    position: relative;
+.mainBoxRight .controller .onOffBox .onOff {
     width: 100%;
-    height: 40px;
-    padding-left: 35px;
-    border-radius: 5px;
-    margin-bottom: 8px;
+    height: 60px;
+    padding-top: 20px;
     box-sizing: border-box;
 }
 
-.participant ul li .userPhoto {
-    position: absolute;
-    top: 5px;
-    left: 0px;
-    width: 30px;
-    height: 30px;
-    border-radius: 20px;
-    background-color: skyblue;
-}
-
-.participant ul li .userName {
-    width: 68%;
-    height: 40px;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 40px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    color: #214B5B;
-    cursor: pointer;
-}
-
-.participant ul li:hover .userName {
-    color: #f00;
-}
-
-.participant ul li span {
-    position: absolute;
-    top: 8px;
-    right: 0px;
-    width: 60px;
-    height: 24px;
-    font-size: 14px;
-    line-height: 24px;
+.onOffBox .onOff .onOffTips {
+    width: 100%;
+    height: 12px;
+    font-size: 12px;
     text-align: center;
-    color: #fff;
-    background-color: skyblue;
-    opacity: 0;
-    cursor: pointer;
-    transition: opacity .5s;
+    line-height: 12px;
+    color: #214B5B;
 }
 
-.participant ul li:hover span {
-    opacity: 1;
+.onOffBox .onOff .onOffBorder {
+    position: relative;
+    width: 40px;
+    height: 18px;
+    border: 1.5px solid #aaa;
+    border-radius: 9px;
+    margin: 5px auto 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: #ccc;
+    transition: left .3s;
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod::before {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    width: 40px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: rgb(0, 150, 0);
+    content: '';
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod::after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: #fff;
+    content: '';
+}
+
+.mainBoxRight .nowNode {
+    height: 120px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #f5f5f5;
 }
 
 /*#endregion*/

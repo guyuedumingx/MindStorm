@@ -210,6 +210,7 @@ function registerGetVC(node) {
             url: '/util',
             data: {
                 email: node.value,
+                sendFor: 'register',
                 method: 'sendEmail',
             },
             success: function (res) {
@@ -301,9 +302,11 @@ registerSubmit.addEventListener('click', function () {
             type: 'post',
             url: '/user',
             data: {
-                email: em,
-                user_name: userName,
-                password: psd,
+                obj: {
+                    email: em,
+                    user_name: userName,
+                    password: psd
+                },
                 method: 'register'
             },
             success: function (res) {

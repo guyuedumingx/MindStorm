@@ -1216,3 +1216,20 @@ Node.prototype.toggleClass = function (theClass) {
 Node.prototype.replaceClass = function (oldClass, newClass) {
     return replaceClass(this, oldClass, newClass);
 }
+
+/**
+ * 
+ * 函数功能：使元素全屏显示
+ * 
+ * @param {*} node 要全屏显示的元素
+ * @author 60rzvvbj
+ */
+function domFullScreen(node) {
+    if (node.requestFullscreen) {
+        node.requestFullscreen();
+    } else if (node.mozRequestFullScreen) {
+        node.mozRequestFullScreen();
+    } else if (node.webkitRequestFullScreen) {
+        node.webkitRequestFullScreen();
+    }
+}

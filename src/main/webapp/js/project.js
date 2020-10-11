@@ -1,12 +1,19 @@
-// ——————————————————右侧简介——————————————————
-var introduceOpen = getDom('.mainBoxRight .introduce a');
-var introduce = getDom('.mainBoxRight .introduce .introduceMain');
-var introduceP = introduce.getDom('p');
-var introduceState = false;
-var str = introduceP.innerHTML;
-var s = '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹';
-introduceP.innerText = s;
+// ——————————————————头部——————————————————
+// projectName.style.top = window.pageYOffset - 48 + 'px';
+// window.addEventListener('scroll', function () {
+//     projectName.style.top = window.pageYOffset - 48 + 'px';
+//     // console.log(window.pageYOffset);
+// });
+// window.scroll(0, 1);
+// window.scroll(0, 0);
 
+// ——————————————————左侧——————————————————
+var introduceOpen = getDom('.mainBoxLeft .introduce a'); // 项目简介展开的开关
+var introduce = getDom('.mainBoxLeft .introduce .introduceMain'); // 项目简介内容盒子
+var introduceP = introduce.getDom('p'); // 项目简介内容
+var introduceState = false; // 项目简介展开状态
+
+// 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
         this.innerText = '展开';
@@ -20,6 +27,38 @@ introduceOpen.addEventListener('click', function () {
         introduceState = true;
     }
 });
+
+// ——————————————————中间——————————————————
+var projectName = getDom('.progressBar .projectName'); // 项目名
+var creationDate = getDom('.progressBar .progressBarTop .creationDate');
+var closingDate = getDom('.progressBar .progressBarTop .closingDate');
+
+// ——————————————————有侧—————————————————— 
+var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
+var onOffArr = getDomA('.onOffBox .onOff .onOffBorder');
+
+function onOffChange(onOff) {
+    if (onOff.state) {
+        onOff.state = false;
+        onOff.children[0].style.left = '0px';
+    } else {
+        onOff.state = true;
+        onOff.children[0].style.left = '22px';
+    }
+}
+
+function setOnOffEvent(onOff) {
+    onOff.state = false;
+    onOff.addEventListener('click', function () {
+        onOffChange(this);
+    });
+}
+
+for (var i = 0; i < onOffArr.length; i++) {
+    setOnOffEvent(onOffArr[i]);
+}
+
+// ——————————页面加载完之后发送请求——————————
 window.onload = function () {
     ajax({
         type: 'get',
@@ -29,7 +68,11 @@ window.onload = function () {
             method: 'enterProject'
         },
         success: function (res) {
-
+            introduceP.innerText = res.introdution;
+            projectName.innerText = res.name;
+            projectLevel.innerText = res.rank;
+            creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
+            closingDate.innerText = new Date(res.ddl).toLocaleDateString();
         }
     });
 }
