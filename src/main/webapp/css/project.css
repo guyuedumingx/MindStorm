@@ -430,10 +430,10 @@ body .header {
     width: 27px;
     height: 195px;
     margin: 0px auto;
-    overflow: hidden;
 }
 
 .mainBoxRight .controller .btnBox .btn {
+    position: relative;
     width: 27px;
     height: 27px;
     border-radius: 13.5px;
@@ -448,6 +448,61 @@ body .header {
 
 .mainBoxRight .controller .btnBox .btn:hover {
     background-color: #666;
+}
+
+@keyframes btnTipsDisplay {
+    0% {
+        transform: scale(0.5, 0.5);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.mainBoxRight .controller .btnBox .btn .btnTips {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 35px;
+    width: 60px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    color: #214B5B;
+    background-color: #fff;
+    animation-name: btnTipsDisplay;
+    animation-duration: .2s;
+}
+
+.mainBoxRight .controller .btnBox .btn:hover .btnTips {
+    display: block;
+}
+
+.btnBox .btn .btnTips::before {
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-right-color: #ccc;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.btnBox .btn .btnTips::after {
+    position: absolute;
+    top: 50%;
+    left: -4px;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-right-color: #fff;
+    transform: translate(-50%, -50%);
+    content: '';
 }
 
 .mainBoxRight .controller .onOffBox {
@@ -494,10 +549,6 @@ body .header {
     border-radius: 7.5px;
     background-color: #ccc;
     transition: left .3s;
-}
-
-.onOffBox .onOff .onOffBorder .onOffRod:hover {
-    left: 22px;
 }
 
 .onOffBox .onOff .onOffBorder .onOffRod::before {
