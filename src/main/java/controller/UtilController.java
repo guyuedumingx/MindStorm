@@ -8,7 +8,6 @@ import common.util.WebUtil;
 import pojo.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +26,9 @@ public class UtilController extends BaseController {
       String sendFor = request.getParameter("sendFor");
       int statusCode = EmailUtil.send(sendFor,email, code);
       Result result = new Result();
-      result.put("status_code",statusCode+"");
+      result.setStatus_code(statusCode);
       result.put("auth_code",code);
-      WebUtil.renderJson(response,result.getMap());
+      WebUtil.renderJson(response,result);
    }
 
    /**

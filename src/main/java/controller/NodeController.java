@@ -35,8 +35,8 @@ public class NodeController extends BaseController{
         int statusCode = StatusCode.isZero(id);
         Result result = new Result();
         result.put("node_id",id);
-        result.put("status_code",statusCode);
-        WebUtil.renderJson(response,result.getMap());
+        result.setStatus_code(statusCode);
+        WebUtil.renderJson(response,result);
     }
 
     /**

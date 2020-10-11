@@ -27,7 +27,7 @@ public class UserController extends BaseController{
         UserService userService = new UserServiceImpl();
         User register = userService.register(usr);
         int i = StatusCode.nullObjcet(register);
-        WebUtil.renderText(response,i+"");
+        WebUtil.renderMap(response,"status_code",i+"");
     }
 
     /**

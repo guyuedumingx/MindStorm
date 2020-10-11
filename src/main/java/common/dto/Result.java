@@ -1,23 +1,18 @@
 package common.dto;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 返回
  * @author yohoyes
  */
-public class Result {
-    private Map<String,String> map = new HashMap<String, String>();
-    public void put(String key, String value) {
-        map.put(key,value);
+public class Result extends HashMap<String,String>{
+
+    public void setStatus_code(int statusCode) {
+        this.put("status_code",statusCode+"");
     }
 
-    public void put(String key, int value) {
-        map.put(key,value+"");
-    }
-
-    public Map<String, String> getMap() {
-        return map;
+    public String put(String key, int value) {
+        return super.put(key, value+"");
     }
 }
