@@ -426,6 +426,102 @@ body .header {
     background-color: #f5f5f5;
 }
 
+.mainBoxRight .controller .btnBox {
+    width: 27px;
+    height: 195px;
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+.mainBoxRight .controller .btnBox .btn {
+    width: 27px;
+    height: 27px;
+    border-radius: 13.5px;
+    margin-top: 12px;
+    text-align: center;
+    line-height: 27px;
+    color: #fff;
+    background-color: #aaa;
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+.mainBoxRight .controller .btnBox .btn:hover {
+    background-color: #666;
+}
+
+.mainBoxRight .controller .onOffBox {
+    width: 100%;
+    height: 180px;
+    margin: 12px auto;
+    overflow: hidden;
+}
+
+.mainBoxRight .controller .onOffBox .onOff {
+    width: 100%;
+    height: 60px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.onOffBox .onOff .onOffTips {
+    width: 100%;
+    height: 12px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 12px;
+    color: #214B5B;
+}
+
+.onOffBox .onOff .onOffBorder {
+    position: relative;
+    width: 40px;
+    height: 18px;
+    border: 1.5px solid #aaa;
+    border-radius: 9px;
+    margin: 5px auto 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: #ccc;
+    transition: left .3s;
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod:hover {
+    left: 22px;
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod::before {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    width: 40px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: rgb(0, 150, 0);
+    content: '';
+}
+
+.onOffBox .onOff .onOffBorder .onOffRod::after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: #fff;
+    content: '';
+}
+
 .mainBoxRight .nowNode {
     height: 120px;
     border-radius: 5px;
