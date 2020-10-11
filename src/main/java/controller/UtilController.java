@@ -20,7 +20,14 @@ import java.io.IOException;
 @WebServlet("/util")
 public class UtilController extends BaseController {
 
-   public void sendEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+   /**
+    * 发送邮件
+    * @param request
+    * @param response
+    * @throws IOException
+    */
+   @Override
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String code = AuthCodeUtil.getAuthCodeUtil();
       String email = request.getParameter("email");
       String sendFor = request.getParameter("sendFor");
@@ -37,7 +44,8 @@ public class UtilController extends BaseController {
     * @param response
     * @throws IOException
     */
-   public void isExist(HttpServletRequest request, HttpServletResponse response) throws IOException {
+   @Override
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String email = request.getParameter("email");
       UserService service = new UserServiceImpl();
       User user = service.getUser(email);

@@ -9,6 +9,7 @@ import pojo.Node;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,19 +25,20 @@ public class NodeController extends BaseController{
 
     /**
      * 新建节点
-     * @param request
-     * @param response
+     * @param req
+     * @param resp
      * @throws IOException
      */
-    public void newNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Node node = WebUtil.getJson(request, Node.class);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Node node = WebUtil.getJson(req, Node.class);
         NodeService service = new NodeServiceImpl();
         int id = service.newNode(node);
         int statusCode = StatusCode.isZero(id);
         Result result = new Result();
         result.put("node_id",id);
         result.setStatus_code(statusCode);
-        WebUtil.renderJson(response,result);
+        WebUtil.renderJson(resp,result);
     }
 
     /**
@@ -45,7 +47,8 @@ public class NodeController extends BaseController{
      * @param response
      * @throws IOException
      */
-    public void delNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
 
@@ -55,7 +58,8 @@ public class NodeController extends BaseController{
      * @param response
      * @throws IOException
      */
-    public void chNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
 
@@ -65,7 +69,8 @@ public class NodeController extends BaseController{
      * @param response
      * @throws IOException
      */
-    public void getNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
 

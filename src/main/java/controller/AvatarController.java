@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 负责处理有关项目的请求
+ * 负责用户头像
  * @author yohoyes
  */
-@WebServlet("/project")
-public class ProjectController extends BaseController{
+@WebServlet("/user/avatar")
+public class AvatarController extends BaseController {
 
     /**
-     * 新建项目
+     * 设置头像
      * @param request
      * @param response
      * @throws IOException
@@ -24,24 +24,13 @@ public class ProjectController extends BaseController{
     }
 
     /**
-     * 进入项目
+     * 获取头像
      * @param request
      * @param response
      * @throws IOException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    }
-
-    /**
-     * 删除项目
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
 }
