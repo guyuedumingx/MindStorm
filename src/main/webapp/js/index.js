@@ -88,7 +88,7 @@ window.onload = function () {
     // 获取输入id框
     var inputID = getDom(".inputID");
 
-    inputTips(inputID, "请输入项目ID")
+    inputTips(inputID, "请输入项目ID","idTips");
 
     
 

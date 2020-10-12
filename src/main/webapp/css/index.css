@@ -50,11 +50,14 @@ body .header {
     border: solid #214B5B;
 }
 .header .personal .spinner ul{
-    font-size: 14px;
+    margin: 10px;
     text-align: center;
+    font-size: 14px;
 }
 .header .personal .spinner ul li{
-    margin: 10px 20px;
+    display: inline-block;
+    padding: 2px;
+    line-height: 20px;
 }
 /* 头像 */
 .header .personal .head {
@@ -226,8 +229,8 @@ body .mainBox {
     border-radius: 5px;
 }
 
-.inputTips {
-    font-size: 20px;
+.idTips{
+    font-size: 16px;
     color: #999999;
 }
 
