@@ -1130,34 +1130,41 @@ function topAlert(str) {
  * 
  * @param {Node} input input标签
  * @param {string} tipsText 提示文字
+ * @param {string} className 提示文字对应的样式类名
  * @author 60rzvvbj
  */
-function inputTips(input, tipsText) {
+function inputTips(input, tipsText, className) {
     if (input.type == 'password') {
         input.value = tipsText;
         input.type = 'text';
+        input.addClass(className);
         input.addEventListener('focus', function () {
             if (input.value == tipsText) {
                 input.value = '';
                 input.type = 'password';
+                input.removeClass(className);
             }
         });
         input.addEventListener('blur', function () {
             if (input.value == '') {
                 input.value = tipsText;
                 input.type = 'text';
+                input.addClass(className);
             }
         });
     } else {
         input.value = tipsText;
+        input.addClass(className);
         input.addEventListener('focus', function () {
             if (input.value == tipsText) {
                 input.value = '';
+                input.removeClass(className);
             }
         });
         input.addEventListener('blur', function () {
             if (input.value == '') {
                 input.value = tipsText;
+                input.addClass(className);
             }
         });
     }
@@ -1233,3 +1240,19 @@ function domFullScreen(node) {
         node.webkitRequestFullScreen();
     }
 }
+
+/**
+ * 
+ * 函数功能：退出全屏
+ * 
+ * @author 60rzvvbj
+ */
+function cancelFullscreen() {
+    if (document.cancelFullScreen) {
+        document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen();
+    }
+};
