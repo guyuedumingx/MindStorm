@@ -88,8 +88,17 @@ window.onload = function () {
     // 获取输入id框
     var inputID = getDom(".inputID");
 
-    inputTips(inputID, "请输入项目ID","idTips");
+    inputTips(inputID, "请输入项目ID", "idTips");
+    
+    //个人下拉框
+    //获取下拉框
+    var spinner = getDom(".spinner");
+    //获取个人框
+    var headNav = getDom(".head_nav");
+    clickOpenBlankClose(headNav, spinner);
 
     
+    
 
+    
 }
