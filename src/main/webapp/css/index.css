@@ -97,13 +97,10 @@ body .mainBox {
 .mainBox .Box>div {
     display: inline-block;
     margin: 0 56px;
-    border: solid 1px #6AC1ED;
-    border-radius: 10px;
+
 }
 
-.mainBox .Box>div:hover {
-    box-shadow: 0px 0px 20px 0px #6AC1ED;
-}
+
 
 /* 隐藏 */
 .mainBox .Box .est_bigBox,
@@ -116,10 +113,14 @@ body .mainBox {
     display: inline-block;
     width: 250px;
     height: 300px;
-    border-radius: 10px;
-    /* display: none; */
 }
-
+.mainBox .Box>div>div{
+     border: solid 1px #6AC1ED;
+    border-radius: 10px;
+}
+.mainBox .Box>div>div:hover {
+    box-shadow: 0px 0px 20px 0px #6AC1ED;
+}
 
 /* 提示 */
 .mainBox .Box .smallBox .est_tips,
@@ -146,11 +147,13 @@ body .mainBox {
     position: relative;
     display: block;
     top: 50%;
-    width: 100px;
-    height: 100px;
+    width: 40%;
+    height: 32%;
     margin: 0 auto;
     transform: translateY(-50%);
     background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
 }
 
 .mainBox .Box .establish .est_icon {
@@ -336,6 +339,38 @@ body .mainBox {
 .mainBox .Box .back:hover {
     background-image: url(../img/back.png);
 
+}
+
+/* ----------显示新建大盒子------- */
+.mainBox .Box .smallBox {
+    transition: width 3s;
+}
+
+/* .mainBox .Box .change_est{
+    animation: toBig 1.3s ease-in-out 0s forwards alternate;
+}
+.mainBox .Box .change_join{
+    animation: toSmall 1.3s ease-in-out 0s forwards alternate;
+} */
+@keyframes toBig{
+    0%{
+        width: 250px;
+        height: 300px;
+    }
+    99%{
+        width: 650px;
+        height: 520px;
+    }
+}
+@keyframes toSmall{
+    0%{
+        width: 250px;
+        height: 300px;
+    }
+    99%{
+        width: 0px;
+        height: 00px;
+    }
 }
 
 /*#endregion*/
