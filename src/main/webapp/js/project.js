@@ -34,7 +34,10 @@ introduceOpen.addEventListener('click', function () {
 var projectName = getDom('.progressBar .projectName'); // 项目名
 var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创建日期
 var closingDate = getDom('.progressBar .progressBarTop .closingDate'); // 截止日期
-var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子
+var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
+var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+
+
 var f = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
 f.addEventListener('click', function () {
     domFullScreen(treeBox);
@@ -59,12 +62,22 @@ var boundaryMinLength = 100; //边界约束中和边界的最小距离
 
 // 鼠标拖动的函数
 function move(e) {
-    var cx = e.clientX - treeBox.offsetLeft;
-    var cy = e.clientY - treeBox.offsetTop;
+    // var cx = e.clientX - treeBox.offsetLeft;
+    // var cy = e.clientY - treeBox.offsetTop;
+
+    // var cx = e.clientX - treeBox.offsetLeft + treeBoxMain.offsetLeft;
+    // var cy = e.clientY - treeBox.offsetTop + treeBoxMain.offsetTop;
+    // console.log(treeBoxMain.offsetLeft);
+    var cx = e.clientX;
+    var cy = e.clientY;
+    // console.log(mx);
+    // console.log(cx);
     nowNode.x = nowNode.x + cx - mx;
     nowNode.y = nowNode.y + cy - my;
-    mx = nowNode.x;
-    my = nowNode.y;
+    // mx = nowNode.x;
+    // my = nowNode.y;
+    mx = cx;
+    my = cy;
 }
 
 function addHeightLight(node) {
@@ -90,7 +103,7 @@ function changeChild(node, fun) {
 // 添加线的函数
 function setline(node1, node2) {
     try {
-        treeBox.removeChild(node1.line);
+        treeBoxMain.removeChild(node1.line);
     } catch (e) {}
     node1.line = document.createElement('div');
     var x1 = node1.offsetLeft + node1.offsetWidth / 2;
@@ -112,7 +125,7 @@ function setline(node1, node2) {
     node1.line.style.backgroundColor = node1.lineColor;
     node1.line.style.zIndex = node1.lineZIndex;
     node1.line.style.boxShadow = '0px 0px 8px ' + node1.lineColor;
-    treeBox.appendChild(node1.line);
+    treeBoxMain.appendChild(node1.line);
 }
 
 function setPosition(node) {
@@ -249,8 +262,10 @@ function addTreeConstraint(root, n) {
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
-        mx = e.clientX - treeBox.offsetLeft;
-        my = e.clientY - treeBox.offsetTop;
+        // mx = e.clientX - treeBox.offsetLeft + treeBoxMain.offsetLeft;
+        // my = e.clientY - treeBox.offsetTop + treeBoxMain.offsetTop;
+        mx = e.clientX;
+        my = e.clientY;
         nowNode = this;
         nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
         var t = nowNode;
@@ -313,7 +328,7 @@ function createTree(node) {
     node.line = document.createElement('div');
     node.lineColor = lineUpColor;
     node.lineZIndex = 0;
-    treeBox.appendChild(node);
+    treeBoxMain.appendChild(node);
     ajax({
         type: 'get',
         url: '/node',
