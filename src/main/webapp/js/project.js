@@ -46,6 +46,8 @@ introduceOpen.addEventListener('click', function () {
 var projectName = getDom('.progressBar .projectName'); // 项目名
 var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创建日期
 var closingDate = getDom('.progressBar .progressBarTop .closingDate'); // 截止日期
+var progressContent = getDom('.progressBox .progressContent'); // 进图条盒子
+var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
 
@@ -445,6 +447,9 @@ window.onload = function () {
             projectLevel.innerText = res.rank;
             creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
             closingDate.innerText = new Date(res.ddl).toLocaleDateString();
+            var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
+            progressContent.style.width = progress + '%';
+            progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);
         }
     });
