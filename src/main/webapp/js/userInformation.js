@@ -1,10 +1,7 @@
-// 引入工具类js
-document.write("<script language='javascript' src='js/concise.js'></script>");
-document.write("<script language='javascript' src='js/toolFunction.js'></script>");
-document.write("<script language='javascript' src='js/ajax.js'></script>");
-document.write("<script language='javascript' src='js/toolClass.js'></script>");
+var tool = new Tool(document, window);
+tool.textProhibition();
 
-window.onload = function () {
+
     var pagination = getDom(".pagination");
 
     var pArr = pagination.getDomA("li");
@@ -19,4 +16,4 @@ window.onload = function () {
             })
         }
 
- }
+ 

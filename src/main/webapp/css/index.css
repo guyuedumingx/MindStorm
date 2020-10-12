@@ -146,8 +146,8 @@ body .mainBox {
 }
 
 /* 提示 */
-.mainBox .Box .smallBox .est_tips,
-.mainBox .Box .smallBox .join_tips {
+.mainBox .Box .est_tips,
+.mainBox .Box .join_tips {
     position: absolute;
     color: #b7c8ce;
     letter-spacing: 10px;
@@ -156,12 +156,6 @@ body .mainBox {
     top: -120px;
     left: 280px;
     opacity: 0;
-}
-
-.mainBox .Box .establish:hover .est_tips,
-.mainBox .Box .join:hover .join_tips {
-    animation: show 1s;
-    animation-fill-mode: forwards;
 }
 
 /* 图标 */
@@ -479,7 +473,7 @@ body .footer {
 }
 
 /*#endregion*/
-
+/* 装饰 */
 .undraw_tree{
     position: absolute;
     bottom: 0;
@@ -487,4 +481,21 @@ body .footer {
     height: 200px;
     background-image: url(../img/undraw_Tree.png);
     background-size: contain;
+    z-index: -1;
 }
+.mainTitle{
+    position: absolute;
+    top: 50px;
+    left: 37%;
+    /* box-shadow:-10px 10px 10px #214B5B; */
+    font-weight: 700;
+    font-size: 56px;
+    color: #214B5B;
+    text-shadow: 6px 2px 2px #517c8d;
+    animation: upDowm 1.3s ease-in-out 0s infinite alternate;
+}
+
+@keyframes upDowm{
+    from{transform:translate(0,0)}
+    to{transform:translate(0,5px)}
+    }
