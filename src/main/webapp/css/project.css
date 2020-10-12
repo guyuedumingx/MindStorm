@@ -438,10 +438,13 @@ body .header {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: #f00;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/project_fullScreen.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
 }
 
 .mainBox .mainBoxRight {
@@ -501,7 +504,6 @@ body .header {
     background-image: url(../img/project_rightButton.png);
     background-size: 100%;
     background-repeat: no-repeat;
-    /* background-position-x: 2.75px; */
     background-color: #aaa;
     cursor: pointer;
     transition: background-color .5s;

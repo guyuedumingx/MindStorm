@@ -64,9 +64,11 @@ var treeFullScreenOnOff = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); 
 treeFullScreenOnOff.addEventListener('click', function () {
     if (treeFullScreenState) {
         cancelFullscreen();
+        this.style.backgroundImage = 'url(img/project_fullScreen.png)';
         treeFullScreenState = false;
     } else {
         domFullScreen(treeBox);
+        this.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
         treeFullScreenState = true;
     }
 });
