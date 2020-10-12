@@ -67,6 +67,7 @@ body .header {
     margin: 10px 10px 0 0;
     border: solid;
     border-radius: 50px;
+    pointer-events: none;
 }
 
 /* 昵称 */
@@ -74,6 +75,7 @@ body .header {
     float: right;
     line-height: 60px;
     color: #214B5B;
+    pointer-events: none;
 }
 
 /* 消息通知 */
@@ -474,7 +476,15 @@ body .footer {
     width: 200px;
     height: 280px;
     background-color: #F3F7F5;
-    display: none;
 }
 
 /*#endregion*/
+
+.undraw_tree{
+    position: absolute;
+    bottom: 0;
+    width: 300px;
+    height: 200px;
+    background-image: url(../img/undraw_Tree.png);
+    background-size: contain;
+}
