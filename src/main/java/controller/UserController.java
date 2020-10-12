@@ -15,7 +15,6 @@ import java.io.IOException;
 @WebServlet("/user")
 public class UserController extends BaseController{
 
-
     /**
      * 设置用户信息
      * @param request

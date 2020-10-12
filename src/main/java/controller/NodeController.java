@@ -6,6 +6,7 @@ import common.factory.DaoFactory;
 import common.util.WebUtil;
 import dao.NodeDao;
 import pojo.Node;
+import pojo.User;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 
@@ -23,13 +24,13 @@ import java.util.Map;
  */
 @WebServlet("/node")
 public class NodeController extends BaseController{
-    int userId = 0;
+    User user = null;
     NodeService service = new NodeServiceImpl();
     @Override
     protected void before(HttpServletRequest req, HttpServletResponse resp) {
         //获取用户id
         HttpSession session = req.getSession();
-        userId = (Integer)session.getAttribute("user_id");
+        user = (User)session.getAttribute("user");
     }
 
     /**
@@ -41,7 +42,7 @@ public class NodeController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Node node = WebUtil.getJson(req, Node.class);
-        node.setAuthor(userId);
+        node.setAuthor(user.getId());
         int nodeId = service.newNode(node);
         int statusCode = StatusCode.isZero(nodeId);
 
@@ -60,7 +61,7 @@ public class NodeController extends BaseController{
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nodeId = request.getParameter("nodeId");
-        int statusCode = service.delNode(Integer.valueOf(nodeId), userId);
+        int statusCode = service.delNode(Integer.valueOf(nodeId), user.getId());
         WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 

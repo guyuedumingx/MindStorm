@@ -38,7 +38,7 @@ public class LoginController extends BaseController {
 
         //把用户Id存储在session中
         if(isSuccess==StatusCode.OK){
-            session.setAttribute("user_id",user.getId());
+            session.setAttribute("user",user);
         }
         WebUtil.renderMap(response,"status_code",isSuccess+"");
     }
