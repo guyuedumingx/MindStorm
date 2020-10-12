@@ -47,9 +47,10 @@ var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [50, 60, 70, 80, 80];
 var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 120; // 无关联节点之间的最小距离
-var bfb = 0.5; // 节点之间线的松紧，紧0 - 1松
+var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
-var lineUpColor = '#555'; // 非高亮时的颜色
+// var lineDownColor = '#aaa'; // 高亮时的颜色
+var lineUpColor = '#333'; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
 var constraintArr = new Array(); // 记录约束的数组
 var setLineArr = new Array(); // 记录要添加线条的数组
@@ -64,10 +65,14 @@ var boundaryMinLength = 100; //边界约束中和边界的最小距离
 function move(e) {
     var cx = e.clientX;
     var cy = e.clientY;
-    nowNode.x = nowNode.x + cx - mx;
-    nowNode.y = nowNode.y + cy - my;
-    mx = cx;
-    my = cy;
+    if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
+        nowNode.x = nowNode.x + cx - mx;
+        mx = cx;
+    }
+    if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
+        nowNode.y = nowNode.y + cy - my;
+        my = cy;
+    }
 }
 
 function addHeightLight(node) {
@@ -90,6 +95,7 @@ function changeChild(node, fun) {
         changeChild(chArr[i], fun);
     }
 }
+
 // 添加线的函数
 function setline(node1, node2) {
     try {
@@ -106,10 +112,10 @@ function setline(node1, node2) {
     var k = (y2 - y1) / (x2 - x1);
     var jd = Math.atan(k) * 180 / Math.PI;
     node1.line.style.width = lineLen + 'px';
-    node1.line.style.height = '1.5px';
+    node1.line.style.height = '1px';
     node1.line.style.position = 'absolute';
     node1.line.style.left = xz - lineLen / 2 + 'px';
-    node1.line.style.top = yz - 0.75 + 'px';
+    node1.line.style.top = yz - 0.5 + 'px';
     node1.line.style.zIndex = 1;
     node1.line.style.transform = 'rotate(' + jd + 'deg)';
     node1.line.style.backgroundColor = node1.lineColor;
@@ -226,7 +232,7 @@ function runConstraint(node1, node2, type, len) {
                 setPosition(node2);
             }
         }
-    } else if (type == 3) {
+    } else if (type == 3) { // 边界约束
         var x2 = node1.x;
         var y2 = node1.y;
         if (x2 < leftBoundary + boundaryMinLength) {
@@ -251,7 +257,7 @@ function addTreeConstraint(root, n) {
     root.layer = n;
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
-root.addEventListener('mousedown', function (e) {
+    root.addEventListener('mousedown', function (e) {
         mx = e.clientX;
         my = e.clientY;
         nowNode = this;
@@ -299,14 +305,14 @@ setInterval(function () {
         var len = constraintArr[i][3];
         runConstraint(node1, node2, type, len);
     }
-}, 20);
+}, 5);
 setInterval(function () {
     for (var i = 0; i < setLineArr.length; i++) {
         var node1 = setLineArr[i][0];
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-}, 20);
+}, 5);
 
 var nodeRequest = 1;
 
@@ -345,11 +351,16 @@ function createTree(node) {
         }
     })
 }
+
 var root = document.createElement('div');
-root.user_id = 1;
 addClass(root, 'root');
 root.style.backgroundColor = randomColor(100, 180);
-createTree(root);
+
+function createRoot(rootID) {
+    root.user_id = rootID;
+    createTree(root);
+}
+createRoot(1);
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
