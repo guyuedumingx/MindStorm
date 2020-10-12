@@ -37,27 +37,58 @@ window.onload = function () {
     var changeJoin = getDom(".change_join");
     //获取新建输入大盒子
     var estBig = getDom(".est_bigBox");
-    //获取加入盒子
+    //获取加入输入大盒子
+    var joinBig = getDom(".join_bigBox");
+    //获取加入外盒子
     var join = getDom(".join");
+    //获取新建外盒子
+    var establish = getDom(".establish");
 
+    // 点击新建放大
     changeEst.addEventListener("click", function () {
-        changeEst.style.animation = "toBig 1s ease-in-out 0s forwards  normal";
-        changeJoin.style.animation = "toSmall 1s ease-in-out 0s forwards normal";
+        changeEst.style.animation = "toEstBig 0.3s ease-in-out 0s forwards  normal";
+        changeJoin.style.animation = "toSmall 0.3s ease-in-out 0s forwards normal";
         setTimeout(function () {
             changeEst.style.display = "none";
             join.style.display = "none";
             estBig.style.display = "block";
-        }, 1000);
+        }, 300);
+    })
+    // 点击加入放大
+    changeJoin.addEventListener("click", function () {
+        changeEst.style.animation = "toSmall 0.3s ease-in-out 0s forwards  normal";
+        changeJoin.style.animation = "toJoinBig 0.3s ease-in-out 0s forwards normal";
+        setTimeout(function () {
+            changeJoin.style.display = "none";
+            establish.style.display = "none";
+            joinBig.style.display = "block";
+        }, 300);
     })
 
-    var back = getDom(".back");
-    back.addEventListener("click", function () {
+    // 新建返回
+    var back = getDomA(".back");
+    back[0].addEventListener("click", function () {
         changeEst.style.animation = "";
         changeJoin.style.animation = "";
+        //新建返回
         changeEst.style.display = "inline-block";
-            join.style.display = "inline-block";
-            estBig.style.display = "none";
+        join.style.display = "inline-block";
+        estBig.style.display = "none";
     })
+    back[1].addEventListener("click", function () {
+        changeEst.style.animation = "";
+        changeJoin.style.animation = "";
+        //加入返回
+        changeJoin.style.display = "inline-block";
+        establish.style.display = "inline-block";
+        joinBig.style.display = "none";
+        	console.log("1");
+    })
+
+    // 获取输入id框
+    var inputID = getDom(".inputID");
+
+    inputTips(inputID, "请输入项目ID")
 
     
 
