@@ -360,7 +360,6 @@ function createRoot(rootID) {
     root.user_id = rootID;
     createTree(root);
 }
-createRoot(1);
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
@@ -426,6 +425,7 @@ window.onload = function () {
             projectLevel.innerText = res.rank;
             creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
             closingDate.innerText = new Date(res.ddl).toLocaleDateString();
+            createRoot(res.headNodeId);
         }
     });
 }
