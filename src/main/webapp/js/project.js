@@ -1,5 +1,17 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
+
+var ctrlState = false;
+document.addEventListener('keydown', function (e) {
+    if (e.keyCode == 17) {
+        ctrlState = true;
+    }
+});
+document.addEventListener('keyup', function (e) {
+    if (e.keyCode == 17) {
+        ctrlState = false;
+    }
+});
 // ——————————————————头部——————————————————
 // projectName.style.top = window.pageYOffset - 48 + 'px';
 // window.addEventListener('scroll', function () {
@@ -34,19 +46,29 @@ introduceOpen.addEventListener('click', function () {
 var projectName = getDom('.progressBar .projectName'); // 项目名
 var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创建日期
 var closingDate = getDom('.progressBar .progressBarTop .closingDate'); // 截止日期
-var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子
-var f = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
-f.addEventListener('click', function () {
-    domFullScreen(treeBox);
+var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
+var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+
+var treeFullScreenState = false;
+var treeFullScreenOnOff = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
+treeFullScreenOnOff.addEventListener('click', function () {
+    if (treeFullScreenState) {
+        cancelFullscreen();
+        treeFullScreenState = false;
+    } else {
+        domFullScreen(treeBox);
+        treeFullScreenState = true;
+    }
 });
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
 var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 120; // 无关联节点之间的最小距离
-var bfb = 0.5; // 节点之间线的松紧，紧0 - 1松
+var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
-var lineUpColor = '#555'; // 非高亮时的颜色
+// var lineDownColor = '#aaa'; // 高亮时的颜色
+var lineUpColor = '#333'; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
 var constraintArr = new Array(); // 记录约束的数组
 var setLineArr = new Array(); // 记录要添加线条的数组
@@ -59,12 +81,16 @@ var boundaryMinLength = 100; //边界约束中和边界的最小距离
 
 // 鼠标拖动的函数
 function move(e) {
-    var cx = e.clientX - treeBox.offsetLeft;
-    var cy = e.clientY - treeBox.offsetTop;
-    nowNode.x = nowNode.x + cx - mx;
-    nowNode.y = nowNode.y + cy - my;
-    mx = nowNode.x;
-    my = nowNode.y;
+    var cx = e.clientX;
+    var cy = e.clientY;
+    if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
+        nowNode.x = nowNode.x + cx - mx;
+        mx = cx;
+    }
+    if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
+        nowNode.y = nowNode.y + cy - my;
+        my = cy;
+    }
 }
 
 function addHeightLight(node) {
@@ -87,10 +113,11 @@ function changeChild(node, fun) {
         changeChild(chArr[i], fun);
     }
 }
+
 // 添加线的函数
 function setline(node1, node2) {
     try {
-        treeBox.removeChild(node1.line);
+        treeBoxMain.removeChild(node1.line);
     } catch (e) {}
     node1.line = document.createElement('div');
     var x1 = node1.offsetLeft + node1.offsetWidth / 2;
@@ -103,16 +130,16 @@ function setline(node1, node2) {
     var k = (y2 - y1) / (x2 - x1);
     var jd = Math.atan(k) * 180 / Math.PI;
     node1.line.style.width = lineLen + 'px';
-    node1.line.style.height = '1.5px';
+    node1.line.style.height = '1px';
     node1.line.style.position = 'absolute';
     node1.line.style.left = xz - lineLen / 2 + 'px';
-    node1.line.style.top = yz - 0.75 + 'px';
+    node1.line.style.top = yz - 0.5 + 'px';
     node1.line.style.zIndex = 1;
     node1.line.style.transform = 'rotate(' + jd + 'deg)';
     node1.line.style.backgroundColor = node1.lineColor;
     node1.line.style.zIndex = node1.lineZIndex;
     node1.line.style.boxShadow = '0px 0px 8px ' + node1.lineColor;
-    treeBox.appendChild(node1.line);
+    treeBoxMain.appendChild(node1.line);
 }
 
 function setPosition(node) {
@@ -223,7 +250,7 @@ function runConstraint(node1, node2, type, len) {
                 setPosition(node2);
             }
         }
-    } else if (type == 3) {
+    } else if (type == 3) { // 边界约束
         var x2 = node1.x;
         var y2 = node1.y;
         if (x2 < leftBoundary + boundaryMinLength) {
@@ -249,8 +276,8 @@ function addTreeConstraint(root, n) {
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
-        mx = e.clientX - treeBox.offsetLeft;
-        my = e.clientY - treeBox.offsetTop;
+        mx = e.clientX;
+        my = e.clientY;
         nowNode = this;
         nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
         var t = nowNode;
@@ -259,7 +286,9 @@ function addTreeConstraint(root, n) {
             t = t.father;
         }
         changeChild(root, addHeightLight);
-        document.addEventListener('mousemove', move);
+        if (ctrlState) {
+            document.addEventListener('mousemove', move);
+        }
     });
     nodeSet.push(root);
     var arr = root.childArr;
@@ -296,14 +325,14 @@ setInterval(function () {
         var len = constraintArr[i][3];
         runConstraint(node1, node2, type, len);
     }
-}, 20);
+}, 5);
 setInterval(function () {
     for (var i = 0; i < setLineArr.length; i++) {
         var node1 = setLineArr[i][0];
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-}, 20);
+}, 5);
 
 var nodeRequest = 1;
 
@@ -313,7 +342,7 @@ function createTree(node) {
     node.line = document.createElement('div');
     node.lineColor = lineUpColor;
     node.lineZIndex = 0;
-    treeBox.appendChild(node);
+    treeBoxMain.appendChild(node);
     ajax({
         type: 'get',
         url: '/node',
@@ -342,11 +371,15 @@ function createTree(node) {
         }
     })
 }
+
 var root = document.createElement('div');
-root.user_id = 1;
 addClass(root, 'root');
 root.style.backgroundColor = randomColor(100, 180);
-createTree(root);
+
+function createRoot(rootID) {
+    root.user_id = rootID;
+    createTree(root);
+}
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
@@ -412,6 +445,7 @@ window.onload = function () {
             projectLevel.innerText = res.rank;
             creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
             closingDate.innerText = new Date(res.ddl).toLocaleDateString();
+            createRoot(res.headNodeId);
         }
     });
 }
