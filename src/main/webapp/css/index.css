@@ -35,13 +35,30 @@ body .header {
 
 /* 个人头像等容器 */
 .header .personal {
+    position: relative;
     float: right;
 }
 
 .header .personal div {
     display: inline-block;
 }
-
+/*下拉框------ */
+.header .personal .spinner{
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    border: solid #214B5B;
+}
+.header .personal .spinner ul{
+    margin: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+.header .personal .spinner ul li{
+    display: inline-block;
+    padding: 2px;
+    line-height: 20px;
+}
 /* 头像 */
 .header .personal .head {
     display: inline-block;
@@ -50,13 +67,15 @@ body .header {
     margin: 10px 10px 0 0;
     border: solid;
     border-radius: 50px;
+    pointer-events: none;
 }
 
 /* 昵称 */
-.header .personal .head_nav span {
+.header .personal .head_nav .name {
     float: right;
     line-height: 60px;
     color: #214B5B;
+    pointer-events: none;
 }
 
 /* 消息通知 */
@@ -90,19 +109,17 @@ body .mainBox {
     position: relative;
     display: table;
     margin: 0 auto;
-    /* width: 728px;---56*4边距+4边线+250*2宽度-- */
+    /* border: solid;
+    width: 728px;
+    height: 300px; */
+    /* overflow: hidden; */
+    /* ---56*4边距+4边线+250*2宽度-- */
 }
 
 /* 点击的框框 */
 .mainBox .Box>div {
     display: inline-block;
-    margin: 0 56px;
-    border: solid 1px #6AC1ED;
-    border-radius: 10px;
-}
 
-.mainBox .Box>div:hover {
-    box-shadow: 0px 0px 20px 0px #6AC1ED;
 }
 
 /* 隐藏 */
@@ -116,10 +133,17 @@ body .mainBox {
     display: inline-block;
     width: 250px;
     height: 300px;
-    border-radius: 10px;
-    /* display: none; */
+    margin: 0 56px;
 }
 
+.mainBox .Box>div>div {
+    border: solid 1px #6AC1ED;
+    border-radius: 10px;
+}
+
+.mainBox .Box>div>div:hover {
+    box-shadow: 0px 0px 20px 0px #6AC1ED;
+}
 
 /* 提示 */
 .mainBox .Box .smallBox .est_tips,
@@ -143,14 +167,17 @@ body .mainBox {
 /* 图标 */
 .mainBox .Box .est_icon,
 .mainBox .Box .join_icon {
-    position: relative;
     display: block;
+    position: relative;
     top: 50%;
-    width: 100px;
-    height: 100px;
+    width: 40%;
+    height: 33%;
     margin: 0 auto;
     transform: translateY(-50%);
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
 }
 
 .mainBox .Box .establish .est_icon {
@@ -174,10 +201,10 @@ body .mainBox {
 /* 标题 */
 .mainBox .Box .join_bigBox .join_til {
     display: table;
-    margin: 30px auto 60px auto;
+    margin: 40px auto 50px auto;
     font-weight: bold;
     font-size: 28px;
-    color: #101F30;
+    color: #132C33;
 }
 
 /* 输入盒子 */
@@ -202,6 +229,11 @@ body .mainBox {
     font-size: 24px;
     border: none;
     border-radius: 5px;
+}
+
+.idTips{
+    font-size: 16px;
+    color: #999999;
 }
 
 /* 点击进入 */
@@ -239,7 +271,7 @@ body .mainBox {
 /* 标题 */
 .mainBox .est_bigBox .est_til {
     font-size: 28px;
-    color: #101F30;
+    color: #132C33;
 }
 
 /* 名称输入框 */
@@ -248,6 +280,8 @@ body .mainBox {
     font-size: 18px;
     height: 40px;
     width: 400px;
+    border: solid 1px;
+    border-radius: 10px;
     vertical-align: middle;
 }
 
@@ -263,6 +297,9 @@ body .mainBox {
     padding: 10px;
     line-height: 24px;
     font-size: 16px;
+    border: solid 1px;
+    border-radius: 10px;
+    outline: none;
     resize: none;
     /*不可调节*/
 }
@@ -338,6 +375,50 @@ body .mainBox {
 
 }
 
+/* ----------显示新建大盒子------- */
+
+@keyframes toEstBig {
+    0% {
+        width: 250px;
+        height: 300px;
+        margin: 0 56px;
+    }
+
+    99% {
+        width: 650px;
+        height: 520px;
+        margin: 0;
+    }
+}
+
+@keyframes toJoinBig {
+    0% {
+        width: 250px;
+        height: 300px;
+        margin: 0 56px;
+    }
+
+    99% {
+        width: 500px;
+        height: 300px;
+        margin: 0;
+    }
+}
+
+@keyframes toSmall {
+    0% {
+        width: 250px;
+        height: 300px;
+        margin: 0 56px;
+    }
+
+    99% {
+        width: 0px;
+        height: 00px;
+        margin: 0;
+    }
+}
+
 /*#endregion*/
 /*#region ----------------底部----------------*/
 body .footer {
@@ -395,7 +476,15 @@ body .footer {
     width: 200px;
     height: 280px;
     background-color: #F3F7F5;
-    display: none;
 }
 
 /*#endregion*/
+
+.undraw_tree{
+    position: absolute;
+    bottom: 0;
+    width: 300px;
+    height: 200px;
+    background-image: url(../img/undraw_Tree.png);
+    background-size: contain;
+}
