@@ -119,11 +119,12 @@ body .personalBox {
     width: 770px;
     height: 450px;
 }
+
 /* .bigBox .projects:hover .history {
     animation: show 1s;
     animation-fill-mode: forwards;
 } */
-.bigBox .projects{
+.bigBox .projects {
     display: none;
 }
 
@@ -266,12 +267,14 @@ body .personalBox {
     border-radius: 50px;
     border: solid 1px #6AC1ED;
 }
+
 /* 粉丝-------- */
-.bigBox .fans{
+.bigBox .fans {
     height: 420px;
 }
+
 /* 粉丝框 */
-.bigBox .fLi li{
+.bigBox .fLi li {
     padding: 5px 15px;
     margin: 20px auto;
     width: 700px;
@@ -281,20 +284,24 @@ body .personalBox {
     border-radius: 5px;
     border: solid 1px #6AC1ED;
 }
-.bigBox .fLi li>span{
+
+.bigBox .fLi li>span {
     float: left;
     margin: 3px 8px;
 }
-.bigBox .fLi li .f_head{
+
+.bigBox .fLi li .f_head {
     width: 38px;
     height: 38px;
     border-radius: 50px;
     border: solid;
 }
-.bigBox .fLi li .f_name{
+
+.bigBox .fLi li .f_name {
     line-height: 38px;
-} 
-.bigBox .fLi li .f_but{
+}
+
+.bigBox .fLi li .f_but {
     float: right;
     width: 100px;
     margin-top: 12px;
@@ -303,11 +310,12 @@ body .personalBox {
     border: solid 1px;
     border-radius: 10px;
 }
-.bigBox .follows{
+
+.bigBox .follows {
     display: none;
 }
 
-.earth{
+/* .earth {
     position: absolute;
     right: -200px;
     top: -100px;
@@ -315,12 +323,29 @@ body .personalBox {
     height: 100px;
     background-image: url(../img/earth.png);
     background-size: contain;
-        animation: heart 1.3s ease-in-out 0s infinite alternate;
-}
+    animation: upDowm 1.3s ease-in-out 0s infinite alternate;
+} */
+
 /*#endregion*/
 
+.undraw_waiting{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    height: 200px;
+    background-image: url(../img/undraw_Waiting.png);
+    background-size: contain;
+    z-index: -1;
+}
 
-@keyframes heart{
-    from{transform:translate(0,0)}
-    to{transform:translate(0,20px)}
+
+@keyframes upDowm {
+    from {
+        transform: translate(0, 0)
     }
+
+    to {
+        transform: translate(0, 20px)
+    }
+}
