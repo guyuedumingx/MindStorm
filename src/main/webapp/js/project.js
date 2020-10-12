@@ -1,5 +1,17 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
+
+var ctrlState = false;
+document.addEventListener('keydown', function (e) {
+    if (e.keyCode == 17) {
+        ctrlState = true;
+    }
+});
+document.addEventListener('keyup', function (e) {
+    if (e.keyCode == 17) {
+        ctrlState = false;
+    }
+});
 // ——————————————————头部——————————————————
 // projectName.style.top = window.pageYOffset - 48 + 'px';
 // window.addEventListener('scroll', function () {
@@ -37,10 +49,16 @@ var closingDate = getDom('.progressBar .progressBarTop .closingDate'); // 截止
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
 
-
-var f = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
-f.addEventListener('click', function () {
-    domFullScreen(treeBox);
+var treeFullScreenState = false;
+var treeFullScreenOnOff = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
+treeFullScreenOnOff.addEventListener('click', function () {
+    if (treeFullScreenState) {
+        cancelFullscreen();
+        treeFullScreenState = false;
+    } else {
+        domFullScreen(treeBox);
+        treeFullScreenState = true;
+    }
 });
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
