@@ -9,8 +9,9 @@ const {
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+var url = __dirname.substring(0, __dirname.length - 3);
 // app.use(express.static('C:\\Users\\Lenovo\\Desktop\\111\\111'));
-app.use(express.static('G:\\rspro\\MindStorm\\src\\main\\webapp'));
+app.use(express.static(url));
 var user = new Array();
 user.push({
     id: 1,
