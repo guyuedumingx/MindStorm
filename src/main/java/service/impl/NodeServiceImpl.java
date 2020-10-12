@@ -15,9 +15,7 @@ public class NodeServiceImpl implements NodeService {
     ProjectDao projectDao = DaoFactory.getProjectDao();
     @Override
     public int newNode(Node node) {
-        int id = 0;
-        id = nodeDao.insertOne(node);
-        return id;
+        return nodeDao.insertOne(node);
     }
 
     @Override

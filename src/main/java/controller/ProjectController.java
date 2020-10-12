@@ -1,5 +1,10 @@
 package controller;
 
+import common.util.WebUtil;
+import pojo.Project;
+import service.ProjectService;
+import service.impl.ProjectServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +17,7 @@ import java.io.IOException;
  */
 @WebServlet("/project")
 public class ProjectController extends BaseController{
+    ProjectService service = new ProjectServiceImpl();
 
     /**
      * 新建项目
@@ -21,7 +27,7 @@ public class ProjectController extends BaseController{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        Project project = WebUtil.getJson(request, Project.class);
     }
 
     /**
