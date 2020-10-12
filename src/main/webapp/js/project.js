@@ -21,6 +21,14 @@ document.addEventListener('keyup', function (e) {
 // window.scroll(0, 1);
 // window.scroll(0, 0);
 
+// var mainBoxBGC = 'rgb(230, 238, 241)';
+// var mainBox = getDom('.mainBox');
+// for (var i = 0; i < mainBox.children.length; i++) {
+//     for (var j = 0; j < mainBox.children[i].children.length; j++) {
+//         mainBox.children[i].children[j].style.backgroundColor = mainBoxBGC;
+//     }
+// }
+
 // ——————————————————左侧——————————————————
 var introduceOpen = getDom('.mainBoxLeft .introduce a'); // 项目简介展开的开关
 var introduce = getDom('.mainBoxLeft .introduce .introduceMain'); // 项目简介内容盒子
@@ -68,7 +76,8 @@ var nowNode; // 当前正在拖动的节点
 var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 120; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
-var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
+// var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
+var lineDownColor = '#6AC1ED'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色
 var lineUpColor = '#333'; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
@@ -403,7 +412,10 @@ var nodeRequetTimer = setInterval(function () {
 }, 5);
 // ——————————————————有侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
+var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn');
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder');
+
+cycleSprite(btnArr, 0, 0, 27);
 
 function onOffChange(onOff) {
     if (onOff.state) {
@@ -437,10 +449,7 @@ window.onload = function () {
     ajax({
         type: 'get',
         url: '/project',
-        data: {
-            id: 0,
-            method: 'enterProject'
-        },
+        data: {},
         success: function (res) {
             introduceP.innerText = res.introdution;
             projectName.innerText = res.name;

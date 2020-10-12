@@ -300,17 +300,14 @@ registerSubmit.addEventListener('click', function () {
         var psd = registerPassword.value;
         ajax({
             type: 'post',
-            url: '/user',
+            url: '/user/register',
             data: {
-                obj: {
-                    email: em,
-                    user_name: userName,
-                    password: psd
-                },
-                method: 'register'
+                email: em,
+                user_name: userName,
+                password: psd
             },
             header: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }, // 请求头
             success: function (res) {
                 if (res == '200') {

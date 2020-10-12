@@ -1,5 +1,6 @@
 html,
 body {
+    background-color: rgb(230, 238, 241);
     min-width: 800px;
 }
 
@@ -385,8 +386,11 @@ body .header {
 .mainBoxMiddle .treeBox {
     position: relative;
     height: 530px;
+    /* border: 1px solid #214B5B; */
+    border: 20px solid #f8fcfa;
     border-radius: 5px;
     margin-top: 10px;
+    box-sizing: border-box;
     background-color: #f8fcfa;
     overflow: hidden;
 }
@@ -397,7 +401,10 @@ body .header {
     left: 50%;
     width: 100vw;
     height: 100vh;
-    background-color: #000;
+    border-radius: 5px;
+    /* background-color: #f8fcfa; */
+    /* background-color: #eef7f2; */
+    background-color: rgb(230, 238, 241);
     transform: translate(-50%, -50%);
 }
 
@@ -491,6 +498,10 @@ body .header {
     text-align: center;
     line-height: 27px;
     color: #fff;
+    background-image: url(../img/project_rightButton.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    /* background-position-x: 2.75px; */
     background-color: #aaa;
     cursor: pointer;
     transition: background-color .5s;
