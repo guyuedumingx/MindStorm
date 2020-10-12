@@ -286,7 +286,9 @@ function addTreeConstraint(root, n) {
             t = t.father;
         }
         changeChild(root, addHeightLight);
-        document.addEventListener('mousemove', move);
+        if (ctrlState) {
+            document.addEventListener('mousemove', move);
+        }
     });
     nodeSet.push(root);
     var arr = root.childArr;
