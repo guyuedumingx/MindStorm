@@ -296,14 +296,14 @@ setInterval(function () {
         var len = constraintArr[i][3];
         runConstraint(node1, node2, type, len);
     }
-}, 5);
+}, 20);
 setInterval(function () {
     for (var i = 0; i < setLineArr.length; i++) {
         var node1 = setLineArr[i][0];
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-}, 5);
+}, 20);
 
 var nodeRequest = 1;
 
