@@ -62,20 +62,10 @@ var boundaryMinLength = 100; //边界约束中和边界的最小距离
 
 // 鼠标拖动的函数
 function move(e) {
-    // var cx = e.clientX - treeBox.offsetLeft;
-    // var cy = e.clientY - treeBox.offsetTop;
-
-    // var cx = e.clientX - treeBox.offsetLeft + treeBoxMain.offsetLeft;
-    // var cy = e.clientY - treeBox.offsetTop + treeBoxMain.offsetTop;
-    // console.log(treeBoxMain.offsetLeft);
     var cx = e.clientX;
     var cy = e.clientY;
-    // console.log(mx);
-    // console.log(cx);
     nowNode.x = nowNode.x + cx - mx;
     nowNode.y = nowNode.y + cy - my;
-    // mx = nowNode.x;
-    // my = nowNode.y;
     mx = cx;
     my = cy;
 }
@@ -261,9 +251,7 @@ function addTreeConstraint(root, n) {
     root.layer = n;
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
-    root.addEventListener('mousedown', function (e) {
-        // mx = e.clientX - treeBox.offsetLeft + treeBoxMain.offsetLeft;
-        // my = e.clientY - treeBox.offsetTop + treeBoxMain.offsetTop;
+root.addEventListener('mousedown', function (e) {
         mx = e.clientX;
         my = e.clientY;
         nowNode = this;

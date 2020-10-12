@@ -222,41 +222,5 @@ app.get('/project', function (req, res) {
         });
     }
 });
-// app.put('/project', function (req, res) {
-//     console.log(1);
-//     var text = req.query;
-//     if (text.method == 'enterProject') {
-//         res.send({
-//             id: 123456,
-//             name: '绝不互相甩锅',
-//             isPublic: false,
-//             rank: 3,
-//             author: 123456,
-//             headNodeId: 0,
-//             introdution: '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹',
-//             contributors: [123456, 123457, 123458, 123459, 123450, 123455],
-//             creatTime: new Date('2020-10-3 8:8:8').valueOf(),
-//             ddl: new Date('2020-10-20 8:8:8').valueOf()
-//         });
-//     }
-// });
-// app.delete('/project', function (req, res) {
-//     console.log(2);
-//     var text = req.query;
-//     if (text.method == 'enterProject') {
-//         res.send({
-//             id: 123456,
-//             name: '绝不互相甩锅',
-//             isPublic: false,
-//             rank: 3,
-//             author: 123456,
-//             headNodeId: 0,
-//             introdution: '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹',
-//             contributors: [123456, 123457, 123458, 123459, 123450, 123455],
-//             creatTime: new Date('2020-10-3 8:8:8').valueOf(),
-//             ddl: new Date('2020-10-20 8:8:8').valueOf()
-//         });
-//     }
-// });
 app.listen(8848);
 console.log('服务器已启动 端口号8848');

@@ -576,24 +576,10 @@ body .header {
     color: #214B5B;
 }
 
-/* 
 .onOffBox .onOff .onOffBorder {
     position: relative;
     width: 40px;
     height: 18px;
-    border: 1.5px solid #aaa;
-    border-radius: 9px;
-    margin: 5px auto 0px;
-    box-sizing: border-box;
-    overflow: hidden;
-    cursor: pointer;
-} */
-
-.onOffBox .onOff .onOffBorder {
-    position: relative;
-    width: 40px;
-    height: 18px;
-    /* border: 1.5px solid #aaa; */
     border-radius: 9px;
     margin: 5px auto 0px;
     box-sizing: border-box;
@@ -604,38 +590,6 @@ body .header {
     transition: all .3s;
 }
 
-/* .onOffBox .onOff .onOffBorder .onOffRod {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 40px;
-    height: 15px;
-    border-radius: 7.5px;
-    background-color: #ccc;
-    transition: left .3s;
-}
-
-.onOffBox .onOff .onOffBorder .onOffRod::before {
-    position: absolute;
-    top: 0px;
-    right: 25px;
-    width: 40px;
-    height: 15px;
-    border-radius: 7.5px;
-    background-color: rgb(0, 150, 0);
-    content: '';
-}
-
-.onOffBox .onOff .onOffBorder .onOffRod::after {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 15px;
-    height: 15px;
-    border-radius: 7.5px;
-    background-color: #fff;
-    content: '';
-} */
 .onOffBox .onOff .onOffBorder .onOffRod {
     position: absolute;
     top: 1.5px;
