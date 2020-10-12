@@ -31,8 +31,10 @@ a {
 /* 设置祖先元素的高度 */
 html,
 body {
+    position: relative;
     height: 100%;
     min-width: 1260px;
+    min-height: 700px;
 }
 
 /*高度塌陷处理*/
@@ -44,12 +46,13 @@ body {
 }
 
 /* --显示动画--- */
-@keyframes show{
-    0%{
+@keyframes show {
+    0% {
         opacity: 0;
     }
-   100%{
-      opacity: 1; 
+
+    100% {
+        opacity: 1;
     }
 }
 
