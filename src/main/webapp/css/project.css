@@ -4,6 +4,20 @@ body {
     min-width: 800px;
 }
 
+/*#region--------------------- 操作节点的框 --------------------- */
+.operationNodeBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 101;
+    width: 384px;
+    height: 400px;
+    margin-top: -200px;
+    margin-left: -192px;
+    background-color: skyblue;
+}
+
+/*#endregion*/
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {
