@@ -131,7 +131,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) {}
+    } catch (e) { }
     node1.line = document.createElement('div');
     var x1 = node1.offsetLeft + node1.offsetWidth / 2;
     var y1 = node1.offsetTop + node1.offsetHeight / 2;
