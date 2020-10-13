@@ -1,7 +1,6 @@
 package common.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -9,7 +8,6 @@ import java.io.IOException;
  * 登录验证
  * @author yohoyes
  */
-@WebFilter("/*")
 public class LoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -20,7 +18,7 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         String uri = request.getRequestURI();
-        if(uri.contains("/login.html")||uri.contains("/user/login")||
+        if(uri.contains("/register.html")||uri.contains("/login.html")||uri.contains("/user/login")||
         uri.contains("/css/")||uri.contains("/img/")||uri.contains("/js/")||uri.contains("/util")){
             filterChain.doFilter(servletRequest,servletResponse);
         }else {

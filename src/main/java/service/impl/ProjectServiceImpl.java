@@ -3,6 +3,7 @@ package service.impl;
 import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.ProjectDao;
+import pojo.Node;
 import pojo.Project;
 import service.ProjectService;
 
@@ -15,7 +16,18 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int newProject(Project project) {
-        return projectDao.insertOne(project);
+        int projectId = projectDao.insertOne(project);
+        if(projectId==0){
+            return StatusCode.LOST;
+        }else {
+            //这里可以用多线程
+            project.setId(projectId);
+            Node node = new Node(project);
+            int headNodeId = DaoFactory.getNodeDao().insertOne(node);
+            project.setHeadNodeId(headNodeId);
+            projectDao.updateOne(project);
+        }
+        return projectId;
     }
 
     @Override

@@ -3,7 +3,6 @@ package common.util;
 import common.dto.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
@@ -42,9 +41,22 @@ public class EmailUtil {
 
     public static int sendEmail(String to,String head,String content) {
         Properties props = new Properties();
-        props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.host", "smtp.163.com");
+
+        //网易的smtp服务器地址
+        props.put("mail.smtp.host", "220.181.12.15");
         props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        //SSLSocketFactory类的端口
+        props.put("mail.smtp.socketFactory.port", "465");
+        //SSLSocketFactory类
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        //网易提供的ssl加密端口,QQ邮箱也是该端口
+        props.put("mail.smtp.port", "465");
+
+
+
         Session session = Session.getInstance(props);
 
         Message msg = new MimeMessage(session);
@@ -88,9 +100,9 @@ public class EmailUtil {
                 "\n" +
                 "<body>\n" +
                 "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden;\">\n" +
-                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
                 "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
-                "                src=\"http://120.24.111.0:8080/logo.png\">\n" +
+                "                src=\"http://120.24.111.0/img/logo.png\">\n" +
                 "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
                 "        </div>\n" +
                 "        <h4 style=\"padding: 5px 20px;font-size: 32px;color: #057082;\">验证您的邮箱注册地址</h4>\n" +
@@ -113,9 +125,9 @@ public class EmailUtil {
                 "\n" +
                 "<body>\n" +
                 "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden\">\n" +
-                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0:8080/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
                 "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
-                "                src=\"http://120.24.111.0:8080/logo.png\">\n" +
+                "                src=\"http://120.24.111.0/img/logo.png\">\n" +
                 "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
                 "        </div>\n" +
                 "        <h4 style=\"padding: 5px 20px;font-size: 22px;color: #057082;\">您正在修改 思维风暴 的密码</h4>\n" +
