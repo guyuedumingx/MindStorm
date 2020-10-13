@@ -4,6 +4,169 @@ body {
     min-width: 800px;
 }
 
+/*#region--------------------- 操作节点的框 --------------------- */
+.operationNodeBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 110;
+    width: 384px;
+    height: 400px;
+    padding: 25px 35px;
+    border-radius: 10px;
+    margin-top: -200px;
+    margin-left: -192px;
+    box-shadow: 0px 0px 10px #ccc;
+    background-color: #fff;
+}
+
+.operationNodeBox .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: pink;
+}
+
+.operationNodeBox h4 {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    color: #214B5B;
+}
+
+.operationNodeBox h4 input {
+    border: 0px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #214B5B;
+    background-color: transparent;
+}
+
+.operationNodeBox h5 {
+    position: relative;
+    border: 0px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #214B5B;
+    background-color: transparent;
+}
+
+h5 .onOff {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 240px;
+    height: 100%;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+h5 .onOff .onOffTips {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 15px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 15px;
+    color: #214B5B;
+    transform: translate(0, -50%);
+}
+
+h5 .onOff .onOffBorder {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    width: 40px;
+    height: 18px;
+    border-radius: 9px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #16a085;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transform: translate(0, -50%);
+    transition: all .3s;
+}
+
+h5 .onOff .onOffBorder .onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #46607b;
+    transition: all .3s;
+}
+
+.operationNodeBox textarea {
+    /* border: 0px; */
+    border: 1px solid #214b5b;
+    width: 100%;
+    height: 240px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #214B5B;
+    background-color: transparent;
+    resize: none;
+}
+
+.operationNodeBox .nodeCreator {
+    display: none;
+    margin: 10px 0px;
+    width: 100%;
+    font-size: 14px;
+    color: #214B5B;
+}
+
+.operationNodeBox .nodeCreator span {
+    font-size: 16px;
+}
+
+.operationNodeBox .lastRevision {
+    display: none;
+    margin: 10px 0px;
+    width: 100%;
+    font-size: 14px;
+    color: #214B5B;
+}
+
+.operationNodeBox .lastRevision span {
+    font-size: 16px;
+}
+
+.operationNodeBox>input {
+    /* display: none; */
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    width: 80px;
+    height: 32px;
+    border: 0px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transform: translate(-50%, 0);
+    transition: background-color .3s;
+}
+
+.operationNodeBox>input:hover {
+    background-color: #101f30;
+}
+
+/*#endregion*/
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {
@@ -568,14 +731,14 @@ body .header {
     content: '';
 }
 
-.mainBoxRight .controller .onOffBox {
+.onOffBox {
     width: 100%;
     height: 180px;
     margin: 12px auto;
     overflow: hidden;
 }
 
-.mainBoxRight .controller .onOffBox .onOff {
+.onOffBox .onOff {
     width: 100%;
     height: 60px;
     padding-top: 20px;

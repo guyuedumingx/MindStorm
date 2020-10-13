@@ -28,6 +28,16 @@ public class Node extends BaseModel{
    @DbField("last_edit_time")
    private String lastEditTime = "";
 
+   public Node(Project project){
+      this.author = project.getAuthor();
+      this.lastEditId = author;
+      this.editable = false;
+      this.nameless = false;
+      this.projectId = project.getId();
+      this.theme = project.getName();
+      this.content = project.getIntroduction();
+   }
+
    public Node() {
    }
    public Node(int id) {

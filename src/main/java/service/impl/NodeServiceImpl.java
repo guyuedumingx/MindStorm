@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class NodeServiceImpl implements NodeService {
     NodeDao nodeDao = DaoFactory.getNodeDao();
     ProjectDao projectDao = DaoFactory.getProjectDao();
+
     @Override
     public int newNode(Node node) {
         return nodeDao.insertOne(node);
@@ -21,22 +22,26 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public int delNode(int nodeId, int operatorId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
+        //如果存在字节点,不能删除
+        if(node.getChildren().length!=0){
+            return StatusCode.LOST;
+        }
         Project project = projectDao.selectOne(new Project(node.getProjectId()));
         //如果是作者本人或者项目作者,则可以删除节点
         if(node.getAuthor()==operatorId || project.getAuthor()==operatorId){
             nodeDao.deleteOne(nodeId);
             return StatusCode.OK;
         }
-        return StatusCode.ERROR;
+        return StatusCode.LOST;
     }
 
     @Override
     public int chNode(Node node) {
         if(node.isEditable()) {
             int i = nodeDao.updateOne(node);
-            return i==0 ? StatusCode.ERROR : StatusCode.OK;
+            return i==0 ? StatusCode.LOST : StatusCode.OK;
         }
-        return StatusCode.ERROR;
+        return StatusCode.LOST;
     }
 
     @Override

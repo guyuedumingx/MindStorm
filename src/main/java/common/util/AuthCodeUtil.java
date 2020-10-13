@@ -6,7 +6,7 @@ package common.util;
 public class AuthCodeUtil {
 
     public static String getAuthCodeUtil() {
-        double v = 1 + Math.random() * 1000000 ;
+        double v = 100000 + Math.random() * 900000 ;
         return (int)v+"";
     }
 }

@@ -94,9 +94,6 @@ public class WebUtil {
             while ((inputStr = streamReader.readLine()) != null) {
                 responseStrBuilder.append(inputStr);
             }
-            // if(responseStrBuilder.length()<=0) {
-            //     return null;
-            // }
             return JSON.parseObject(responseStrBuilder.toString(), clazz);
         } catch (Exception e) {
             e.printStackTrace();
