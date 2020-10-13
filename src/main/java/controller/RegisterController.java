@@ -26,7 +26,6 @@ public class RegisterController extends BaseController {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin","*");
         User usr = WebUtil.getJson(request, User.class);
         UserService userService = new UserServiceImpl();
         User register = userService.register(usr);
