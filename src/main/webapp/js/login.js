@@ -300,7 +300,7 @@ registerSubmit.addEventListener('click', function () {
             url: '/user/register',
             data: {
                 email: em,
-                user_name: userName,
+                name: userName,
                 password: psd
             },
             header: {

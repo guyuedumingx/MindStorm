@@ -4,6 +4,20 @@ tool.textProhibition();
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
+        if (!ctrlState) {
+            if (nowNode) {
+                nowNode.style.boxShadow = 'none';
+                var t = nowNode;
+                while (t.father) {
+                    removeHeightLight(t.father);
+                    t = t.father;
+                }
+                changeChild(nowNode, removeHeightLight);
+            }
+            nowNode = null;
+            lineColor = lineUpColor;
+            document.removeEventListener('mousemove', move);
+        }
         ctrlState = true;
     }
 });
@@ -290,7 +304,7 @@ function addTreeConstraint(root, n) {
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
         if (nowNode) {
-            if (!isParent(e.target, box)) {
+            if (!isParent(e.target, nowNode)) {
                 nowNode.style.boxShadow = 'none';
                 var t = nowNode;
                 while (t.father) {
@@ -307,6 +321,7 @@ function addTreeConstraint(root, n) {
                     addHeightLight(t.father);
                     t = t.father;
                 }
+                changeChild(root, addHeightLight);
             }
         } else {
             mx = e.clientX;
@@ -349,9 +364,9 @@ document.addEventListener('mouseup', function (e) {
         }
         nowNode = null;
         lineColor = lineUpColor;
-        document.removeEventListener('mousemove', move);
     }
-})
+    document.removeEventListener('mousemove', move);
+});
 
 setInterval(function () {
     for (var i = 0; i < constraintArr.length; i++) {
