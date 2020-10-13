@@ -26,11 +26,10 @@ loginSubmit.addEventListener('click', function () {
     var pa = loginPassword.value;
     ajax({
         type: 'post',
-        url: '/user',
+        url: '/user/login',
         data: {
             email: em,
             password: pa,
-            method: 'login'
         },
         success: function (res) {
             if (res.status_code == '200') {
@@ -172,7 +171,6 @@ function setEmailJudge(node) {
             url: '/util',
             data: {
                 email: node.value,
-                method: 'isExist'
             },
             success: function (res) {
                 if (res == '200') {
@@ -206,12 +204,11 @@ function registerGetVC(node) {
             }
         }, 1000);
         ajax({
-            type: 'get',
+            type: 'post',
             url: '/util',
             data: {
                 email: node.value,
                 sendFor: 'register',
-                method: 'sendEmail',
             },
             success: function (res) {
                 if (res.status_code == '200') {
@@ -306,9 +303,6 @@ registerSubmit.addEventListener('click', function () {
                 user_name: userName,
                 password: psd
             },
-            header: {
-                'Content-Type': 'multipart/form-data'
-            }, // 请求头
             success: function (res) {
                 if (res == '200') {
                     topAlert('注册成功');

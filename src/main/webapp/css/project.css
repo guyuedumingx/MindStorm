@@ -4,6 +4,37 @@ body {
     min-width: 800px;
 }
 
+/*#region--------------------- 操作节点的框 --------------------- */
+.operationNodeBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 110;
+    width: 384px;
+    height: 400px;
+    padding: 25px 35px;
+    border-radius: 10px;
+    margin-top: -200px;
+    margin-left: -192px;
+    box-shadow: 0px 0px 10px #ccc;
+    background-color: #fff;
+}
+
+.operationNodeBox h4 {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    color: #214B5B;
+}
+
+.operationNodeBox h4 input {
+    border: 0px;
+    font-size: 18px;
+    color: #214B5B;
+    background-color: transparent;
+}
+
+/*#endregion*/
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {

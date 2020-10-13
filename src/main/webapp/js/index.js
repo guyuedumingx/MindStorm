@@ -69,6 +69,7 @@ tool.textProhibition();
         changeEst.addEventListener("click", function () {
             changeEst.style.animation = "toEstBig 0.3s ease-in-out 0s forwards  normal";
             changeJoin.style.animation = "toSmall 0.3s ease-in-out 0s forwards normal";
+            estTips.style.animation = ""
             setTimeout(function () {
                 changeEst.style.display = "none";
                 join.style.display = "none";
@@ -79,6 +80,7 @@ tool.textProhibition();
         changeJoin.addEventListener("click", function () {
             changeEst.style.animation = "toSmall 0.3s ease-in-out 0s forwards  normal";
             changeJoin.style.animation = "toJoinBig 0.3s ease-in-out 0s forwards normal";
+            joinTips.style.animation = ""
             setTimeout(function () {
                 changeJoin.style.display = "none";
                 establish.style.display = "none";
