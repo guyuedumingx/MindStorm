@@ -6,7 +6,7 @@ body {
 
 /*#region--------------------- 操作节点的框 --------------------- */
 .operationNodeBox {
-    display: none;
+    /* display: none; */
     position: fixed;
     top: 50%;
     left: 50%;
