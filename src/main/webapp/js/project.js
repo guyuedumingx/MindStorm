@@ -289,18 +289,39 @@ function addTreeConstraint(root, n) {
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
-        mx = e.clientX;
-        my = e.clientY;
-        nowNode = this;
-        nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
-        var t = nowNode;
-        while (t.father) {
-            addHeightLight(t.father);
-            t = t.father;
-        }
-        changeChild(root, addHeightLight);
-        if (ctrlState) {
-            document.addEventListener('mousemove', move);
+        if (nowNode) {
+            if (!isParent(e.target, box)) {
+                nowNode.style.boxShadow = 'none';
+                var t = nowNode;
+                while (t.father) {
+                    removeHeightLight(t.father);
+                    t = t.father;
+                }
+                changeChild(nowNode, removeHeightLight);
+                mx = e.clientX;
+                my = e.clientY;
+                nowNode = this;
+                nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+                var t = nowNode;
+                while (t.father) {
+                    addHeightLight(t.father);
+                    t = t.father;
+                }
+            }
+        } else {
+            mx = e.clientX;
+            my = e.clientY;
+            nowNode = this;
+            nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+            var t = nowNode;
+            while (t.father) {
+                addHeightLight(t.father);
+                t = t.father;
+            }
+            changeChild(root, addHeightLight);
+            if (ctrlState) {
+                document.addEventListener('mousemove', move);
+            }
         }
     });
     nodeSet.push(root);
@@ -315,19 +336,21 @@ function addTreeConstraint(root, n) {
     }
 }
 
-document.addEventListener('mouseup', function () {
-    if (nowNode) {
-        nowNode.style.boxShadow = 'none';
-        var t = nowNode;
-        while (t.father) {
-            removeHeightLight(t.father);;
-            t = t.father;
+document.addEventListener('mouseup', function (e) {
+    if (ctrlState) {
+        if (nowNode) {
+            nowNode.style.boxShadow = 'none';
+            var t = nowNode;
+            while (t.father) {
+                removeHeightLight(t.father);
+                t = t.father;
+            }
+            changeChild(nowNode, removeHeightLight);
         }
-        changeChild(nowNode, removeHeightLight);
+        nowNode = null;
+        lineColor = lineUpColor;
+        document.removeEventListener('mousemove', move);
     }
-    nowNode = null;
-    lineColor = lineUpColor;
-    document.removeEventListener('mousemove', move);
 })
 
 setInterval(function () {

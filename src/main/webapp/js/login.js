@@ -303,6 +303,9 @@ registerSubmit.addEventListener('click', function () {
                 user_name: userName,
                 password: psd
             },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
             success: function (res) {
                 if (res == '200') {
                     topAlert('注册成功');
