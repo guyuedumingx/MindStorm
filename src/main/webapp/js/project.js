@@ -481,7 +481,7 @@ function setOnOffEvent(onOff) {
 }
 
 for (var i = 0; i < onOffArr.length; i++) {
-    setOnOffEvent(onOffArr[i]);
+    setOnOffEvent(onOffArr[i]); 
 }
 
 // ——————————页面加载完之后发送请求——————————

@@ -6,15 +6,15 @@ body .header {
     padding: 0 60px;
     box-sizing: border-box;
     width: 100%;
-    height: 60px;
+    height: 100px;
 }
 
 /* logo位置 */
 .header .logo {
     float: left;
     margin-top: 6px;
-    width: 42px;
-    height: 42px;
+    width: 82px;
+    height: 82px;
     background-image: url(../img/logo1.png);
     background-size: contain;
 }
@@ -42,32 +42,28 @@ body .header {
 .header .personal div {
     display: inline-block;
 }
-
 /*下拉框------ */
-.header .personal .spinner {
+.header .personal .spinner{
     position: absolute;
     top: 60px;
     right: 0px;
     border: solid #214B5B;
 }
-
-.header .personal .spinner ul {
+.header .personal .spinner ul{
     margin: 10px;
     text-align: center;
     font-size: 14px;
 }
-
-.header .personal .spinner ul li {
+.header .personal .spinner ul li{
     display: inline-block;
     padding: 2px;
     line-height: 20px;
 }
-
 /* 头像 */
 .header .personal .head {
     display: inline-block;
-    width: 32px;
-    height: 32px;
+    width: 52px;
+    height: 52px;
     margin: 10px 10px 0 0;
     border: solid;
     border-radius: 50px;
@@ -77,13 +73,14 @@ body .header {
 /* 昵称 */
 .header .personal .head_nav .name {
     float: right;
-    line-height: 60px;
+    line-height: 100px;
     color: #214B5B;
     pointer-events: none;
 }
 
 /* 消息通知 */
 .header .personal .message {
+    display: none;
     width: 28px;
     height: 28px;
     margin-right: 10px;
@@ -134,6 +131,7 @@ body .mainBox {
 
 /* 链接 */
 .mainBox .Box .smallBox {
+    position: relative;
     display: inline-block;
     width: 250px;
     height: 300px;
@@ -141,25 +139,22 @@ body .mainBox {
 }
 
 .mainBox .Box>div>div {
-    border: solid 1px #6AC1ED;
+    border: solid  #2c3e50;
     border-radius: 10px;
 }
 
 .mainBox .Box>div>div:hover {
-    box-shadow: 0px 0px 20px 0px #6AC1ED;
+    box-shadow: 0px 0px 20px 0px #2c3e50;
 }
 
 /* 提示 */
 .mainBox .Box .est_tips,
 .mainBox .Box .join_tips {
-    position: absolute;
-    color: #b7c8ce;
+    display: table;
+    margin: 20px auto;
+    color: #214B5B;
     letter-spacing: 10px;
-    font-weight: bold;
     font-size: 36px;
-    top: -120px;
-    left: 280px;
-    opacity: 0;
 }
 
 /* 图标 */
@@ -167,7 +162,7 @@ body .mainBox {
 .mainBox .Box .join_icon {
     display: block;
     position: relative;
-    top: 50%;
+    top: 40%;
     width: 40%;
     height: 33%;
     margin: 0 auto;
@@ -229,7 +224,7 @@ body .mainBox {
     border-radius: 5px;
 }
 
-.idTips {
+.idTips{
     font-size: 16px;
     color: #999999;
 }
@@ -327,17 +322,35 @@ body .mainBox {
 
 /* 是否选择 */
 /* 按钮 */
-.mainBox .Box .est_bigBox .open .openBut {
-    width: 28px;
-    height: 28px;
-    border-radius: 50px;
+.onOffBorder {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 18px;
+    border-radius: 9px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transition: all .3s;
     vertical-align: middle;
-    background-image: url(../img/lamp_blue.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    transition: 0.5s;
 }
 
+.onOffBorder .onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #46607b;
+    transition: all .3s;
+}
 .mainBox .Box .est_bigBox .est_but input {
     display: inline-block;
     margin: 0px auto;
@@ -478,34 +491,62 @@ body .footer {
 
 /*#endregion*/
 /* 装饰 */
-.undraw_tree {
+.undraw_tree{
     position: absolute;
     bottom: 0;
-    width: 300px;
-    height: 200px;
+    width: 600px;
+    height: 400px;
     background-image: url(../img/undraw_Tree.png);
     background-size: contain;
+    background-repeat: no-repeat;
     z-index: -1;
 }
-
-.mainTitle {
+.mainTitle{
     position: absolute;
     top: 10px;
-    left: 37%;
-    /* box-shadow:-10px 10px 10px #214B5B; */
+    left: 160px;
+    text-shadow:0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
     font-weight: 700;
     font-size: 56px;
     color: #214B5B;
-    text-shadow: 6px 2px 2px #517c8d;
-    animation: upDowm 1.3s ease-in-out 0s infinite alternate;
 }
-
-@keyframes upDowm {
+.mainTitle:hover{
+    -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon1 1.5s ease-in-out infinite alternate;
+    animation: neon1 1.5s ease-in-out infinite alternate; 
+  }
+  @keyframes neon1 {
     from {
-        transform: translate(0, 0)
+      text-shadow: 0 0 10px #fff,
+                 0 0 20px  #fff,
+                 0 0 30px  #fff,
+                 0 0 40px  #214B5B,
+                 0 0 70px #214B5B,
+                 0 0 80px  #214B5B,
+                 0 0 100px #214B5B,
+                 0 0 150px #214B5B;
     }
-
     to {
-        transform: translate(0, 5px)
+      text-shadow: 0 0 5px #fff,
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #214B5B,
+                 0 0 35px #214B5B,
+                 0 0 40px #214B5B,
+                 0 0 50px #214B5B,
+                 0 0 75px #214B5B;
     }
+  }
+  
+  body {
+    background-image: url(../img/back1.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
+
+
+
+/* @keyframes upDowm{
+    from{transform:translate(0,0)}
+    to{transform:translate(0,5px)}
+    } */

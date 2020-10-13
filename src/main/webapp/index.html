@@ -29,7 +29,7 @@
 			<div class="head_nav cleafix">
 				<div class="head"></div>
 				<span class="name">昵称</span>
-				
+
 			</div>
 			<div class="spinner">
 				<ul>
@@ -44,13 +44,13 @@
 	<div class="mainBox cleafix">
 		<!-- 框框的盒子 -->
 		<div class="Box cleafix">
-			<div class="est_tips">新建项目</div>
-			<div class="join_tips">加入项目</div>
+			
+
 			<!-- 创建 -->
 			<div class="establish ">
 				<!-- 新建链接 -->
 				<div class="smallBox change_est">
-					
+					<div class="est_tips">新建项目</div>
 					<!-- 新建图标 -->
 					<div class="est_icon"></div>
 				</div>
@@ -65,25 +65,35 @@
 						<textarea cols="" rows="8"></textarea>
 					</div>
 					<div class="choice">
-						<span class="open">是否公开:<i class="openBut"></i></span>
-						
+						<span class="open">是否公开:
+							<div class="onOffBorder">
+								<div class="onOffRod">x</div>
+							</div>
+						</span>
+
 						<span class="time">项目时长:<i class="timeBut">
-							<select name="" id="">
-								<option value="">请选择</option>
-							</select>
-						</i></span>
-						
+								<select name="" id="">
+									<option value="">一天</option>
+									<option value="">三天</option>
+									<option value="">一周</option>
+									<option value="">一个月</option>
+									<option value="">三个月</option>
+									<option value="">半年</option>
+									<option value="">一年</option>
+								</select>
+							</i></span>
+
 						<span class="rank">项目等级:<i class="rankBut">
-							<select name="" id="">
-								<option value="">请选择</option>
-								<option value="">1</option>
-								<option value="">2</option>
-								<option value="">3</option>
-								<option value="">4</option>
-								<option value="">5</option>
-							</select>
-						</i></span>
-						
+								<select name="" id="">
+									<option value="">请选择</option>
+									<option value="">1</option>
+									<option value="">2</option>
+									<option value="">3</option>
+									<option value="">4</option>
+									<option value="">5</option>
+								</select>
+							</i></span>
+
 					</div>
 					<div class="est_but">
 						<input type="submit" value="创建">
@@ -95,7 +105,7 @@
 			<div class="join">
 				<!-- 加入链接 -->
 				<div class="smallBox change_join">
-					
+					<div class="join_tips">加入项目</div>
 					<!-- 加入图标 -->
 					<div class="join_icon"></div>
 				</div>
@@ -121,13 +131,14 @@
 
 		</div>
 	</div>
-	
-	<div class="undraw_tree"></div>
-	<div class="mainTitle">MINDSTORM</div>
-	
+
+	<!-- <div class="undraw_tree"></div> -->
+	<p class="mainTitle">MINDSTORM</p>
+
 	<script src="js/concise.js"></script>
 	<script src="js/toolFunction.js"></script>
 	<script src="js/toolClass.js"></script>
 	<script src="js/index.js"></script>
 </body>
+
 </html>
