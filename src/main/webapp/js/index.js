@@ -16,20 +16,7 @@ tool.textProhibition();
         //快捷键显示
         clickOpenBlankClose(shortcut, shotcutNav);
     
-        //是否公开
-        var openBut = getDom(".openBut");
-        var openX = 1;
-        openBut.addEventListener("click", function () {
-            if (openX % 2 != 0) {
-                openBut.style.backgroundImage = "url(./img/lamp_yellow.png)";
-                openBut.style.boxShadow = "inset 0px 0px 5px 0px #f9f28b";
-            }
-            else {
-                openBut.style.backgroundImage = "url(./img/lamp_blue.png)";
-                openBut.style.boxShadow = "";
-            }
-            openX++;
-        })
+ 
     
         //放大新建
     
@@ -74,7 +61,7 @@ tool.textProhibition();
                 changeEst.style.display = "none";
                 join.style.display = "none";
                 estBig.style.display = "block";
-            }, 300);
+            }, 200);
         })
         // 点击加入放大
         changeJoin.addEventListener("click", function () {
@@ -85,7 +72,7 @@ tool.textProhibition();
                 changeJoin.style.display = "none";
                 establish.style.display = "none";
                 joinBig.style.display = "block";
-            }, 300);
+            },200);
         })
     
         // 新建返回
@@ -119,5 +106,29 @@ tool.textProhibition();
         //获取个人框
         var headNav = getDom(".head_nav");
         clickOpenBlankClose(headNav, spinner);
-    
+        
+        //是否公开选择-----------
+        var onOff = getDom(".onOffBorder");
+        var onOffRod = getDom(".onOffRod");
+        //初始状态
+        onOff.state = false;
+        
+        //点击改变
+        onOff.addEventListener('click', function () {
+           
+            if (onOff.state) {
+                onOff.state = false;
+                onOff.style.backgroundColor = '#2c3e50';
+                onOffRod.style.left = '1.5px';
+                onOffRod.style.backgroundColor = ' #46607b';
+                onOffRod.innerText = 'x';
+            } else {
+                onOff.state = true;
+                onOff.style.backgroundColor = '#16a085';
+                onOffRod.style.left = '23.5px';
+                onOffRod.style.backgroundColor = '#1abc9c';
+                onOffRod.innerText = '✔';
+            }
+        })
+        
 
