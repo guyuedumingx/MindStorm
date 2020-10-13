@@ -42,23 +42,27 @@ body .header {
 .header .personal div {
     display: inline-block;
 }
+
 /*下拉框------ */
-.header .personal .spinner{
+.header .personal .spinner {
     position: absolute;
     top: 60px;
     right: 0px;
     border: solid #214B5B;
 }
-.header .personal .spinner ul{
+
+.header .personal .spinner ul {
     margin: 10px;
     text-align: center;
     font-size: 14px;
 }
-.header .personal .spinner ul li{
+
+.header .personal .spinner ul li {
     display: inline-block;
     padding: 2px;
     line-height: 20px;
 }
+
 /* 头像 */
 .header .personal .head {
     display: inline-block;
@@ -225,7 +229,7 @@ body .mainBox {
     border-radius: 5px;
 }
 
-.idTips{
+.idTips {
     font-size: 16px;
     color: #999999;
 }
@@ -474,7 +478,7 @@ body .footer {
 
 /*#endregion*/
 /* 装饰 */
-.undraw_tree{
+.undraw_tree {
     position: absolute;
     bottom: 0;
     width: 300px;
@@ -483,9 +487,10 @@ body .footer {
     background-size: contain;
     z-index: -1;
 }
-.mainTitle{
+
+.mainTitle {
     position: absolute;
-    top: 50px;
+    top: 10px;
     left: 37%;
     /* box-shadow:-10px 10px 10px #214B5B; */
     font-weight: 700;
@@ -495,7 +500,12 @@ body .footer {
     animation: upDowm 1.3s ease-in-out 0s infinite alternate;
 }
 
-@keyframes upDowm{
-    from{transform:translate(0,0)}
-    to{transform:translate(0,5px)}
+@keyframes upDowm {
+    from {
+        transform: translate(0, 0)
     }
+
+    to {
+        transform: translate(0, 5px)
+    }
+}
