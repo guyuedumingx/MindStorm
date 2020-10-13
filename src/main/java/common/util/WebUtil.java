@@ -46,7 +46,7 @@ public class WebUtil {
     public static void renderMap(HttpServletResponse resp, String key, String value) {
         Result result = new Result();
         result.put(key,value);
-        renderJson(resp,result.getMap());
+        renderJson(resp,result);
     }
 
     /**

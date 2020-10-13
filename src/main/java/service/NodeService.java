@@ -16,13 +16,13 @@ public interface NodeService {
      * 删除节点
      * @param nodeId
      */
-    public void delNode(int nodeId);
+    public int delNode(int nodeId,int operatorId);
 
     /**
      * 修改节点
      * @param node
      */
-    public void chNode(Node node);
+    public int chNode(Node node);
 
     /**
      * 获取节点

@@ -6,12 +6,15 @@ import common.factory.DaoFactory;
 import common.util.WebUtil;
 import dao.NodeDao;
 import pojo.Node;
+import pojo.User;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -21,22 +24,32 @@ import java.util.Map;
  */
 @WebServlet("/node")
 public class NodeController extends BaseController{
+    User user = null;
+    NodeService service = new NodeServiceImpl();
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        //获取用户id
+        HttpSession session = req.getSession();
+        user = (User)session.getAttribute("user");
+    }
 
     /**
      * 新建节点
-     * @param request
-     * @param response
+     * @param req
+     * @param resp
      * @throws IOException
      */
-    public void newNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Node node = WebUtil.getJson(request, Node.class);
-        NodeService service = new NodeServiceImpl();
-        int id = service.newNode(node);
-        int statusCode = StatusCode.isZero(id);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Node node = WebUtil.getJson(req, Node.class);
+        node.setAuthor(user.getId());
+        int nodeId = service.newNode(node);
+        int statusCode = StatusCode.isZero(nodeId);
+
         Result result = new Result();
-        result.put("node_id",id);
-        result.put("status_code",statusCode);
-        WebUtil.renderJson(response,result.getMap());
+        result.put("node_id",nodeId);
+        result.setStatus_code(statusCode);
+        WebUtil.renderJson(resp,result);
     }
 
     /**
@@ -45,8 +58,11 @@ public class NodeController extends BaseController{
      * @param response
      * @throws IOException
      */
-    public void delNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String nodeId = request.getParameter("nodeId");
+        int statusCode = service.delNode(Integer.valueOf(nodeId), user.getId());
+        WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
     /**
@@ -55,8 +71,11 @@ public class NodeController extends BaseController{
      * @param response
      * @throws IOException
      */
-    public void chNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Node node = WebUtil.getJson(request, Node.class);
+        int statusCode = service.chNode(node);
+        WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
     /**
@@ -65,8 +84,11 @@ public class NodeController extends BaseController{
      * @param response
      * @throws IOException
      */
-    public void getNode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String nodeId = request.getParameter("nodeId");
+        Node node = service.getNode(Integer.valueOf(nodeId));
+        WebUtil.renderJson(response,node);
     }
 
     /**

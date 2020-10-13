@@ -1,6 +1,8 @@
 package controller;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,20 +15,16 @@ import java.lang.reflect.Method;
  */
 public class BaseController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doPost(req,resp);
+    protected void before(HttpServletRequest req, HttpServletResponse resp){
+    }
+
+    protected void after(HttpServletRequest req, HttpServletResponse resp) {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String methodName = req.getParameter("method");
-        try {
-            Method method = this.getClass().getDeclaredMethod(methodName,HttpServletRequest.class,
-                    HttpServletResponse.class);
-            method.invoke(this,req,resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        before(req,resp);
+        super.service(req, resp);
+        after(req,resp);
     }
 }

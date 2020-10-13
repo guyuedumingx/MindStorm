@@ -26,7 +26,6 @@ public class EmailUtil {
             pro.load(is);
             from = pro.getProperty("sender");
             password = pro.getProperty("password");
-            logger.debug("nihao");
         } catch (Exception e) {
             logger.debug("This is a debug message");
         }
