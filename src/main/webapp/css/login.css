@@ -341,3 +341,8 @@ body::after {
 
 /* #endregion */
 
+body {
+    background-image: url(../img/background4.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
