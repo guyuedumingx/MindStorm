@@ -507,6 +507,7 @@ addNode.addEventListener('click', function () {
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
     operationNodeBoxTheme.readOnly = false;
+    operationNodeBoxTheme.addClass('editable');
     operationNodeBoxJurisdictionBox.show();
     operationNodeBoxContent.show();
     operationNodeBoxNodeCreator.hide();
@@ -524,6 +525,7 @@ changeNode.addEventListener('click', function () {
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
     operationNodeBoxTheme.readOnly = false;
+    operationNodeBoxTheme.addClass('editable');
     operationNodeBoxJurisdictionBox.hide();
     operationNodeBoxContent.show();
     operationNodeBoxNodeCreator.hide();
@@ -537,6 +539,7 @@ queryNode.addEventListener('click', function () {
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
     operationNodeBoxTheme.readOnly = true;
+    operationNodeBoxTheme.removeClass('editable');
     operationNodeBoxJurisdictionBox.show();
     operationNodeBoxContent.show();
     operationNodeBoxNodeCreator.show();

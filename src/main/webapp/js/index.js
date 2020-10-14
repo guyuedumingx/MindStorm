@@ -178,9 +178,6 @@ inputTips(inputID, "请输入项目ID", "idTips");
 // 新建交互------
 // 获取新建按钮
 var estBut = getDom(".click_est");
-
-var inputName = getDom(".inputName");
-
 estBut.addEventListener("click", function () {
     if (inputName.value == "") {
         inputName.style.color = "red";
