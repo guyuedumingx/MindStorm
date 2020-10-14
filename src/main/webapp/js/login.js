@@ -300,14 +300,14 @@ registerSubmit.addEventListener('click', function () {
             url: '/user/register',
             data: {
                 email: em,
-                user_name: userName,
+                name: userName,
                 password: psd
             },
             header: {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res == '200') {
+                if (res.status_code == '200') {
                     topAlert('注册成功');
                 } else {
                     topAlert('注册失败');

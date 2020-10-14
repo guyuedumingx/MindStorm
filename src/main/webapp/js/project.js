@@ -4,6 +4,20 @@ tool.textProhibition();
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
+        if (!ctrlState) {
+            if (nowNode) {
+                nowNode.style.boxShadow = 'none';
+                var t = nowNode;
+                while (t.father) {
+                    removeHeightLight(t.father);
+                    t = t.father;
+                }
+                changeChild(nowNode, removeHeightLight);
+            }
+            nowNode = null;
+            lineColor = lineUpColor;
+            document.removeEventListener('mousemove', move);
+        }
         ctrlState = true;
     }
 });
@@ -58,6 +72,19 @@ var progressContent = getDom('.progressBox .progressContent'); // 进图条盒�
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+treeBoxMain.addEventListener('mousedown', function (e) {
+    if (nowNode) {
+        if (!isParent(e.target, nowNode)) {
+            nowNode.style.boxShadow = 'none';
+            var t = nowNode;
+            while (t.father) {
+                removeHeightLight(t.father);
+                t = t.father;
+            }
+            changeChild(nowNode, removeHeightLight);
+        }
+    }
+});
 
 var treeFullScreenState = false;
 var treeFullScreenOnOff = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
@@ -290,7 +317,7 @@ function addTreeConstraint(root, n) {
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
         if (nowNode) {
-            if (!isParent(e.target, box)) {
+            if (!isParent(e.target, nowNode)) {
                 nowNode.style.boxShadow = 'none';
                 var t = nowNode;
                 while (t.father) {
@@ -307,6 +334,7 @@ function addTreeConstraint(root, n) {
                     addHeightLight(t.father);
                     t = t.father;
                 }
+                changeChild(root, addHeightLight);
             }
         } else {
             mx = e.clientX;
@@ -349,9 +377,9 @@ document.addEventListener('mouseup', function (e) {
         }
         nowNode = null;
         lineColor = lineUpColor;
-        document.removeEventListener('mousemove', move);
     }
-})
+    document.removeEventListener('mousemove', move);
+});
 
 setInterval(function () {
     for (var i = 0; i < constraintArr.length; i++) {
@@ -435,11 +463,84 @@ var nodeRequetTimer = setInterval(function () {
         clearInterval(nodeRequetTimer);
     }
 }, 5);
-// ——————————————————有侧—————————————————— 
+// ——————————————————右侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
-var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn');
-var onOffArr = getDomA('.onOffBox .onOff .onOffBorder');
+var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
+var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
+var addNode = btnArr[0]; // 创建节点
+var removeNode = btnArr[1]; // 删除节点
+var changeNode = btnArr[2]; // 修改节点
+var queryNode = btnArr[3]; // 查询节点
+var refreshTree = btnArr[4]; // 刷新树
+var operationNodeBox = getDom('.operationNodeBox'); // 操作节点盒子
+var operationNodeBoxClose = operationNodeBox.getDom('.close'); // 操作节点盒子中关闭按钮
+var operationNodeBoxTheme = operationNodeBox.getDom('h4 input'); // 节点主题
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.onOff');// 是否允许被其他人修改盒子
+var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'); // 是否允许被其他人修改开关
+var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
+var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
+var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
+var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
+operationNodeBox.hide();
+operationNodeBoxClose.hide();
+operationNodeBoxTheme.hide();
+operationNodeBoxJurisdictionBox.hide();
+operationNodeBoxContent.hide();
+operationNodeBoxNodeCreator.hide();
+operationNodeBoxLastRevision.hide();
+operationNodeBoxSubmit.hide();
 
+// 关闭按钮的点击事件
+operationNodeBoxClose.addEventListener('click', function () {
+    operationNodeBox.hide();
+    operationNodeBoxClose.hide();
+    operationNodeBoxTheme.hide();
+    operationNodeBoxJurisdictionBox.hide();
+    operationNodeBoxContent.hide();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.hide();
+});
+
+// 创建节点按钮的点击事件
+addNode.addEventListener('click', function () {
+    operationNodeBox.show();
+    operationNodeBoxClose.show();
+    operationNodeBoxTheme.show();
+    operationNodeBoxJurisdictionBox.show();
+    operationNodeBoxContent.show();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.show();
+});
+
+// 删除节点按钮的点击事件
+removeNode.addEventListener('click', function () {
+});
+
+// 修改节点按钮的点击事件
+changeNode.addEventListener('click', function () {
+    operationNodeBox.show();
+    operationNodeBoxClose.show();
+    operationNodeBoxTheme.show();
+    operationNodeBoxJurisdictionBox.hide();
+    operationNodeBoxContent.show();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.show();
+});
+
+// 查看节点按钮的点击事件
+queryNode.addEventListener('click', function () {
+    operationNodeBox.show();
+    operationNodeBoxClose.show();
+    operationNodeBoxTheme.show();
+    operationNodeBoxJurisdictionBox.show();
+    operationNodeBoxContent.show();
+    operationNodeBoxNodeCreator.show();
+    operationNodeBoxLastRevision.show();
+    operationNodeBoxSubmit.hide();
+});
 cycleSprite(btnArr, 0, 0, 27);
 
 function onOffChange(onOff) {
@@ -448,13 +549,13 @@ function onOffChange(onOff) {
         onOff.style.backgroundColor = '#2c3e50';
         onOff.children[0].style.left = '1.5px';
         onOff.children[0].style.backgroundColor = ' #46607b';
-        onOff.children[0].innerText = 'x';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
     } else {
         onOff.state = true;
         onOff.style.backgroundColor = '#16a085';
         onOff.children[0].style.left = '23.5px';
         onOff.children[0].style.backgroundColor = '#1abc9c';
-        onOff.children[0].innerText = '✔';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
     }
 }
 
@@ -466,9 +567,9 @@ function setOnOffEvent(onOff) {
 }
 
 for (var i = 0; i < onOffArr.length; i++) {
-    setOnOffEvent(onOffArr[i]); 
+    setOnOffEvent(onOffArr[i]);
 }
-
+setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
     ajax({

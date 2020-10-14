@@ -7,7 +7,7 @@ public class EmailTest {
     public void sendEmailTest() {
         String str = "1808078515@qq.com";
         String str2 = "1131993675@qq.com";
-        EmailUtil.sendChPasswordEmail(str2, AuthCodeUtil.getAuthCodeUtil());
-        EmailUtil.sendRegisterEmail(str2, AuthCodeUtil.getAuthCodeUtil());
+        EmailUtil.sendChPasswordEmail(str, AuthCodeUtil.getAuthCodeUtil());
+        EmailUtil.sendRegisterEmail(str, AuthCodeUtil.getAuthCodeUtil());
     }
 }
