@@ -180,8 +180,8 @@ inputTips(inputID, "请输入项目ID", "idTips");
 // 获取新建按钮
 var estBut = getDom(".click_est");
 estBut.addEventListener("click", function () {
-    if (inputID.value == "") {
-        inputID.value
+    if (inputName.value == "") {
+        inputName.style.color = "red";
     } else {
         var idnum = inputID.value;
         ajax({
@@ -223,8 +223,3 @@ introduceInput.addEventListener("keyup", function () {
         sum.style.color = "#88b3c4";
     }
 })
-
-
-
-
-
