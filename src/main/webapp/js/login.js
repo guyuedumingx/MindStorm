@@ -307,7 +307,7 @@ registerSubmit.addEventListener('click', function () {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res == '200') {
+                if (res.status_code == '200') {
                     topAlert('注册成功');
                 } else {
                     topAlert('注册失败');

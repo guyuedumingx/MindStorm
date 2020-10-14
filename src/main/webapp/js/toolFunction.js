@@ -1256,3 +1256,10 @@ function cancelFullscreen() {
         document.webkitCancelFullScreen();
     }
 };
+
+Node.prototype.show = function () {
+    this.style.display = 'block';
+}
+Node.prototype.hide = function () {
+    this.style.display = 'none';
+}

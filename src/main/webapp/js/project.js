@@ -72,6 +72,19 @@ var progressContent = getDom('.progressBox .progressContent'); // 进图条盒�
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+treeBoxMain.addEventListener('mousedown', function (e) {
+    if (nowNode) {
+        if (!isParent(e.target, nowNode)) {
+            nowNode.style.boxShadow = 'none';
+            var t = nowNode;
+            while (t.father) {
+                removeHeightLight(t.father);
+                t = t.father;
+            }
+            changeChild(nowNode, removeHeightLight);
+        }
+    }
+});
 
 var treeFullScreenState = false;
 var treeFullScreenOnOff = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
@@ -450,11 +463,40 @@ var nodeRequetTimer = setInterval(function () {
         clearInterval(nodeRequetTimer);
     }
 }, 5);
-// ——————————————————有侧—————————————————— 
+// ——————————————————右侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
-var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn');
-var onOffArr = getDomA('.onOffBox .onOff .onOffBorder');
+var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
+var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
+var addNode = btnArr[0]; // 创建节点
+var removeNode = btnArr[1]; // 删除节点
+var changeNode = btnArr[2]; // 修改节点
+var queryNode = btnArr[3]; // 查询节点
+var refreshTree = btnArr[4]; // 刷新树
+var operationNodeBox = getDom('.operationNodeBox'); // 操作节点盒子
+var operationNodeBoxClose = operationNodeBox.getDom('.close'); // 操作节点盒子中关闭按钮
+var operationNodeBoxTheme = operationNodeBox.getDom('h4 input'); // 节点主题
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.onOff');// 是否允许被其他人修改盒子
+var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'); // 是否允许被其他人修改开关
+var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
+var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
+var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
+var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
+operationNodeBox.hide();
+operationNodeBoxClose.hide();
+operationNodeBoxTheme.hide();
+operationNodeBoxJurisdictionBox.hide();
+operationNodeBoxJurisdictionBox.hide();
+operationNodeBoxContent.hide();
+operationNodeBoxNodeCreator.hide();
+operationNodeBoxLastRevision.hide();
+operationNodeBoxSubmit.hide();
 
+operationNodeBoxClose.addEventListener('click', function () {
+    operationNodeBox.hide();
+});
+// addNode.addEventListener('click', function () {
+//     operationNodeBox.show();
+// });
 cycleSprite(btnArr, 0, 0, 27);
 
 function onOffChange(onOff) {
@@ -481,9 +523,9 @@ function setOnOffEvent(onOff) {
 }
 
 for (var i = 0; i < onOffArr.length; i++) {
-    setOnOffEvent(onOffArr[i]); 
+    setOnOffEvent(onOffArr[i]);
 }
-
+setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
     ajax({
