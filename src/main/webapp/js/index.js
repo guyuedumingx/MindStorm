@@ -155,7 +155,7 @@ joinBut.addEventListener("click", function () {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res.state_code == '200') {
+                if (res.status_code == '200') {
                     window.location.href = "/project.html?" + "id=" + idnum; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
