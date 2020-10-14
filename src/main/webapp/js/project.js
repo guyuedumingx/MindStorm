@@ -485,18 +485,62 @@ operationNodeBox.hide();
 operationNodeBoxClose.hide();
 operationNodeBoxTheme.hide();
 operationNodeBoxJurisdictionBox.hide();
-operationNodeBoxJurisdictionBox.hide();
 operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
 
+// 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBox.hide();
+    operationNodeBoxClose.hide();
+    operationNodeBoxTheme.hide();
+    operationNodeBoxJurisdictionBox.hide();
+    operationNodeBoxContent.hide();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.hide();
 });
-// addNode.addEventListener('click', function () {
-//     operationNodeBox.show();
-// });
+
+// 创建节点按钮的点击事件
+addNode.addEventListener('click', function () {
+    operationNodeBox.show();
+    operationNodeBoxClose.show();
+    operationNodeBoxTheme.show();
+    operationNodeBoxJurisdictionBox.show();
+    operationNodeBoxContent.show();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.show();
+});
+
+// 删除节点按钮的点击事件
+removeNode.addEventListener('click', function () {
+});
+
+// 修改节点按钮的点击事件
+changeNode.addEventListener('click', function () {
+    operationNodeBox.show();
+    operationNodeBoxClose.show();
+    operationNodeBoxTheme.show();
+    operationNodeBoxJurisdictionBox.hide();
+    operationNodeBoxContent.show();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.show();
+});
+
+// 查看节点按钮的点击事件
+queryNode.addEventListener('click', function () {
+    operationNodeBox.show();
+    operationNodeBoxClose.show();
+    operationNodeBoxTheme.show();
+    operationNodeBoxJurisdictionBox.show();
+    operationNodeBoxContent.show();
+    operationNodeBoxNodeCreator.show();
+    operationNodeBoxLastRevision.show();
+    operationNodeBoxSubmit.hide();
+});
 cycleSprite(btnArr, 0, 0, 27);
 
 function onOffChange(onOff) {

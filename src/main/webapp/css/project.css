@@ -6,7 +6,7 @@ body {
 
 /*#region--------------------- 操作节点的框 --------------------- */
 .operationNodeBox {
-    /* display: none; */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -27,8 +27,15 @@ body {
     right: 10px;
     width: 20px;
     height: 20px;
-    background-color: pink;
+    background-image: url(../img/project_close.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
     cursor: pointer;
+}
+
+.operationNodeBox .close:hover {
+    background-image: url(../img/project_closeHover.png);
 }
 
 .operationNodeBox h4 {
@@ -38,8 +45,15 @@ body {
     color: #214B5B;
 }
 
+.operationNodeBox h4 span {
+    float: left;
+}
+
 .operationNodeBox h4 input {
+    display: block;
+    float: left;
     border: 0px;
+    margin-top: 7px;
     font-size: 18px;
     font-weight: 700;
     color: #214B5B;
