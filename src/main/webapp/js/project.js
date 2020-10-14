@@ -549,13 +549,13 @@ function onOffChange(onOff) {
         onOff.style.backgroundColor = '#2c3e50';
         onOff.children[0].style.left = '1.5px';
         onOff.children[0].style.backgroundColor = ' #46607b';
-        onOff.children[0].innerText = 'x';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
     } else {
         onOff.state = true;
         onOff.style.backgroundColor = '#16a085';
         onOff.children[0].style.left = '23.5px';
         onOff.children[0].style.backgroundColor = '#1abc9c';
-        onOff.children[0].innerText = '✔';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
     }
 }
 

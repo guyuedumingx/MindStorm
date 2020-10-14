@@ -777,13 +777,12 @@ body .header {
     margin: 5px auto 0px;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: #16a085;
     background-color: #2c3e50;
     cursor: pointer;
     transition: all .3s;
 }
 
-.onOffBox .onOff .onOffBorder .onOffRod {
+.onOffRod {
     position: absolute;
     top: 1.5px;
     left: 1.5px;
@@ -795,6 +794,10 @@ body .header {
     line-height: 15px;
     text-align: center;
     color: #fff;
+    background-image: url(../img/public_onOffFalse.png);
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
     background-color: #46607b;
     transition: all .3s;
 }
