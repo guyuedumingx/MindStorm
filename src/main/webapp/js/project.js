@@ -489,7 +489,6 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
-
 // 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBox.hide();
@@ -507,6 +506,7 @@ addNode.addEventListener('click', function () {
     operationNodeBox.show();
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
+    operationNodeBoxTheme.readOnly = false;
     operationNodeBoxJurisdictionBox.show();
     operationNodeBoxContent.show();
     operationNodeBoxNodeCreator.hide();
@@ -523,6 +523,7 @@ changeNode.addEventListener('click', function () {
     operationNodeBox.show();
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
+    operationNodeBoxTheme.readOnly = false;
     operationNodeBoxJurisdictionBox.hide();
     operationNodeBoxContent.show();
     operationNodeBoxNodeCreator.hide();
@@ -535,6 +536,7 @@ queryNode.addEventListener('click', function () {
     operationNodeBox.show();
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
+    operationNodeBoxTheme.readOnly = true;
     operationNodeBoxJurisdictionBox.show();
     operationNodeBoxContent.show();
     operationNodeBoxNodeCreator.show();
