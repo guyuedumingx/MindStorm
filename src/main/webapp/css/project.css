@@ -52,9 +52,9 @@ body {
 .operationNodeBox h4 input {
     display: block;
     float: left;
-    padding-bottom: 5px;
+    padding-bottom: 1px;
     border: 0px;
-    margin-top: 7px;
+    margin-top: 5px;
     box-sizing: border-box;
     font-size: 18px;
     font-weight: 700;
