@@ -43,7 +43,7 @@ public class EmailUtil {
         Properties props = new Properties();
 
         //网易的smtp服务器地址
-        props.put("mail.smtp.host", "220.181.12.15");
+        props.put("mail.smtp.host", "20.181.12.15");
         props.setProperty("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");

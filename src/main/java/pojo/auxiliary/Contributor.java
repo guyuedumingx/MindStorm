@@ -1,6 +1,7 @@
 package pojo.auxiliary;
 
 import common.annontation.DbField;
+import pojo.Project;
 
 /**
  * 贡献者表对应的bean
@@ -21,6 +22,10 @@ public class Contributor {
 
     public Contributor(int contributorId) {
         this.contributorId = contributorId;
+    }
+    public Contributor(Project project){
+        this.contributorId = project.getAuthor();
+        this.projectId = project.getId();
     }
 
     public int getProjectId() {

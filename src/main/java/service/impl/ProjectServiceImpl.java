@@ -3,9 +3,14 @@ package service.impl;
 import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.ProjectDao;
+import dao.auxiliary.impl.ContributorDaoImpl;
 import pojo.Node;
 import pojo.Project;
+import pojo.auxiliary.Contributor;
 import service.ProjectService;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 项目service层实现类
@@ -13,6 +18,7 @@ import service.ProjectService;
  */
 public class ProjectServiceImpl implements ProjectService {
     ProjectDao projectDao = DaoFactory.getProjectDao();
+    ContributorDaoImpl contributorDao = new ContributorDaoImpl();
 
     @Override
     public int newProject(Project project) {
@@ -26,6 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
             int headNodeId = DaoFactory.getNodeDao().insertOne(node);
             project.setHeadNodeId(headNodeId);
             projectDao.updateOne(project);
+            contributorDao.insertOne(new Contributor(project));
         }
         return projectId;
     }
@@ -48,6 +55,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getProject(int projectId) {
-        return projectDao.selectOne(new Project(projectId));
+        Project project = projectDao.selectOne(new Project(projectId));
+        List<Contributor> contributors = contributorDao.selectObjectList(new Contributor(projectId));
+        Iterator<Contributor> iterator = contributors.iterator();
+        int[] cons = new int[contributors.size()];
+        for(int i=0; iterator.hasNext();i++){
+            cons[i] = iterator.next().getContributorId();
+        }
+        project.setContributors(cons);
+        return project;
     }
 }
