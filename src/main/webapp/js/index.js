@@ -148,6 +148,44 @@ joinBut.addEventListener("click", function () {
         var idnum = inputID.value;
         ajax({
             type: 'get',
+            url: '/util/project',
+            data: {
+                id: idnum
+            },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
+            success: function (res) {
+                if (res.state_code == '200') {
+                    window.location.href = "/project.html?" + "id=" + idnum; //跳转页面
+                    // "test2.html?"+"txt="+encodeURI(s.value);
+                } else {
+                    topAlert("该房间不存在");
+                }
+            }
+        });
+    }
+})
+
+// 移除样式
+inputID.addEventListener("click", function () {
+    inputID.removeClass("idPd");
+})
+
+inputTips(inputID, "请输入项目ID", "idTips");
+
+
+
+// 新建交互------
+// 获取新建按钮
+var estBut = getDom("click_est");
+estBut.addEventListener("click", function () {
+    if (inputID.value == "") {
+        inputID.value
+    } else {
+        var idnum = inputID.value;
+        ajax({
+            type: 'get',
             url: '/user/register',
             data: {
                 id: idnum
@@ -167,19 +205,16 @@ joinBut.addEventListener("click", function () {
     }
 })
 
-// 移除样式
-inputID.addEventListener("click", function () {
-    inputID.removeClass("idPd");
-})
 
-inputTips(inputID, "请输入项目ID", "idTips");
+
+
 
 // 获取简介框
 var introduceInput = getDom(".introduce_input");
 
 var sum = getDom(".sum");
 
-
+//字数限制
 introduceInput.addEventListener("keyup", function () {
     sum.innerText = introduceInput.value.length + "/200";
     if (introduceInput.value.length > 200)
@@ -188,4 +223,8 @@ introduceInput.addEventListener("keyup", function () {
         sum.style.color = "#88b3c4";
     }
 })
+
+
+
+
 

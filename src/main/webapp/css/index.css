@@ -22,7 +22,7 @@ body .header {
 /* 登录注册容器 */
 .header .logOn {
     float: right;
-    /* display: none; */
+    display: none;
 }
 
 /* 字体大小位置设置 */
@@ -35,7 +35,7 @@ body .header {
 
 /* 个人头像等容器 */
 .header .personal {
-    display: none;
+    /* display: none; */
     position: relative;
     float: right;
 }
@@ -47,7 +47,7 @@ body .header {
 /*下拉框------ */
 .header .personal .spinner {
     position: absolute;
-    top: 60px;
+    top: 70px;
     right: 0px;
     border: solid #214B5B;
 }
@@ -146,11 +146,11 @@ body .mainBox {
 .mainBox .Box>div>div {
     border: solid #2c3e50;
     border-radius: 15px;
-    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555, 6px 6px 0px #444, 7px 7px 0px #333, 8px 8px 7px #001135;
+    /* box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555, 6px 6px 0px #444, 7px 7px 0px #333, 8px 8px 7px #001135; */
 }
 
 .mainBox .Box .smallBox:hover {
-    /* box-shadow: 0px 0px 20px 0px #2c3e50; */
+    box-shadow: 0px 0px 20px 0px #2c3e50;
     cursor: pointer;
 }
 
