@@ -21,7 +21,7 @@
 		</div>
 		<!--右边登录注册-->
 		<div class="logOn">
-			<a href="javascript">登录 | 注册</a>
+			<a href="login.html">登录 | 注册</a>
 		</div>
 		<!--右边个人-->
 		<div class="personal">
@@ -58,11 +58,12 @@
 					<div class="est_til">新建项目</div>
 					<div class="project_name">
 						<span class="prjName">项目名称：</span>
-						<input type="text">
+						<input type="text" maxlength="20">
 					</div>
 					<div class="introduction">
 						<span class="introduce">简&nbsp;&nbsp; &nbsp;介：</span>
-						<textarea cols="" rows="8"></textarea>
+						<textarea class="introduce_input" ></textarea>
+						<span class="sum">0/200</span>
 					</div>
 					<div class="choice">
 						<span class="open">是否公开:
@@ -72,7 +73,7 @@
 						</span>
 
 						<span class="time">项目时长:<i class="timeBut">
-								<select name="" id="">
+								<select name="" id="projectTime">
 									<option value="">一天</option>
 									<option value="">三天</option>
 									<option value="">一周</option>
@@ -84,8 +85,8 @@
 							</i></span>
 
 						<span class="rank">项目等级:<i class="rankBut">
-								<select name="" id="">
-									<option value="">请选择</option>
+								<select name="" id="projectRank">
+									
 									<option value="">1</option>
 									<option value="">2</option>
 									<option value="">3</option>
@@ -96,7 +97,7 @@
 
 					</div>
 					<div class="est_but">
-						<input type="submit" value="创建">
+						<input type="submit" value="创建" class="click_est">
 					</div>
 					<div class="back"></div>
 				</div>

@@ -35,6 +35,7 @@ body .header {
 
 /* 个人头像等容器 */
 .header .personal {
+    /* display: none; */
     position: relative;
     float: right;
 }
@@ -42,23 +43,27 @@ body .header {
 .header .personal div {
     display: inline-block;
 }
+
 /*下拉框------ */
-.header .personal .spinner{
+.header .personal .spinner {
     position: absolute;
-    top: 60px;
+    top: 70px;
     right: 0px;
     border: solid #214B5B;
 }
-.header .personal .spinner ul{
+
+.header .personal .spinner ul {
     margin: 10px;
     text-align: center;
     font-size: 14px;
 }
-.header .personal .spinner ul li{
+
+.header .personal .spinner ul li {
     display: inline-block;
     padding: 2px;
     line-height: 20px;
 }
+
 /* 头像 */
 .header .personal .head {
     display: inline-block;
@@ -139,12 +144,14 @@ body .mainBox {
 }
 
 .mainBox .Box>div>div {
-    border: solid  #2c3e50;
-    border-radius: 10px;
+    border: solid #2c3e50;
+    border-radius: 15px;
+    /* box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555, 6px 6px 0px #444, 7px 7px 0px #333, 8px 8px 7px #001135; */
 }
 
-.mainBox .Box>div>div:hover {
+.mainBox .Box .smallBox:hover {
     box-shadow: 0px 0px 20px 0px #2c3e50;
+    cursor: pointer;
 }
 
 /* 提示 */
@@ -216,7 +223,7 @@ body .mainBox {
 /* 输入框 */
 .mainBox .Box .join_bigBox input {
     display: inline-block;
-    height: 60px;
+    line-height: 60px;
     width: 230px;
     padding-left: 10px;
     font-size: 24px;
@@ -224,9 +231,13 @@ body .mainBox {
     border-radius: 5px;
 }
 
-.idTips{
-    font-size: 16px;
+.idTips {
+    font-size: 16px !important;
     color: #999999;
+}
+
+.idPd {
+    color: rgb(196, 60, 60);
 }
 
 /* 点击进入 */
@@ -234,12 +245,16 @@ body .mainBox {
     float: right;
     width: 60px;
     height: 60px;
-    background-image: url(../img/join_join_q.png);
-    background-size: contain;
+    border-left: solid #2c3e50;
+    background-image: url(../img/join_logo_q.png);
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .mainBox .Box .join_bigBox .click_join:hover {
-    background-image: url(../img/join_join.png);
+    cursor: pointer;
+    background-image: url(../img/join_logo.png);
 }
 
 /* ----新建大盒子--- */
@@ -285,32 +300,42 @@ body .mainBox {
 
 /* 简介输入框 */
 .mainBox .Box .est_bigBox .introduction textarea {
-    height: 190px;
+    height: 180px;
     width: 395px;
     padding: 10px;
-    line-height: 24px;
-    font-size: 16px;
+    line-height: 22px;
+    font-size: 15px;
     border: solid 1px;
     border-radius: 10px;
     outline: none;
     resize: none;
     /*不可调节*/
 }
+.mainBox .Box .est_bigBox .introduction {
+    position: relative;
+}
+.mainBox .Box .est_bigBox .introduction .sum{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #88b3c4;
+}
 
 .mainBox .Box .est_bigBox .introduce {
     float: left;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 }
 
 /* 选择 */
 .mainBox .Box .est_bigBox .choice {
     width: 520px;
-    margin-top: 0px;
+    margin-top: 10px;
 }
 
 .mainBox .Box .est_bigBox .choice span {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 50px;
     font-weight: normal;
     font-size: 16px;
 }
@@ -318,6 +343,18 @@ body .mainBox {
 .mainBox .Box .est_bigBox .choice i {
     display: inline-block;
     margin-left: 5px;
+}
+
+/* 时间 */
+#projectTime {
+    padding: 3px;
+    border-radius: 5px;
+}
+
+/* 等级 */
+#projectRank {
+    padding: 3px;
+    border-radius: 5px;
 }
 
 /* 是否选择 */
@@ -351,11 +388,12 @@ body .mainBox {
     background-color: #46607b;
     transition: all .3s;
 }
+
 .mainBox .Box .est_bigBox .est_but input {
     display: inline-block;
-    margin: 0px auto;
     width: 150px;
     height: 40px;
+    margin: 0px auto;
     border: none;
     background-color: #214B5B;
     color: #EEF7F2;
@@ -491,7 +529,7 @@ body .footer {
 
 /*#endregion*/
 /* 装饰 */
-.undraw_tree{
+.undraw_tree {
     position: absolute;
     bottom: 0;
     width: 600px;
@@ -501,21 +539,24 @@ body .footer {
     background-repeat: no-repeat;
     z-index: -1;
 }
-.mainTitle{
+
+.mainTitle {
     position: absolute;
     top: 10px;
     left: 160px;
-    text-shadow:0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+    text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
     font-weight: 700;
     font-size: 56px;
     color: #214B5B;
+    cursor: default;
 }
-.mainTitle:hover{
+
+/* .mainTitle:hover{
     -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
     -moz-animation: neon1 1.5s ease-in-out infinite alternate;
     animation: neon1 1.5s ease-in-out infinite alternate; 
-  }
-  @keyframes neon1 {
+  } */
+/* @keyframes neon1 {
     from {
       text-shadow: 0 0 10px #fff,
                  0 0 20px  #fff,
@@ -537,12 +578,7 @@ body .footer {
                  0 0 75px #214B5B;
     }
   }
-  
-  body {
-    background-image: url(../img/back1.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
+   */
 
 
 
