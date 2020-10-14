@@ -1,5 +1,6 @@
 package service.impl;
 
+
 import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.ProjectDao;
@@ -8,7 +9,6 @@ import pojo.Node;
 import pojo.Project;
 import pojo.auxiliary.Contributor;
 import service.ProjectService;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -64,5 +64,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
         project.setContributors(cons);
         return project;
+    }
+
+    @Override
+    public int existProject(int projectId) {
+        Project project = projectDao.selectOne(new Project(projectId));
+        return StatusCode.nullObjcet(project);
     }
 }
