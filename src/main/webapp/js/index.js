@@ -178,7 +178,7 @@ inputTips(inputID, "请输入项目ID", "idTips");
 
 // 新建交互------
 // 获取新建按钮
-var estBut = getDom("click_est");
+var estBut = getDom(".click_est");
 estBut.addEventListener("click", function () {
     if (inputID.value == "") {
         inputID.value
