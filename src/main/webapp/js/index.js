@@ -139,7 +139,6 @@ var joinBut = getDom(".click_join");
 // 获取输入id框
 var inputID = getDom(".inputID");
 
-
 // 点击进入
 joinBut.addEventListener("click", function () {
     if (inputID.value == "请输入项目ID") {
