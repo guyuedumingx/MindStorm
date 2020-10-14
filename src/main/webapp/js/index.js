@@ -156,7 +156,7 @@ joinBut.addEventListener("click", function () {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res.state_code == '200') {
+                if (res.status_code == '200') {
                     window.location.href = "/project.html?" + "id=" + idnum; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
@@ -180,40 +180,69 @@ inputTips(inputID, "请输入项目ID", "idTips");
 // 获取新建按钮
 var estBut = getDom(".click_est");
 
+//获取项目名称
 var inputName = getDom(".inputName");
+
+// 获取简介框
+var introduceInput = getDom(".introduce_input");
+
+
+//获取时间
+var timeInput = getDom("#projectTime");
+//获取等级
+var rankInput = getDom("#projectRank");
+
+var timeArr = [123456, 234567, 345678, 456789];
 
 estBut.addEventListener("click", function () {
     if (inputName.value == "") {
-        inputName.style.color = "red";
+        inputName.style.color = "rgb(196, 60, 60)";
+        inputName.style.boxShadow = "0 0 5px rgb(196, 60, 60)";
     } else {
-        var idnum = inputID.value;
+        var createTime = Date.now();
+        var name = inputName.value;
+        var indu = introduceInput.value;
+        var index = (timeInput.selectedIndex);
+        var time = timeArr[index];
+        var rank = rankInput.options[rankInput.selectedIndex].text;
+        if (onOffRod.innerText == '✔') {
+            var public = true;
+        } else {
+            var public = false;
+        }
         ajax({
-            type: 'get',
-            url: '/user/register',
+            type: 'post',
+            url: '/util/project',
             data: {
-                id: idnum
+                public: public,
+                name: name,
+                deadline: createTime + time,
+                rank: rank,
+                createTime: createTime
             },
             header: {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res == '200') {
-                    window.location.href = "/project.html?" + "id=" + idnum; //跳转页面
+                if (res.status_code == '200') {
+                    window.location.href = "/project.html?id=" + res.project_id; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
-                    topAlert("该房间不存在");
+                    topAlert("项目创建失败");
                 }
             }
         });
     }
+})
+inputName.addEventListener("click", function () {
+    inputName.style.color = "#132C33";
+    inputName.style.boxShadow = "";
 })
 
 
 
 
 
-// 获取简介框
-var introduceInput = getDom(".introduce_input");
 
 var sum = getDom(".sum");
 
