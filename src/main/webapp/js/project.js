@@ -83,6 +83,8 @@ treeBoxMain.addEventListener('mousedown', function (e) {
                 t = t.father;
             }
             changeChild(nowNode, removeHeightLight);
+            nowNode = null;
+            changeNodeEvent();
         }
     }
 });
@@ -318,6 +320,7 @@ function addTreeConstraint(root, n) {
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
+        e.stopPropagation();
         if (nowNode) {
             if (!isParent(e.target, nowNode)) {
                 nowNode.style.boxShadow = 'none';
@@ -338,6 +341,9 @@ function addTreeConstraint(root, n) {
                     t = t.father;
                 }
                 changeChild(root, addHeightLight);
+                if (ctrlState) {
+                    document.addEventListener('mousemove', move);
+                }
             }
         } else {
             mx = e.clientX;
@@ -369,20 +375,20 @@ function addTreeConstraint(root, n) {
 }
 
 document.addEventListener('mouseup', function (e) {
-    if (ctrlState) {
-        if (nowNode) {
-            nowNode.style.boxShadow = 'none';
-            var t = nowNode;
-            while (t.father) {
-                removeHeightLight(t.father);
-                t = t.father;
-            }
-            changeChild(nowNode, removeHeightLight);
-        }
-        nowNode = null;
-        changeNodeEvent();
-        lineColor = lineUpColor;
-    }
+    // if (ctrlState) {
+    //     if (nowNode) {
+    //         nowNode.style.boxShadow = 'none';
+    //         var t = nowNode;
+    //         while (t.father) {
+    //             removeHeightLight(t.father);
+    //             t = t.father;
+    //         }
+    //         changeChild(nowNode, removeHeightLight);
+    //     }
+    //     nowNode = null;
+    //     changeNodeEvent();
+    //     lineColor = lineUpColor;
+    // }
     document.removeEventListener('mousemove', move);
 });
 
@@ -496,6 +502,11 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
+addNode.jurisdiction = false;
+removeNode.jurisdiction = false;
+changeNode.jurisdiction = false;
+queryNode.jurisdiction = false;
+refreshTree.jurisdiction = true;
 operationNodeBox.hide();
 operationNodeBoxClose.hide();
 operationNodeBoxTheme.hide();
@@ -508,9 +519,15 @@ operationNodeBoxSubmit.hide();
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
-        console.log(nowNode.innerText);
+        addNode.jurisdiction = true;
+        removeNode.jurisdiction = true;
+        changeNode.jurisdiction = true;
+        queryNode.jurisdiction = true;
     } else {
-
+        addNode.jurisdiction = false;
+        removeNode.jurisdiction = false;
+        changeNode.jurisdiction = false;
+        queryNode.jurisdiction = false;
     }
 }
 
@@ -564,22 +581,24 @@ changeNode.addEventListener('click', function () {
 
 // 查看节点按钮的点击事件
 queryNode.addEventListener('click', function () {
-    operationNodeBox.show();
-    operationNodeBoxClose.show();
-    operationNodeBoxTheme.show();
-    operationNodeBoxTheme.value = nowNode.children[0].innerText;
-    operationNodeBoxTheme.readOnly = true;
-    operationNodeBoxTheme.removeClass('editable');
-    operationNodeBoxJurisdictionBox.hide();
-    operationNodeBoxContent.show();
-    operationNodeBoxContent.value = nowNode.content;
-    operationNodeBoxContent.readOnly = true;
-    operationNodeBoxContent.removeClass('textareaEditable');
-    operationNodeBoxNodeCreator.show();
-    operationNodeBoxNodeCreator.innerHTML = '<span>创建者：</span>' + nowNode.userName;
-    operationNodeBoxLastRevision.show();
-    operationNodeBoxLastRevision.innerHTML = '<span>最后修改：</span>' + nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime).toLocaleDateString();
-    operationNodeBoxSubmit.hide();
+    if (this.jurisdiction) {
+        operationNodeBox.show();
+        operationNodeBoxClose.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = true;
+        operationNodeBoxTheme.removeClass('editable');
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = true;
+        operationNodeBoxContent.removeClass('textareaEditable');
+        operationNodeBoxNodeCreator.show();
+        operationNodeBoxNodeCreator.innerHTML = '<span>创建者：</span>' + nowNode.userName;
+        operationNodeBoxLastRevision.show();
+        operationNodeBoxLastRevision.innerHTML = '<span>最后修改：</span>' + nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime).toLocaleDateString();
+        operationNodeBoxSubmit.hide();
+    }
 });
 cycleSprite(btnArr, 0, 0, 27);
 
