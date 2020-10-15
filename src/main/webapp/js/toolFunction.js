@@ -1289,7 +1289,8 @@ function setCookie(json, time) {
  * @author 60rzvvbj
  */
 function getCookie(attr) {
-    return document.cookie.match(new RegExp("(^|\\s)" + attr + "=([^;]+)(;|$)"))[2];
+    var t = document.cookie.match(new RegExp("(^|\\s)" + attr + "=([^;]+)(;|$)"));
+    return t != null ? t[2] : null;
 }
 
 /**
@@ -1303,4 +1304,15 @@ function removeCookie(attr) {
     var json = {};
     json[attr] = "";
     setCookie(json, -1);
+}
+/**
+ * 
+ * 函数功能：获取url中参数
+ * 
+ * @param {*} attr 字段名
+ * @author 60rzvvbj
+ */
+function getLocation(attr) {
+    var t = location.search.substr(1).match(new RegExp("(^|&)" + attr + "=([^&]*)(&|$)"));
+    return t != null ? t[2] : null;
 }
