@@ -86,7 +86,7 @@ back[0].addEventListener("click", function () {
     changeEst.style.display = "inline-block";
     join.style.display = "inline-block";
     estBig.style.display = "none";
-    joinTips.style.display = "table";
+    joinTips.style.display = "table";   
 })
 back[1].addEventListener("click", function () {
     changeEst.style.animation = "";
@@ -138,7 +138,6 @@ var joinBut = getDom(".click_join");
 
 // 获取输入id框
 var inputID = getDom(".inputID");
-
 
 // 点击进入
 joinBut.addEventListener("click", function () {
@@ -212,13 +211,14 @@ estBut.addEventListener("click", function () {
         }
         ajax({
             type: 'post',
-            url: '/util/project',
+            url: '/project',
             data: {
                 public: public,
                 name: name,
                 deadline: createTime + time,
                 rank: rank,
-                createTime: createTime
+                createTime: createTime,
+                introduction: indu
             },
             header: {
                 'Content-Type': 'application/json'

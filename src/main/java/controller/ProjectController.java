@@ -1,13 +1,17 @@
 package controller;
 
+import common.dto.Result;
+import common.dto.StatusCode;
 import common.util.WebUtil;
 import pojo.Project;
+import pojo.User;
 import service.ProjectService;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -17,6 +21,14 @@ import java.io.IOException;
 @WebServlet("/project")
 public class ProjectController extends BaseController{
     ProjectService service = new ProjectServiceImpl();
+    User user = null;
+
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        //获取用户id
+        HttpSession session = req.getSession();
+        user = (User)session.getAttribute("user");
+    }
 
     /**
      * 新建项目
@@ -27,6 +39,12 @@ public class ProjectController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Project project = WebUtil.getJson(request, Project.class);
+        project.setAuthor(user.getId());
+        int id = service.newProject(project);
+        Result result = new Result();
+        result.setStatus_code(id!=0 ? StatusCode.OK : StatusCode.LOST);
+        result.put("project_id",id);
+        WebUtil.renderJson(response,result);
     }
 
     /**
@@ -48,7 +66,9 @@ public class ProjectController extends BaseController{
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        int id =Integer.valueOf(request.getParameter("id"));
+        int statusCode = service.delProject(id, user.getId());
+        WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
     /**

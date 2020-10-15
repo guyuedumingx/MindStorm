@@ -19,16 +19,16 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
+        Object user = request.getSession().getAttribute("user");
         String uri = request.getRequestURI();
         if("/".equals(uri)||uri.contains("/index.html")||uri.contains("/user/register")||uri.contains("/login.html")||uri.contains("/user/login")||
         uri.contains("/css/")||uri.contains("/img/")||uri.contains("/js/")||uri.contains("/util")){
             filterChain.doFilter(servletRequest,servletResponse);
         }else {
-            Object user = request.getSession().getAttribute("user");
-            if(user!=null){
-                filterChain.doFilter(servletRequest,servletResponse);
+            if(user!=null) {
+                filterChain.doFilter(servletRequest, servletResponse);
             }else {
-                request.getRequestDispatcher("login.html").forward(servletRequest,servletResponse);
+                request.getRequestDispatcher("login.html").forward(servletRequest, servletResponse);
             }
         }
     }

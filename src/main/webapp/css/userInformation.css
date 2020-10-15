@@ -117,24 +117,18 @@ body .personalBox {
     border: solid #EEF7F2;
     margin: 0 auto;
     width: 770px;
-    height: 450px;
+    height: 460px;
 }
 
 /* .bigBox .projects:hover .history {
     animation: show 1s;
     animation-fill-mode: forwards;
 } */
-.bigBox .projects {
-    display: none;
-}
-
 /* 历史记录标题 */
-.bigBox .history,
-.bigBox .fans_til,
-.bigBox .follow_til {
+.bigBox .history{
     position: absolute;
     left: -50px;
-    top: 5%;
+    top: 37%;
     padding: 10px;
     width: 30px;
     text-align: center;
@@ -142,14 +136,6 @@ body .personalBox {
     background-color: #EEF7F2;
     color: #214B5B;
     opacity: 1;
-}
-
-.bigBox .fans_til {
-    top: 42%;
-}
-
-.bigBox .follow_til {
-    top: 70%;
 }
 
 /* 背景 */
@@ -172,9 +158,13 @@ body .personalBox {
     width: 700px;
     height: 70px;
     background-color: #f8fcfa;
+    border: solid 1px #214B5B;
     color: #214B5B;
     /* border: solid #6AC1ED 1px; */
     border-radius: 5px;
+}
+.bigBox .projectLi li:hover{
+    box-shadow: 0 0 5px #214B5B;
 }
 
 /* 标题 */
@@ -265,55 +255,12 @@ body .personalBox {
     font-size: 12px;
     color: #214B5B;
     border-radius: 50px;
-    border: solid 1px #6AC1ED;
+    border: solid 1px #214B5B;
+}
+.bigBox .pagination li :hover{
+
 }
 
-/* 粉丝-------- */
-.bigBox .fans {
-    height: 420px;
-}
-
-/* 粉丝框 */
-.bigBox .fLi li {
-    padding: 5px 15px;
-    margin: 20px auto;
-    width: 700px;
-    height: 50px;
-    color: #214B5B;
-    /* border: solid #6AC1ED 1px; */
-    border-radius: 5px;
-    border: solid 1px #6AC1ED;
-}
-
-.bigBox .fLi li>span {
-    float: left;
-    margin: 3px 8px;
-}
-
-.bigBox .fLi li .f_head {
-    width: 38px;
-    height: 38px;
-    border-radius: 50px;
-    border: solid;
-}
-
-.bigBox .fLi li .f_name {
-    line-height: 38px;
-}
-
-.bigBox .fLi li .f_but {
-    float: right;
-    width: 100px;
-    margin-top: 12px;
-    line-height: 25px;
-    text-align: center;
-    border: solid 1px;
-    border-radius: 10px;
-}
-
-.bigBox .follows {
-    display: none;
-}
 
 /* .earth {
     position: absolute;
@@ -327,18 +274,6 @@ body .personalBox {
 } */
 
 /*#endregion*/
-
-.undraw_waiting{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 300px;
-    height: 200px;
-    background-image: url(../img/undraw_Waiting.png);
-    background-size: contain;
-    z-index: -1;
-}
-
 
 @keyframes upDowm {
     from {

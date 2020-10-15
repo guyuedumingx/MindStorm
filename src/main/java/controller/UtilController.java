@@ -17,7 +17,7 @@ import java.io.IOException;
  * 负责其他请求
  * @author yohoyes
  */
-@WebServlet("/util")
+@WebServlet("/util/email")
 public class UtilController extends BaseController {
 
    /**

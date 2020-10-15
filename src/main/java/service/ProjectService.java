@@ -37,4 +37,9 @@ import pojo.Project;
      * @return
      */
      Project getProject(int projectId);
+
+    /**
+     * 项目是否存在
+     */
+    int existProject(int projectId);
 }

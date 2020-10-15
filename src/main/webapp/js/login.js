@@ -33,10 +33,7 @@ loginSubmit.addEventListener('click', function () {
         },
         success: function (res) {
             if (res.status_code == '200') {
-                topAlert('登录成功');
-                setTimeout(function () {
-                    window.location.href = 'index.html';
-                }, 1000);
+                window.location = 'index.html';
             } else {
                 topAlert('邮箱或密码不正确');
             }
