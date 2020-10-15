@@ -103,8 +103,9 @@ treeFullScreenOnOff.addEventListener('click', function () {
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
-var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
-var nodeMinLen = 120; // 无关联节点之间的最小距离
+var nodeConstLen = [100, 100, 100, 100, 100];
+// var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
+var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
 var lineDownColor = '#6AC1ED'; // 高亮时的颜色
@@ -419,8 +420,18 @@ function createTree(node) {
         },
         success: function (res) {
             if (res) {
-                node.childIdArr = res.childrenId;
-                node.innerHTML = res.userName;
+                node.childIdArr = res.children;
+                var theme = document.createElement('div');
+                theme.addClass('theme');
+                theme.innerText = res.theme;
+                node.appendChild(theme);
+                node.content = res.content; // 主要内容
+                node.editable = res.editable; // 是否可被编辑
+                node.userName = res.userName; // 创建者
+                node.authorId = res.author// 创建者Id
+                node.lastEditName = res.lastEditName; // 最后修改者
+                node.lastEditTime = res.lastEditTime; // 最后修改时间
+                node.star = res.star; // 点赞数
                 for (var i = 0; i < node.childIdArr.length; i++) {
                     nodeRequest++;
                     var ch = document.createElement('div');
