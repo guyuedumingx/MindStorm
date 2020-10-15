@@ -255,3 +255,7 @@ introduceInput.addEventListener("keyup", function () {
         sum.style.color = "#88b3c4";
     }
 })
+
+//获取个人中心
+var center = getDom(".presonal_cen");
+center.addEventListener("click",)
