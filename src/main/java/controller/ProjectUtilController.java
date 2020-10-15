@@ -24,7 +24,6 @@ public class ProjectUtilController extends BaseController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.valueOf(req.getParameter("id"));
         int statusCode = service.existProject(id);
-        System.out.println(statusCode);
         WebUtil.renderMap(resp,"status_code",statusCode+"");
     }
 }

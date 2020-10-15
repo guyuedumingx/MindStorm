@@ -1,5 +1,6 @@
 package service.impl;
 
+
 import common.factory.DaoFactory;
 import common.util.IntListUtil;
 import dao.UserDao;

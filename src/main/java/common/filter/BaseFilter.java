@@ -11,7 +11,6 @@ import java.io.IOException;
  * response编码
  * @author yohoyes
  */
-@WebFilter("/*")
 public class BaseFilter implements Filter {
 
     @Override

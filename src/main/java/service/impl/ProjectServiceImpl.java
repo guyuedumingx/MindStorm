@@ -8,6 +8,7 @@ import dao.auxiliary.impl.ContributorDaoImpl;
 import pojo.Node;
 import pojo.Project;
 import pojo.auxiliary.Contributor;
+import pojo.auxiliary.RecentProject;
 import service.ProjectService;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     public int newProject(Project project) {
         int projectId = projectDao.insertOne(project);
         if(projectId==0){
-            return StatusCode.LOST;
+            return projectId;
         }else {
             //这里可以用多线程
             project.setId(projectId);
@@ -41,10 +42,15 @@ public class ProjectServiceImpl implements ProjectService {
     public int delProject(int projectId, int operatorId) {
         Project project = projectDao.selectOne(new Project(projectId));
         if(project.getAuthor()==operatorId) {
-            projectDao.deleteOne(projectId);
+            doDelete(projectId);
             return StatusCode.OK;
         }
         return StatusCode.ERROR;
+    }
+
+    private void doDelete(int projectId){
+        projectDao.deleteOne(projectId);
+        contributorDao.deleteOne(projectId);
     }
 
     @Override

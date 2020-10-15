@@ -26,6 +26,7 @@ import java.util.Map;
 public class NodeController extends BaseController{
     User user = null;
     NodeService service = new NodeServiceImpl();
+
     @Override
     protected void before(HttpServletRequest req, HttpServletResponse resp) {
         //获取用户id
