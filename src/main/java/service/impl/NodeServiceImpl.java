@@ -46,6 +46,9 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public Node getNode(int nodeId) {
-        return null;
+        Node node = nodeDao.selectOne(new Node(nodeId));
+        int[] children = nodeDao.selectChildren(nodeId);
+        node.setChildren(children);
+        return node;
     }
 }
