@@ -545,18 +545,25 @@ operationNodeBoxClose.addEventListener('click', function () {
 
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
-    operationNodeBox.show();
-    operationNodeBoxClose.show();
-    operationNodeBoxTheme.show();
-    operationNodeBoxTheme.readOnly = false;
-    operationNodeBoxTheme.addClass('editable');
-    operationNodeBoxJurisdictionBox.show();
-    operationNodeBoxContent.show();
-    operationNodeBoxContent.readOnly = false;
-    operationNodeBoxContent.addClass('textareaEditable');
-    operationNodeBoxNodeCreator.hide();
-    operationNodeBoxLastRevision.hide();
-    operationNodeBoxSubmit.show();
+    if (this.jurisdiction) {
+        operationNodeBox.show();
+        operationNodeBoxClose.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = '';
+        operationNodeBoxTheme.readOnly = false;
+        operationNodeBoxTheme.addClass('editable');
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = '';
+        operationNodeBoxContent.readOnly = false;
+        operationNodeBoxContent.addClass('textareaEditable');
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+    }
 });
 
 // 删除节点按钮的点击事件
@@ -568,10 +575,12 @@ changeNode.addEventListener('click', function () {
     operationNodeBox.show();
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
+    operationNodeBoxTheme.value = nowNode.children[0].innerText;
     operationNodeBoxTheme.readOnly = false;
     operationNodeBoxTheme.addClass('editable');
     operationNodeBoxJurisdictionBox.hide();
     operationNodeBoxContent.show();
+    operationNodeBoxContent.value = nowNode.content;
     operationNodeBoxContent.readOnly = false;
     operationNodeBoxContent.addClass('textareaEditable');
     operationNodeBoxNodeCreator.hide();
