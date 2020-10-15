@@ -1,6 +1,6 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
-
+var user;
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
@@ -484,6 +484,38 @@ var nodeRequetTimer = setInterval(function () {
         clearInterval(nodeRequetTimer);
     }
 }, 5);
+
+function treeAppendNode(father, nodeData) {
+    var node = document.createElement('div');
+    node.childArr = new Array();
+    node.style.display = 'none';
+    node.line = document.createElement('div');
+    node.lineColor = lineUpColor;
+    node.lineZIndex = 0;
+    treeBoxMain.appendChild(node);
+    node.childIdArr = [];
+    var theme = document.createElement('div');
+    theme.addClass('theme');
+    theme.innerText = nodeData.theme;
+    node.appendChild(theme);
+    node.content = nodeData.content; // 主要内容
+    node.editable = nodeData.editable; // 是否可被编辑
+    node.userName = res.userName; // 创建者
+    node.authorId = res.author// 创建者Id
+    node.lastEditName = res.lastEditName; // 最后修改者
+    node.lastEditTime = res.lastEditTime; // 最后修改时间
+    node.star = res.star; // 点赞数
+    for (var i = 0; i < node.childIdArr.length; i++) {
+        nodeRequest++;
+        var ch = document.createElement('div');
+        ch.father = node;
+        node.childArr.push(ch);
+        ch.id = node.childIdArr[i];
+        addClass(ch, 'node');
+        ch.style.backgroundColor = randomColor(100, 180);
+        createTree(ch);
+    }
+}
 // ——————————————————右侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
@@ -646,7 +678,38 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }
         });
     } else if (nowOperation == 'change') {
-
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        ajax({
+            type: 'post',
+            url: '/node',
+            data: {
+                node: {
+                    id: nowNode.id,
+                    theme: inpTheme,
+                    content: inpContent,
+                    editable: nowNode.editable,
+                    projectId: projectId,
+                    lastEditTime: Date.now(),
+                }
+            },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
+            success: function (res) {
+                console.log(res);
+            }
+        });
     } else {
         topAlert('淦');
     }
