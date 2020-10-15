@@ -103,7 +103,7 @@ treeFullScreenOnOff.addEventListener('click', function () {
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
-var nodeConstLen = [100, 100, 100, 100, 100];
+var nodeConstLen = [120, 120, 120, 120, 120];
 // var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
@@ -567,14 +567,18 @@ queryNode.addEventListener('click', function () {
     operationNodeBox.show();
     operationNodeBoxClose.show();
     operationNodeBoxTheme.show();
+    operationNodeBoxTheme.value = nowNode.children[0].innerText;
     operationNodeBoxTheme.readOnly = true;
     operationNodeBoxTheme.removeClass('editable');
     operationNodeBoxJurisdictionBox.hide();
     operationNodeBoxContent.show();
+    operationNodeBoxContent.value = nowNode.content;
     operationNodeBoxContent.readOnly = true;
     operationNodeBoxContent.removeClass('textareaEditable');
     operationNodeBoxNodeCreator.show();
+    operationNodeBoxNodeCreator.innerHTML = '<span>创建者：</span>' + nowNode.userName;
     operationNodeBoxLastRevision.show();
+    operationNodeBoxLastRevision.innerHTML = '<span>最后修改：</span>' + nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime).toLocaleDateString();
     operationNodeBoxSubmit.hide();
 });
 cycleSprite(btnArr, 0, 0, 27);
