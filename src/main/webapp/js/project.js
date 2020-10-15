@@ -1,6 +1,10 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
-var user;
+var user = {};
+user.userId = getCookie('user_id');
+user.userName = getCookie('user_name');
+var projectId = getLocation('project_id');
+console.log(user);
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
@@ -105,7 +109,7 @@ treeFullScreenOnOff.addEventListener('click', function () {
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
-var nodeConstLen = [120, 120, 120, 120, 120];
+var nodeConstLen = [80, 80, 80, 80, 80, 80];
 // var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
@@ -744,12 +748,13 @@ for (var i = 0; i < onOffArr.length; i++) {
 }
 setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
-var projectId = 1;
 window.onload = function () {
     ajax({
         type: 'get',
         url: '/project',
-        data: {},
+        data: {
+            id: projectId
+        },
         success: function (res) {
             introduceP.innerText = res.introdution;
             projectName.innerText = res.name;
