@@ -1265,3 +1265,42 @@ Node.prototype.show = function () {
 Node.prototype.hide = function () {
     this.style.display = 'none';
 }
+
+/**
+ * 
+ * 函数功能：设置cookie
+ * 
+ * @param {*} json 参数列表
+ * @param {*} time 有效时间
+ * @author 60rzvvbj
+ */
+function setCookie(json, time) {
+    var date = new Date(Date.now() + time * 86400000).toUTCString();
+    for (var key in json) {
+        document.cookie = key + "=" + json[key] + "; expires=" + date;
+    }
+}
+
+/**
+ * 
+ * 函数功能：获取cookie
+ * 
+ * @param {*} attr 字段名
+ * @author 60rzvvbj
+ */
+function getCookie(attr) {
+    return document.cookie.match(new RegExp("(^|\\s)" + attr + "=([^;]+)(;|$)"))[2];
+}
+
+/**
+ * 
+ * 函数功能：获取cookie
+ * 
+ * @param {*} attr 字段名
+ * @author 60rzvvbj
+ */
+function removeCookie(attr) {
+    var json = {};
+    json[attr] = "";
+    setCookie(json, -1);
+}
