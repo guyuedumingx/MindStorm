@@ -3,6 +3,7 @@ tool.textProhibition();
 var user = {};
 user.userId = getCookie('user_id');
 user.userName = getCookie('user_name');
+var projectId = getLocation('project_id');
 console.log(user);
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
@@ -747,13 +748,12 @@ for (var i = 0; i < onOffArr.length; i++) {
 }
 setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
-var projectId = 1;
 window.onload = function () {
     ajax({
         type: 'get',
         url: '/project',
         data: {
-
+            id: projectId
         },
         success: function (res) {
             introduceP.innerText = res.introdution;
