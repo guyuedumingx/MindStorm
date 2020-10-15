@@ -130,16 +130,19 @@ h5 .onOff .onOffBorder .onOffRod {
 }
 
 .operationNodeBox textarea {
-    /* border: 0px; */
-    border: 1px solid #214b5b;
+    border: 0px;
     width: 100%;
     height: 240px;
-    padding: 10px;
     box-sizing: border-box;
     font-size: 16px;
     color: #214B5B;
     background-color: transparent;
     resize: none;
+}
+
+.operationNodeBox .textareaEditable {
+    border: 1px solid #214b5b;
+    padding: 10px;
 }
 
 .operationNodeBox .nodeCreator {

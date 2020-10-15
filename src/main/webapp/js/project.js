@@ -15,6 +15,7 @@ document.addEventListener('keydown', function (e) {
                 changeChild(nowNode, removeHeightLight);
             }
             nowNode = null;
+            changeNodeEvent();
             lineColor = lineUpColor;
             document.removeEventListener('mousemove', move);
         }
@@ -328,6 +329,7 @@ function addTreeConstraint(root, n) {
                 mx = e.clientX;
                 my = e.clientY;
                 nowNode = this;
+                changeNodeEvent();
                 nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
                 var t = nowNode;
                 while (t.father) {
@@ -340,6 +342,7 @@ function addTreeConstraint(root, n) {
             mx = e.clientX;
             my = e.clientY;
             nowNode = this;
+            changeNodeEvent();
             nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
             var t = nowNode;
             while (t.father) {
@@ -376,6 +379,7 @@ document.addEventListener('mouseup', function (e) {
             changeChild(nowNode, removeHeightLight);
         }
         nowNode = null;
+        changeNodeEvent();
         lineColor = lineUpColor;
     }
     document.removeEventListener('mousemove', move);
@@ -489,6 +493,16 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
+
+// 改变当前节点的函数
+function changeNodeEvent() {
+    if (nowNode) {
+        console.log(nowNode.innerText);
+    } else {
+
+    }
+}
+
 // 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBox.hide();
@@ -510,6 +524,8 @@ addNode.addEventListener('click', function () {
     operationNodeBoxTheme.addClass('editable');
     operationNodeBoxJurisdictionBox.show();
     operationNodeBoxContent.show();
+    operationNodeBoxContent.readOnly = false;
+    operationNodeBoxContent.addClass('textareaEditable');
     operationNodeBoxNodeCreator.hide();
     operationNodeBoxLastRevision.hide();
     operationNodeBoxSubmit.show();
@@ -528,6 +544,8 @@ changeNode.addEventListener('click', function () {
     operationNodeBoxTheme.addClass('editable');
     operationNodeBoxJurisdictionBox.hide();
     operationNodeBoxContent.show();
+    operationNodeBoxContent.readOnly = false;
+    operationNodeBoxContent.addClass('textareaEditable');
     operationNodeBoxNodeCreator.hide();
     operationNodeBoxLastRevision.hide();
     operationNodeBoxSubmit.show();
@@ -540,8 +558,10 @@ queryNode.addEventListener('click', function () {
     operationNodeBoxTheme.show();
     operationNodeBoxTheme.readOnly = true;
     operationNodeBoxTheme.removeClass('editable');
-    operationNodeBoxJurisdictionBox.show();
+    operationNodeBoxJurisdictionBox.hide();
     operationNodeBoxContent.show();
+    operationNodeBoxContent.readOnly = true;
+    operationNodeBoxContent.removeClass('textareaEditable');
     operationNodeBoxNodeCreator.show();
     operationNodeBoxLastRevision.show();
     operationNodeBoxSubmit.hide();

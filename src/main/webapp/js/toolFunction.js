@@ -40,15 +40,17 @@ function addClass(node, theClass) {
 function removeClass(node, theClass) {
     if (node) {
         var str = node.getAttribute('class');
-        var arr = str.split(' ');
-        var res = '';
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] != theClass) {
-                res += arr[i] + ' ';
+        if (str) {
+            var arr = str.split(' ');
+            var res = '';
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] != theClass) {
+                    res += arr[i] + ' ';
+                }
             }
+            res = res.substring(0, res.length - 1);
+            node.setAttribute('class', res);
         }
-        res = res.substring(0, res.length - 1);
-        node.setAttribute('class', res);
     }
     return node;
 }
