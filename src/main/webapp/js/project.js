@@ -504,21 +504,11 @@ function treeAppendNode(father, nodeData) {
     node.appendChild(theme);
     node.content = nodeData.content; // 主要内容
     node.editable = nodeData.editable; // 是否可被编辑
-    node.userName = res.userName; // 创建者
-    node.authorId = res.author// 创建者Id
-    node.lastEditName = res.lastEditName; // 最后修改者
-    node.lastEditTime = res.lastEditTime; // 最后修改时间
-    node.star = res.star; // 点赞数
-    for (var i = 0; i < node.childIdArr.length; i++) {
-        nodeRequest++;
-        var ch = document.createElement('div');
-        ch.father = node;
-        node.childArr.push(ch);
-        ch.id = node.childIdArr[i];
-        addClass(ch, 'node');
-        ch.style.backgroundColor = randomColor(100, 180);
-        createTree(ch);
-    }
+    node.userName = user.userName; // 创建者
+    node.authorId = user.userId;// 创建者Id
+    node.lastEditName = user.userName; // 最后修改者
+    node.lastEditTime = Date.now(); // 最后修改时间
+    node.star = 0; // 点赞数
 }
 // ——————————————————右侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
@@ -756,11 +746,11 @@ window.onload = function () {
             id: projectId
         },
         success: function (res) {
-            introduceP.innerText = res.introdution;
+            introduceP.innerText = res.introduction;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
-            creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
-            closingDate.innerText = new Date(res.ddl).toLocaleDateString();
+            creationDate.innerText = new Date(res.createTime).toLocaleDateString();
+            closingDate.innerText = new Date(res.deadline).toLocaleDateString();
             var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
             progressContent.style.width = progress + '%';
             progressWave.style.left = progress + '%';
