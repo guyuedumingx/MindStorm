@@ -288,7 +288,7 @@ body .mainBox {
     font-size: 18px;
     height: 40px;
     width: 400px;
-    border: solid 1px;
+    border: solid ;
     border-radius: 10px;
     vertical-align: middle;
 }
@@ -305,7 +305,7 @@ body .mainBox {
     padding: 10px;
     line-height: 22px;
     font-size: 15px;
-    border: solid 1px;
+    border: solid ;
     border-radius: 10px;
     outline: none;
     resize: none;
