@@ -258,4 +258,6 @@ introduceInput.addEventListener("keyup", function () {
 
 //获取个人中心
 var center = getDom(".presonal_cen");
-center.addEventListener("click",)
+center.addEventListener("click", function () {
+    
+})
