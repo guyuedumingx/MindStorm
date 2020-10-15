@@ -15,6 +15,7 @@ document.addEventListener('keydown', function (e) {
                 changeChild(nowNode, removeHeightLight);
             }
             nowNode = null;
+            changeNodeEvent();
             lineColor = lineUpColor;
             document.removeEventListener('mousemove', move);
         }
@@ -82,6 +83,8 @@ treeBoxMain.addEventListener('mousedown', function (e) {
                 t = t.father;
             }
             changeChild(nowNode, removeHeightLight);
+            nowNode = null;
+            changeNodeEvent();
         }
     }
 });
@@ -102,8 +105,9 @@ treeFullScreenOnOff.addEventListener('click', function () {
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
-var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
-var nodeMinLen = 120; // 无关联节点之间的最小距离
+var nodeConstLen = [120, 120, 120, 120, 120];
+// var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
+var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
 var lineDownColor = '#6AC1ED'; // 高亮时的颜色
@@ -316,6 +320,7 @@ function addTreeConstraint(root, n) {
     root.x = root.offsetLeft;
     root.y = root.offsetTop;
     root.addEventListener('mousedown', function (e) {
+        e.stopPropagation();
         if (nowNode) {
             if (!isParent(e.target, nowNode)) {
                 nowNode.style.boxShadow = 'none';
@@ -328,6 +333,7 @@ function addTreeConstraint(root, n) {
                 mx = e.clientX;
                 my = e.clientY;
                 nowNode = this;
+                changeNodeEvent();
                 nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
                 var t = nowNode;
                 while (t.father) {
@@ -336,10 +342,14 @@ function addTreeConstraint(root, n) {
                 }
                 changeChild(root, addHeightLight);
             }
+            if (ctrlState) {
+                document.addEventListener('mousemove', move);
+            }
         } else {
             mx = e.clientX;
             my = e.clientY;
             nowNode = this;
+            changeNodeEvent();
             nowNode.style.boxShadow = '0px 0px 30px ' + lineDownColor;
             var t = nowNode;
             while (t.father) {
@@ -365,19 +375,20 @@ function addTreeConstraint(root, n) {
 }
 
 document.addEventListener('mouseup', function (e) {
-    if (ctrlState) {
-        if (nowNode) {
-            nowNode.style.boxShadow = 'none';
-            var t = nowNode;
-            while (t.father) {
-                removeHeightLight(t.father);
-                t = t.father;
-            }
-            changeChild(nowNode, removeHeightLight);
-        }
-        nowNode = null;
-        lineColor = lineUpColor;
-    }
+    // if (ctrlState) {
+    //     if (nowNode) {
+    //         nowNode.style.boxShadow = 'none';
+    //         var t = nowNode;
+    //         while (t.father) {
+    //             removeHeightLight(t.father);
+    //             t = t.father;
+    //         }
+    //         changeChild(nowNode, removeHeightLight);
+    //     }
+    //     nowNode = null;
+    //     changeNodeEvent();
+    //     lineColor = lineUpColor;
+    // }
     document.removeEventListener('mousemove', move);
 });
 
@@ -411,18 +422,28 @@ function createTree(node) {
         type: 'get',
         url: '/node',
         data: {
-            id: node.user_id
+            id: node.id
         },
         success: function (res) {
             if (res) {
-                node.childIdArr = res.childrenId;
-                node.innerHTML = res.userName;
+                node.childIdArr = res.children;
+                var theme = document.createElement('div');
+                theme.addClass('theme');
+                theme.innerText = res.theme;
+                node.appendChild(theme);
+                node.content = res.content; // 主要内容
+                node.editable = res.editable; // 是否可被编辑
+                node.userName = res.userName; // 创建者
+                node.authorId = res.author// 创建者Id
+                node.lastEditName = res.lastEditName; // 最后修改者
+                node.lastEditTime = res.lastEditTime; // 最后修改时间
+                node.star = res.star; // 点赞数
                 for (var i = 0; i < node.childIdArr.length; i++) {
                     nodeRequest++;
                     var ch = document.createElement('div');
                     ch.father = node;
                     node.childArr.push(ch);
-                    ch.user_id = node.childIdArr[i];
+                    ch.id = node.childIdArr[i];
                     addClass(ch, 'node');
                     ch.style.backgroundColor = randomColor(100, 180);
                     createTree(ch);
@@ -441,7 +462,7 @@ addClass(root, 'root');
 root.style.backgroundColor = randomColor(100, 180);
 
 function createRoot(rootID) {
-    root.user_id = rootID;
+    root.id = rootID;
     createTree(root);
 }
 var nodeRequetTimer = setInterval(function () {
@@ -481,6 +502,12 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
+var nowOperation = 'null';
+addNode.jurisdiction = false;
+removeNode.jurisdiction = false;
+changeNode.jurisdiction = false;
+queryNode.jurisdiction = false;
+refreshTree.jurisdiction = true;
 operationNodeBox.hide();
 operationNodeBoxClose.hide();
 operationNodeBoxTheme.hide();
@@ -489,8 +516,25 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
+
+// 改变当前节点的函数
+function changeNodeEvent() {
+    if (nowNode) {
+        addNode.jurisdiction = true;
+        removeNode.jurisdiction = true;
+        changeNode.jurisdiction = true;
+        queryNode.jurisdiction = true;
+    } else {
+        addNode.jurisdiction = false;
+        removeNode.jurisdiction = false;
+        changeNode.jurisdiction = false;
+        queryNode.jurisdiction = false;
+    }
+}
+
 // 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', function () {
+    nowOperation = 'null';
     operationNodeBox.hide();
     operationNodeBoxClose.hide();
     operationNodeBoxTheme.hide();
@@ -503,16 +547,26 @@ operationNodeBoxClose.addEventListener('click', function () {
 
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
-    operationNodeBox.show();
-    operationNodeBoxClose.show();
-    operationNodeBoxTheme.show();
-    operationNodeBoxTheme.readOnly = false;
-    operationNodeBoxTheme.addClass('editable');
-    operationNodeBoxJurisdictionBox.show();
-    operationNodeBoxContent.show();
-    operationNodeBoxNodeCreator.hide();
-    operationNodeBoxLastRevision.hide();
-    operationNodeBoxSubmit.show();
+    if (this.jurisdiction) {
+        nowOperation = 'add';
+        operationNodeBox.show();
+        operationNodeBoxClose.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = '';
+        operationNodeBoxTheme.readOnly = false;
+        operationNodeBoxTheme.addClass('editable');
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = '';
+        operationNodeBoxContent.readOnly = false;
+        operationNodeBoxContent.addClass('textareaEditable');
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+    }
 });
 
 // 删除节点按钮的点击事件
@@ -521,30 +575,81 @@ removeNode.addEventListener('click', function () {
 
 // 修改节点按钮的点击事件
 changeNode.addEventListener('click', function () {
-    operationNodeBox.show();
-    operationNodeBoxClose.show();
-    operationNodeBoxTheme.show();
-    operationNodeBoxTheme.readOnly = false;
-    operationNodeBoxTheme.addClass('editable');
-    operationNodeBoxJurisdictionBox.hide();
-    operationNodeBoxContent.show();
-    operationNodeBoxNodeCreator.hide();
-    operationNodeBoxLastRevision.hide();
-    operationNodeBoxSubmit.show();
+    if (this.jurisdiction) {
+        nowOperation = 'change';
+        operationNodeBox.show();
+        operationNodeBoxClose.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = false;
+        operationNodeBoxTheme.addClass('editable');
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = false;
+        operationNodeBoxContent.addClass('textareaEditable');
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+    }
 });
 
 // 查看节点按钮的点击事件
 queryNode.addEventListener('click', function () {
-    operationNodeBox.show();
-    operationNodeBoxClose.show();
-    operationNodeBoxTheme.show();
-    operationNodeBoxTheme.readOnly = true;
-    operationNodeBoxTheme.removeClass('editable');
-    operationNodeBoxJurisdictionBox.show();
-    operationNodeBoxContent.show();
-    operationNodeBoxNodeCreator.show();
-    operationNodeBoxLastRevision.show();
-    operationNodeBoxSubmit.hide();
+    if (this.jurisdiction) {
+        nowOperation = 'query';
+        operationNodeBox.show();
+        operationNodeBoxClose.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = true;
+        operationNodeBoxTheme.removeClass('editable');
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = true;
+        operationNodeBoxContent.removeClass('textareaEditable');
+        operationNodeBoxNodeCreator.show();
+        operationNodeBoxNodeCreator.innerHTML = '<span>创建者：</span>' + nowNode.userName;
+        operationNodeBoxLastRevision.show();
+        operationNodeBoxLastRevision.innerHTML = '<span>最后修改：</span>' + nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime).toLocaleDateString();
+        operationNodeBoxSubmit.hide();
+    }
+});
+
+operationNodeBoxSubmit.addEventListener('click', function () {
+    if (nowOperation == 'add') {
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        ajax({
+            type: 'post',
+            url: '/node',
+            data: {
+                content: inpContent,
+                editable: operationNodeBoxJurisdiction.state,
+                theme: inpTheme,
+                parent: nowNode.id,
+                projectId: projectId
+            },
+            success: function (res) {
+                console.log(res);
+            }
+        });
+    } else if (nowOperation == 'change') {
+
+    } else {
+        topAlert('淦');
+    }
 });
 cycleSprite(btnArr, 0, 0, 27);
 
@@ -576,6 +681,7 @@ for (var i = 0; i < onOffArr.length; i++) {
 }
 setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
+var projectId = 1;
 window.onload = function () {
     ajax({
         type: 'get',
