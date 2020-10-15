@@ -4,7 +4,6 @@ var user = {};
 user.userId = getCookie('user_id');
 user.userName = getCookie('user_name');
 var projectId = getLocation('project_id');
-console.log(user);
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
@@ -346,9 +345,6 @@ function addTreeConstraint(root, n) {
                 }
                 changeChild(root, addHeightLight);
             }
-            if (ctrlState) {
-                document.addEventListener('mousemove', move);
-            }
         } else {
             mx = e.clientX;
             my = e.clientY;
@@ -361,9 +357,9 @@ function addTreeConstraint(root, n) {
                 t = t.father;
             }
             changeChild(root, addHeightLight);
-            if (ctrlState) {
-                document.addEventListener('mousemove', move);
-            }
+        }
+        if (ctrlState) {
+            document.addEventListener('mousemove', move);
         }
     });
     nodeSet.push(root);
@@ -412,7 +408,9 @@ setInterval(function () {
         setline(node1, node2);
     }
 }, 5);
-
+setInterval(function () {
+    console.log(constraintArr.length);
+}, 3000);
 var nodeRequest = 1;
 
 function createTree(node) {
@@ -491,6 +489,10 @@ var nodeRequetTimer = setInterval(function () {
 
 function treeAppendNode(father, nodeData) {
     var node = document.createElement('div');
+    node.father = father;
+    node.style.backgroundColor = randomColor(100, 180);
+    node.addClass('node');
+    node.id = 100;
     node.childArr = new Array();
     node.style.display = 'none';
     node.line = document.createElement('div');
@@ -509,6 +511,20 @@ function treeAppendNode(father, nodeData) {
     node.lastEditName = user.userName; // 最后修改者
     node.lastEditTime = Date.now(); // 最后修改时间
     node.star = 0; // 点赞数
+    node.style.display = 'block';
+    node.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
+    node.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
+    node.x = node.offsetLeft;
+    node.y = node.offsetTop;
+    // addTreeConstraint(node, father.layer + 1);
+    addConstraint(node, father, 1, nodeConstLen[node.layer]);
+    addConstraint(node, null, 3, null);
+    addSetLine(node, father);
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i] != father) {
+            addConstraint(node, nodeSet[i], 2, nodeMinLen);
+        }
+    }
 }
 // ——————————————————右侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
@@ -657,6 +673,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        console.log(nowNode.id);
         ajax({
             type: 'post',
             url: '/node',
@@ -668,7 +685,16 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 projectId: projectId
             },
             success: function (res) {
-                console.log(res);
+                if (res.status_code == '200') {
+                    // treeAppendNode(nowNode, {
+                    //     theme: inpTheme,
+                    //     content: inpContent,
+                    //     editable: operationNodeBoxJurisdiction.state
+                    // });
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
         });
     } else if (nowOperation == 'change') {

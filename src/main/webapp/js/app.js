@@ -162,6 +162,11 @@ app.get('/', function (req, res) {
         }
     });
 });
+app.post('/node', function (req, res) {
+    res.send({
+        status_code: '200'
+    });
+});
 app.get('/node', function (req, res) {
     var id = req.query.id;
     console.log(id);
