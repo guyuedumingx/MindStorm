@@ -211,13 +211,14 @@ estBut.addEventListener("click", function () {
         }
         ajax({
             type: 'post',
-            url: '/util/project',
+            url: '/project',
             data: {
                 public: public,
                 name: name,
                 deadline: createTime + time,
                 rank: rank,
-                createTime: createTime
+                createTime: createTime,
+                introduction: indu
             },
             header: {
                 'Content-Type': 'application/json'

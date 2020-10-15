@@ -2,6 +2,7 @@ package common.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
  * response编码
  * @author yohoyes
  */
+@WebFilter("/*")
 public class BaseFilter implements Filter {
 
     @Override
@@ -23,9 +25,6 @@ public class BaseFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)servletResponse;
 
         response.setHeader("Access-Control-Allow-Origin","*");
-        //response.addHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE");
-        //response.addHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
-
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

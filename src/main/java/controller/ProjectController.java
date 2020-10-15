@@ -27,6 +27,7 @@ public class ProjectController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Project project = WebUtil.getJson(request, Project.class);
+        int id = service.newProject(project);
     }
 
     /**
