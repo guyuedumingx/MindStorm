@@ -1,3 +1,4 @@
+import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
 import dao.UserDao;
@@ -75,5 +76,10 @@ public class DaoTest {
         RecentEditDaoImpl dao = new RecentEditDaoImpl();
         dao.insertOne(edit);
         dao.selectOne(edit);
+    }
+    
+    @Test
+    public void SelectChildrenTest(){
+        DaoFactory.getNodeDao().selectChildren(0);
     }
 }

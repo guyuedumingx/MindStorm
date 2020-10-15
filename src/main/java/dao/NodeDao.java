@@ -7,5 +7,9 @@ import pojo.Node;
  * @author yohoyes
  */
 public interface NodeDao extends BaseDao<Node>{
-
+    /**
+     * 查询子节点
+     * @return
+     */
+    int[] selectChildren(int id);
 }
