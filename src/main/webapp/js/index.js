@@ -86,7 +86,7 @@ back[0].addEventListener("click", function () {
     changeEst.style.display = "inline-block";
     join.style.display = "inline-block";
     estBig.style.display = "none";
-    joinTips.style.display = "table";
+    joinTips.style.display = "table";   
 })
 back[1].addEventListener("click", function () {
     changeEst.style.animation = "";
