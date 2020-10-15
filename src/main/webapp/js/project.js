@@ -341,9 +341,9 @@ function addTreeConstraint(root, n) {
                     t = t.father;
                 }
                 changeChild(root, addHeightLight);
-                if (ctrlState) {
-                    document.addEventListener('mousemove', move);
-                }
+            }
+            if (ctrlState) {
+                document.addEventListener('mousemove', move);
             }
         } else {
             mx = e.clientX;
@@ -422,7 +422,7 @@ function createTree(node) {
         type: 'get',
         url: '/node',
         data: {
-            id: node.user_id
+            id: node.id
         },
         success: function (res) {
             if (res) {
@@ -443,7 +443,7 @@ function createTree(node) {
                     var ch = document.createElement('div');
                     ch.father = node;
                     node.childArr.push(ch);
-                    ch.user_id = node.childIdArr[i];
+                    ch.id = node.childIdArr[i];
                     addClass(ch, 'node');
                     ch.style.backgroundColor = randomColor(100, 180);
                     createTree(ch);
@@ -462,7 +462,7 @@ addClass(root, 'root');
 root.style.backgroundColor = randomColor(100, 180);
 
 function createRoot(rootID) {
-    root.user_id = rootID;
+    root.id = rootID;
     createTree(root);
 }
 var nodeRequetTimer = setInterval(function () {
@@ -502,6 +502,7 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
+var nowOperation = 'null';
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -533,6 +534,7 @@ function changeNodeEvent() {
 
 // 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', function () {
+    nowOperation = 'null';
     operationNodeBox.hide();
     operationNodeBoxClose.hide();
     operationNodeBoxTheme.hide();
@@ -546,6 +548,7 @@ operationNodeBoxClose.addEventListener('click', function () {
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
     if (this.jurisdiction) {
+        nowOperation = 'add';
         operationNodeBox.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
@@ -572,25 +575,29 @@ removeNode.addEventListener('click', function () {
 
 // 修改节点按钮的点击事件
 changeNode.addEventListener('click', function () {
-    operationNodeBox.show();
-    operationNodeBoxClose.show();
-    operationNodeBoxTheme.show();
-    operationNodeBoxTheme.value = nowNode.children[0].innerText;
-    operationNodeBoxTheme.readOnly = false;
-    operationNodeBoxTheme.addClass('editable');
-    operationNodeBoxJurisdictionBox.hide();
-    operationNodeBoxContent.show();
-    operationNodeBoxContent.value = nowNode.content;
-    operationNodeBoxContent.readOnly = false;
-    operationNodeBoxContent.addClass('textareaEditable');
-    operationNodeBoxNodeCreator.hide();
-    operationNodeBoxLastRevision.hide();
-    operationNodeBoxSubmit.show();
+    if (this.jurisdiction) {
+        nowOperation = 'change';
+        operationNodeBox.show();
+        operationNodeBoxClose.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = false;
+        operationNodeBoxTheme.addClass('editable');
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = false;
+        operationNodeBoxContent.addClass('textareaEditable');
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+    }
 });
 
 // 查看节点按钮的点击事件
 queryNode.addEventListener('click', function () {
     if (this.jurisdiction) {
+        nowOperation = 'query';
         operationNodeBox.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
@@ -607,6 +614,41 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxLastRevision.show();
         operationNodeBoxLastRevision.innerHTML = '<span>最后修改：</span>' + nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime).toLocaleDateString();
         operationNodeBoxSubmit.hide();
+    }
+});
+
+operationNodeBoxSubmit.addEventListener('click', function () {
+    if (nowOperation == 'add') {
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        ajax({
+            type: 'post',
+            url: '/node',
+            data: {
+                content: inpContent,
+                editable: operationNodeBoxJurisdiction.state,
+                theme: inpTheme,
+                parent: nowNode.id,
+                projectId: projectId
+            },
+            success: function (res) {
+                console.log(res);
+            }
+        });
+    } else if (nowOperation == 'change') {
+
+    } else {
+        topAlert('淦');
     }
 });
 cycleSprite(btnArr, 0, 0, 27);
@@ -639,6 +681,7 @@ for (var i = 0; i < onOffArr.length; i++) {
 }
 setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
+var projectId = 1;
 window.onload = function () {
     ajax({
         type: 'get',
