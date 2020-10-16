@@ -408,9 +408,6 @@ setInterval(function () {
         setline(node1, node2);
     }
 }, 5);
-setInterval(function () {
-    console.log(constraintArr.length);
-}, 3000);
 var nodeRequest = 1;
 
 function createTree(node) {
@@ -544,7 +541,11 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
-var nowOperation = 'null';
+var removeNodeBox = getDom('.removeNodeBox'); // 删除节点的提示框盒子
+var removeNodeClose = removeNodeBox.getDom('.close'); // 提示盒子右上角的叉
+var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
+var removeNodeNo = removeNodeBox.getDom('.no'); // 否
+var nowOperation = 'null'; // 盒子当前状态
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -586,7 +587,26 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxLastRevision.hide();
     operationNodeBoxSubmit.hide();
 });
-
+removeNodeClose.addEventListener('click', function () {
+    removeNodeBox.hide();
+});
+removeNodeYes.addEventListener('click', function () {
+    ajax({
+        type: 'delete',
+        url: '/node',
+        data: {
+            nodeId: nowNode.id
+        },
+        success: function (res) {
+            if (res.status_code == '200') {
+                location.reload();
+            } else {
+                topAlert('淦');
+            }
+        }
+    });
+});
+removeNodeNo.addEventListener('click', removeNodeClose.onclick);
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
     if (this.jurisdiction) {
@@ -613,6 +633,9 @@ addNode.addEventListener('click', function () {
 
 // 删除节点按钮的点击事件
 removeNode.addEventListener('click', function () {
+    if (this.jurisdiction) {
+        removeNodeBox.show();
+    }
 });
 
 // 修改节点按钮的点击事件
@@ -714,23 +737,24 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             inpContent = '暂无';
         }
         ajax({
-            type: 'post',
+            type: 'put',
             url: '/node',
             data: {
-                node: {
-                    id: nowNode.id,
-                    theme: inpTheme,
-                    content: inpContent,
-                    editable: nowNode.editable,
-                    projectId: projectId,
-                    lastEditTime: Date.now(),
-                }
+                id: nowNode.id,
+                theme: inpTheme,
+                content: inpContent,
+                editable: nowNode.editable,
+                projectId: projectId,
             },
             header: {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                console.log(res);
+                if (res.status_code == '200') {
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
         });
     } else {

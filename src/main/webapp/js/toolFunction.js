@@ -1270,8 +1270,8 @@ Node.prototype.hide = function () {
  * 
  * 函数功能：设置cookie
  * 
- * @param {*} json 参数列表
- * @param {*} time 有效时间
+ * @param {JSON} json 参数列表
+ * @param {number} time 有效时间
  * @author 60rzvvbj
  */
 function setCookie(json, time) {
@@ -1285,7 +1285,7 @@ function setCookie(json, time) {
  * 
  * 函数功能：获取cookie
  * 
- * @param {*} attr 字段名
+ * @param {string} attr 字段名
  * @author 60rzvvbj
  */
 function getCookie(attr) {
@@ -1297,7 +1297,7 @@ function getCookie(attr) {
  * 
  * 函数功能：获取cookie
  * 
- * @param {*} attr 字段名
+ * @param {string} attr 字段名
  * @author 60rzvvbj
  */
 function removeCookie(attr) {
@@ -1305,14 +1305,35 @@ function removeCookie(attr) {
     json[attr] = "";
     setCookie(json, -1);
 }
+
 /**
  * 
  * 函数功能：获取url中参数
  * 
- * @param {*} attr 字段名
+ * @param {string} attr 字段名
  * @author 60rzvvbj
  */
 function getLocation(attr) {
     var t = location.search.substr(1).match(new RegExp("(^|&)" + attr + "=([^&]*)(&|$)"));
     return t != null ? t[2] : null;
+}
+
+/**
+ * 
+ * 函数功能：给输入框添加回车事件
+ * 
+ * @param {Node} input 输入框元素
+ * @param {function} fun 回车执行的函数
+ * @author 60rzvvbj
+ */
+function inputEnterEvent(input, fun) {
+    input.addEventListener('keydown', function (e) {
+        if (e.keyCode == 13) {
+            fun();
+        }
+    });
+}
+
+Node.prototype.inputEnterEvent = function (fun) {
+    inputEnterEvent(this, fun);
 }
