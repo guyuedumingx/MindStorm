@@ -21,7 +21,7 @@ public class XmindUtil {
         builder = Core.getWorkbookBuilder();
     }
 
-    public static void getWorkBook(String path, int id){
+    public static int getWorkBook(String path, int id){
        userId = id;
         IWorkbook workbook = null;
         try {
@@ -32,10 +32,14 @@ public class XmindUtil {
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
         ITopic rootTopic = primarySheet.getRootTopic();
-        createNodes(rootTopic,0);
+        int rootId = createNodes(rootTopic, 0);
+        Project project = projectService.getProject(projectId);
+        project.setHeadNodeId(rootId);
+        projectService.chProject(project);
+        return projectId;
     }
 
-    public static void getWorkBook(HttpServletRequest req) {
+    public static int getWorkBook(HttpServletRequest req) {
         userId = Integer.valueOf(req.getParameter("user_id"));
         IWorkbook workbook = null;
         try {
@@ -46,18 +50,23 @@ public class XmindUtil {
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
         ITopic rootTopic = primarySheet.getRootTopic();
-        createNodes(rootTopic,0);
+        int rootId = createNodes(rootTopic, 0);
+        Project project = projectService.getProject(projectId);
+        project.setHeadNodeId(rootId);
+        projectService.chProject(project);
+        return projectId;
     }
 
-    public static void createNodes(ITopic topic, int parentId){
+    private static int createNodes(ITopic topic, int parentId){
         int nodeId = addNode(topic, parentId);
         Iterator<ITopic> iterator = topic.getAllChildrenIterator();
         while (iterator.hasNext()){
             createNodes(iterator.next(),nodeId);
         }
+        return nodeId;
     }
 
-    public static int addNode(ITopic topic, int parendId) {
+    private static int addNode(ITopic topic, int parendId) {
         Node node = new Node();
         node.setTheme(topic.getTitleText());
         node.setAuthor(userId);
@@ -70,13 +79,14 @@ public class XmindUtil {
         return nodeService.newNode(node);
     }
 
-    public static int addProject(ISheet sheet){
+    private static int addProject(ISheet sheet){
         Project project = new Project();
         project.setAuthor(userId);
         project.setCreateTime(System.currentTimeMillis()+"");
         project.setName(sheet.getRootTopic().getTitleText());
         project.setPublic(false);
         project.setRank(1);
+        //project.setIntroduction(sheet.getRootTopic().getNotes().toString());
         project.setDeadline(System.currentTimeMillis()+"");
         return projectService.newProject(project,false);
     }

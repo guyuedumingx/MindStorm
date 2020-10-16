@@ -1,5 +1,6 @@
 import common.util.AuthCodeUtil;
 import common.util.MD5Util;
+import common.util.XmindUtil;
 import org.junit.Test;
 
 public class UtilTest {
@@ -12,5 +13,9 @@ public class UtilTest {
     @Test
     public void Md5Test() {
         String result = MD5Util.getResult("思维风暴");
+    }
+    @Test
+    public void xmindTest(){
+        XmindUtil.getWorkBook("2.xmind",1);
     }
 }
