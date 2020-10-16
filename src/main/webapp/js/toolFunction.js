@@ -1338,7 +1338,18 @@ Node.prototype.inputEnterEvent = function (fun) {
     inputEnterEvent(this, fun);
 }
 
+/**
+ * 
+ * 函数功能：通过样式名获取元素行内style中样式
+ * 
+ * @param {Node} dom 
+ * @param {string} key 
+ */
 function getCSS(dom, key) {
     var t = dom.style.cssText.match(new RegExp("(^|\\s)" + key + ": ([^;]+)(;|$)"));
     return t != null ? t[2] : null;
+}
+
+Node.prototype.getCSS = function (key) {
+    return getCSS(this, key);
 }
