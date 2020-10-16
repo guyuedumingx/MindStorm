@@ -744,7 +744,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 theme: inpTheme,
                 content: inpContent,
                 editable: nowNode.editable,
-                projectId: projectId,
+                projectId: projectId
             },
             header: {
                 'Content-Type': 'application/json'

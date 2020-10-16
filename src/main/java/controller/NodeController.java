@@ -64,8 +64,8 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nodeId = request.getParameter("nodeId");
-        int statusCode = service.delNode(Integer.valueOf(nodeId), user.getId());
+        int nodeId =Integer.valueOf(request.getParameter("nodeId"));
+        int statusCode = service.delNode(nodeId, user.getId());
         WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
