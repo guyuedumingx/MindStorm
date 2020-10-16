@@ -23,15 +23,22 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int newProject(Project project) {
+        return newProject(project,true);
+    }
+
+    @Override
+    public int newProject(Project project, boolean hasRootNode) {
         int projectId = projectDao.insertOne(project);
         if(projectId==0){
             return projectId;
         }else {
             //这里可以用多线程
             project.setId(projectId);
-            Node node = new Node(project);
-            int headNodeId = DaoFactory.getNodeDao().insertOne(node);
-            project.setHeadNodeId(headNodeId);
+            if(hasRootNode) {
+                Node node = new Node(project);
+                int headNodeId = DaoFactory.getNodeDao().insertOne(node);
+                project.setHeadNodeId(headNodeId);
+            }
             projectDao.updateOne(project);
             contributorDao.insertOne(new Contributor(project));
         }
