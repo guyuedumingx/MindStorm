@@ -680,6 +680,9 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 parentId: nowNode.id,
                 projectId: projectId
             },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
                     // treeAppendNode(nowNode, {
