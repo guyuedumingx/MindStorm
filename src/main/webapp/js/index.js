@@ -86,7 +86,7 @@ back[0].addEventListener("click", function () {
     changeEst.style.display = "inline-block";
     join.style.display = "inline-block";
     estBig.style.display = "none";
-    joinTips.style.display = "table";   
+    joinTips.style.display = "table";
 })
 back[1].addEventListener("click", function () {
     changeEst.style.animation = "";
@@ -256,8 +256,30 @@ introduceInput.addEventListener("keyup", function () {
     }
 })
 
-//获取个人中心
+//获取个人中心按钮
 var center = getDom(".presonal_cen");
+//跳转到个人中心
 center.addEventListener("click", function () {
-    
+    window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
 })
+
+//获取用户id
+var loginPd = getCookie("user_id");
+//个人容器
+var personal = getDom(".personal");
+//获取登录注册容器
+var logOn = getDom(".logOn");
+//获取昵称框
+var nameU = getDom(".user_name");
+//获取用户名
+var userName = getCookie("user_name");
+
+//判断是否登录------------
+if (loginPd == null) {
+    personal.style.display = "none";
+    logOn.style.display = "block";
+} else {
+    personal.style.display = "block";
+    logOn.style.display = "none";
+    nameU.innerText = userName;
+}
