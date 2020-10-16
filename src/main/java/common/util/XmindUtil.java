@@ -8,7 +8,9 @@ import service.ProjectService;
 import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.http.HttpServletRequest;
+import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * 与xmind互转工具类
@@ -19,6 +21,7 @@ public class XmindUtil {
     static ProjectService projectService = new ProjectServiceImpl();
     static IWorkbookBuilder builder = null;
     static IWorkbook workbook;
+    static Project project;
     static int projectId;
     static int userId;
 
@@ -37,7 +40,7 @@ public class XmindUtil {
         projectId = addProject(primarySheet);
         ITopic rootTopic = primarySheet.getRootTopic();
         int rootId = createNodes(rootTopic, 0);
-        Project project = projectService.getProject(projectId);
+        project = projectService.getProject(projectId);
         project.setHeadNodeId(rootId);
         projectService.chProject(project);
         return projectId;
@@ -54,7 +57,7 @@ public class XmindUtil {
         projectId = addProject(primarySheet);
         ITopic rootTopic = primarySheet.getRootTopic();
         int rootId = createNodes(rootTopic, 0);
-        Project project = projectService.getProject(projectId);
+        project = projectService.getProject(projectId);
         project.setHeadNodeId(rootId);
         projectService.chProject(project);
         return projectId;
@@ -79,11 +82,22 @@ public class XmindUtil {
         node.setParentId(parendId);
         node.setNameless(false);
         node.setLastEditId(userId);
+        node.setContent(lablesToString(topic));
         return nodeService.newNode(node);
     }
 
+    private static String lablesToString(ITopic topic){
+        Set<String> labels = topic.getLabels();
+        Iterator<String> iterator = labels.iterator();
+        StringBuilder str = new StringBuilder();
+        while (iterator.hasNext()){
+            str.append(iterator.next());
+        }
+        return str.toString();
+    }
+
     private static int addProject(ISheet sheet){
-        Project project = new Project();
+        project = new Project();
         project.setAuthor(userId);
         project.setCreateTime(System.currentTimeMillis()+"");
         project.setName(sheet.getRootTopic().getTitleText());
@@ -94,8 +108,8 @@ public class XmindUtil {
         return projectService.newProject(project,false);
     }
 
-    public static void writToXmind(int projectId) {
-        Project project = projectService.getProject(projectId);
+    private static void createXmind(int projectId) {
+        project = projectService.getProject(projectId);
         int rootId = project.getHeadNodeId();
         workbook = builder.createWorkbook();
         ISheet sheet = workbook.getPrimarySheet();
@@ -103,8 +117,21 @@ public class XmindUtil {
         ITopic rootTopic = sheet.getRootTopic();
         rootTopic.setTitleText(rootNode.getTheme());
         writeITopics(rootTopic, rootNode);
+    }
+
+    public static void write(int projectId, OutputStream out){
+        createXmind(projectId);
         try {
-            workbook.save(project.getName() + ".xmind");
+            workbook.save(out);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void write(int projectId, String path){
+        createXmind(projectId);
+        try {
+            workbook.save(path + project.getName() + ".xmind");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -118,6 +145,7 @@ public class XmindUtil {
             Node child = nodeService.getNode(n);
             ITopic topic = workbook.createTopic();
             topic.setTitleText(child.getTheme());
+            topic.addLabel(child.getContent());
             root.add(topic);
             writeITopics(topic,child);
         }

@@ -22,6 +22,6 @@ public class UtilTest {
 
     @Test
     public void saveXmindTest(){
-        XmindUtil.writToXmind(19);
+        XmindUtil.write(19,"");
     }
 }
