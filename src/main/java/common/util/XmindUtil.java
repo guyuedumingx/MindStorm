@@ -7,9 +7,8 @@ import service.NodeService;
 import service.ProjectService;
 import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -121,10 +120,12 @@ public class XmindUtil {
         writeITopics(rootTopic, rootNode);
     }
 
-    public static void write(int projectId, OutputStream out){
+    public static void write(int projectId, HttpServletResponse resp){
         createXmind(projectId);
+        resp.setContentType("multipart/form-data");
+        resp.setHeader("Content-Disposition", "attachment;filename=" + project.getName() + ".xmind");
         try {
-            workbook.save(out);
+            workbook.save(resp.getOutputStream());
         }catch (Exception e){
             e.printStackTrace();
         }
