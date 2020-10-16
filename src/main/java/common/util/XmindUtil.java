@@ -8,12 +8,14 @@ import service.ProjectService;
 import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Iterator;
 
 public class XmindUtil {
     static NodeService nodeService = new NodeServiceImpl();
     static ProjectService projectService = new ProjectServiceImpl();
     static IWorkbookBuilder builder = null;
+    static IWorkbook workbook;
     static int projectId;
     static int userId;
 
@@ -23,7 +25,6 @@ public class XmindUtil {
 
     public static int getWorkBook(String path, int id){
        userId = id;
-        IWorkbook workbook = null;
         try {
             workbook = builder.loadFromPath(path);
         }catch (Exception e) {
@@ -41,7 +42,6 @@ public class XmindUtil {
 
     public static int getWorkBook(HttpServletRequest req) {
         userId = Integer.valueOf(req.getParameter("user_id"));
-        IWorkbook workbook = null;
         try {
             workbook = builder.loadFromStream(req.getInputStream());
         }catch (Exception e) {
@@ -86,8 +86,37 @@ public class XmindUtil {
         project.setName(sheet.getRootTopic().getTitleText());
         project.setPublic(false);
         project.setRank(1);
-        //project.setIntroduction(sheet.getRootTopic().getNotes().toString());
+        project.setIntroduction(sheet.getRootTopic().getNotes().toString());
         project.setDeadline(System.currentTimeMillis()+"");
         return projectService.newProject(project,false);
+    }
+
+    public static void writToXmind(int projectId) {
+        Project project = projectService.getProject(projectId);
+        int rootId = project.getHeadNodeId();
+        workbook = builder.createWorkbook();
+        ISheet sheet = workbook.createSheet();
+        Node rootNode = nodeService.getNode(rootId);
+        ITopic rootTopic = sheet.getRootTopic();
+        rootTopic.setTitleText(rootNode.getTheme());
+        writeITopics(rootTopic,rootNode);
+        try {
+            workbook.save(project.getName() + ".xmind");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeITopics(ITopic root, Node node){
+        int[] children = node.getChildren();
+        if(children==null){return;}
+
+        for (int n : children) {
+            Node child = nodeService.getNode(n);
+            ITopic topic = workbook.createTopic();
+            topic.setTitleText(child.getTheme());
+            root.add(topic);
+            writeITopics(topic,child);
+        }
     }
 }
