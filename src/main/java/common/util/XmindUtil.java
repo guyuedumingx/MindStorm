@@ -8,9 +8,12 @@ import service.ProjectService;
 import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Iterator;
 
+/**
+ * 与xmind互转工具类
+ * @author yohoyes
+ */
 public class XmindUtil {
     static NodeService nodeService = new NodeServiceImpl();
     static ProjectService projectService = new ProjectServiceImpl();
@@ -95,11 +98,11 @@ public class XmindUtil {
         Project project = projectService.getProject(projectId);
         int rootId = project.getHeadNodeId();
         workbook = builder.createWorkbook();
-        ISheet sheet = workbook.createSheet();
+        ISheet sheet = workbook.getPrimarySheet();
         Node rootNode = nodeService.getNode(rootId);
         ITopic rootTopic = sheet.getRootTopic();
         rootTopic.setTitleText(rootNode.getTheme());
-        writeITopics(rootTopic,rootNode);
+        writeITopics(rootTopic, rootNode);
         try {
             workbook.save(project.getName() + ".xmind");
         }catch (Exception e){
@@ -107,9 +110,9 @@ public class XmindUtil {
         }
     }
 
-    public static void writeITopics(ITopic root, Node node){
+    public static ITopic writeITopics(ITopic root, Node node){
         int[] children = node.getChildren();
-        if(children==null){return;}
+        if(children==null){return root;}
 
         for (int n : children) {
             Node child = nodeService.getNode(n);
@@ -118,5 +121,6 @@ public class XmindUtil {
             root.add(topic);
             writeITopics(topic,child);
         }
+        return root;
     }
 }
