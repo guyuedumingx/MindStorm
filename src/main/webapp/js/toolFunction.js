@@ -1337,3 +1337,8 @@ function inputEnterEvent(input, fun) {
 Node.prototype.inputEnterEvent = function (fun) {
     inputEnterEvent(this, fun);
 }
+
+function getCSS(dom, key) {
+    var t = dom.style.cssText.match(new RegExp("(^|\\s)" + key + ": ([^;]+)(;|$)"));
+    return t != null ? t[2] : null;
+}
