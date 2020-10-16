@@ -1,6 +1,9 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
-var user;
+var user = {};
+user.userId = getCookie('user_id');
+user.userName = getCookie('user_name');
+var projectId = getLocation('project_id');
 var ctrlState = false;
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
@@ -105,7 +108,7 @@ treeFullScreenOnOff.addEventListener('click', function () {
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
-var nodeConstLen = [120, 120, 120, 120, 120];
+var nodeConstLen = [80, 80, 80, 80, 80, 80];
 // var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
@@ -342,9 +345,6 @@ function addTreeConstraint(root, n) {
                 }
                 changeChild(root, addHeightLight);
             }
-            if (ctrlState) {
-                document.addEventListener('mousemove', move);
-            }
         } else {
             mx = e.clientX;
             my = e.clientY;
@@ -357,9 +357,9 @@ function addTreeConstraint(root, n) {
                 t = t.father;
             }
             changeChild(root, addHeightLight);
-            if (ctrlState) {
-                document.addEventListener('mousemove', move);
-            }
+        }
+        if (ctrlState) {
+            document.addEventListener('mousemove', move);
         }
     });
     nodeSet.push(root);
@@ -408,7 +408,6 @@ setInterval(function () {
         setline(node1, node2);
     }
 }, 5);
-
 var nodeRequest = 1;
 
 function createTree(node) {
@@ -487,6 +486,10 @@ var nodeRequetTimer = setInterval(function () {
 
 function treeAppendNode(father, nodeData) {
     var node = document.createElement('div');
+    node.father = father;
+    node.style.backgroundColor = randomColor(100, 180);
+    node.addClass('node');
+    node.id = 100;
     node.childArr = new Array();
     node.style.display = 'none';
     node.line = document.createElement('div');
@@ -500,20 +503,24 @@ function treeAppendNode(father, nodeData) {
     node.appendChild(theme);
     node.content = nodeData.content; // 主要内容
     node.editable = nodeData.editable; // 是否可被编辑
-    node.userName = res.userName; // 创建者
-    node.authorId = res.author// 创建者Id
-    node.lastEditName = res.lastEditName; // 最后修改者
-    node.lastEditTime = res.lastEditTime; // 最后修改时间
-    node.star = res.star; // 点赞数
-    for (var i = 0; i < node.childIdArr.length; i++) {
-        nodeRequest++;
-        var ch = document.createElement('div');
-        ch.father = node;
-        node.childArr.push(ch);
-        ch.id = node.childIdArr[i];
-        addClass(ch, 'node');
-        ch.style.backgroundColor = randomColor(100, 180);
-        createTree(ch);
+    node.userName = user.userName; // 创建者
+    node.authorId = user.userId;// 创建者Id
+    node.lastEditName = user.userName; // 最后修改者
+    node.lastEditTime = Date.now(); // 最后修改时间
+    node.star = 0; // 点赞数
+    node.style.display = 'block';
+    node.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
+    node.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
+    node.x = node.offsetLeft;
+    node.y = node.offsetTop;
+    // addTreeConstraint(node, father.layer + 1);
+    addConstraint(node, father, 1, nodeConstLen[node.layer]);
+    addConstraint(node, null, 3, null);
+    addSetLine(node, father);
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i] != father) {
+            addConstraint(node, nodeSet[i], 2, nodeMinLen);
+        }
     }
 }
 // ——————————————————右侧—————————————————— 
@@ -534,7 +541,11 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
-var nowOperation = 'null';
+var removeNodeBox = getDom('.removeNodeBox'); // 删除节点的提示框盒子
+var removeNodeClose = removeNodeBox.getDom('.close'); // 提示盒子右上角的叉
+var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
+var removeNodeNo = removeNodeBox.getDom('.no'); // 否
+var nowOperation = 'null'; // 盒子当前状态
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -576,7 +587,26 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxLastRevision.hide();
     operationNodeBoxSubmit.hide();
 });
-
+removeNodeClose.addEventListener('click', function () {
+    removeNodeBox.hide();
+});
+removeNodeYes.addEventListener('click', function () {
+    ajax({
+        type: 'delete',
+        url: '/node',
+        data: {
+            nodeId: nowNode.id
+        },
+        success: function (res) {
+            if (res.status_code == '200') {
+                location.reload();
+            } else {
+                topAlert('淦');
+            }
+        }
+    });
+});
+removeNodeNo.addEventListener('click', removeNodeClose.onclick);
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
     if (this.jurisdiction) {
@@ -603,6 +633,9 @@ addNode.addEventListener('click', function () {
 
 // 删除节点按钮的点击事件
 removeNode.addEventListener('click', function () {
+    if (this.jurisdiction) {
+        removeNodeBox.show();
+    }
 });
 
 // 修改节点按钮的点击事件
@@ -663,6 +696,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        console.log(nowNode.id);
         ajax({
             type: 'post',
             url: '/node',
@@ -670,11 +704,23 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 content: inpContent,
                 editable: operationNodeBoxJurisdiction.state,
                 theme: inpTheme,
-                parent: nowNode.id,
+                parentId: nowNode.id,
                 projectId: projectId
             },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
             success: function (res) {
-                console.log(res);
+                if (res.status_code == '200') {
+                    // treeAppendNode(nowNode, {
+                    //     theme: inpTheme,
+                    //     content: inpContent,
+                    //     editable: operationNodeBoxJurisdiction.state
+                    // });
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
         });
     } else if (nowOperation == 'change') {
@@ -691,23 +737,24 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             inpContent = '暂无';
         }
         ajax({
-            type: 'post',
+            type: 'put',
             url: '/node',
             data: {
-                node: {
-                    id: nowNode.id,
-                    theme: inpTheme,
-                    content: inpContent,
-                    editable: nowNode.editable,
-                    projectId: projectId,
-                    lastEditTime: Date.now(),
-                }
+                id: nowNode.id,
+                theme: inpTheme,
+                content: inpContent,
+                editable: nowNode.editable,
+                projectId: projectId
             },
             header: {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                console.log(res);
+                if (res.status_code == '200') {
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
         });
     } else {
@@ -744,18 +791,19 @@ for (var i = 0; i < onOffArr.length; i++) {
 }
 setOnOffEvent(operationNodeBoxJurisdiction);
 // ——————————页面加载完之后发送请求——————————
-var projectId = 1;
 window.onload = function () {
     ajax({
         type: 'get',
         url: '/project',
-        data: {},
+        data: {
+            id: projectId
+        },
         success: function (res) {
-            introduceP.innerText = res.introdution;
+            introduceP.innerText = res.introduction;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
-            creationDate.innerText = new Date(res.creatTime).toLocaleDateString();
-            closingDate.innerText = new Date(res.ddl).toLocaleDateString();
+            creationDate.innerText = new Date(res.createTime).toLocaleDateString();
+            closingDate.innerText = new Date(res.deadline).toLocaleDateString();
             var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
             progressContent.style.width = progress + '%';
             progressWave.style.left = progress + '%';

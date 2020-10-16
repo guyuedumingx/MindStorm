@@ -190,6 +190,100 @@ h5 .onOff .onOffBorder .onOffRod {
     background-color: #101f30;
 }
 
+.removeNodeBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 110;
+    width: 360px;
+    height: 150px;
+    border-radius: 10px;
+    margin-top: -75px;
+    margin-left: -180px;
+    box-shadow: 0px 0px 10px #ccc;
+    background-color: #fff;
+}
+
+.removeNodeBox .boxTitle {
+    width: 100%;
+    height: 50px;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    color: #214B5B;
+}
+
+.removeNodeBox .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/project_close.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.removeNodeBox .close:hover {
+    background-image: url(../img/project_closeHover.png);
+}
+
+.removeNodeBox .content {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    color: #214b5b;
+}
+
+.removeNodeBox .yes {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    width: 50px;
+    height: 24px;
+    border-radius: 5px;
+    margin-left: -80px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.removeNodeBox .yes:hover {
+    background-color: #101f30;
+}
+
+.removeNodeBox .no {
+    position: absolute;
+    right: 50%;
+    bottom: 20px;
+    width: 50px;
+    height: 24px;
+    border-radius: 5px;
+    margin-right: -80px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.removeNodeBox .no:hover {
+    background-color: #101f30;
+}
+
 /*#endregion*/
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
@@ -819,10 +913,39 @@ body .header {
 }
 
 .mainBoxRight .nowNode {
+    position: relative;
     height: 120px;
     border-radius: 5px;
     margin-top: 10px;
     background-color: #f8fcfa;
+}
+
+.mainBoxRight .nowNode .nowNodeTheme {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    height: 20px;
+    padding: 0px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 20px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #214b5b;
+}
+
+.mainBoxRight .nowNode .nowNodeTitle {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    height: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+    color: #214b5b;
 }
 
 /*#endregion*/

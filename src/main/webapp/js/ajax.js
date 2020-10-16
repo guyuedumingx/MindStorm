@@ -29,8 +29,8 @@ function ajax(options) {
         header: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }, // 请求头
-        success: function () {}, // 成功函数
-        error: function () {} // 失败函数
+        success: function () { }, // 成功函数
+        error: function () { } // 失败函数
     }
     Object.assign(defaults, options);
 

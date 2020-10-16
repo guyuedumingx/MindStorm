@@ -8,10 +8,7 @@ import service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 /**
@@ -39,6 +36,14 @@ public class LoginController extends BaseController {
         //把用户Id存储在session中
         if(isSuccess==StatusCode.OK){
             session.setAttribute("user",user);
+            Cookie userName = new Cookie("user_name", user.getName());
+            Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
+            Cookie userId = new Cookie("user_id", user.getId() + "");
+            Cookie userSignature = new Cookie("user_signature",user.getUserSignature());
+            response.addCookie(userName);
+            response.addCookie(userId);
+            response.addCookie(userAvatar);
+            response.addCookie(userSignature);
         }
         WebUtil.renderMap(response,"status_code",isSuccess+"");
     }

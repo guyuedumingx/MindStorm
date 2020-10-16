@@ -23,7 +23,7 @@ public class NodeServiceImpl implements NodeService {
     public int delNode(int nodeId, int operatorId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
         //如果存在字节点,不能删除
-        if(node.getChildren().length!=0){
+        if(node.getChildren()!=null && node.getChildren().length!=0){
             return StatusCode.LOST;
         }
         Project project = projectDao.selectOne(new Project(node.getProjectId()));
@@ -46,6 +46,9 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public Node getNode(int nodeId) {
-        return null;
+        Node node = nodeDao.selectOne(new Node(nodeId));
+        int[] children = nodeDao.selectChildren(nodeId);
+        node.setChildren(children);
+        return node;
     }
 }

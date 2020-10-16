@@ -156,7 +156,7 @@ joinBut.addEventListener("click", function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    window.location.href = "/project.html?" + "id=" + idnum; //跳转页面
+                    window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
                     topAlert("该房间不存在");
@@ -225,7 +225,7 @@ estBut.addEventListener("click", function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    window.location.href = "/project.html?id=" + res.project_id; //跳转页面
+                    window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
                     topAlert("项目创建失败");

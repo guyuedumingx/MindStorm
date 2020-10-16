@@ -18,7 +18,7 @@ public class Node extends BaseModel{
    @DbField("parent_id")
    private int parentId;
    @DbField("editable")
-   private boolean editable;
+   private boolean editable = true;
    @DbField("nameless")
    private boolean nameless;
    @DbField("theme")

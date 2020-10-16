@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -44,6 +45,8 @@ public class NodeController extends BaseController{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Node node = WebUtil.getJson(req, Node.class);
         node.setAuthor(user.getId());
+        node.setLastEditId(user.getId());
+        node.setLastEditTime(System.currentTimeMillis()+"");
         int nodeId = service.newNode(node);
         int statusCode = StatusCode.isZero(nodeId);
 
@@ -61,8 +64,8 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nodeId = request.getParameter("nodeId");
-        int statusCode = service.delNode(Integer.valueOf(nodeId), user.getId());
+        int nodeId =Integer.valueOf(request.getParameter("nodeId"));
+        int statusCode = service.delNode(nodeId, user.getId());
         WebUtil.renderMap(response,"status_code",statusCode+"");
     }
 
@@ -87,7 +90,7 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nodeId = request.getParameter("nodeId");
+        String nodeId = request.getParameter("id");
         Node node = service.getNode(Integer.valueOf(nodeId));
         WebUtil.renderJson(response,node);
     }

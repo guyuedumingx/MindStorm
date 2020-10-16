@@ -1,5 +1,6 @@
 package service;
 
+import pojo.Node;
 import pojo.Project;
 
 /**
@@ -14,6 +15,14 @@ import pojo.Project;
      * @return
      */
      int newProject(Project project);
+
+    /**
+     * 新建项目
+     * @param project
+     * @param hasRootNode 是否生成根节点
+     * @return
+     */
+     int newProject(Project project, boolean hasRootNode);
 
     /**
      * 删除项目
