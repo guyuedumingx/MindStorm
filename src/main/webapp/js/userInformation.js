@@ -44,7 +44,29 @@ var projectLength = projectArr.length;
 var projectLi = getDom(".projectLi");
 
 for (var i = 0; i < projectLength; i++) {
-    
+    ajax({
+        type: 'post',
+        url: '/project',
+        data: {
+            public: public,
+            name: name,
+            deadline: createTime + time,
+            rank: rank,
+            createTime: createTime,
+            introduction: indu
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                // "test2.html?"+"txt="+encodeURI(s.value);
+            } else {
+                topAlert("项目创建失败");
+            }
+        }
+    });
 }
 //添加项目
 function addLi(projectName, projectIntro, projectDate, projectNum) {

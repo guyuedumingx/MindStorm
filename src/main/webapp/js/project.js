@@ -1,3 +1,39 @@
+// header
+
+//个人下拉框
+//获取下拉框
+var spinner = getDom(".spinner");
+//获取个人框
+var headNav = getDom(".head_nav");
+clickOpenBlankClose(headNav, spinner);
+//获取个人中心按钮
+var center = getDom(".presonal_cen");
+//跳转到个人中心
+center.addEventListener("click", function () {
+    window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
+})
+
+//获取用户id
+var loginPd = getCookie("user_id");
+//个人容器
+var personal = getDom(".personal");
+//获取登录注册容器
+var logOn = getDom(".logOn");
+//获取昵称框
+var nameU = getDom(".user_name");
+//获取用户名
+var userName = getCookie("user_name");
+
+//判断是否登录------------
+if (loginPd == null) {
+    personal.style.display = "none";
+    logOn.style.display = "block";
+} else {
+    personal.style.display = "block";
+    logOn.style.display = "none";
+    nameU.innerText = userName;
+}
+// end header
 var tool = new Tool(document, window);
 tool.textProhibition();
 var user = {};
@@ -546,6 +582,7 @@ var removeNodeClose = removeNodeBox.getDom('.close'); // 提示盒子右上角�
 var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
 var removeNodeNo = removeNodeBox.getDom('.no'); // 否
 var nowOperation = 'null'; // 盒子当前状态
+var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -563,6 +600,8 @@ operationNodeBoxSubmit.hide();
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
+        nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
+        nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
         addNode.jurisdiction = true;
         removeNode.jurisdiction = true;
         changeNode.jurisdiction = true;

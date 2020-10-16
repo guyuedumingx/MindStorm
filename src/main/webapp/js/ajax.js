@@ -45,7 +45,7 @@ function ajax(options) {
     parameter = parameter.substring(0, parameter.length - 1);
 
     // 判断请求方式，并根据请求方式做不同的处理
-    if (defaults.type == 'get' || defaults.type == 'delete') {
+    if (defaults.type != 'post') {
         defaults.url = defaults.url + '?' + parameter;
         xhr.open(defaults.type, defaults.url);
         xhr.send();

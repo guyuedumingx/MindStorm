@@ -139,8 +139,7 @@ var joinBut = getDom(".click_join");
 // 获取输入id框
 var inputID = getDom(".inputID");
 
-// 点击进入
-joinBut.addEventListener("click", function () {
+function joinButClick() {
     if (inputID.value == "请输入项目ID") {
         inputID.addClass("idPd");
     } else {
@@ -164,12 +163,17 @@ joinBut.addEventListener("click", function () {
             }
         });
     }
-})
+}
+//回车进入
+inputEnterEvent(inputID, joinButClick);
+
+// 点击进入
+joinBut.addEventListener("click", joinButClick);
 
 // 移除样式
 inputID.addEventListener("click", function () {
     inputID.removeClass("idPd");
-})
+});
 
 inputTips(inputID, "请输入项目ID", "idTips");
 

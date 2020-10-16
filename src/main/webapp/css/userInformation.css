@@ -96,6 +96,7 @@ body .personalBox {
     display: inline-block;
     margin-left: -10px;
     width: 320px;
+    color: #000;
     vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -178,7 +179,7 @@ body .personalBox {
     height: 72px;
     background-color: #f8fcfa;
     border: solid 1px #214B5B;
-    color: #214B5B;
+    color: #000000;
     /* border: solid #6AC1ED 1px; */
     border-radius: 5px;
 }

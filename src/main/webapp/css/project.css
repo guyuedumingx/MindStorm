@@ -288,14 +288,13 @@ h5 .onOff .onOffBorder .onOffRod {
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {
-    position: absolute;
+    position: fixed;
     top: 0;
-    z-index: 100;
-    min-width: 800px;
     padding: 0 60px;
     box-sizing: border-box;
     width: 100%;
     height: 60px;
+    z-index: 100;
 }
 
 /* logo位置 */
@@ -324,42 +323,93 @@ body .header {
 
 /* 个人头像等容器 */
 .header .personal {
+    position: relative;
+    /* display: none; */
     float: right;
+    cursor: pointer;
 }
 
 .header .personal div {
     display: inline-block;
 }
 
+/*下拉框------ */
+.header .personal .spinner {
+    position: absolute;
+    width: 119px;
+    top: 60px;
+    right: 0px;
+    border-radius: 5px;
+    border: solid 1px rgba(150, 150, 150, 0.336);
+    background-color: #fff;
+    box-shadow: 0 0 3px #132C33;
+    animation: show 0.5s;
+    z-index: 101;
+}
+
+.header .personal .spinner ul {
+    text-align: center;
+    font-size: 14px;
+}
+
+.header .personal .spinner ul li {
+    display: inline-block;
+    width: 100px;
+    padding: 10px;
+    color: #132c33dc;
+    line-height: 20px;
+}
+
+.header .personal .spinner ul li:hover {
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #e3e7e5;
+}
+
+.header .personal .spinner ul li:first-child {
+    border-radius: 5px 5px 0 0;
+}
+
+.header .personal .spinner ul li:last-child {
+    border-radius: 0 0 5px 5px;
+}
+
 /* 头像 */
 .header .personal .head {
     display: inline-block;
-    width: 32px;
-    height: 32px;
-    margin: 10px 10px 0 0;
+    width: 38px;
+    height: 38px;
+    margin: 10px;
     border: solid;
     border-radius: 50px;
+    pointer-events: none;
 }
 
 /* 昵称 */
-.header .personal .head_nav span {
+.header .personal .head_nav .user_name {
     float: right;
+    font-size: 20px;
+    font-weight: bold;
     line-height: 60px;
     color: #214B5B;
+    pointer-events: none;
 }
 
 /* 消息通知 */
 .header .personal .message {
+    display: none;
     width: 28px;
     height: 28px;
     margin-right: 10px;
     border-radius: 50px;
-    background-image: url(../img/public_help.png);
+    background-image: url(../img/message_q.png);
     background-repeat: no-repeat;
+    background-size: contain;
     background-position: center;
 }
 
 .header .personal .message:hover {
+    background-image: url(../img/message.png);
     box-shadow: 0px 0px 3px 0px #214B5B;
 }
 
@@ -682,6 +732,8 @@ body .header {
     left: 50%;
     width: 100vw;
     height: 100vh;
+    min-width: 1260px;
+    min-height: 700px;
     border-radius: 5px;
     /* background-color: #f8fcfa; */
     /* background-color: #eef7f2; */
@@ -925,7 +977,7 @@ body .header {
     top: 5px;
     width: 100%;
     height: 20px;
-    padding: 0px 12px;
+    padding: 0px 20px;
     box-sizing: border-box;
     overflow: hidden;
     font-size: 10px;
@@ -934,6 +986,17 @@ body .header {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #214b5b;
+}
+
+.mainBoxRight .nowNode .nowNodeContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #aaa;
+    transform: translate(-50%, -50%);
 }
 
 .mainBoxRight .nowNode .nowNodeTitle {
