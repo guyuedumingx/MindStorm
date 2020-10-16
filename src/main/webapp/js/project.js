@@ -444,7 +444,7 @@ function createTree(node) {
                     node.childArr.push(ch);
                     ch.id = node.childIdArr[i];
                     addClass(ch, 'node');
-                    ch.style.backgroundColor = randomColor(100, 180);
+                    ch.style.backgroundColor = randomColor(160, 220);
                     createTree(ch);
                 }
                 nodeRequest--;
@@ -458,7 +458,7 @@ function createTree(node) {
 
 var root = document.createElement('div');
 addClass(root, 'root');
-root.style.backgroundColor = randomColor(100, 180);
+root.style.backgroundColor = randomColor(0, 100);
 
 function createRoot(rootID) {
     root.id = rootID;
