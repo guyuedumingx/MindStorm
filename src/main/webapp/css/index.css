@@ -35,8 +35,8 @@ body .header {
 
 /* 个人头像等容器 */
 .header .personal {
-    display: none;
     position: relative;
+    display: none;
     float: right;
     cursor: pointer;
 }
@@ -48,11 +48,12 @@ body .header {
 /*下拉框------ */
 .header .personal .spinner {
     position: absolute;
-    width: 120px;
-    top: 80px;
+    width: 119px;
+    top: 90px;
     right: 0px;
     border-radius: 5px;
     border: solid 1px rgba(150, 150, 150, 0.336);
+    box-shadow:0 0 3px #132C33;
     animation: show 0.5s;
 }
 
@@ -65,34 +66,40 @@ body .header {
     display: inline-block;
     width: 100px;
     padding: 10px;
-    color: #132c339a;
+    color: #132c33dc;
     line-height: 20px;
 }
-.header .personal .spinner ul li:hover{
+
+.header .personal .spinner ul li:hover {
     cursor: pointer;
-    color: #132C33;
+    font-weight: bold;
     background-color: #e3e7e5;
 }
-.header .personal .spinner ul li:first-child{
+
+.header .personal .spinner ul li:first-child {
     border-radius: 5px 5px 0 0;
 }
-.header .personal .spinner ul li:last-child{
+
+.header .personal .spinner ul li:last-child {
     border-radius: 0 0 5px 5px;
 }
+
 /* 头像 */
 .header .personal .head {
     display: inline-block;
     width: 52px;
     height: 52px;
-    margin: 10px 10px 0 0;
+    margin: 20px 10px 0 0;
     border: solid;
     border-radius: 50px;
     pointer-events: none;
 }
 
 /* 昵称 */
-.header .personal .head_nav .name {
+.header .personal .head_nav .user_name {
     float: right;
+    font-size: 20px;
+    font-weight: bold;
     line-height: 100px;
     color: #214B5B;
     pointer-events: none;
@@ -305,7 +312,7 @@ body .mainBox {
     font-size: 18px;
     height: 40px;
     width: 400px;
-    border: solid ;
+    border: solid;
     border-radius: 10px;
     vertical-align: middle;
 }
@@ -322,16 +329,18 @@ body .mainBox {
     padding: 10px;
     line-height: 22px;
     font-size: 15px;
-    border: solid ;
+    border: solid;
     border-radius: 10px;
     outline: none;
     resize: none;
     /*不可调节*/
 }
+
 .mainBox .Box .est_bigBox .introduction {
     position: relative;
 }
-.mainBox .Box .est_bigBox .introduction .sum{
+
+.mainBox .Box .est_bigBox .introduction .sum {
     position: absolute;
     bottom: 10px;
     right: 10px;
