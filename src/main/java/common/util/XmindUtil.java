@@ -8,6 +8,7 @@ import service.ProjectService;
 import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Set;
@@ -46,10 +47,11 @@ public class XmindUtil {
         return projectId;
     }
 
-    public static int getWorkBook(HttpServletRequest req) {
-        userId = Integer.valueOf(req.getParameter("user_id"));
+    public static int getWorkBook(InputStream in) {
+        //userId = Integer.valueOf(req.getParameter("user_id"));
+        userId = 1;
         try {
-            workbook = builder.loadFromStream(req.getInputStream());
+            workbook = builder.loadFromStream(in);
         }catch (Exception e) {
             e.printStackTrace();
         }

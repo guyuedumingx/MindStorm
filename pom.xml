@@ -51,6 +51,9 @@
             <configuration>
                 <source>6</source>
                 <target>6</target>
+                <compilerArguments>
+                  <extdirs>src\main\webapp\WEB-INF\lib</extdirs>
+                </compilerArguments>
             </configuration>
         </plugin>
     </plugins>
@@ -95,7 +98,6 @@
       <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
-
 
     <dependency>
       <groupId>com.alibaba</groupId>

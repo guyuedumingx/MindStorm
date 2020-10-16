@@ -747,7 +747,8 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 projectId: projectId
             },
             header: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "X-HTTP-Method-Override": "PUT"
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
