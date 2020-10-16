@@ -191,7 +191,7 @@ h5 .onOff .onOffBorder .onOffRod {
 }
 
 .removeNodeBox {
-    /* display: none; */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;

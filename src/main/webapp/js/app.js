@@ -24,6 +24,7 @@ user.push({
     lastEditName: '张三',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '张三',
+    father: 0
 });
 user.push({
     author: 2,
@@ -36,6 +37,7 @@ user.push({
     lastEditName: '李四',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '李四',
+    father: 1,
 });
 user.push({
     author: 1,
@@ -48,6 +50,7 @@ user.push({
     lastEditName: '马六',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '王五',
+    father: 1,
 });
 user.push({
     author: 1,
@@ -60,6 +63,7 @@ user.push({
     lastEditName: '马六',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '马六',
+    father: 1,
 });
 user.push({
     author: 1,
@@ -72,6 +76,7 @@ user.push({
     lastEditName: '陈七',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '张三',
+    father: 1,
 });
 user.push({
     author: 1,
@@ -84,6 +89,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
+    father: 1,
 });
 user.push({
     author: 1,
@@ -96,6 +102,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
+    father: 1,
 });
 user.push({
     author: 1,
@@ -108,6 +115,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
+    father: 2,
 });
 user.push({
     author: 1,
@@ -120,6 +128,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
+    father: 2,
 });
 user.push({
     author: 1,
@@ -132,6 +141,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
+    father: 3,
 });
 user.push({
     author: 1,
@@ -144,6 +154,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
+    father: 8,
 });
 var template = {
     id: "@id()",
@@ -165,8 +176,10 @@ app.get('/', function (req, res) {
 function getNode(id) {
     console.log('要获取的节点：' + id);
     for (var i = 0; i < user.length; i++) {
-        if (user[i].id == id - 0) {
-            return user[i];
+        if (user[i]) {
+            if (user[i].id == id) {
+                return user[i];
+            }
         }
     }
     return null;
@@ -189,6 +202,25 @@ app.post('/node', function (req, res) {
     res.send({
         status_code: '200'
     });
+});
+app.delete('/node', function (req, res) {
+    var text = req.query;
+    for (var i = 0; i < user.length; i++) {
+        if (user[i]) {
+            if (user[i].id == text.id) {
+                var f = user.father;
+                for (var j = 0; j < f.children.length; j++) {
+                    if (f.children[j] == text.id) {
+                        f.children[j] == null;
+                    }
+                }
+            }
+            user[i] = null;
+        }
+    }
+    res.send({
+        status_code: '200'
+    })
 });
 app.put('/node', function (req, res) {
     var text = req.query;
