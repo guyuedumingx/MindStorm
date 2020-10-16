@@ -1,3 +1,39 @@
+// header
+
+//个人下拉框
+//获取下拉框
+var spinner = getDom(".spinner");
+//获取个人框
+var headNav = getDom(".head_nav");
+clickOpenBlankClose(headNav, spinner);
+//获取个人中心按钮
+var center = getDom(".presonal_cen");
+//跳转到个人中心
+center.addEventListener("click", function () {
+    window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
+})
+
+//获取用户id
+var loginPd = getCookie("user_id");
+//个人容器
+var personal = getDom(".personal");
+//获取登录注册容器
+var logOn = getDom(".logOn");
+//获取昵称框
+var nameU = getDom(".user_name");
+//获取用户名
+var userName = getCookie("user_name");
+
+//判断是否登录------------
+if (loginPd == null) {
+    personal.style.display = "none";
+    logOn.style.display = "block";
+} else {
+    personal.style.display = "block";
+    logOn.style.display = "none";
+    nameU.innerText = userName;
+}
+// end header
 var tool = new Tool(document, window);
 tool.textProhibition();
 var user = {};
@@ -444,7 +480,7 @@ function createTree(node) {
                     node.childArr.push(ch);
                     ch.id = node.childIdArr[i];
                     addClass(ch, 'node');
-                    ch.style.backgroundColor = randomColor(100, 180);
+                    ch.style.backgroundColor = randomColor(160, 220);
                     createTree(ch);
                 }
                 nodeRequest--;
@@ -458,7 +494,7 @@ function createTree(node) {
 
 var root = document.createElement('div');
 addClass(root, 'root');
-root.style.backgroundColor = randomColor(100, 180);
+root.style.backgroundColor = randomColor(0, 100);
 
 function createRoot(rootID) {
     root.id = rootID;

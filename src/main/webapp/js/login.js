@@ -21,7 +21,7 @@ var loginInput = getDomA('input', login);
 var loginEmail = loginInput[0];
 var loginPassword = loginInput[1];
 var loginSubmit = loginInput[2];
-loginSubmit.addEventListener('click', function () {
+function runLogin() {
     var em = loginEmail.value;
     var pa = loginPassword.value;
     ajax({
@@ -39,7 +39,9 @@ loginSubmit.addEventListener('click', function () {
             }
         }
     })
-});
+}
+loginSubmit.addEventListener('click', runLogin);
+loginPassword.inputEnterEvent(runLogin);
 // 注册
 var register = getDom('.register');
 var registerInput = getDomA('input', register);

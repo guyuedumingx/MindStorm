@@ -14,8 +14,14 @@ public class UtilTest {
     public void Md5Test() {
         String result = MD5Util.getResult("思维风暴");
     }
+
     @Test
     public void xmindTest(){
         XmindUtil.getWorkBook("2.xmind",1);
+    }
+
+    @Test
+    public void saveXmindTest(){
+        XmindUtil.write(19,"");
     }
 }

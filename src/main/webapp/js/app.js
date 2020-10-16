@@ -18,7 +18,7 @@ user.push({
     id: 1,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [2, 3, 4, 5, 6, 7],
+    children: [2, 3, 4, 5, 6, 7, 8, 9],
     star: 22,
     editable: true,
     lastEditName: '张三',
@@ -31,7 +31,7 @@ user.push({
     id: 2,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [8, 9],
+    children: [],
     star: 19,
     editable: true,
     lastEditName: '李四',
@@ -115,7 +115,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
-    father: 2,
+    father: 1,
 });
 user.push({
     author: 1,
@@ -128,7 +128,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
-    father: 2,
+    father: 1,
 });
 user.push({
     author: 1,
@@ -247,28 +247,29 @@ app.get('/', function (req, res) {
         }
     });
 });
-app.post('/user', function (req, res) {
+app.post('/user/login', function (req, res) {
     var text = req.body;
-    console.log(text);
-    if (text.method == 'register') {
-        if (text.email != '1808078515@qq.com') {
-            res.send('200');
-        } else {
-            res.send('500');
-        }
-    } else if (text.method == 'login') {
-        if (text.email == '1808078515@qq.com' && text.password == '20011219ycx') {
-            res.send({
-                status_code: '200',
-                token: 'asd'
-            });
-        } else {
-            res.send({
-                status_code: '500',
-                token: 'sb'
-            });
-        }
+
+    // console.log(text);
+    // if (text.method == 'register') {
+    //     if (text.email != '1808078515@qq.com') {
+    //         res.send('200');
+    //     } else {
+    //         res.send('500');
+    //     }
+    // } else if (text.method == 'login') {
+    if (text.email == '1808078515@qq.com' && text.password == '20011219ycx') {
+        res.send({
+            status_code: '200',
+            token: 'asd'
+        });
+    } else {
+        res.send({
+            status_code: '500',
+            token: 'sb'
+        });
     }
+    // }
 });
 app.get('/util', function (req, res) {
     var text = req.query;
