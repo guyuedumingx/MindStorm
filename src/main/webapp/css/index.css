@@ -580,6 +580,12 @@ body .footer {
     cursor: default;
 }
 
+
+body {
+    background-image: url(../img/background.jpg);
+    background-repeat: no-repeat;
+}
+
 /* .mainTitle:hover{
     -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
     -moz-animation: neon1 1.5s ease-in-out infinite alternate;
