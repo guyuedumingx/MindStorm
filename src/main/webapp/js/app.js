@@ -163,8 +163,9 @@ app.get('/', function (req, res) {
     });
 });
 function getNode(id) {
+    console.log('要获取的节点：' + id);
     for (var i = 0; i < user.length; i++) {
-        if (user[i].id == id) {
+        if (user[i].id == id - 0) {
             return user[i];
         }
     }
@@ -185,6 +186,20 @@ app.post('/node', function (req, res) {
         userName: '60rzvvbj',
     });
     getNode(text.parentId).children.push(user.length);
+    res.send({
+        status_code: '200'
+    });
+});
+app.put('/node', function (req, res) {
+    var text = req.query;
+    var nowNode = getNode(text.id);
+    Object.assign(nowNode, {
+        theme: text.theme,
+        content: text.content,
+        editable: text.editable,
+        lastEditName: '60rzvvbj',
+        lastEditTime: Date.now()
+    });
     res.send({
         status_code: '200'
     });

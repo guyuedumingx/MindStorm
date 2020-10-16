@@ -670,6 +670,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        console.log(nowNode.id);
         ajax({
             type: 'post',
             url: '/node',
@@ -710,23 +711,24 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             inpContent = '暂无';
         }
         ajax({
-            type: 'post',
+            type: 'put',
             url: '/node',
             data: {
-                node: {
-                    id: nowNode.id,
-                    theme: inpTheme,
-                    content: inpContent,
-                    editable: nowNode.editable,
-                    projectId: projectId,
-                    lastEditTime: Date.now(),
-                }
+                id: nowNode.id,
+                theme: inpTheme,
+                content: inpContent,
+                editable: nowNode.editable,
+                projectId: projectId,
             },
             header: {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                console.log(res);
+                if (res.status_code == '200') {
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
         });
     } else {
