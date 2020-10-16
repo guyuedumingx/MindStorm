@@ -106,7 +106,7 @@ public class XmindUtil {
         project.setRank(1);
         project.setIntroduction(sheet.getRootTopic().getNotes().toString());
         project.setDeadline(System.currentTimeMillis()+"");
-        return projectService.newProject(project,false);
+        return projectService.newProject(project,false,userId);
     }
 
     private static void createXmind(int projectId) {
