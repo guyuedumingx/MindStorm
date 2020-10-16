@@ -86,13 +86,13 @@ body .personalBox {
 }
 
 /* 昵称 */
-.personalBox .main_mes .name {
+.personalBox .main_mes .userName {
     font-size: 20px;
     font-weight: bold;
 }
 
 /* 简介内容 */
-.personalBox .introduce .intro_text {
+.personalBox .userIntroduce .intro_txt {
     display: inline-block;
     margin-left: -10px;
     width: 320px;
@@ -175,7 +175,7 @@ body .personalBox {
     padding: 5px 15px;
     margin: 20px auto 20px auto;
     width: 700px;
-    height: 70px;
+    height: 72px;
     background-color: #f8fcfa;
     border: solid 1px #214B5B;
     color: #214B5B;
