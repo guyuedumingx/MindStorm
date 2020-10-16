@@ -1316,3 +1316,23 @@ function getLocation(attr) {
     var t = location.search.substr(1).match(new RegExp("(^|&)" + attr + "=([^&]*)(&|$)"));
     return t != null ? t[2] : null;
 }
+
+/**
+ * 
+ * 函数功能：给输入框添加回车事件
+ * 
+ * @param {*} input 输入框元素
+ * @param {*} fun 回车执行的函数
+ * @author 60rzvvbj
+ */
+function inputEnterEvent(input, fun) {
+    input.addEventListener('keydown', function (e) {
+        if (e.keyCode == 13) {
+            fun();
+        }
+    });
+}
+
+Node.prototype.inputEnterEvent = function (fun) {
+    inputEnterEvent(this, fun);
+}

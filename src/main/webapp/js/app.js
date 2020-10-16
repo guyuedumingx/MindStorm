@@ -18,7 +18,7 @@ user.push({
     id: 1,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [2, 3, 7],
+    children: [2, 3, 4, 5, 6, 7],
     star: 22,
     editable: true,
     lastEditName: '张三',
@@ -30,7 +30,7 @@ user.push({
     id: 2,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [4, 5],
+    children: [8, 9],
     star: 19,
     editable: true,
     lastEditName: '李四',
@@ -42,7 +42,7 @@ user.push({
     id: 3,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [6],
+    children: [10],
     star: 3,
     editable: true,
     lastEditName: '马六',
@@ -54,7 +54,7 @@ user.push({
     id: 4,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [8, 9],
+    children: [],
     star: 4,
     editable: true,
     lastEditName: '马六',
@@ -66,7 +66,7 @@ user.push({
     id: 5,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [10],
+    children: [],
     star: 8,
     editable: true,
     lastEditName: '陈七',
@@ -78,7 +78,7 @@ user.push({
     id: 6,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [11],
+    children: [],
     star: 15,
     editable: true,
     lastEditName: '王五',
@@ -102,7 +102,7 @@ user.push({
     id: 8,
     theme: '节点主题节点主题节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [],
+    children: [11],
     star: 15,
     editable: true,
     lastEditName: '王五',
@@ -162,25 +162,36 @@ app.get('/', function (req, res) {
         }
     });
 });
+function getNode(id) {
+    for (var i = 0; i < user.length; i++) {
+        if (user[i].id == id) {
+            return user[i];
+        }
+    }
+    return null;
+}
 app.post('/node', function (req, res) {
+    var text = req.body;
+    user.push({
+        author: 8848,
+        id: user.length + 1,
+        theme: text.theme,
+        content: text.content,
+        children: [],
+        star: 0,
+        editable: text.editable,
+        lastEditName: '60rzvvbj',
+        lastEditTime: Date.now(),
+        userName: '60rzvvbj',
+    });
+    getNode(text.parentId).children.push(user.length);
     res.send({
         status_code: '200'
     });
 });
 app.get('/node', function (req, res) {
     var id = req.query.id;
-    console.log(id);
-    var judge = false;
-    for (var i = 0; i < user.length; i++) {
-        if (user[i].id == id) {
-            res.send(user[i]);
-            judge = true;
-            break;
-        }
-    }
-    if (!judge) {
-        res.send(false);
-    }
+    res.send(getNode(id));
 });
 app.get('/', function (req, res) {
     fs.readFile('test.html', 'utf8', function (err, doc) {
@@ -238,8 +249,8 @@ app.get('/project', function (req, res) {
         headNodeId: 1,
         introduction: '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹',
         contributors: [123456, 123457, 123458, 123459, 123450, 123455],
-        creatTime: new Date('2020-10-3 8:8:8').valueOf(),
-        ddl: new Date('2020-10-20 8:8:8').valueOf()
+        createTime: new Date('2020-10-3 8:8:8').valueOf(),
+        deadline: new Date('2020-10-20 8:8:8').valueOf()
     });
 });
 app.listen(8848);

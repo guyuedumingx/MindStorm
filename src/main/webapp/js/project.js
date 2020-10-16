@@ -408,9 +408,6 @@ setInterval(function () {
         setline(node1, node2);
     }
 }, 5);
-setInterval(function () {
-    console.log(constraintArr.length);
-}, 3000);
 var nodeRequest = 1;
 
 function createTree(node) {
@@ -673,7 +670,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
-        console.log(nowNode.id);
         ajax({
             type: 'post',
             url: '/node',
@@ -681,7 +677,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 content: inpContent,
                 editable: operationNodeBoxJurisdiction.state,
                 theme: inpTheme,
-                parent: nowNode.id,
+                parentId: nowNode.id,
                 projectId: projectId
             },
             success: function (res) {
