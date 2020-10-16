@@ -977,7 +977,7 @@ body .header {
     top: 5px;
     width: 100%;
     height: 20px;
-    padding: 0px 12px;
+    padding: 0px 20px;
     box-sizing: border-box;
     overflow: hidden;
     font-size: 10px;
@@ -986,6 +986,17 @@ body .header {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #214b5b;
+}
+
+.mainBoxRight .nowNode .nowNodeContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #aaa;
+    transform: translate(-50%, -50%);
 }
 
 .mainBoxRight .nowNode .nowNodeTitle {

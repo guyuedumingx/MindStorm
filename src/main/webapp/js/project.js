@@ -582,6 +582,7 @@ var removeNodeClose = removeNodeBox.getDom('.close'); // 提示盒子右上角�
 var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
 var removeNodeNo = removeNodeBox.getDom('.no'); // 否
 var nowOperation = 'null'; // 盒子当前状态
+var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -599,6 +600,8 @@ operationNodeBoxSubmit.hide();
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
+        nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
+        nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
         addNode.jurisdiction = true;
         removeNode.jurisdiction = true;
         changeNode.jurisdiction = true;
