@@ -913,10 +913,39 @@ body .header {
 }
 
 .mainBoxRight .nowNode {
+    position: relative;
     height: 120px;
     border-radius: 5px;
     margin-top: 10px;
     background-color: #f8fcfa;
+}
+
+.mainBoxRight .nowNode .nowNodeTheme {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    height: 20px;
+    padding: 0px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 20px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #214b5b;
+}
+
+.mainBoxRight .nowNode .nowNodeTitle {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    height: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+    color: #214b5b;
 }
 
 /*#endregion*/
