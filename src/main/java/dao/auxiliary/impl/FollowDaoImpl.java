@@ -18,17 +18,13 @@ public class FollowDaoImpl extends BaseDaoImpl<Follow> implements BaseDao<Follow
     @Override
     public String getQueryCondition(Follow po) {
         String base;
-        String format;
         if(po.getFollower()!=0 && po.getFollowing()==0) {
-            base = "follower_id = {0}";
-            format = MessageFormat.format(base, po.getFollower());
+            base = "follower_id = " + po.getFollower();
         }else if(po.getFollowing()!=0 && po.getFollower()==0){
-            base = "following_id = {0}";
-            format = MessageFormat.format(base, po.getFollowing());
+            base = "following_id = " + po.getFollowing();
         }else {
-            base = "follower_id = {0} and following_id = {1}";
-            format = MessageFormat.format(base,po.getFollower(),po.getFollowing());
+            base = "follower_id = " + po.getFollower() + " and following_id = " + po.getFollowing();
         }
-        return format;
+        return base;
     }
 }
