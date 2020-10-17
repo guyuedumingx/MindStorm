@@ -9,25 +9,25 @@ var userName = getCookie("user_name");
 //储存user对象
 var user;
 //请求获得数组对象
-ajax({
-    type: 'get',
-    url: '/user',
-    data: {
-        id: userId
-    },
-    header: {},
-    success: function (res) {
-        user = res;
-    },
-    error: function () {}
-});
+// ajax({
+//     type: 'get',
+//     url: '/user',
+//     data: {
+//         id: userId
+//     },
+//     header: {},
+//     success: function (res) {
+//         user = res;
+//     },
+//     error: function () {}
+// });
 
 //获取个人简介
-var userIntroduce = user.userSignature;
+// var userIntroduce = user.userSignature;
 //获取简介框
 var introduceNav = getDom(".intro_txt");
 
-introduceNav.innerText = userIntroduce;
+// introduceNav.innerText = userIntroduce;
 
 //获取昵称框
 var nameU = getDom(".userName");
@@ -35,39 +35,15 @@ var nameU = getDom(".userName");
 nameU.innerText = userName;
 
 //项目数组
-var projectArr = user.recentProject;
+// var projectArr = user.recentProject;
 
 //数组长度
-var projectLength = projectArr.length;
+// var projectLength = projectArr.length;
 
 //获取项目列表
 var projectLi = getDom(".projectLi");
 
-for (var i = 0; i < projectLength; i++) {
-    ajax({
-        type: 'post',
-        url: '/project',
-        data: {
-            public: public,
-            name: name,
-            deadline: createTime + time,
-            rank: rank,
-            createTime: createTime,
-            introduction: indu
-        },
-        header: {
-            'Content-Type': 'application/json'
-        }, // 请求头
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                // "test2.html?"+"txt="+encodeURI(s.value);
-            } else {
-                topAlert("项目创建失败");
-            }
-        }
-    });
-}
+// for (var i = 0; i < projectLength; i++) {}
 //添加项目
 function addLi(projectName, projectIntro, projectDate, projectNum) {
     //创建标签
@@ -98,3 +74,20 @@ function addLi(projectName, projectIntro, projectDate, projectNum) {
     newLi.appendChild(newI2);
     newLi.appendChild(newSpan3);
 }
+
+//高度自适应-----------
+//获取个人信息框架
+var personalBox = getDom(".personalBox");
+
+var personalHeight = personalBox.offsetHeight;
+
+//获取项目框架
+var bigBox = getDom(".bigBox");
+var boxTop = personalHeight + 60;
+bigBox.style.top = boxTop + "px";
+
+//获取项目高度
+var projectHeight = bigBox.offsetHeight;
+console.log(projectHeight);
+
+projectLi.style.maxHeight = projectHeight - 70+ "px";//70为外边距
