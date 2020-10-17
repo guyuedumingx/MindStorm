@@ -36,25 +36,18 @@ public class EmailUtil {
         }else if("chpwd".equals(sendFor)){
             return sendChPasswordEmail(to, code);
         }
-        return StatusCode.ERROR;
+        return StatusCode.LOST;
     }
 
     public static int sendEmail(String to,String head,String content) {
         Properties props = new Properties();
 
         //网易的smtp服务器地址
-        props.put("mail.smtp.host", "20.181.12.15");
+        props.put("mail.smtp.host", "smtp.163.com");
         props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
-
-        //SSLSocketFactory类的端口
-        props.put("mail.smtp.socketFactory.port", "465");
-        //SSLSocketFactory类
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        //网易提供的ssl加密端口,QQ邮箱也是该端口
-        props.put("mail.smtp.port", "465");
-
+        props.put("mail.smtp.port", "25");
 
 
         Session session = Session.getInstance(props);

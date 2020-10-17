@@ -170,10 +170,13 @@ function setEmailJudge(node) {
     if (judgeEmail(node)) {
         ajax({
             type: 'get',
-            url: '/util',
+            url: '/util/email',
             data: {
                 email: node.value,
             },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
             success: function (res) {
                 if (res == '200') {
                     node.judge = true;
@@ -207,10 +210,10 @@ function registerGetVC(node) {
         }, 1000);
         ajax({
             type: 'post',
-            url: '/util',
+            url: '/util/email',
             data: {
                 email: node.value,
-                sendFor: 'register',
+                sendFor: 'register'
             },
             success: function (res) {
                 if (res.status_code == '200') {
