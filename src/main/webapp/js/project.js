@@ -90,8 +90,16 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+var operationProject = getDomA('.mainBoxLeft .operationProject div');
 projectIdBox.innerText = projectId;
-
+function setOperationProject() {
+    for (var i = 0; i < operationProject.length; i++) {
+        operationProject[i].style.lineHeight = operationProject[i].offsetHeight + 'px';
+        operationProject[i].style.backgroundColor = randomColor(120, 180);
+    }
+}
+setOperationProject();
+window.addEventListener('resize', setOperationProject);
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
@@ -200,6 +208,7 @@ function removeHeightLight(node) {
 }
 
 function changeChild(node, fun) {
+    fun(node);
     var chArr = node.childArr;
     for (var i = 0; i < chArr.length; i++) {
         fun(chArr[i]);
@@ -383,28 +392,28 @@ function addTreeConstraint(root, n) {
                 my = e.clientY;
                 nowNode = this;
                 changeNodeEvent();
-                nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
                 var t = nowNode;
                 while (t.father) {
                     addHeightLight(t.father);
                     t = t.father;
                 }
                 changeChild(root, addHeightLight);
+                nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
             }
         } else {
             mx = e.clientX;
             my = e.clientY;
             nowNode = this;
             changeNodeEvent();
-            nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
             var t = nowNode;
             while (t.father) {
                 addHeightLight(t.father);
                 t = t.father;
             }
             changeChild(root, addHeightLight);
+            nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
         }
-        if (ctrlState) {
+        if (ctrlState && !lockingNode.state) {
             document.addEventListener('mousemove', move);
         }
     });
@@ -424,22 +433,6 @@ document.addEventListener('mouseup', function () {
     document.removeEventListener('mousemove', move);
 });
 
-setInterval(function () {
-    for (var i = 0; i < constraintArr.length; i++) {
-        var node1 = constraintArr[i][0];
-        var node2 = constraintArr[i][1];
-        var type = constraintArr[i][2];
-        var len = constraintArr[i][3];
-        runConstraint(node1, node2, type, len);
-    }
-}, 5);
-setInterval(function () {
-    for (var i = 0; i < setLineArr.length; i++) {
-        var node1 = setLineArr[i][0];
-        var node2 = setLineArr[i][1];
-        setline(node1, node2);
-    }
-}, 5);
 var nodeRequest = 1;
 
 function createTree(node) {
@@ -465,7 +458,7 @@ function createTree(node) {
                 node.content = res.content; // 主要内容
                 node.editable = res.editable; // 是否可被编辑
                 node.userName = res.userName; // 创建者
-                node.authorId = res.author// 创建者Id
+                node.authorId = res.author; // 创建者Id
                 node.lastEditName = res.lastEditName; // 最后修改者
                 node.lastEditTime = res.lastEditTime; // 最后修改时间
                 node.star = res.star; // 点赞数
@@ -490,7 +483,7 @@ function createTree(node) {
 
 var root = document.createElement('div');
 addClass(root, 'root');
-root.style.backgroundColor = randomColor(0, 100);
+root.style.backgroundColor = randomColor(120, 180);
 
 function createRoot(rootID) {
     root.id = rootID;
@@ -515,6 +508,24 @@ var nodeRequetTimer = setInterval(function () {
         clearInterval(nodeRequetTimer);
     }
 }, 5);
+
+function ergodicNode(node, fun) {
+    fun(node);
+    var arr = node.childArr;
+    for (var i = 0; i < arr.length; i++) {
+        ergodicNode(arr[i], fun);
+    }
+}
+
+function ergodicTree(fun) {
+    if (fun) {
+        fun(root);
+        var arr = root.childArr;
+        for (var i = 0; i < arr.length; i++) {
+            ergodicNode(arr[i], fun);
+        }
+    }
+}
 
 // 开发中
 function treeAppendNode(father, nodeData) {
@@ -556,6 +567,7 @@ function treeAppendNode(father, nodeData) {
         }
     }
 }
+
 // ——————————————————右侧—————————————————— 
 var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
@@ -580,6 +592,10 @@ var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
 var removeNodeNo = removeNodeBox.getDom('.no'); // 否
 var nowOperation = 'null'; // 盒子当前状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
+var hideLine = onOffArr[0]; // 隐藏节点间线条
+var lockingNode = onOffArr[1]; // 锁定所有节点
+var hideTheme = onOffArr[2]; // 隐藏无关节点主题
+var lockingNodeState = false;
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -593,6 +609,9 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
+for (var i = 0; i < btnArr.length; i++) {
+    btnArr[i].style.backgroundColor = randomColor(120, 180);
+}
 
 // 改变当前节点的函数
 function changeNodeEvent() {
@@ -602,17 +621,25 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
         nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
         nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
+        nowNodeBox.children[1].innerText = '';
         addNode.jurisdiction = true;
         removeNode.jurisdiction = true;
         changeNode.jurisdiction = true;
         queryNode.jurisdiction = true;
     } else {
+        nowNodeBox.children[0].innerText = '???';
+        nowNodeBox.children[1].style.backgroundColor = '#ccc';
+        nowNodeBox.children[1].style.width = '30px';
+        nowNodeBox.children[1].style.height = '30px';
+        nowNodeBox.children[1].style.borderRadius = '15px';
+        nowNodeBox.children[1].innerText = '?';
         addNode.jurisdiction = false;
         removeNode.jurisdiction = false;
         changeNode.jurisdiction = false;
         queryNode.jurisdiction = false;
     }
 }
+changeNodeEvent();
 
 // 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', function () {
@@ -820,17 +847,60 @@ function onOffChange(onOff) {
     }
 }
 
-function setOnOffEvent(onOff) {
+function setOnOffEvent(onOff, fun) {
     onOff.state = false;
-    onOff.addEventListener('click', function () {
-        onOffChange(this);
-    });
+    if (fun) {
+        onOff.addEventListener('click', function () {
+            onOffChange(this);
+            fun();
+        });
+    } else {
+        onOff.addEventListener('click', function () {
+            onOffChange(this);
+        });
+    }
 }
 
-for (var i = 0; i < onOffArr.length; i++) {
-    setOnOffEvent(onOffArr[i]);
-}
+setOnOffEvent(hideLine, function () {
+    if (hideLine.state) {
+        lineUpColor = '#e6eef1';
+        ergodicTree(function (node) {
+            node.lineColor = '#e6eef1';
+        });
+    } else {
+        lineUpColor = '#333';
+        ergodicTree(function (node) {
+            node.lineColor = '#333';
+        });
+    }
+});
+setOnOffEvent(lockingNode);
+setOnOffEvent(hideTheme, function () {
+
+});
 setOnOffEvent(operationNodeBoxJurisdiction);
+
+setInterval(function () {
+    if (!lockingNode.state) {
+        for (var i = 0; i < constraintArr.length; i++) {
+            var node1 = constraintArr[i][0];
+            var node2 = constraintArr[i][1];
+            var type = constraintArr[i][2];
+            var len = constraintArr[i][3];
+            runConstraint(node1, node2, type, len);
+        }
+    }
+}, 5);
+setInterval(function () {
+    if (!lockingNode.state) {
+        for (var i = 0; i < setLineArr.length; i++) {
+            var node1 = setLineArr[i][0];
+            var node2 = setLineArr[i][1];
+            setline(node1, node2);
+        }
+    }
+}, 5);
+
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
     ajax({
