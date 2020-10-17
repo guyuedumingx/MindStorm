@@ -90,8 +90,16 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+var operationProject = getDomA('.mainBoxLeft .operationProject div');
 projectIdBox.innerText = projectId;
-
+function setOperationProject() {
+    for (var i = 0; i < operationProject.length; i++) {
+        operationProject[i].style.lineHeight = operationProject[i].offsetHeight + 'px';
+        operationProject[i].style.backgroundColor = randomColor(120, 180);
+    }
+}
+setOperationProject();
+window.addEventListener('resize', setOperationProject);
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
@@ -593,7 +601,9 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
-
+for (var i = 0; i < btnArr.length; i++) {
+    btnArr[i].style.backgroundColor = randomColor(120, 180);
+}
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
