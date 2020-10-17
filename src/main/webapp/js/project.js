@@ -104,7 +104,7 @@ introduceOpen.addEventListener('click', function () {
         introduceState = true;
     }
 });
-window.addEventListener('resize', function (e) {
+window.addEventListener('resize', function () {
     if (introduceState) {
         introduce.style.transition = 'none';
         introduce.style.height = mainBoxLeft.offsetHeight - 70 + 'px';
