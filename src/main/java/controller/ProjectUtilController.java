@@ -30,11 +30,17 @@ public class ProjectUtilController extends BaseController {
         WebUtil.renderMap(resp,"status_code",statusCode+"");
     }
 
+    /**
+     * 获取最近参与的项目
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.valueOf(req.getParameter("id"));
         List<Project> recentProjectList = service.getRecentProjectList(id);
         WebUtil.renderJson(resp,recentProjectList);
     }
-
 }
