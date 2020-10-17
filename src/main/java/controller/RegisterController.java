@@ -30,6 +30,9 @@ public class RegisterController extends BaseController {
         UserService userService = new UserServiceImpl();
         User register = userService.register(usr);
         int i = StatusCode.nullObjcet(register);
+        if(!(StatusCode.OK+"").equals(i)){
+            WebUtil.renderMap(response,"status_code",i+"");
+        }
         request.getRequestDispatcher("/user/login?email="+usr.getEmail()+"&password="+usr.getPassword()).forward(request,response);
     }
 
