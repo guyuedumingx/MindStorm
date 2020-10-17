@@ -75,19 +75,25 @@ function addLi(projectName, projectIntro, projectDate, projectNum) {
     newLi.appendChild(newSpan3);
 }
 
-//高度自适应-----------
-//获取个人信息框架
-var personalBox = getDom(".personalBox");
+function heightAuto() {
+    //高度自适应-----------
+    //获取个人信息框架
+    var personalBox = getDom(".personalBox");
+    //获取项目框架
+    var bigBox = getDom(".bigBox");
+    //个人信息高度
+    var personalHeight = personalBox.offsetHeight;
 
-var personalHeight = personalBox.offsetHeight;
 
-//获取项目框架
-var bigBox = getDom(".bigBox");
-var boxTop = personalHeight + 60;
-bigBox.style.top = boxTop + "px";
+    //项目离顶部距离
+    var boxTop = personalHeight + 60;
+    bigBox.style.top = boxTop + "px";
 
-//获取项目高度
-var projectHeight = bigBox.offsetHeight;
-console.log(projectHeight);
+    //获取项目高度
+    var projectHeight = bigBox.offsetHeight;
+    //高度
+    projectLi.style.maxHeight = projectHeight - 70 + "px"; //70为外边距
+}
+heightAuto();
 
-projectLi.style.maxHeight = projectHeight - 70+ "px";//70为外边距
+window.addEventListener('resize', heightAuto);
