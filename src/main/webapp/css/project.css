@@ -501,7 +501,7 @@ body .header {
 }
 
 .mainBoxLeft .introduce p {
-    height: calc(100% - 126px);
+    height: calc(100% - 130px);
     padding: 5px 20px 0px;
     font-size: 14px;
     /* letter-spacing: 5px; */
