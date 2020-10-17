@@ -87,8 +87,10 @@ document.addEventListener('keyup', function (e) {
 var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
 var introduceOpen = mainBoxLeft.getDom('.introduce a'); // 项目简介展开的开关
 var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介内容盒子
+var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+projectIdBox.innerText = projectId;
 
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
