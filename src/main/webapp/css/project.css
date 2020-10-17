@@ -417,7 +417,7 @@ body .header {
 /*#region--------------------- mainBox --------------------- */
 .emptyLine {
     width: 100%;
-    height: 10%;
+    height: 8%;
 }
 
 .mainBox {
@@ -464,7 +464,7 @@ body .header {
 }
 
 .mainBoxLeft .introduce {
-    flex: 2;
+    flex: 4;
     position: relative;
     width: 100%;
     height: 180px;
@@ -480,23 +480,32 @@ body .header {
     z-index: 5;
     width: 100%;
     height: 100%;
+    padding-top: 5px;
     border-radius: 5px;
+    box-sizing: border-box;
     background-color: #f8fcfa;
     transition: height .5s;
 }
 
 .mainBoxLeft .introduce h4 {
     padding: 10px 20px 0px;
-    font-size: 20px;
+    font-size: 18px;
     color: #214b5b;
 }
 
+.mainBoxLeft .introduce span {
+    display: block;
+    padding: 5px 20px 0px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
 .mainBoxLeft .introduce p {
-    height: calc(100% - 65px);
+    height: calc(100% - 126px);
     padding: 5px 20px 0px;
     font-size: 14px;
-    letter-spacing: 2px;
-    line-height: 24px;
+    /* letter-spacing: 5px; */
+    line-height: 1.5em;
     overflow: hidden;
     color: #214b5b;
 }
@@ -610,6 +619,14 @@ body .header {
 
 .participant ul li:hover span {
     opacity: 1;
+}
+
+.mainBoxLeft .operationProject {
+    flex: 3;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #f8fcfa;
 }
 
 .mainBox .mainBoxMiddle {
