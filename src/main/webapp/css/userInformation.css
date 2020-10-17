@@ -1,8 +1,9 @@
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
-body{
+body {
     cursor: default;
 }
+
 body .header {
     position: fixed;
     top: 0;
@@ -108,7 +109,7 @@ body .personalBox {
     position: absolute;
     width: 70px;
     height: 70px;
-    bottom: -3px;
+    bottom: 0px;
     left: 380px;
     background: url(../img/tree.png) no-repeat center;
     background-size: contain;
@@ -116,25 +117,26 @@ body .personalBox {
 
 /*#endregion*/
 /* #region---------参加过的项目 ---------------*/
-.bigBox .changeBox {
-    position: relative;
-    border: solid #EEF7F2;
-    margin: 0 auto;
-    width: 770px;
-    height: 460px;
+.bigBox{
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
-
+/* .bigBox .projectBox{
+    border: solid #EEF7F2;
+} */
 /* .bigBox .projects:hover .history {
     animation: show 1s;
     animation-fill-mode: forwards;
 } */
 /* 历史记录标题 */
-.bigBox .history{
+.bigBox .history {
     position: absolute;
-    left: -50px;
-    top: 37%;
+    left: -120px;
+    top: 0;
     padding: 10px;
-    width: 30px;
     text-align: center;
     border-radius: 5px;
     background-color: #f8fcfa;
@@ -150,31 +152,34 @@ body .personalBox {
     background-image: url(../img/logo.png);
     background-size: contain;
     background-repeat: no-repeat;
-    background-position:center;
+    background-position: center;
     opacity: 0.05;
     pointer-events: none;
 }
-.bigBox .projectLi{
-    margin: 20px auto 0 auto;
-    max-height: 428px;
+
+.bigBox .projectLi {
+    margin: 20px auto 50px auto;
     overflow: auto;
 }
-.bigBox .projectLi::-webkit-scrollbar{
+
+.bigBox .projectLi::-webkit-scrollbar {
     width: 5px;
 }
-.bigBox .projectLi::-webkit-scrollbar-thumb{
+
+.bigBox .projectLi::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background   : #214B5B;
+    background: #214B5B;
 }
-.bigBox .projectLi::-webkit-scrollbar-track{   
+
+.bigBox .projectLi::-webkit-scrollbar-track {
     border-radius: 10px;
-    background   : #EEF7F2;
+    background: #EEF7F2;
 }
 
 /* 项目列表 */
 .bigBox .projectLi li {
     padding: 5px 15px;
-    margin: 20px auto 20px auto;
+    margin: 20px 10px;
     width: 700px;
     height: 72px;
     background-color: #f8fcfa;
@@ -183,15 +188,19 @@ body .personalBox {
     /* border: solid #6AC1ED 1px; */
     border-radius: 5px;
 }
-.bigBox .projectLi li:hover{
+
+.bigBox .projectLi li:hover {
     box-shadow: 0 0 5px #214B5B;
 }
-.bigBox .projectLi li:first-child{
+
+.bigBox .projectLi li:first-child {
     margin-top: 0px;
 }
-.bigBox .projectLi li:last-child{
+
+.bigBox .projectLi li:last-child {
     margin-bottom: 0px;
 }
+
 /* 标题 */
 .bigBox .projectLi li .txt_name {
     display: block;
