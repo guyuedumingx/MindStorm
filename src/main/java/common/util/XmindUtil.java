@@ -7,8 +7,8 @@ import service.NodeService;
 import service.ProjectService;
 import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
-import javax.servlet.http.HttpServletRequest;
-import java.io.OutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -46,10 +46,11 @@ public class XmindUtil {
         return projectId;
     }
 
-    public static int getWorkBook(HttpServletRequest req) {
-        userId = Integer.valueOf(req.getParameter("user_id"));
+    public static int getWorkBook(InputStream in) {
+        //userId = Integer.valueOf(req.getParameter("user_id"));
+        userId = 1;
         try {
-            workbook = builder.loadFromStream(req.getInputStream());
+            workbook = builder.loadFromStream(in);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,7 +106,7 @@ public class XmindUtil {
         project.setRank(1);
         project.setIntroduction(sheet.getRootTopic().getNotes().toString());
         project.setDeadline(System.currentTimeMillis()+"");
-        return projectService.newProject(project,false);
+        return projectService.newProject(project,false,userId);
     }
 
     private static void createXmind(int projectId) {
@@ -119,10 +120,12 @@ public class XmindUtil {
         writeITopics(rootTopic, rootNode);
     }
 
-    public static void write(int projectId, OutputStream out){
+    public static void write(int projectId, HttpServletResponse resp){
         createXmind(projectId);
+        resp.setContentType("multipart/form-data");
+        resp.setHeader("Content-Disposition", "attachment;filename=" + project.getName() + ".xmind");
         try {
-            workbook.save(out);
+            workbook.save(resp.getOutputStream());
         }catch (Exception e){
             e.printStackTrace();
         }

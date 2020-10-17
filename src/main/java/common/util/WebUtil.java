@@ -3,7 +3,6 @@ package common.util;
 import com.alibaba.fastjson.JSON;
 import common.dto.Result;
 import common.dto.StatusCode;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;

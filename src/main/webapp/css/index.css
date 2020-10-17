@@ -573,7 +573,7 @@ body .footer {
     position: absolute;
     top: 10px;
     left: 160px;
-    text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
     font-weight: 700;
     font-size: 56px;
     color: #214B5B;
@@ -581,43 +581,7 @@ body .footer {
 }
 
 
-body {
+/* body {
     background-image: url(../img/background.jpg);
     background-repeat: no-repeat;
-}
-
-/* .mainTitle:hover{
-    -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
-    -moz-animation: neon1 1.5s ease-in-out infinite alternate;
-    animation: neon1 1.5s ease-in-out infinite alternate; 
-  } */
-/* @keyframes neon1 {
-    from {
-      text-shadow: 0 0 10px #fff,
-                 0 0 20px  #fff,
-                 0 0 30px  #fff,
-                 0 0 40px  #214B5B,
-                 0 0 70px #214B5B,
-                 0 0 80px  #214B5B,
-                 0 0 100px #214B5B,
-                 0 0 150px #214B5B;
-    }
-    to {
-      text-shadow: 0 0 5px #fff,
-                 0 0 10px #fff,
-                 0 0 15px #fff,
-                 0 0 20px #214B5B,
-                 0 0 35px #214B5B,
-                 0 0 40px #214B5B,
-                 0 0 50px #214B5B,
-                 0 0 75px #214B5B;
-    }
-  }
-   */
-
-
-
-/* @keyframes upDowm{
-    from{transform:translate(0,0)}
-    to{transform:translate(0,5px)}
-    } */
+} */

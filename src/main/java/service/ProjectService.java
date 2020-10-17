@@ -3,6 +3,8 @@ package service;
 import pojo.Node;
 import pojo.Project;
 
+import java.util.List;
+
 /**
  * project service
  * @author  yohoyes
@@ -14,7 +16,7 @@ import pojo.Project;
      * @param project
      * @return
      */
-     int newProject(Project project);
+     int newProject(Project project, int id);
 
     /**
      * 新建项目
@@ -22,7 +24,7 @@ import pojo.Project;
      * @param hasRootNode 是否生成根节点
      * @return
      */
-     int newProject(Project project, boolean hasRootNode);
+     int newProject(Project project, boolean hasRootNode, int id);
 
     /**
      * 删除项目
@@ -51,4 +53,6 @@ import pojo.Project;
      * 项目是否存在
      */
     int existProject(int projectId);
+
+    List<Project> getRecentProjectList(int userId);
 }
