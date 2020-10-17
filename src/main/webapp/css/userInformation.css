@@ -123,14 +123,9 @@ body .personalBox {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+   
 }
-/* .bigBox .projectBox{
-    border: solid #EEF7F2;
-} */
-/* .bigBox .projects:hover .history {
-    animation: show 1s;
-    animation-fill-mode: forwards;
-} */
+
 /* 历史记录标题 */
 .bigBox .history {
     position: absolute;
@@ -138,6 +133,7 @@ body .personalBox {
     top: 0;
     padding: 10px;
     text-align: center;
+    border-top: none;
     border-radius: 5px;
     background-color: #f8fcfa;
     color: #214B5B;
@@ -158,8 +154,9 @@ body .personalBox {
 }
 
 .bigBox .projectLi {
-    margin: 20px auto 50px auto;
+    margin: 20px 10px 50px auto;
     overflow: auto;
+    /* border: solid #EEF7F2; */
 }
 
 .bigBox .projectLi::-webkit-scrollbar {
