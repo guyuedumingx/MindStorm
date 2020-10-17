@@ -310,7 +310,7 @@ registerSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    topAlert('注册成功');
+                    window.location = 'index.html';
                 } else {
                     topAlert('注册失败');
                 }
