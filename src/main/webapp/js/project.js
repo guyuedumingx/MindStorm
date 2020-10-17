@@ -84,8 +84,9 @@ document.addEventListener('keyup', function (e) {
 // }
 
 // ——————————————————左侧——————————————————
-var introduceOpen = getDom('.mainBoxLeft .introduce a'); // 项目简介展开的开关
-var introduce = getDom('.mainBoxLeft .introduce .introduceMain'); // 项目简介内容盒子
+var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
+var introduceOpen = mainBoxLeft.getDom('.introduce a'); // 项目简介展开的开关
+var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介内容盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
 
@@ -93,17 +94,23 @@ var introduceState = false; // 项目简介展开状态
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
         this.innerText = '展开';
-        introduce.style.height = '180px';
-        introduceP.style.webkitLineClamp = '5';
+        introduce.style.height = '100%';
         introduceState = false;
     } else {
         this.innerText = '收起';
-        introduce.style.height = '530px';
-        introduceP.style.webkitLineClamp = '20';
+        introduce.style.height = mainBoxLeft.offsetHeight - 70 + 'px';
         introduceState = true;
     }
 });
-
+window.addEventListener('resize', function (e) {
+    if (introduceState) {
+        introduce.style.transition = 'none';
+        introduce.style.height = mainBoxLeft.offsetHeight - 70 + 'px';
+        setTimeout(function () {
+            introduce.style.transition = 'height .5s';
+        }, 1);
+    }
+});
 // ——————————————————中间——————————————————
 var projectName = getDom('.progressBar .projectName'); // 项目名
 var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创建日期
