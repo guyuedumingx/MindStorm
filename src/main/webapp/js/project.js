@@ -130,24 +130,26 @@ var progressContent = getDom('.progressBox .progressContent'); // 进图条盒�
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+
+// 点击空白处事件
 treeBoxMain.addEventListener('mousedown', function (e) {
     if (nowNode) {
-        if (!isParent(e.target, nowNode)) {
-            nowNode.style.boxShadow = 'none';
-            var t = nowNode;
-            while (t.father) {
-                removeHeightLight(t.father);
-                t = t.father;
-            }
-            changeChild(nowNode, removeHeightLight);
-            nowNode = null;
-            changeNodeEvent();
+        nowNode.style.boxShadow = 'none';
+        var t = nowNode;
+        while (t.father) {
+            removeHeightLight(t.father);
+            t = t.father;
         }
+        changeChild(nowNode, removeHeightLight);
+        nowNode = null;
+        changeNodeEvent();
     }
 });
 
-var treeFullScreenState = false;
+var treeFullScreenState = false; // 全屏状态
 var treeFullScreenOnOff = getDom('.mainBoxMiddle .treeBox .treeBoxFullScreen'); // 树盒子全屏按钮
+
+// 全屏按钮点击事件
 treeFullScreenOnOff.addEventListener('click', function () {
     if (treeFullScreenState) {
         cancelFullscreen();
@@ -159,6 +161,7 @@ treeFullScreenOnOff.addEventListener('click', function () {
         treeFullScreenState = true;
     }
 });
+
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
@@ -177,29 +180,34 @@ var setLineArr = new Array(); // 记录要添加线条的数组
 var mx, my; // 鼠标上次的位置
 var topBoundary = 0; // 边界约束中的边界
 var leftBoundary = 0;
-var bottomBoundary = 700;
-var rightBoundary = 1500;
-var boundaryMinLength = 100; //边界约束中和边界的最小距离
+var bottomBoundary = treeBoxMain.offsetHeight;
+var rightBoundary = treeBoxMain.offsetWidth;
+var boundaryMinLength = bottomBoundary * 0.18; //边界约束中和边界的最小距离
 var treeBoxMainWidth = treeBoxMain.offsetWidth;
 // var treeBoxMainHeight = treeBoxMain.offsetHeight;
+
 // 鼠标拖动的函数
 function move(e) {
     var cx = e.clientX;
     var cy = e.clientY;
-    // if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
-    nowNode.x = nowNode.x + cx - mx;
-    mx = cx;
-    // }
-    // if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
-    nowNode.y = nowNode.y + cy - my;
-    my = cy;
-    // }
+    if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
+        nowNode.x = nowNode.x + cx - mx;
+        mx = cx;
+    }
+    if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
+        nowNode.y = nowNode.y + cy - my;
+        my = cy;
+    }
 }
-window.addEventListener('resize', function () {
+
+function maintainTreeBox() {
     var bl = treeBoxMainWidth / treeBoxMain.offsetWidth;
     treeBoxMainWidth = treeBoxMain.offsetWidth;
     mx /= bl;
     my /= bl;
+    bottomBoundary = treeBoxMain.offsetHeight;
+    rightBoundary = treeBoxMainWidth;
+    boundaryMinLength = bottomBoundary * 0.18;
     ergodicTree(function (node) {
         node.x /= bl;
         node.y /= bl;
@@ -210,7 +218,10 @@ window.addEventListener('resize', function () {
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-});
+}
+
+// 缩放时维护坐标
+window.addEventListener('resize', maintainTreeBox);
 
 // 给节点添加高亮
 function addHeightLight(node) {
@@ -377,7 +388,7 @@ function runConstraint(node1, node2, type, len) {
                 setPosition(node2);
             }
         }
-    } else if (type == 4) { // 边界约束
+    } else if (type == 3) { // 边界约束
         var x2 = node1.x;
         var y2 = node1.y;
         if (x2 < leftBoundary + boundaryMinLength) {
@@ -408,26 +419,24 @@ function addTreeConstraint(root, n) {
     root.addEventListener('mousedown', function (e) {
         e.stopPropagation();
         if (nowNode) {
-            if (!isParent(e.target, nowNode)) {
-                nowNode.style.boxShadow = 'none';
-                var t = nowNode;
-                while (t.father) {
-                    removeHeightLight(t.father);
-                    t = t.father;
-                }
-                changeChild(nowNode, removeHeightLight);
-                mx = e.clientX;
-                my = e.clientY;
-                nowNode = this;
-                changeNodeEvent();
-                var t = nowNode;
-                while (t.father) {
-                    addHeightLight(t.father);
-                    t = t.father;
-                }
-                changeChild(root, addHeightLight);
-                nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
+            nowNode.style.boxShadow = 'none';
+            var t = nowNode;
+            while (t.father) {
+                removeHeightLight(t.father);
+                t = t.father;
             }
+            changeChild(nowNode, removeHeightLight);
+            mx = e.clientX;
+            my = e.clientY;
+            nowNode = this;
+            changeNodeEvent();
+            var t = nowNode;
+            while (t.father) {
+                addHeightLight(t.father);
+                t = t.father;
+            }
+            changeChild(root, addHeightLight);
+            nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
         } else {
             mx = e.clientX;
             my = e.clientY;
@@ -531,8 +540,8 @@ var nodeRequetTimer = setInterval(function () {
         addTreeConstraint(root, 0);
         for (var i = 0; i < nodeSet.length; i++) {
             nodeSet[i].style.display = 'block';
-            nodeSet[i].style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
-            nodeSet[i].style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
+            nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
+            nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
             nodeSet[i].x = nodeSet[i].offsetLeft;
             nodeSet[i].y = nodeSet[i].offsetTop;
             addConstraint(nodeSet[i], null, 3, null);
@@ -796,6 +805,10 @@ queryNode.addEventListener('click', function () {
     }
 });
 
+refreshTree.addEventListener('click', function () {
+    location.reload();
+});
+
 // 操作节点框中提交按钮点击事件
 operationNodeBoxSubmit.addEventListener('click', function () {
     if (nowOperation == 'add') {
@@ -965,6 +978,8 @@ setInterval(function () {
 
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
+
+    // 请求项目页面
     ajax({
         type: 'get',
         url: '/project',
