@@ -21,6 +21,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         Object user = request.getSession().getAttribute("user");
         String uri = request.getRequestURI();
+        System.out.println(uri);
         if("/".equals(uri)||uri.contains("/index.html")||uri.contains("/user/register")||uri.contains("/login.html")||uri.contains("/user/login")||
         uri.contains("/css/")||uri.contains("/img/")||uri.contains("/js/")||uri.contains("/util")){
             filterChain.doFilter(servletRequest,servletResponse);

@@ -18,8 +18,7 @@ public class RecentEditDaoImpl extends BaseDaoImpl<RecentEdit> implements BaseDa
 
     @Override
     public String getQueryCondition(RecentEdit po) {
-        String base = "user_id = {0} ";
-        return MessageFormat.format(base,po.getUserId());
+        return  "user_id = " + po.getUserId();
     }
 
     @Override

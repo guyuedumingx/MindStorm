@@ -20,8 +20,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     public String getQueryCondition(User po) {
         String format = null;
         if(po.getId()!=0) {
-            String base = "id = {0}";
-            format = MessageFormat.format(base, po.getId());
+            format = "id = " + po.getId();
         }else if(!"".equals(po.getEmail())&&!"".equals(po.getPassword())){
             String base = "user_email = {0} and password = {1}";
             format = MessageFormat.format(base,po.getEmail(),po.getPassword());

@@ -18,8 +18,7 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
 
     @Override
     public String getQueryCondition(Project po) {
-        String base = "id = {0}";
-        String format = MessageFormat.format(base,po.getId());
-        return format;
+        String base = "id = " + po.getId();
+        return base;
     }
 }

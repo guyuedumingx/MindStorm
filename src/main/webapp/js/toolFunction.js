@@ -1181,7 +1181,7 @@ function inputTips(input, tipsText, className) {
  * @author 60rzvvbj
  */
 function isParent(node, parentNode) {
-    while (node != undefined && node != null && node.tagName.toUpperCase() != 'BODY') {
+    while (node != undefined && node != null && node.tagName.toUpperCase() != 'HTML') {
         if (node == parentNode) {
             return true;
         }

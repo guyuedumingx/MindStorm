@@ -39,9 +39,8 @@ public class ProjectController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Project project = WebUtil.getJson(request, Project.class);
-        int userId =Integer.valueOf(request.getParameter("id"));
         project.setAuthor(user.getId());
-        int id = service.newProject(project,userId);
+        int id = service.newProject(project,user.getId());
         Result result = new Result();
         result.setStatus_code(id!=0 ? StatusCode.OK : StatusCode.LOST);
         result.put("project_id",id);

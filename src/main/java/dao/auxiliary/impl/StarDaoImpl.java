@@ -18,14 +18,11 @@ public class StarDaoImpl extends BaseDaoImpl<Star> implements BaseDao<Star> {
     @Override
     public String getQueryCondition(Star po) {
        String base;
-       String format;
         if(po.getNodeId()!=0 && po.getUserId()==0) {
-            base = "node_id = {0}";
-            format = MessageFormat.format(base,po.getNodeId());
+            base = "node_id = " + po.getNodeId();
         }else {
-            base = "user_id = {0} and node_id = {1}";
-            format = MessageFormat.format(base, po.getUserId(),po.getNodeId());
+            base = "user_id = " + po.getUserId() + " and node_id = " + po.getNodeId();
         }
-        return format;
+        return base;
     }
 }
