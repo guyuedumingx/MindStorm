@@ -304,7 +304,7 @@ function UpladFile() {
     var fileObj = importNav.files[0];
     ajax({
         type: 'post',
-        url: '/until/xmind',
+        url: '/util/xmind',
         data: {
             fileObj
         },
