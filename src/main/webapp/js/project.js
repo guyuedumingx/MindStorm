@@ -173,9 +173,11 @@ treeBoxMain.addEventListener('mousedown', function (e) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
-        ergodicTree(function (node) {
-            node.addClass('hideTheme');
-        });
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+        }
         nowNode = null;
         changeNodeEvent();
     }
@@ -673,10 +675,10 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
-var removeNodeBox = getDom('.removeNodeBox'); // 删除节点的提示框盒子
-var removeNodeClose = removeNodeBox.getDom('.close'); // 提示盒子右上角的叉
-var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
-var removeNodeNo = removeNodeBox.getDom('.no'); // 否
+var tipsBox = getDom('.removeNodeBox'); // 删除节点的提示框盒子
+var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
+var tipsYes = tipsBox.getDom('.yes'); // 是
+var tipsNo = tipsBox.getDom('.no'); // 否
 var nowOperation = 'null'; // 盒子当前状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 var hideLine = onOffArr[0]; // 隐藏节点间线条
@@ -744,12 +746,12 @@ operationNodeBoxClose.addEventListener('click', function () {
 });
 
 // 删除节点框中关闭按钮点击事件
-removeNodeClose.addEventListener('click', function () {
-    removeNodeBox.hide();
+tipsClose.addEventListener('click', function () {
+    tipsBox.hide();
 });
 
 // 删除节点框中确定按钮点击事件
-removeNodeYes.addEventListener('click', function () {
+tipsYes.addEventListener('click', function () {
     ajax({
         type: 'delete',
         url: '/node',
@@ -767,7 +769,7 @@ removeNodeYes.addEventListener('click', function () {
 });
 
 // 删除节点框中取消按钮点击事件
-removeNodeNo.addEventListener('click', removeNodeClose.onclick);
+tipsNo.addEventListener('click', tipsClose.onclick);
 
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
@@ -796,7 +798,7 @@ addNode.addEventListener('click', function () {
 // 删除节点按钮的点击事件
 removeNode.addEventListener('click', function () {
     if (this.jurisdiction) {
-        removeNodeBox.show();
+        tipsBox.show();
     }
 });
 
