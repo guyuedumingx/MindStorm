@@ -26,7 +26,7 @@ public class XmindController extends BaseController {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer projectId = Integer.valueOf(req.getParameter("projectId"));
+        Integer projectId = Integer.valueOf(req.getParameter("project_id"));
         XmindUtil.write(projectId,resp);
     }
 
