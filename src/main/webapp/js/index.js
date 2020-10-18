@@ -225,7 +225,7 @@ var timeInput = getDom("#projectTime");
 //获取等级
 var rankInput = getDom("#projectRank");
 
-var timeArr = [86400000, 259200000, 604800000, 2592000000,7776000000,15552000000,31104000000];
+var timeArr = [86400000, 259200000, 604800000, 2592000000, 7776000000, 15552000000, 31104000000];
 
 estBut.addEventListener("click", function () {
     if (inputName.value == "") {
@@ -301,23 +301,40 @@ center.addEventListener("click", function () {
 var importNav = getDom(".import");
 
 function UpladFile() {
-    var fileObj = importNav.files[0];
-    ajax({
-        type: 'post',
-        url: '/until/xmind',
-        data: {
-            fileObj
-        },
-        header: {
-            'Content-Type': 'multipart/form-data'
-        }, // 请求头
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-            } else {
-                topAlert("导入失败");
-            }
+    var file = importNav.files[0];
+    // ajax({
+    //     type: 'post',
+    //     url: '/until/xmind',
+    //     data: {
+    //         fileObj
+    //     },
+    //     header: {
+    //         'Content-Type': 'multipart/form-data'
+    //     }, // 请求头
+    //     success: function (res) {
+    //         if (res.status_code == '200') {
+    //             window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+    //         } else {
+    //             topAlert("导入失败");
+    //         }
+    //     }
+    // });
+    //创建formdata对象
+    var formdata = new FormData();
+    formdata.append("file", file);
+    //创建xhr，使用ajax进行文件上传
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "/");
+    //回调
+    xhr.onreadystatechange = function () {
+        if (xhr.status == 200) {
+            window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+        } else {
+            topAlert("导入失败");
         }
-    });
+    }
 }
-importNav.addEventListener("change",UpladFile);
+importNav.addEventListener("change", function () {
+    var fileObj = importNav.files[0];
+    console.log(fileObj);
+});
