@@ -92,14 +92,15 @@ var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
 var operationProject = getDomA('.mainBoxLeft .operationProject div');
 projectIdBox.innerText = projectId;
-function setOperationProject() {
-    for (var i = 0; i < operationProject.length; i++) {
-        operationProject[i].style.lineHeight = operationProject[i].offsetHeight + 'px';
-        operationProject[i].style.backgroundColor = randomColor(120, 180);
-    }
-}
-setOperationProject();
-window.addEventListener('resize', setOperationProject);
+// function setOperationProject() {
+//     for (var i = 0; i < operationProject.length; i++) {
+//         operationProject[i].style.lineHeight = operationProject[i].offsetHeight + 'px';
+//         operationProject[i].style.backgroundColor = randomColor(120, 180);
+//     }
+// }
+// setOperationProject();
+// window.addEventListener('resize', setOperationProject);
+
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
@@ -829,7 +830,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         topAlert('淦');
     }
 });
-cycleSprite(btnArr, 0, 0, 27);
+cycleSprite(btnArr, 0, 0, 40);
 
 function onOffChange(onOff) {
     if (onOff.state) {
