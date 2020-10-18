@@ -33,6 +33,7 @@ body .header {
 
 /* 登录注册容器 */
 .header .logOn {
+    position: relative;
     float: right;
 }
 
@@ -41,7 +42,23 @@ body .header {
     font-weight: bold;
     font-size: 16px;
     line-height: 60px;
-    color: #214B5B;
+    color: #53656d;
 }
-
+.logOn:hover::after {
+    width: 100%;
+}
+.logOn::after {
+    content: '';
+    position: absolute;
+    border-radius: inherit;
+    width: 20%;
+    height: 3px;
+    background: #214B5B;
+    left: 0px;
+    bottom: 5px;
+    z-index: -1;
+    transition: all .25s ease;
+    left: 50%;
+    transform: translate(-50%);
+}
 /*#endregion*/

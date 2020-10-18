@@ -2,32 +2,32 @@ var tool = new Tool(document, window);
 tool.textProhibition();
 
 //获取用户id
-var userId = getCookie("user_id");
+// var userId = getCookie("user_id");
 
 //获取用户名
-var userName = getCookie("user_name");
+// var userName = getCookie("user_name");
 //储存user对象
 var user;
 //请求获得数组对象
-// ajax({
-//     type: 'get',
-//     url: '/user',
-//     data: {
-//         id: userId
-//     },
-//     header: {},
-//     success: function (res) {
-//         user = res;
-//     },
-//     error: function () {}
-// });
+ajax({
+    type: 'get',
+    url: '/user',
+    data: {
+        // id: userId
+    },
+    header: {},
+    success: function (res) {
+        user = res;
+    },
+    error: function () {}
+});
 
 //获取个人简介
-// var userIntroduce = user.userSignature;
+var userIntroduce = user.userSignature;
 //获取简介框
 var introduceNav = getDom(".intro_txt");
 
-// introduceNav.innerText = userIntroduce;
+introduceNav.innerText = userIntroduce;
 
 //获取昵称框
 var nameU = getDom(".userName");
@@ -35,17 +35,16 @@ var nameU = getDom(".userName");
 nameU.innerText = userName;
 
 //项目数组
-// var projectArr = user.recentProject;
+var projectArr = user.recentProject;
 
 //数组长度
-// var projectLength = projectArr.length;
+var projectLength = projectArr.length;
 
 //获取项目列表
 var projectLi = getDom(".projectLi");
 
-// for (var i = 0; i < projectLength; i++) {}
-//添加项目
-function addLi(projectName, projectIntro, projectDate, projectNum) {
+//添加项目-------------
+function addLi(projectName, projectIntro, projectDate) {
     //创建标签
     var newLi = document.createElement("li");
     var newSpan1 = document.createElement("span")
@@ -75,16 +74,22 @@ function addLi(projectName, projectIntro, projectDate, projectNum) {
     newLi.appendChild(newSpan3);
 }
 
-function heightAuto() {
+for (var i = 0; i < projectLength; i++) {
+    var projectName = projectArr[i].name;
+    var projectIntro = projectArr[i].introduction;
+    var projectDate = projectArr[i].createElement;
+    // var projectNum = projectArr[i].use;
+    addLi(projectName, projectIntro, projectDate)
+}
+
     //高度自适应-----------
+function heightAuto() {
     //获取个人信息框架
     var personalBox = getDom(".personalBox");
     //获取项目框架
     var bigBox = getDom(".bigBox");
     //个人信息高度
     var personalHeight = personalBox.offsetHeight;
-
-
     //项目离顶部距离
     var boxTop = personalHeight + 60;
     bigBox.style.top = boxTop + "px";
