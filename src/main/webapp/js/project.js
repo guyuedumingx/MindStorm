@@ -90,16 +90,37 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+var operationProjectTitle = getDom('.operationProject .operationProjectTitle');
 var operationProject = getDomA('.mainBoxLeft .operationProject div');
 projectIdBox.innerText = projectId;
-// function setOperationProject() {
-//     for (var i = 0; i < operationProject.length; i++) {
-//         operationProject[i].style.lineHeight = operationProject[i].offsetHeight + 'px';
-//         operationProject[i].style.backgroundColor = randomColor(120, 180);
-//     }
-// }
-// setOperationProject();
-// window.addEventListener('resize', setOperationProject);
+
+operationProjectTitle.style.backgroundColor = randomColor(120, 180);
+function setOperationProject() {
+    for (var i = 0; i < operationProject.length; i++) {
+        operationProject[i].style.backgroundColor = randomColor(120, 180);
+    }
+}
+setOperationProject();
+
+operationProjectTitle.addEventListener('click', function () {
+    this.hide();
+    for (var i = 0; i < operationProject.length; i++) {
+        operationProject[i].show();
+    }
+});
+document.addEventListener('click', function (e) {
+    if (!isParent(e.target, operationProjectTitle.parentNode)) {
+        operationProjectTitle.show();
+        for (var i = 0; i < operationProject.length; i++) {
+            operationProject[i].hide();
+        }
+    }
+});
+
+// 导出按钮点击事件
+operationProject[0].addEventListener('click', function () {
+    window.location = '/';
+});
 
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
