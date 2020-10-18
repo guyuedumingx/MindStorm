@@ -141,14 +141,15 @@ body .personalBox {
 }
 
 /* 背景 */
-.bigBox .changeBox .backLogo {
-    position: absolute;
+.backLogo {
+    position: relative;
     width: 770px;
-    height: 460px;
+    height:460px;
+    margin: 50px auto;
     background-image: url(../img/logo.png);
-    background-size: contain;
+    background-size: 50%;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center -10px;
     opacity: 0.05;
     pointer-events: none;
 }

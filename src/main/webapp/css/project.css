@@ -288,7 +288,7 @@ h5 .onOff .onOffBorder .onOffRod {
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
 body .header {
-    position: fixed;
+    position: absolute;
     top: 0;
     padding: 0 60px;
     box-sizing: border-box;
@@ -620,48 +620,6 @@ body .header {
     opacity: 1;
 }
 
-/* .mainBoxLeft .operationProject {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
-    align-items: stretch;
-    flex: 3;
-    width: 100%;
-    padding: 20px 50px;
-    border-radius: 5px;
-    margin-top: 10px;
-    box-sizing: border-box;
-    background-color: #f8fcfa;
-}
-
-.mainBoxLeft .operationProject div {
-    position: relative;
-    width: 100%;
-    height: 15%;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 700;
-    text-align: center;
-    color: #f8fcfa;
-    background-color: rgb(107, 107, 181);
-    cursor: pointer;
-}
-
-.mainBoxLeft .operationProject div::before {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    transition: background-color .3s;
-    content: '';
-}
-
-.mainBoxLeft .operationProject div:hover::before {
-    background-color: rgba(255, 255, 255, 0);
-} */
-
 .mainBoxLeft .displayControl {
     display: flex;
     flex-flow: column nowrap;
@@ -676,7 +634,7 @@ body .header {
 }
 
 .onOffBox {
-    flex: 3;
+    flex: 5;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
@@ -734,20 +692,112 @@ body .header {
 }
 
 .displayControl .operationProject {
-    flex: 1;
+    flex: 2;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
-    align-items: center;
-    background-color: #f00;
-    opacity: 0;
+    align-items: flex-end;
+    padding: 0px 24px 12px;
+}
+
+.displayControl .operationProject .operationProjectTitle {
+    position: relative;
+    width: 80px;
+    height: 26px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+    color: #fff;
+    background-color: skyblue;
+    cursor: pointer;
+}
+
+.displayControl .operationProject .operationProjectTitle::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    content: '';
+}
+
+.displayControl .operationProject .operationProjectTitle:hover::before {
+    background-color: rgba(255, 255, 255, 0);
 }
 
 .displayControl .operationProject div {
+    display: none;
+    position: relative;
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    background-color: #0f0;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.displayControl .operationProject div::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    content: '';
+}
+
+.displayControl .operationProject div:hover::before {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.displayControl .operationProject div span {
+    display: none;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    width: 64px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: -32px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #214b5b;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    animation-name: btnTipsDisplay;
+    animation-duration: .2s;
+}
+
+.displayControl .operationProject div:hover span {
+    display: block;
+}
+
+.displayControl .operationProject div span::before {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-top-color: #ccc;
+    transform: translate(-50%, 50%);
+    content: '';
+}
+
+.displayControl .operationProject div span::after {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-top-color: #fff;
+    transform: translate(-50%, 50%);
+    content: '';
 }
 
 .mainBox .mainBoxMiddle {
@@ -883,7 +933,6 @@ body .header {
     flex: 1;
     position: relative;
     height: 530px;
-    /* border: 1px solid #214B5B; */
     border: 20px solid #f8fcfa;
     border-radius: 5px;
     margin-top: 10px;
@@ -901,8 +950,6 @@ body .header {
     min-width: 1260px;
     min-height: 700px;
     border-radius: 5px;
-    /* background-color: #f8fcfa; */
-    /* background-color: #eef7f2; */
     background-color: rgb(230, 238, 241);
     transform: translate(-50%, -50%);
 }

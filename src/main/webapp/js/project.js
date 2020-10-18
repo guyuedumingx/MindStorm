@@ -34,13 +34,23 @@ if (loginPd == null) {
     nameU.innerText = userName;
 }
 // end header
+
+// 设置文本不可选中
 var tool = new Tool(document, window);
 tool.textProhibition();
+
+// 创建user对象
 var user = {};
+
+// 从cookie中获取值
 user.userId = getCookie('user_id');
 user.userName = getCookie('user_name');
+
+// 从url中获取项目id
 var projectId = getLocation('project_id');
 var ctrlState = false;
+
+// 键盘按下事件
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
         if (!ctrlState) {
@@ -52,6 +62,11 @@ document.addEventListener('keydown', function (e) {
                     t = t.father;
                 }
                 changeChild(nowNode, removeHeightLight);
+                if (hideTheme.state) {
+                    ergodicTree(function (node) {
+                        node.addClass('hideTheme');
+                    });
+                }
             }
             nowNode = null;
             changeNodeEvent();
@@ -66,22 +81,6 @@ document.addEventListener('keyup', function (e) {
         ctrlState = false;
     }
 });
-// ——————————————————头部——————————————————
-// projectName.style.top = window.pageYOffset - 48 + 'px';
-// window.addEventListener('scroll', function () {
-//     projectName.style.top = window.pageYOffset - 48 + 'px';
-//     // console.log(window.pageYOffset);
-// });
-// window.scroll(0, 1);
-// window.scroll(0, 0);
-
-// var mainBoxBGC = 'rgb(230, 238, 241)';
-// var mainBox = getDom('.mainBox');
-// for (var i = 0; i < mainBox.children.length; i++) {
-//     for (var j = 0; j < mainBox.children[i].children.length; j++) {
-//         mainBox.children[i].children[j].style.backgroundColor = mainBoxBGC;
-//     }
-// }
 
 // ——————————————————左侧——————————————————
 var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
@@ -90,16 +89,46 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
-var operationProject = getDomA('.mainBoxLeft .operationProject div');
+var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
+var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
 projectIdBox.innerText = projectId;
-// function setOperationProject() {
-//     for (var i = 0; i < operationProject.length; i++) {
-//         operationProject[i].style.lineHeight = operationProject[i].offsetHeight + 'px';
-//         operationProject[i].style.backgroundColor = randomColor(120, 180);
-//     }
-// }
-// setOperationProject();
-// window.addEventListener('resize', setOperationProject);
+
+// 随机颜色
+operationProjectTitle.style.backgroundColor = randomColor(120, 180);
+function setOperationProject() {
+    for (var i = 0; i < operationProject.length; i++) {
+        operationProject[i].style.backgroundColor = randomColor(120, 180);
+    }
+}
+setOperationProject();
+
+// 项目处理开关相关点击事件
+operationProjectTitle.addEventListener('click', function () {
+    this.hide();
+    for (var i = 0; i < operationProject.length; i++) {
+        operationProject[i].show();
+    }
+});
+
+document.addEventListener('click', function (e) {
+    if (!isParent(e.target, operationProjectTitle.parentNode)) {
+        operationProjectTitle.show();
+        for (var i = 0; i < operationProject.length; i++) {
+            operationProject[i].hide();
+        }
+    }
+});
+
+// 导出按钮点击事件
+operationProject[0].addEventListener('click', function () {
+    ajax({
+        type: 'get',
+        url: 'util/xmind',
+        data: {
+            project_id: projectId
+        }
+    });
+});
 
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
@@ -113,6 +142,8 @@ introduceOpen.addEventListener('click', function () {
         introduceState = true;
     }
 });
+
+// 页面缩放时动态维护展开后的高度
 window.addEventListener('resize', function () {
     if (introduceState) {
         introduce.style.transition = 'none';
@@ -122,6 +153,7 @@ window.addEventListener('resize', function () {
         }, 1);
     }
 });
+
 // ——————————————————中间——————————————————
 var projectName = getDom('.progressBar .projectName'); // 项目名
 var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创建日期
@@ -141,6 +173,9 @@ treeBoxMain.addEventListener('mousedown', function (e) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
+        ergodicTree(function (node) {
+            node.addClass('hideTheme');
+        });
         nowNode = null;
         changeNodeEvent();
     }
@@ -426,32 +461,36 @@ function addTreeConstraint(root, n) {
                 t = t.father;
             }
             changeChild(nowNode, removeHeightLight);
-            mx = e.clientX;
-            my = e.clientY;
-            nowNode = this;
-            changeNodeEvent();
-            var t = nowNode;
-            while (t.father) {
-                addHeightLight(t.father);
-                t = t.father;
-            }
-            changeChild(root, addHeightLight);
-            nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
-        } else {
-            mx = e.clientX;
-            my = e.clientY;
-            nowNode = this;
-            changeNodeEvent();
-            var t = nowNode;
-            while (t.father) {
-                addHeightLight(t.father);
-                t = t.father;
-            }
-            changeChild(root, addHeightLight);
-            nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
         }
+        mx = e.clientX;
+        my = e.clientY;
+        nowNode = this;
+        changeNodeEvent();
+        var t = nowNode;
+        while (t.father) {
+            addHeightLight(t.father);
+            t = t.father;
+        }
+        changeChild(root, addHeightLight);
+        nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
         if (ctrlState && !lockingNode.state) {
             document.addEventListener('mousemove', move);
+        }
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+            if (nowNode) {
+                var t = nowNode;
+                t.removeClass('hideTheme');
+                while (t.father) {
+                    t = t.father;
+                    t.removeClass('hideTheme');
+                }
+                changeChild(nowNode, function (node) {
+                    node.removeClass('hideTheme');
+                });
+            }
         }
     });
     nodeSet.push(root);
@@ -805,6 +844,7 @@ queryNode.addEventListener('click', function () {
     }
 });
 
+// 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
     location.reload();
 });
@@ -946,7 +986,26 @@ setOnOffEvent(lockingNode);
 
 // 隐藏无关节点主题
 setOnOffEvent(hideTheme, function () {
-
+    if (hideTheme.state) {
+        ergodicTree(function (node) {
+            node.addClass('hideTheme');
+        });
+        if (nowNode) {
+            var t = nowNode;
+            t.removeClass('hideTheme');
+            while (t.father) {
+                t = t.father;
+                t.removeClass('hideTheme');
+            }
+            changeChild(nowNode, function (node) {
+                node.removeClass('hideTheme');
+            });
+        }
+    } else {
+        ergodicTree(function (node) {
+            node.removeClass('hideTheme');
+        });
+    }
 });
 
 // 设置节点是否可被其他人修改
@@ -967,13 +1026,11 @@ setInterval(function () {
 
 // 维护节点间线条的定时器
 setInterval(function () {
-    // if (!lockingNode.state) {
     for (var i = 0; i < setLineArr.length; i++) {
         var node1 = setLineArr[i][0];
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-    // }
 }, 5);
 
 // ——————————页面加载完之后发送请求——————————

@@ -37,6 +37,20 @@ if (loginPd == null) {
     nameU.innerText = userName;
 }
 
+//退出登录
+//获取退出按钮
+var logOut = getDom(".logOut");
+logOut.addEventListener("click", function () {
+    //删除id
+    removeCookie("user_id");
+    //删除昵称
+    removeCookie("user_name");
+    //跳转到登录页面
+    window.location.href = "/login.html";
+})
+
+
+
 
 
 //放大新建
@@ -333,6 +347,6 @@ function UpladFile() {
         } else {
             topAlert("导入失败");
         }
-    }
+    };
 }
 importNav.addEventListener("change", UpladFile);
