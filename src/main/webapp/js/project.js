@@ -121,7 +121,13 @@ document.addEventListener('click', function (e) {
 
 // 导出按钮点击事件
 operationProject[0].addEventListener('click', function () {
-    window.location = '/';
+    ajax({
+        type: 'get',
+        url: 'util/xmind',
+        data: {
+            project_id: projectId
+        }
+    });
 });
 
 // 项目简介展开按钮点击事件
