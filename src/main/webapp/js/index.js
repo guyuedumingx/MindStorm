@@ -249,10 +249,12 @@ estBut.addEventListener("click", function () {
         var createTime = Date.now();
         var name = inputName.value;
         var indu = introduceInput.value;
+        if (!indu)
+            indu = "暂无";
         var index = (timeInput.selectedIndex);
         var time = timeArr[index];
         var rank = rankInput.options[rankInput.selectedIndex].text;
-        if (onOffRod.innerText == '✔') {
+        if (onOffRod.state) {
             var public = true;
         } else {
             var public = false;
