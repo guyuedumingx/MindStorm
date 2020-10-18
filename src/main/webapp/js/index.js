@@ -315,34 +315,38 @@ center.addEventListener("click", function () {
 var importNav = getDom(".import");
 
 function UpladFile() {
-    var fileObj = importNav.files[0];
-    ajax({
-        type: 'post',
-        url: '/until/xmind',
-        data: {
-            fileObj
-        },
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-            } else {
-                topAlert("导入失败");
-            }
-        }
-    });
-    // //创建formdata对象
-    // var formdata = new FormData();
-    // formdata.append("file", file);
-    // //创建xhr，使用ajax进行文件上传
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("post", "/");
-    // //回调
-    // xhr.onreadystatechange = function () {
-    //     if (xhr.status == 200) {
-    //         window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-    //     } else {
-    //         topAlert("导入失败");
+    var file = importNav.files[0];
+    // ajax({
+    //     type: 'post',
+    //     url: '/until/xmind',
+    //     data: {
+    //         fileObj
+    //     },
+    //     header: {
+    //         'Content-Type': 'multipart/form-data'
+    //     }, // 请求头
+    //     success: function (res) {
+    //         if (res.status_code == '200') {
+    //             window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+    //         } else {
+    //             topAlert("导入失败");
+    //         }
     //     }
-    // }
+    // });
+    //创建formdata对象
+    var formdata = new FormData();
+    formdata.append("file", file);
+    //创建xhr，使用ajax进行文件上传
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "/util/xmind");
+    xhr.send(formdata);
+    //回调
+    xhr.onreadystatechange = function () {
+        if (xhr.status == 200) {
+            window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+        } else {
+            topAlert("导入失败");
+        }
+    };
 }
 importNav.addEventListener("change", UpladFile);

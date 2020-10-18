@@ -2,6 +2,8 @@ package pojo;
 
 import common.annontation.DbField;
 
+import java.util.List;
+
 /**
  * 用户类
  * @author yohoyes
@@ -11,7 +13,7 @@ public class User extends BaseModel {
     private int exp;
     @DbField("token")
     private String token;
-    private Integer[] recentProject;
+    private List<Project> recentProject;
     private Integer[] following;
     private Integer[] follower;
     @DbField("user_name")
@@ -59,11 +61,11 @@ public class User extends BaseModel {
         this.token = token;
     }
 
-    public Integer[] getRecentProject() {
+    public List<Project> getRecentProject() {
         return recentProject;
     }
 
-    public void setRecentProject(Integer[] recentProject) {
+    public void setRecentProject(List<Project> recentProject) {
         this.recentProject = recentProject;
     }
 
