@@ -781,6 +781,7 @@ tipsYes.addEventListener('click', function () {
             }
         });
     }
+    tipsCloseFunction();
 });
 
 // 删除节点框中取消按钮点击事件
@@ -993,11 +994,31 @@ setOnOffEvent(hideLine, function () {
         ergodicTree(function (node) {
             node.lineColor = '#e6eef1';
         });
+        if (nowNode) {
+            var t = nowNode;
+            while (t.father) {
+                t = t.father;
+                t.lineColor = 'rgb(106, 193, 237)';
+            }
+            changeChild(nowNode, function (node) {
+                node.lineColor = 'rgb(106, 193, 237)';
+            });
+        }
     } else {
         lineUpColor = '#333';
         ergodicTree(function (node) {
             node.lineColor = '#333';
         });
+        if (nowNode) {
+            var t = nowNode;
+            while (t.father) {
+                t = t.father;
+                t.lineColor = 'rgb(106, 193, 237)';
+            }
+            changeChild(nowNode, function (node) {
+                node.lineColor = 'rgb(106, 193, 237)';
+            });
+        }
     }
 });
 

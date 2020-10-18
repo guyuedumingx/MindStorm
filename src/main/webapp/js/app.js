@@ -18,13 +18,13 @@ user.push({
     id: 1,
     theme: '节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [2, 3, 4, 5, 6, 7, 8, 9],
+    children: [2, 3, 4, 5, 6, 7, 8],
     star: 22,
     editable: true,
     lastEditName: '张三',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '张三',
-    father: 0
+    father: 0,
 });
 user.push({
     author: 2,
@@ -44,7 +44,7 @@ user.push({
     id: 3,
     theme: '节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [10],
+    children: [9, 10],
     star: 3,
     editable: true,
     lastEditName: '马六',
@@ -128,7 +128,7 @@ user.push({
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8'),
     userName: '陈七',
-    father: 1,
+    father: 3,
 });
 user.push({
     author: 1,
