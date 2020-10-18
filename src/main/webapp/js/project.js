@@ -119,17 +119,6 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// 导出按钮点击事件
-operationProject[0].addEventListener('click', function () {
-    ajax({
-        type: 'get',
-        url: 'util/xmind',
-        data: {
-            project_id: projectId
-        }
-    });
-});
-
 // 项目简介展开按钮点击事件
 introduceOpen.addEventListener('click', function () {
     if (introduceState) {
@@ -675,11 +664,14 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
-var tipsBox = getDom('.removeNodeBox'); // 删除节点的提示框盒子
+var tipsBox = getDom('.tipsBox'); // 提示框盒子
+var tipsTitle = tipsBox.getDom('.boxTitle'); // 提示框标题
+var tipsContent = tipsBox.getDom('.content'); // 提示内容
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
 var nowOperation = 'null'; // 盒子当前状态
+var tipsState = 'null'; // 提示盒子状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 var hideLine = onOffArr[0]; // 隐藏节点间线条
 var lockingNode = onOffArr[1]; // 锁定所有节点
@@ -745,31 +737,54 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxSubmit.hide();
 });
 
-// 删除节点框中关闭按钮点击事件
-tipsClose.addEventListener('click', function () {
+function tipsCloseFunction() {
+    tipsState = 'null';
+    tipsTitle.innerText = '？';
+    tipsContent.innerText = '？？？';
     tipsBox.hide();
+}
+
+// 提示框中关闭按钮点击事件
+tipsClose.addEventListener('click', tipsCloseFunction);
+
+// 导出按钮点击事件
+operationProject[0].addEventListener('click', function () {
+    tipsState = 'exportProject';
+    tipsTitle.innerText = '导出项目';
+    tipsContent.innerText = '项目将会导出到本地，是否继续';
+    tipsBox.show();
 });
 
 // 删除节点框中确定按钮点击事件
 tipsYes.addEventListener('click', function () {
-    ajax({
-        type: 'delete',
-        url: '/node',
-        data: {
-            nodeId: nowNode.id
-        },
-        success: function (res) {
-            if (res.status_code == '200') {
-                location.reload();
-            } else {
-                topAlert('淦');
+    if (tipsState == 'deleteNode') {
+        ajax({
+            type: 'delete',
+            url: '/node',
+            data: {
+                nodeId: nowNode.id
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
-        }
-    });
+        });
+    } else if (tipsState == 'exportProject') {
+        ajax({
+            type: 'get',
+            url: '/util/xmind',
+            data: {
+                project_id: projectId
+            }
+        });
+    }
 });
 
 // 删除节点框中取消按钮点击事件
-tipsNo.addEventListener('click', tipsClose.onclick);
+tipsNo.addEventListener('click', tipsCloseFunction);
 
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
@@ -798,6 +813,9 @@ addNode.addEventListener('click', function () {
 // 删除节点按钮的点击事件
 removeNode.addEventListener('click', function () {
     if (this.jurisdiction) {
+        tipsState = 'deleteNode';
+        tipsTitle.innerText = '删除节点';
+        tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
     }
 });
