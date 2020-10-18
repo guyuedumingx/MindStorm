@@ -117,13 +117,13 @@ body .personalBox {
 
 /*#endregion*/
 /* #region---------参加过的项目 ---------------*/
-.bigBox{
+.bigBox {
     position: absolute;
     bottom: 0;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-   
+
 }
 
 /* 历史记录标题 */
@@ -243,10 +243,6 @@ body .personalBox {
     background-image: url(../img/date.png);
     margin-left: 0;
 }
-
-
-
-
 
 /*#endregion*/
 

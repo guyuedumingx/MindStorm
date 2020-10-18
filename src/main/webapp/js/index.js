@@ -16,6 +16,27 @@ var shotcutNav = getDom(".shortcut_nav");
 //快捷键显示
 clickOpenBlankClose(shortcut, shotcutNav);
 
+//获取用户id
+var loginPd = getCookie("user_id");
+//个人容器
+var personal = getDom(".personal");
+//获取登录注册容器
+var logOn = getDom(".logOn");
+//获取昵称框
+var nameU = getDom(".user_name");
+//获取用户名
+var userName = getCookie("user_name");
+
+//判断是否登录------------
+if (loginPd == null) {
+    personal.style.display = "none";
+    logOn.style.display = "block";
+} else {
+    personal.style.display = "block";
+    logOn.style.display = "none";
+    nameU.innerText = userName;
+}
+
 
 
 //放大新建
@@ -54,27 +75,36 @@ changeJoin.addEventListener("mouseout", function () {
 
 // 点击新建放大
 changeEst.addEventListener("click", function () {
-    changeEst.style.animation = "toEstBig 0.3s ease-in-out 0s forwards  normal";
-    changeJoin.style.animation = "toSmall 0.3s ease-in-out 0s forwards normal";
-    estTips.style.animation = ""
-    joinTips.style.display = "none";
-    setTimeout(function () {
-        changeEst.style.display = "none";
-        join.style.display = "none";
-        estBig.style.display = "block";
-    }, 200);
+    if (!loginPd) {
+        window.location.href = "/login.html";
+    } else {
+        changeEst.style.animation = "toEstBig 0.3s ease-in-out 0s forwards  normal";
+        changeJoin.style.animation = "toSmall 0.3s ease-in-out 0s forwards normal";
+        estTips.style.animation = ""
+        joinTips.style.display = "none";
+        setTimeout(function () {
+            changeEst.style.display = "none";
+            join.style.display = "none";
+            estBig.style.display = "block";
+        }, 200);
+    }
 })
 // 点击加入放大
 changeJoin.addEventListener("click", function () {
-    changeEst.style.animation = "toSmall 0.3s ease-in-out 0s forwards  normal";
-    changeJoin.style.animation = "toJoinBig 0.3s ease-in-out 0s forwards normal";
-    joinTips.style.animation = ""
-    estTips.style.display = "none";
-    setTimeout(function () {
-        changeJoin.style.display = "none";
-        establish.style.display = "none";
-        joinBig.style.display = "block";
-    }, 200);
+    if (!loginPd) {
+        window.location.href = "/login.html";
+    } else {
+        changeEst.style.animation = "toSmall 0.3s ease-in-out 0s forwards  normal";
+        changeJoin.style.animation = "toJoinBig 0.3s ease-in-out 0s forwards normal";
+        joinTips.style.animation = ""
+        estTips.style.display = "none";
+        setTimeout(function () {
+            changeJoin.style.display = "none";
+            establish.style.display = "none";
+            joinBig.style.display = "block";
+        }, 200);
+    }
+
 })
 
 // 新建返回
@@ -267,23 +297,27 @@ center.addEventListener("click", function () {
     window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
 })
 
-//获取用户id
-var loginPd = getCookie("user_id");
-//个人容器
-var personal = getDom(".personal");
-//获取登录注册容器
-var logOn = getDom(".logOn");
-//获取昵称框
-var nameU = getDom(".user_name");
-//获取用户名
-var userName = getCookie("user_name");
+//导入
+var importNav = getDom(".import");
 
-//判断是否登录------------
-if (loginPd == null) {
-    personal.style.display = "none";
-    logOn.style.display = "block";
-} else {
-    personal.style.display = "block";
-    logOn.style.display = "none";
-    nameU.innerText = userName;
+function UpladFile() {
+    var fileObj = importNav.files[0];
+    ajax({
+        type: 'post',
+        url: '/until/xmind',
+        data: {
+            fileObj
+        },
+        header: {
+            'Content-Type': 'multipart/form-data'
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+            } else {
+                topAlert("导入失败");
+            }
+        }
+    });
 }
+importNav.addEventListener("change",UpladFile);
