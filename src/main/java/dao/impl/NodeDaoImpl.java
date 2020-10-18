@@ -22,15 +22,14 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
 
     @Override
     public String getQueryCondition(Node po) {
-        String base = "id = {0}";
-        String format = MessageFormat.format(base,po.getId());
-        return format;
+        String base = "id = " + po.getId();
+        return base;
     }
 
     @Override
     public int[] selectChildren(int id) {
-        String base = "select id from {0} where parent_id = {1}";
-        String sql = MessageFormat.format(base, getTableName(), id);
+        String base = "select id from {0} where parent_id = " + id;
+        String sql = MessageFormat.format(base, getTableName());
         QueryRunner queryRunner = new QueryRunner(JdbcUtil.getDataSource());
         List<Object[]> query = null;
         try {

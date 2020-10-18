@@ -17,8 +17,7 @@ public class ContributorDaoImpl extends BaseDaoImpl<Contributor> implements Base
 
     @Override
     public String getQueryCondition(Contributor po) {
-        String base = "project_id = {0}";
-        String format = MessageFormat.format(base, po.getProjectId());
-        return format;
+        String base = "project_id = " + po.getProjectId();
+        return base;
     }
 }

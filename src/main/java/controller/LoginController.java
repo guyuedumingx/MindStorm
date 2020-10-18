@@ -39,11 +39,9 @@ public class LoginController extends BaseController {
             Cookie userName = new Cookie("user_name", user.getName());
             Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
             Cookie userId = new Cookie("user_id", user.getId() + "");
-            Cookie userSignature = new Cookie("user_signature",user.getUserSignature());
             response.addCookie(userName);
             response.addCookie(userId);
             response.addCookie(userAvatar);
-            response.addCookie(userSignature);
         }
         WebUtil.renderMap(response,"status_code",isSuccess+"");
     }
