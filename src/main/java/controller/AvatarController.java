@@ -1,8 +1,5 @@
 package controller;
 
-import pojo.User;
-import service.UserService;
-import service.impl.UserServiceImpl;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;

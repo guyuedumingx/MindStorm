@@ -1,12 +1,17 @@
 package controller;
 
 import common.util.WebUtil;
+import pojo.Project;
 import pojo.User;
+import service.ProjectService;
+import service.impl.ProjectServiceImpl;
 import service.impl.UserServiceImpl;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 负责处理有关用户的请求
@@ -14,6 +19,14 @@ import java.io.IOException;
  */
 @WebServlet("/user")
 public class UserController extends BaseController{
+    User user = null;
+
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        //获取用户id
+        HttpSession session = req.getSession();
+        user = (User)session.getAttribute("user");
+    }
 
     /**
      * 设置用户信息
@@ -45,9 +58,9 @@ public class UserController extends BaseController{
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id =Integer.valueOf(request.getParameter("user_id"));
-        boolean isAuthor = Boolean.valueOf(request.getParameter("is_author"));
-        User user = new UserServiceImpl().getUser(id,isAuthor);
+        ProjectService service = new ProjectServiceImpl();
+        List<Project> recentProjectList = service.getRecentProjectList(user.getId());
+        user.setRecentProject(recentProjectList);
         WebUtil.renderJson(response,user);
     }
 

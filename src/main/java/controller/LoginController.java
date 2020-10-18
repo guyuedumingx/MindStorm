@@ -31,6 +31,7 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         UserService service = new UserServiceImpl();
         User user = service.login(email, password);
+        user.setPassword(null);
         int isSuccess = StatusCode.nullObjcet(user);
 
         //把用户Id存储在session中
