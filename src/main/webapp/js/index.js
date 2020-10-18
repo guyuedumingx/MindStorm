@@ -37,6 +37,20 @@ if (loginPd == null) {
     nameU.innerText = userName;
 }
 
+//退出登录
+//获取退出按钮
+var logOut = getDom(".logOut");
+logOut.addEventListener("click", function () {
+    //删除id
+    removeCookie("user_id");
+    //删除昵称
+    removeCookie("user_name");
+    //跳转到登录页面
+    window.location.href = "/login.html";
+})
+
+
+
 
 
 //放大新建
@@ -301,40 +315,34 @@ center.addEventListener("click", function () {
 var importNav = getDom(".import");
 
 function UpladFile() {
-    var file = importNav.files[0];
-    // ajax({
-    //     type: 'post',
-    //     url: '/until/xmind',
-    //     data: {
-    //         fileObj
-    //     },
-    //     header: {
-    //         'Content-Type': 'multipart/form-data'
-    //     }, // 请求头
-    //     success: function (res) {
-    //         if (res.status_code == '200') {
-    //             window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-    //         } else {
-    //             topAlert("导入失败");
-    //         }
-    //     }
-    // });
-    //创建formdata对象
-    var formdata = new FormData();
-    formdata.append("file", file);
-    //创建xhr，使用ajax进行文件上传
-    var xhr = new XMLHttpRequest();
-    xhr.open("post", "/");
-    //回调
-    xhr.onreadystatechange = function () {
-        if (xhr.status == 200) {
-            window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-        } else {
-            topAlert("导入失败");
-        }
-    }
-}
-importNav.addEventListener("change", function () {
     var fileObj = importNav.files[0];
-    console.log(fileObj);
-});
+    ajax({
+        type: 'post',
+        url: '/until/xmind',
+        data: {
+            fileObj
+        },
+        success: function (res) {
+            if (res.status_code == '200') {
+                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+            } else {
+                topAlert("导入失败");
+            }
+        }
+    });
+    // //创建formdata对象
+    // var formdata = new FormData();
+    // formdata.append("file", file);
+    // //创建xhr，使用ajax进行文件上传
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("post", "/");
+    // //回调
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.status == 200) {
+    //         window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+    //     } else {
+    //         topAlert("导入失败");
+    //     }
+    // }
+}
+importNav.addEventListener("change", UpladFile);
