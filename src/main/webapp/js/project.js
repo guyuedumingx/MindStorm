@@ -180,20 +180,37 @@ var leftBoundary = 0;
 var bottomBoundary = 700;
 var rightBoundary = 1500;
 var boundaryMinLength = 100; //边界约束中和边界的最小距离
-
+var treeBoxMainWidth = treeBoxMain.offsetWidth;
+// var treeBoxMainHeight = treeBoxMain.offsetHeight;
 // 鼠标拖动的函数
 function move(e) {
     var cx = e.clientX;
     var cy = e.clientY;
-    if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
-        nowNode.x = nowNode.x + cx - mx;
-        mx = cx;
-    }
-    if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
-        nowNode.y = nowNode.y + cy - my;
-        my = cy;
-    }
+    // if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
+    nowNode.x = nowNode.x + cx - mx;
+    mx = cx;
+    // }
+    // if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
+    nowNode.y = nowNode.y + cy - my;
+    my = cy;
+    // }
 }
+window.addEventListener('resize', function () {
+    var bl = treeBoxMainWidth / treeBoxMain.offsetWidth;
+    treeBoxMainWidth = treeBoxMain.offsetWidth;
+    mx /= bl;
+    my /= bl;
+    ergodicTree(function (node) {
+        node.x /= bl;
+        node.y /= bl;
+        setPosition(node);
+    });
+    for (var i = 0; i < setLineArr.length; i++) {
+        var node1 = setLineArr[i][0];
+        var node2 = setLineArr[i][1];
+        setline(node1, node2);
+    }
+});
 
 // 给节点添加高亮
 function addHeightLight(node) {
@@ -360,7 +377,7 @@ function runConstraint(node1, node2, type, len) {
                 setPosition(node2);
             }
         }
-    } else if (type == 3) { // 边界约束
+    } else if (type == 4) { // 边界约束
         var x2 = node1.x;
         var y2 = node1.y;
         if (x2 < leftBoundary + boundaryMinLength) {
@@ -937,13 +954,13 @@ setInterval(function () {
 
 // 维护节点间线条的定时器
 setInterval(function () {
-    if (!lockingNode.state) {
-        for (var i = 0; i < setLineArr.length; i++) {
-            var node1 = setLineArr[i][0];
-            var node2 = setLineArr[i][1];
-            setline(node1, node2);
-        }
+    // if (!lockingNode.state) {
+    for (var i = 0; i < setLineArr.length; i++) {
+        var node1 = setLineArr[i][0];
+        var node2 = setLineArr[i][1];
+        setline(node1, node2);
     }
+    // }
 }, 5);
 
 // ——————————页面加载完之后发送请求——————————
