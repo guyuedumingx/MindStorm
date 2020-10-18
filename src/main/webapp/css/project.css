@@ -190,7 +190,7 @@ h5 .onOff .onOffBorder .onOffRod {
     background-color: #101f30;
 }
 
-.removeNodeBox {
+.tipsBox {
     display: none;
     position: fixed;
     top: 50%;
@@ -205,7 +205,7 @@ h5 .onOff .onOffBorder .onOffRod {
     background-color: #fff;
 }
 
-.removeNodeBox .boxTitle {
+.tipsBox .boxTitle {
     width: 100%;
     height: 50px;
     padding: 10px 10px;
@@ -216,7 +216,7 @@ h5 .onOff .onOffBorder .onOffRod {
     color: #214B5B;
 }
 
-.removeNodeBox .close {
+.tipsBox .close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -229,11 +229,11 @@ h5 .onOff .onOffBorder .onOffRod {
     cursor: pointer;
 }
 
-.removeNodeBox .close:hover {
+.tipsBox .close:hover {
     background-image: url(../img/project_closeHover.png);
 }
 
-.removeNodeBox .content {
+.tipsBox .content {
     width: 100%;
     height: 50px;
     font-size: 16px;
@@ -242,7 +242,7 @@ h5 .onOff .onOffBorder .onOffRod {
     color: #214b5b;
 }
 
-.removeNodeBox .yes {
+.tipsBox .yes {
     position: absolute;
     left: 50%;
     bottom: 20px;
@@ -259,11 +259,11 @@ h5 .onOff .onOffBorder .onOffRod {
     transition: background-color .3s;
 }
 
-.removeNodeBox .yes:hover {
+.tipsBox .yes:hover {
     background-color: #101f30;
 }
 
-.removeNodeBox .no {
+.tipsBox .no {
     position: absolute;
     right: 50%;
     bottom: 20px;
@@ -280,7 +280,7 @@ h5 .onOff .onOffBorder .onOffRod {
     transition: background-color .3s;
 }
 
-.removeNodeBox .no:hover {
+.tipsBox .no:hover {
     background-color: #101f30;
 }
 
