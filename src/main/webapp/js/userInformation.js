@@ -96,6 +96,12 @@ function addLi(projectName, projectIntro, projectDate) {
     newLi.appendChild(newI2);
     newLi.appendChild(newSpan3);
 }
+//判断是否有项目
+if (projectLength == 0) {
+    getDom(".notYet").style.display = "block";
+} else {
+    getDom(".notYet").style.display = "none";
+}
 
 for (var i = 0; i < projectLength; i++) {
     var projectName = projectArr[i].name;
