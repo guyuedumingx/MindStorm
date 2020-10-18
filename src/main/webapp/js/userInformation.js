@@ -1,6 +1,27 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
 
+//高度自适应-----------
+function heightAuto() {
+    //获取个人信息框架
+    var personalBox = getDom(".personalBox");
+    //获取项目框架
+    var bigBox = getDom(".bigBox");
+    //个人信息高度
+    var personalHeight = personalBox.offsetHeight;
+    //项目离顶部距离
+    var boxTop = personalHeight + 60;
+    bigBox.style.top = boxTop + "px";
+
+    //获取项目高度
+    var projectHeight = bigBox.offsetHeight;
+    //高度
+    projectLi.style.maxHeight = projectHeight - 70 + "px"; //70为外边距
+}
+heightAuto();
+
+window.addEventListener('resize', heightAuto);
+
 //获取用户id
 // var userId = getCookie("user_id");
 
@@ -22,19 +43,21 @@ ajax({
     error: function () {}
 });
 
-//获取个人简介
+//获取个人简介--
 var userIntroduce = user.userSignature;
 //获取简介框
 var introduceNav = getDom(".intro_txt");
 
 introduceNav.innerText = userIntroduce;
-
+//获取名字--
+var userName = res.name;
 //获取昵称框
 var nameU = getDom(".userName");
 
 nameU.innerText = userName;
 
-//项目数组
+
+//项目数组--
 var projectArr = user.recentProject;
 
 //数组长度
@@ -82,23 +105,4 @@ for (var i = 0; i < projectLength; i++) {
     addLi(projectName, projectIntro, projectDate)
 }
 
-    //高度自适应-----------
-function heightAuto() {
-    //获取个人信息框架
-    var personalBox = getDom(".personalBox");
-    //获取项目框架
-    var bigBox = getDom(".bigBox");
-    //个人信息高度
-    var personalHeight = personalBox.offsetHeight;
-    //项目离顶部距离
-    var boxTop = personalHeight + 60;
-    bigBox.style.top = boxTop + "px";
-
-    //获取项目高度
-    var projectHeight = bigBox.offsetHeight;
-    //高度
-    projectLi.style.maxHeight = projectHeight - 70 + "px"; //70为外边距
-}
-heightAuto();
-
-window.addEventListener('resize', heightAuto);
+    
