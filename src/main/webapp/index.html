@@ -39,6 +39,7 @@
 				</ul>
 			</div>
 		</div>
+		<!-- 标题 -->
 		<p class="mainTitle">MINDSTORM</p>
 	</div>
 	<!------------------- 主要内容------------- -->
@@ -52,11 +53,15 @@
 				<!-- 新建链接 -->
 				<div class="smallBox change_est">
 					<div class="est_tips">新建项目</div>
+
 					<!-- 新建图标 -->
 					<div class="est_icon"></div>
 				</div>
 				<div class="est_bigBox">
 					<div class="est_til">新建项目</div>
+					<input type="file" value="导入" class="import">
+					<!-- <input type="button" οnclick="UpladFile()" value="导入"  class="importBut"> -->
+					<span class="importBut">导入</span>
 					<div class="project_name">
 						<span class="prjName">项目名称：</span>
 						<input type="text" maxlength="20" class="inputName">
@@ -67,13 +72,13 @@
 						<span class="sum">0/200</span>
 					</div>
 					<div class="choice">
-						<span class="open">是否公开:
+						<span class="open"><span>是否公开:</span>
 							<div class="onOffBorder">
 								<div class="onOffRod">x</div>
 							</div>
 						</span>
 
-						<span class="time">项目时长:<i class="timeBut">
+						<span class="time"><span>项目时长:</span><i class="timeBut">
 								<select name="" id="projectTime">
 									<option value="">一天</option>
 									<option value="">三天</option>
@@ -85,7 +90,7 @@
 								</select>
 							</i></span>
 
-						<span class="rank">项目等级:<i class="rankBut">
+						<span class="rank"><span>项目等级:</span><i class="rankBut">
 								<select name="" id="projectRank">
 
 									<option value="">1</option>
@@ -98,6 +103,8 @@
 
 					</div>
 					<div class="est_but">
+
+						<!-- <input type="submit" value="导入" class="click_import"> -->
 						<input type="submit" value="创建" class="click_est">
 					</div>
 					<div class="back"></div>
@@ -135,7 +142,7 @@
 	</div>
 
 	<!-- <div class="undraw_tree"></div> -->
-	
+
 
 	<script src="js/concise.js"></script>
 	<script src="js/toolFunction.js"></script>

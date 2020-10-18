@@ -620,7 +620,7 @@ body .header {
     opacity: 1;
 }
 
-.mainBoxLeft .operationProject {
+/* .mainBoxLeft .operationProject {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
@@ -643,7 +643,6 @@ body .header {
     font-weight: 700;
     text-align: center;
     color: #f8fcfa;
-    /* color: #f00; */
     background-color: rgb(107, 107, 181);
     cursor: pointer;
 }
@@ -661,6 +660,94 @@ body .header {
 
 .mainBoxLeft .operationProject div:hover::before {
     background-color: rgba(255, 255, 255, 0);
+} */
+
+.mainBoxLeft .displayControl {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 3;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    background-color: #f8fcfa;
+}
+
+.onOffBox {
+    flex: 3;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.onOffBox .onOff {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.onOffBox .onOff .onOffTips {
+    width: 100%;
+    height: 12px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 12px;
+    color: #214B5B;
+}
+
+.onOffBox .onOff .onOffBorder {
+    position: relative;
+    width: 40px;
+    height: 18px;
+    border-radius: 9px;
+    margin: 5px auto 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-image: url(../img/public_onOffFalse.png);
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
+    background-color: #46607b;
+    transition: all .3s;
+}
+
+.displayControl .operationProject {
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f00;
+    opacity: 0;
+}
+
+.displayControl .operationProject div {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #0f0;
 }
 
 .mainBox .mainBoxMiddle {
@@ -853,6 +940,10 @@ body .header {
     transform: translate(-50%, 0);
 }
 
+.mainBoxMiddle .treeBox .hideTheme .theme {
+    display: none;
+}
+
 .mainBoxMiddle .treeBox .treeBoxFullScreen {
     position: absolute;
     bottom: 10px;
@@ -872,6 +963,7 @@ body .header {
     justify-content: space-between;
     align-items: stretch;
     width: 10%;
+    min-width: 120px;
     padding-left: 10px;
     box-sizing: border-box;
 }
@@ -900,7 +992,7 @@ body .header {
 .mainBoxRight .controller {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex: 1;
     height: 200px;
@@ -910,17 +1002,20 @@ body .header {
 }
 
 .mainBoxRight .controller .btnBox {
-    width: 27px;
-    height: 195px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 40px;
+    height: 80%;
     margin: 0px auto;
 }
 
 .mainBoxRight .controller .btnBox .btn {
     position: relative;
-    width: 27px;
-    height: 27px;
-    border-radius: 13.5px;
-    margin-top: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
     text-align: center;
     line-height: 27px;
     color: #fff;
@@ -960,13 +1055,15 @@ body .header {
 .mainBoxRight .controller .btnBox .btn .btnTips {
     display: none;
     position: absolute;
-    top: 3px;
-    left: 35px;
-    width: 60px;
-    height: 20px;
-    font-size: 12px;
-    line-height: 20px;
+    top: 50%;
+    left: 100%;
+    width: 80px;
+    height: 26px;
+    font-size: 16px;
+    line-height: 26px;
     border-radius: 5px;
+    margin-top: -13px;
+    margin-left: 12px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
     color: #214B5B;
     background-color: #fff;
@@ -981,10 +1078,10 @@ body .header {
 .btnBox .btn .btnTips::before {
     position: absolute;
     top: 50%;
-    left: -5px;
+    left: -8px;
     width: 0px;
     height: 0px;
-    border: 5px solid transparent;
+    border: 8px solid transparent;
     border-right-color: #ccc;
     transform: translate(-50%, -50%);
     content: '';
@@ -993,69 +1090,13 @@ body .header {
 .btnBox .btn .btnTips::after {
     position: absolute;
     top: 50%;
-    left: -4px;
+    left: -7px;
     width: 0px;
     height: 0px;
-    border: 5px solid transparent;
+    border: 8px solid transparent;
     border-right-color: #fff;
     transform: translate(-50%, -50%);
     content: '';
-}
-
-.onOffBox {
-    width: 100%;
-    height: 180px;
-    margin: 12px auto;
-    overflow: hidden;
-}
-
-.onOffBox .onOff {
-    width: 100%;
-    height: 48px;
-    padding-top: 18px;
-    box-sizing: border-box;
-}
-
-.onOffBox .onOff .onOffTips {
-    width: 100%;
-    height: 12px;
-    font-size: 12px;
-    text-align: center;
-    line-height: 12px;
-    color: #214B5B;
-}
-
-.onOffBox .onOff .onOffBorder {
-    position: relative;
-    width: 40px;
-    height: 18px;
-    border-radius: 9px;
-    margin: 5px auto 0px;
-    box-sizing: border-box;
-    overflow: hidden;
-    background-color: #2c3e50;
-    cursor: pointer;
-    transition: all .3s;
-}
-
-.onOffRod {
-    position: absolute;
-    top: 1.5px;
-    left: 1.5px;
-    width: 15px;
-    height: 15px;
-    border-radius: 7.5px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-    font-size: 10px;
-    line-height: 15px;
-    text-align: center;
-    color: #fff;
-    background-image: url(../img/public_onOffFalse.png);
-    background-repeat: no-repeat;
-    background-size: 75%;
-    background-position: center;
-    background-color: #46607b;
-    transition: all .3s;
 }
 
 .mainBoxRight .nowNode {
@@ -1068,13 +1109,13 @@ body .header {
 
 .mainBoxRight .nowNode .nowNodeTheme {
     position: absolute;
-    top: 5px;
+    top: 15px;
     width: 100%;
     height: 20px;
     padding: 0px 20px;
     box-sizing: border-box;
     overflow: hidden;
-    font-size: 10px;
+    font-size: 14px;
     line-height: 20px;
     text-align: center;
     text-overflow: ellipsis;
@@ -1102,8 +1143,7 @@ body .header {
     bottom: 5px;
     width: 100%;
     height: 20px;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 12px;
     line-height: 20px;
     text-align: center;
     color: #214b5b;
