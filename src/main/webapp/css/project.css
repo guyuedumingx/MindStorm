@@ -940,6 +940,10 @@ body .header {
     transform: translate(-50%, 0);
 }
 
+.mainBoxMiddle .treeBox .hideTheme .theme {
+    display: none;
+}
+
 .mainBoxMiddle .treeBox .treeBoxFullScreen {
     position: absolute;
     bottom: 10px;
