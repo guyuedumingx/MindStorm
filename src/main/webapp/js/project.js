@@ -34,13 +34,23 @@ if (loginPd == null) {
     nameU.innerText = userName;
 }
 // end header
+
+// 设置文本不可选中
 var tool = new Tool(document, window);
 tool.textProhibition();
+
+// 创建user对象
 var user = {};
+
+// 从cookie中获取值
 user.userId = getCookie('user_id');
 user.userName = getCookie('user_name');
+
+// 从url中获取项目id
 var projectId = getLocation('project_id');
 var ctrlState = false;
+
+// 键盘按下事件
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
         if (!ctrlState) {
@@ -71,22 +81,6 @@ document.addEventListener('keyup', function (e) {
         ctrlState = false;
     }
 });
-// ——————————————————头部——————————————————
-// projectName.style.top = window.pageYOffset - 48 + 'px';
-// window.addEventListener('scroll', function () {
-//     projectName.style.top = window.pageYOffset - 48 + 'px';
-//     // console.log(window.pageYOffset);
-// });
-// window.scroll(0, 1);
-// window.scroll(0, 0);
-
-// var mainBoxBGC = 'rgb(230, 238, 241)';
-// var mainBox = getDom('.mainBox');
-// for (var i = 0; i < mainBox.children.length; i++) {
-//     for (var j = 0; j < mainBox.children[i].children.length; j++) {
-//         mainBox.children[i].children[j].style.backgroundColor = mainBoxBGC;
-//     }
-// }
 
 // ——————————————————左侧——————————————————
 var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
@@ -127,7 +121,13 @@ document.addEventListener('click', function (e) {
 
 // 导出按钮点击事件
 operationProject[0].addEventListener('click', function () {
-    window.location = '/';
+    ajax({
+        type: 'get',
+        url: 'util/xmind',
+        data: {
+            project_id: projectId
+        }
+    });
 });
 
 // 项目简介展开按钮点击事件
@@ -844,6 +844,7 @@ queryNode.addEventListener('click', function () {
     }
 });
 
+// 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
     location.reload();
 });
@@ -1025,13 +1026,11 @@ setInterval(function () {
 
 // 维护节点间线条的定时器
 setInterval(function () {
-    // if (!lockingNode.state) {
     for (var i = 0; i < setLineArr.length; i++) {
         var node1 = setLineArr[i][0];
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-    // }
 }, 5);
 
 // ——————————页面加载完之后发送请求——————————
