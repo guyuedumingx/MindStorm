@@ -225,7 +225,7 @@ var timeInput = getDom("#projectTime");
 //获取等级
 var rankInput = getDom("#projectRank");
 
-var timeArr = [123456, 234567, 345678, 456789];
+var timeArr = [86400000, 259200000, 604800000, 2592000000,7776000000,15552000000,31104000000];
 
 estBut.addEventListener("click", function () {
     if (inputName.value == "") {
