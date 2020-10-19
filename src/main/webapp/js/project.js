@@ -167,12 +167,10 @@ treeBox.addEventListener('mousewheel', function (e) {
     e.preventDefault();
     if (ctrlState) {
         if (e.deltaY < 0) {
-            topAlert('放大了');
             treeMultiple += 0.1;
             treeMultiple = treeMultiple < 5 ? treeMultiple : 5;
             treeBoxMain.style.zoom = treeMultiple;
         } else {
-            topAlert('缩小了');
             treeMultiple -= 0.1;
             treeMultiple = treeMultiple > 1 ? treeMultiple : 1;
             treeBoxMain.style.zoom = treeMultiple;
