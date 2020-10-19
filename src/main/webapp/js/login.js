@@ -158,6 +158,12 @@ function judgeEmail(node) {
     if (str != '请输入邮箱') {
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(str)) {
             reportError(node, '邮箱格式不正确');
+            try {
+                throw new exception();
+            } catch (e) {
+                console.log(e);
+                topAlert(e.toString());
+            }
             return false;
         }
         clearError(node);
