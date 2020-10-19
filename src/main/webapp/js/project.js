@@ -152,6 +152,33 @@ var progressContent = getDom('.progressBox .progressContent'); // 进图条盒�
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+var treeBoxState = false; // 鼠标是否在树盒子中
+var treeMultiple = 1; // 树盒子缩放倍数
+
+// 维护treeBoxState变量相关事件
+treeBox.addEventListener('mouseover', function () {
+    treeBoxState = true;
+});
+treeBox.addEventListener('mouseout', function () {
+    treeBoxState = false;
+});
+
+treeBox.addEventListener('mousewheel', function (e) {
+    e.preventDefault();
+    if (ctrlState) {
+        if (e.deltaY < 0) {
+            topAlert('放大了');
+            treeMultiple += 0.1;
+            treeMultiple = treeMultiple < 5 ? treeMultiple : 5;
+            treeBoxMain.style.zoom = treeMultiple;
+        } else {
+            topAlert('缩小了');
+            treeMultiple -= 0.1;
+            treeMultiple = treeMultiple > 1 ? treeMultiple : 1;
+            treeBoxMain.style.zoom = treeMultiple;
+        }
+    }
+});
 
 // 点击空白处事件
 treeBoxMain.addEventListener('mousedown', function (e) {
@@ -218,11 +245,11 @@ function move(e) {
     var cx = e.clientX;
     var cy = e.clientY;
     if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
-        nowNode.x = nowNode.x + cx - mx;
+        nowNode.x = nowNode.x + (cx - mx) / treeMultiple;
         mx = cx;
     }
     if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
-        nowNode.y = nowNode.y + cy - my;
+        nowNode.y = nowNode.y + (cy - my) / treeMultiple;
         my = cy;
     }
 }
