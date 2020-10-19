@@ -214,6 +214,33 @@ treeFullScreenOnOff.addEventListener('click', function () {
     }
 });
 
+// Esc退出全屏
+// document.addEventListener('keydown', function (e) {
+//     console.log(1);
+//     e.preventDefault();
+//     if (e.keyCode == 27 && treeFullScreenState) {
+//         cancelFullscreen();
+//         this.style.backgroundImage = 'url(img/project_fullScreen.png)';
+//         treeFullScreenState = false;
+//     }
+// });
+
+//监听退出全屏事件
+function checkFull() {
+    return document.webkitIsFullScreen;
+}
+window.addEventListener('resize', function () {
+    // console.log(document.fullscreenEnabled);
+    // console.log(window.fullScreen);
+    // console.log(document.webkitIsFullScreen);
+    // console.log(document.msFullscreenEnabled);
+    // console.log('+++++++++++++++++');
+    if (!checkFull()) {
+        //要执行的动作
+        treeFullScreenOnOff.style.backgroundImage = 'url(img/project_fullScreen.png)';
+        treeFullScreenState = false;
+    }
+});
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
