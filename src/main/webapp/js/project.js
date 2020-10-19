@@ -1142,6 +1142,8 @@ window.onload = function () {
             projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
+            console.log('创建时间：' + res.createTime);
+            console.log('截止时间：' + res.deadline);
             creationDate.innerText = new Date(res.createTime).toLocaleDateString();
             closingDate.innerText = new Date(res.deadline).toLocaleDateString();
             var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
