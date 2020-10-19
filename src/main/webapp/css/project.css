@@ -142,6 +142,7 @@ h5 .onOff .onOffBorder .onOffRod {
 
 .operationNodeBox .textareaEditable {
     border: 1px solid #214b5b;
+    border-radius: 5px;
     padding: 10px;
 }
 

@@ -151,8 +151,29 @@ var progressContent = getDom('.progressBox .progressContent'); // 进图条盒�
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+var treeBoxPercentageTips = getDom('.mainBoxMiddle .treeBox .treeBoxPercentageTips'); // 提示树盒子缩放倍数的盒子
 var treeBoxState = false; // 鼠标是否在树盒子中
 var treeMultiple = 1; // 树盒子缩放倍数
+
+treeBoxPercentageTips.hide();
+
+function percentageTips(num) {
+    if (treeBoxPercentageTips.timer) {
+        clearInterval(treeBoxPercentageTips.timer);
+    }
+    var i = 0;
+    treeBoxPercentageTips.innerText = parseInt(num * 100) + '%';
+    treeBoxPercentageTips.show();
+    treeBoxPercentageTips.timer = setInterval(function () {
+        if (i == 30) {
+            clearInterval(treeBoxPercentageTips.timer);
+            treeBoxPercentageTips.hide();
+        } else {
+            i++;
+            treeBoxPercentageTips.style.opacity = 1 / 30 * (30 - i) + '';
+        }
+    }, 25);
+}
 
 // 维护treeBoxState变量相关事件
 treeBox.addEventListener('mouseover', function () {
@@ -167,13 +188,14 @@ treeBox.addEventListener('mousewheel', function (e) {
         e.preventDefault();
         if (e.deltaY < 0) {
             treeMultiple += 0.1;
-            treeMultiple = treeMultiple < 5 ? treeMultiple : 5;
+            treeMultiple = treeMultiple < 3 ? treeMultiple : 3;
             treeBoxMain.style.zoom = treeMultiple;
         } else {
             treeMultiple -= 0.1;
             treeMultiple = treeMultiple > 1 ? treeMultiple : 1;
             treeBoxMain.style.zoom = treeMultiple;
         }
+        percentageTips(treeMultiple);
     }
 });
 
@@ -213,33 +235,18 @@ treeFullScreenOnOff.addEventListener('click', function () {
     }
 });
 
-// Esc退出全屏
-// document.addEventListener('keydown', function (e) {
-//     console.log(1);
-//     e.preventDefault();
-//     if (e.keyCode == 27 && treeFullScreenState) {
-//         cancelFullscreen();
-//         this.style.backgroundImage = 'url(img/project_fullScreen.png)';
-//         treeFullScreenState = false;
-//     }
-// });
-
 //监听退出全屏事件
 function checkFull() {
     return document.webkitIsFullScreen;
 }
 window.addEventListener('resize', function () {
-    // console.log(document.fullscreenEnabled);
-    // console.log(window.fullScreen);
-    // console.log(document.webkitIsFullScreen);
-    // console.log(document.msFullscreenEnabled);
-    // console.log('+++++++++++++++++');
     if (!checkFull()) {
         //要执行的动作
         treeFullScreenOnOff.style.backgroundImage = 'url(img/project_fullScreen.png)';
         treeFullScreenState = false;
     }
 });
+
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
@@ -596,7 +603,7 @@ function createTree(node) {
                 }
                 nodeRequest--;
             } else {
-                console.log('用户不存在');
+                topAlert('节点不存在');
                 nodeRequest--;
             }
         }
@@ -913,7 +920,6 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxNodeCreator.show();
         operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
         operationNodeBoxLastRevision.show();
-        console.log(nowNode.lastEditTime);
         operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
         operationNodeBoxSubmit.hide();
     }
@@ -939,7 +945,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
-        console.log(nowNode.id);
         ajax({
             type: 'post',
             url: '/node',
@@ -1143,8 +1148,6 @@ window.onload = function () {
             projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
-            console.log('创建时间：' + res.createTime);
-            console.log('截止时间：' + res.deadline);
             creationDate.innerText = new Date(res.createTime - 0).toLocaleDateString();
             closingDate.innerText = new Date(res.deadline - 0).toLocaleDateString();
             var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
