@@ -1006,6 +1006,7 @@ body .header {
 }
 
 .mainBoxMiddle .treeBox .treeBoxPercentageTips {
+    display: none;
     position: absolute;
     bottom: 8%;
     left: 50%;

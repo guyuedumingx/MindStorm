@@ -153,16 +153,14 @@ var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
 var treeBoxPercentageTips = getDom('.mainBoxMiddle .treeBox .treeBoxPercentageTips'); // 提示树盒子缩放倍数的盒子
 var treeBoxState = false; // 鼠标是否在树盒子中
-var treeMultiple = 1; // 树盒子缩放倍数
-
-treeBoxPercentageTips.hide();
+var treeMultiple = 100; // 树盒子缩放倍数
 
 function percentageTips(num) {
     if (treeBoxPercentageTips.timer) {
         clearInterval(treeBoxPercentageTips.timer);
     }
     var i = 0;
-    treeBoxPercentageTips.innerText = parseInt(num * 100) + '%';
+    treeBoxPercentageTips.innerText = num + '%';
     treeBoxPercentageTips.show();
     treeBoxPercentageTips.timer = setInterval(function () {
         if (i == 30) {
@@ -183,17 +181,18 @@ treeBox.addEventListener('mouseout', function () {
     treeBoxState = false;
 });
 
+// 树盒子缩放
 treeBox.addEventListener('mousewheel', function (e) {
     if (ctrlState) {
         e.preventDefault();
         if (e.deltaY < 0) {
-            treeMultiple += 0.1;
-            treeMultiple = treeMultiple < 3 ? treeMultiple : 3;
-            treeBoxMain.style.zoom = treeMultiple;
+            treeMultiple += 10;
+            treeMultiple = treeMultiple < 300 ? treeMultiple : 300;
+            treeBoxMain.style.zoom = treeMultiple / 100;
         } else {
-            treeMultiple -= 0.1;
-            treeMultiple = treeMultiple > 1 ? treeMultiple : 1;
-            treeBoxMain.style.zoom = treeMultiple;
+            treeMultiple -= 10;
+            treeMultiple = treeMultiple > 100 ? treeMultiple : 100;
+            treeBoxMain.style.zoom = treeMultiple / 100;
         }
         percentageTips(treeMultiple);
     }
@@ -276,11 +275,11 @@ function move(e) {
     var cx = e.clientX;
     var cy = e.clientY;
     if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
-        nowNode.x = nowNode.x + (cx - mx) / treeMultiple;
+        nowNode.x = nowNode.x + (cx - mx) / (treeMultiple / 100);
         mx = cx;
     }
     if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
-        nowNode.y = nowNode.y + (cy - my) / treeMultiple;
+        nowNode.y = nowNode.y + (cy - my) / (treeMultiple / 100);
         my = cy;
     }
 }
