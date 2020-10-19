@@ -1,5 +1,7 @@
 package service.impl;
 
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.ProjectDao;
@@ -23,6 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectDao projectDao = DaoFactory.getProjectDao();
     ContributorDaoImpl contributorDao = new ContributorDaoImpl();
     RecentProjectDaoImpl recentProjectDao = new RecentProjectDaoImpl();
+    Logger logger = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     @Override
     public int newProject(Project project,int userId) {

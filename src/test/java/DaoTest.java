@@ -1,3 +1,5 @@
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
@@ -30,6 +32,12 @@ public class DaoTest {
        node.setLastEditTime(null);
        dao.updateOne(node);
        dao.deleteOne(node.getId());
+    }
+
+    @Test
+    public void logTest(){
+        Logger logger = LoggerFactory.getLogger(DaoTest.class);
+        logger.warn("warn");
     }
 
     @Test
