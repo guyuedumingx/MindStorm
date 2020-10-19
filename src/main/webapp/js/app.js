@@ -18,13 +18,13 @@ user.push({
     id: 1,
     theme: '节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [2, 3, 4, 5, 6, 7, 8, 9],
+    children: [2, 3, 4, 5, 6, 7, 8],
     star: 22,
     editable: true,
     lastEditName: '张三',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '张三',
-    father: 0
+    father: 0,
 });
 user.push({
     author: 2,
@@ -35,7 +35,7 @@ user.push({
     star: 19,
     editable: true,
     lastEditName: '李四',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '李四',
     father: 1,
 });
@@ -44,11 +44,11 @@ user.push({
     id: 3,
     theme: '节点主题',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [10],
+    children: [9, 10],
     star: 3,
     editable: true,
     lastEditName: '马六',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '王五',
     father: 1,
 });
@@ -61,7 +61,7 @@ user.push({
     star: 4,
     editable: true,
     lastEditName: '马六',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '马六',
     father: 1,
 });
@@ -74,7 +74,7 @@ user.push({
     star: 8,
     editable: true,
     lastEditName: '陈七',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '张三',
     father: 1,
 });
@@ -87,7 +87,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 1,
 });
@@ -100,7 +100,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 1,
 });
@@ -113,7 +113,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 1,
 });
@@ -126,9 +126,9 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
-    father: 1,
+    father: 3,
 });
 user.push({
     author: 1,
@@ -139,7 +139,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 3,
 });
@@ -152,7 +152,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 8,
 });
@@ -293,7 +293,7 @@ app.get('/project', function (req, res) {
         name: '绝不互相甩锅',
         isPublic: false,
         rank: 3,
-        author: 123456,
+        creatorName: '张三',
         headNodeId: 1,
         introduction: '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹',
         contributors: [123456, 123457, 123458, 123459, 123450, 123455],
