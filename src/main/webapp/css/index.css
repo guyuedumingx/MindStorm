@@ -48,7 +48,7 @@ body .header {
     height: 3px;
     background: #214B5B;
     left: 0px;
-    bottom: 5px;
+    bottom: 25px;
     z-index: -1;
     transition: all .25s ease;
     left: 50%;
@@ -58,8 +58,8 @@ body .header {
 /* 字体大小位置设置 */
 .header .logOn a {
     font-weight: bold;
-    font-size: 16px;
-    line-height: 60px;
+    font-size: 20px;
+    line-height: 100px;
     color: #214B5B;
 }
 
@@ -196,13 +196,19 @@ body .mainBox {
 }
 
 .mainBox .Box>div>div {
-    border: solid #2c3e50;
     border-radius: 15px;
-    /* box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555, 6px 6px 0px #444, 7px 7px 0px #333, 8px 8px 7px #001135; */
+    background-color: #fff;
+    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555, 6px 6px 0px #444, 7px 7px 0px #333, 8px 8px 7px #001135;
+    transition: all .3s;
+    /* border: solid #EEF7F2; */
+     overflow: hidden;
+     /* 外边距塌陷 */
 }
-
+                          
 .mainBox .Box .smallBox:hover {
     box-shadow: 0px 0px 20px 0px #2c3e50;
+    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555;
+    transform: translate(5px,5px);
     cursor: pointer;
 }
 
@@ -612,3 +618,7 @@ body .footer {
 }
 
 /*#endregion*/
+
+body{
+    background-color: #E6EEF1;
+}

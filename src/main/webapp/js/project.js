@@ -84,14 +84,14 @@ document.addEventListener('keyup', function (e) {
 
 // ——————————————————左侧——————————————————
 var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
+var projectCreatorName = mainBoxLeft.getDom('.creator h4 span'); // 项目创建者
 var introduceOpen = mainBoxLeft.getDom('.introduce a'); // 项目简介展开的开关
 var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介内容盒子
-var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
+var projectLevel = introduce.getDom('span'); // 获取项目等级盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
-projectIdBox.innerText = projectId;
 
 // 随机颜色
 operationProjectTitle.style.backgroundColor = randomColor(120, 180);
@@ -117,17 +117,6 @@ document.addEventListener('click', function (e) {
             operationProject[i].hide();
         }
     }
-});
-
-// 导出按钮点击事件
-operationProject[0].addEventListener('click', function () {
-    ajax({
-        type: 'get',
-        url: 'util/xmind',
-        data: {
-            project_id: projectId
-        }
-    });
 });
 
 // 项目简介展开按钮点击事件
@@ -162,6 +151,31 @@ var progressContent = getDom('.progressBox .progressContent'); // 进图条盒�
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
+var treeBoxState = false; // 鼠标是否在树盒子中
+var treeMultiple = 1; // 树盒子缩放倍数
+
+// 维护treeBoxState变量相关事件
+treeBox.addEventListener('mouseover', function () {
+    treeBoxState = true;
+});
+treeBox.addEventListener('mouseout', function () {
+    treeBoxState = false;
+});
+
+treeBox.addEventListener('mousewheel', function (e) {
+    if (ctrlState) {
+        e.preventDefault();
+        if (e.deltaY < 0) {
+            treeMultiple += 0.1;
+            treeMultiple = treeMultiple < 5 ? treeMultiple : 5;
+            treeBoxMain.style.zoom = treeMultiple;
+        } else {
+            treeMultiple -= 0.1;
+            treeMultiple = treeMultiple > 1 ? treeMultiple : 1;
+            treeBoxMain.style.zoom = treeMultiple;
+        }
+    }
+});
 
 // 点击空白处事件
 treeBoxMain.addEventListener('mousedown', function (e) {
@@ -173,9 +187,11 @@ treeBoxMain.addEventListener('mousedown', function (e) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
-        ergodicTree(function (node) {
-            node.addClass('hideTheme');
-        });
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+        }
         nowNode = null;
         changeNodeEvent();
     }
@@ -197,6 +213,33 @@ treeFullScreenOnOff.addEventListener('click', function () {
     }
 });
 
+// Esc退出全屏
+// document.addEventListener('keydown', function (e) {
+//     console.log(1);
+//     e.preventDefault();
+//     if (e.keyCode == 27 && treeFullScreenState) {
+//         cancelFullscreen();
+//         this.style.backgroundImage = 'url(img/project_fullScreen.png)';
+//         treeFullScreenState = false;
+//     }
+// });
+
+//监听退出全屏事件
+function checkFull() {
+    return document.webkitIsFullScreen;
+}
+window.addEventListener('resize', function () {
+    // console.log(document.fullscreenEnabled);
+    // console.log(window.fullScreen);
+    // console.log(document.webkitIsFullScreen);
+    // console.log(document.msFullscreenEnabled);
+    // console.log('+++++++++++++++++');
+    if (!checkFull()) {
+        //要执行的动作
+        treeFullScreenOnOff.style.backgroundImage = 'url(img/project_fullScreen.png)';
+        treeFullScreenState = false;
+    }
+});
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
@@ -226,11 +269,11 @@ function move(e) {
     var cx = e.clientX;
     var cy = e.clientY;
     if (cx >= leftBoundary + boundaryMinLength && cx <= rightBoundary - boundaryMinLength) {
-        nowNode.x = nowNode.x + cx - mx;
+        nowNode.x = nowNode.x + (cx - mx) / treeMultiple;
         mx = cx;
     }
     if (cy >= topBoundary + boundaryMinLength && cy <= bottomBoundary - boundaryMinLength) {
-        nowNode.y = nowNode.y + cy - my;
+        nowNode.y = nowNode.y + (cy - my) / treeMultiple;
         my = cy;
     }
 }
@@ -656,7 +699,7 @@ function treeAppendNode(father, nodeData) {
 }
 
 // ——————————————————右侧—————————————————— 
-var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
+var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
 var addNode = btnArr[0]; // 创建节点
@@ -673,11 +716,14 @@ var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内�
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
-var removeNodeBox = getDom('.removeNodeBox'); // 删除节点的提示框盒子
-var removeNodeClose = removeNodeBox.getDom('.close'); // 提示盒子右上角的叉
-var removeNodeYes = removeNodeBox.getDom('.yes'); // 是
-var removeNodeNo = removeNodeBox.getDom('.no'); // 否
+var tipsBox = getDom('.tipsBox'); // 提示框盒子
+var tipsTitle = tipsBox.getDom('.boxTitle'); // 提示框标题
+var tipsContent = tipsBox.getDom('.content'); // 提示内容
+var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
+var tipsYes = tipsBox.getDom('.yes'); // 是
+var tipsNo = tipsBox.getDom('.no'); // 否
 var nowOperation = 'null'; // 盒子当前状态
+var tipsState = 'null'; // 提示盒子状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 var hideLine = onOffArr[0]; // 隐藏节点间线条
 var lockingNode = onOffArr[1]; // 锁定所有节点
@@ -699,6 +745,7 @@ operationNodeBoxSubmit.hide();
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
+projectIdBox.innerText = projectId;
 
 // 改变当前节点的函数
 function changeNodeEvent() {
@@ -743,31 +790,55 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxSubmit.hide();
 });
 
-// 删除节点框中关闭按钮点击事件
-removeNodeClose.addEventListener('click', function () {
-    removeNodeBox.hide();
+function tipsCloseFunction() {
+    tipsState = 'null';
+    tipsTitle.innerText = '？';
+    tipsContent.innerText = '？？？';
+    tipsBox.hide();
+}
+
+// 提示框中关闭按钮点击事件
+tipsClose.addEventListener('click', tipsCloseFunction);
+
+// 导出按钮点击事件
+operationProject[0].addEventListener('click', function () {
+    tipsState = 'exportProject';
+    tipsTitle.innerText = '导出项目';
+    tipsContent.innerText = '项目将会导出到本地，是否继续';
+    tipsBox.show();
 });
 
 // 删除节点框中确定按钮点击事件
-removeNodeYes.addEventListener('click', function () {
-    ajax({
-        type: 'delete',
-        url: '/node',
-        data: {
-            nodeId: nowNode.id
-        },
-        success: function (res) {
-            if (res.status_code == '200') {
-                location.reload();
-            } else {
-                topAlert('淦');
+tipsYes.addEventListener('click', function () {
+    if (tipsState == 'deleteNode') {
+        ajax({
+            type: 'delete',
+            url: '/node',
+            data: {
+                nodeId: nowNode.id
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    location.reload();
+                } else {
+                    topAlert('淦');
+                }
             }
-        }
-    });
+        });
+    } else if (tipsState == 'exportProject') {
+        ajax({
+            type: 'get',
+            url: '/util/xmind',
+            data: {
+                project_id: projectId
+            }
+        });
+    }
+    tipsCloseFunction();
 });
 
 // 删除节点框中取消按钮点击事件
-removeNodeNo.addEventListener('click', removeNodeClose.onclick);
+tipsNo.addEventListener('click', tipsCloseFunction);
 
 // 创建节点按钮的点击事件
 addNode.addEventListener('click', function () {
@@ -796,7 +867,10 @@ addNode.addEventListener('click', function () {
 // 删除节点按钮的点击事件
 removeNode.addEventListener('click', function () {
     if (this.jurisdiction) {
-        removeNodeBox.show();
+        tipsState = 'deleteNode';
+        tipsTitle.innerText = '删除节点';
+        tipsContent.innerText = '该操作不可恢复，是否继续';
+        tipsBox.show();
     }
 });
 
@@ -973,11 +1047,31 @@ setOnOffEvent(hideLine, function () {
         ergodicTree(function (node) {
             node.lineColor = '#e6eef1';
         });
+        if (nowNode) {
+            var t = nowNode;
+            while (t.father) {
+                t = t.father;
+                t.lineColor = 'rgb(106, 193, 237)';
+            }
+            changeChild(nowNode, function (node) {
+                node.lineColor = 'rgb(106, 193, 237)';
+            });
+        }
     } else {
         lineUpColor = '#333';
         ergodicTree(function (node) {
             node.lineColor = '#333';
         });
+        if (nowNode) {
+            var t = nowNode;
+            while (t.father) {
+                t = t.father;
+                t.lineColor = 'rgb(106, 193, 237)';
+            }
+            changeChild(nowNode, function (node) {
+                node.lineColor = 'rgb(106, 193, 237)';
+            });
+        }
     }
 });
 
@@ -1045,8 +1139,11 @@ window.onload = function () {
         },
         success: function (res) {
             introduceP.innerText = res.introduction;
+            projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
+            console.log('创建时间：' + res.createTime);
+            console.log('截止时间：' + res.deadline);
             creationDate.innerText = new Date(res.createTime).toLocaleDateString();
             closingDate.innerText = new Date(res.deadline).toLocaleDateString();
             var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;

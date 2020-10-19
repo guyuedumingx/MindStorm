@@ -130,7 +130,7 @@ body .personalBox {
 .bigBox .history {
     position: absolute;
     left: -120px;
-    top: 0;
+    top: 20px;
     padding: 10px;
     text-align: center;
     border-top: none;
@@ -149,7 +149,7 @@ body .personalBox {
     background-image: url(../img/logo.png);
     background-size: 50%;
     background-repeat: no-repeat;
-    background-position: center -10px;
+    background-position: 177px -10px;
     opacity: 0.05;
     pointer-events: none;
 }
@@ -186,10 +186,10 @@ body .personalBox {
     /* border: solid #6AC1ED 1px; */
     border-radius: 5px;
 }
-
+/* 
 .bigBox .projectLi li:hover {
     box-shadow: 0 0 5px #214B5B;
-}
+} */
 
 .bigBox .projectLi li:first-child {
     margin-top: 0px;
@@ -197,6 +197,14 @@ body .personalBox {
 
 .bigBox .projectLi li:last-child {
     margin-bottom: 0px;
+    line-height: 72px;
+}
+/* 暂无 */
+.notYet{
+    letter-spacing: 10px;
+    font-size: 20px;
+    text-align: center;
+    opacity: 0.6;
 }
 
 /* 标题 */
