@@ -149,24 +149,24 @@ h5 .onOff .onOffBorder .onOffRod {
     display: none;
     margin: 10px 0px;
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     color: #214B5B;
 }
 
 .operationNodeBox .nodeCreator span {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .operationNodeBox .lastRevision {
     display: none;
     margin: 10px 0px;
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     color: #214B5B;
 }
 
 .operationNodeBox .lastRevision span {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .operationNodeBox>input {
@@ -1002,6 +1002,21 @@ body .header {
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
+}
+
+.mainBoxMiddle .treeBox .treeBoxPercentageTips {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, 0);
 }
 
 .mainBox .mainBoxRight {

@@ -911,9 +911,10 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxContent.readOnly = true;
         operationNodeBoxContent.removeClass('textareaEditable');
         operationNodeBoxNodeCreator.show();
-        operationNodeBoxNodeCreator.innerHTML = '<span>创建者：</span>' + nowNode.userName;
+        operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
         operationNodeBoxLastRevision.show();
-        operationNodeBoxLastRevision.innerHTML = '<span>最后修改：</span>' + nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime).toLocaleDateString();
+        console.log(nowNode.lastEditTime);
+        operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
         operationNodeBoxSubmit.hide();
     }
 });
@@ -1144,8 +1145,8 @@ window.onload = function () {
             projectLevel.innerText = res.rank;
             console.log('创建时间：' + res.createTime);
             console.log('截止时间：' + res.deadline);
-            creationDate.innerText = new Date(res.createTime).toLocaleDateString();
-            closingDate.innerText = new Date(res.deadline).toLocaleDateString();
+            creationDate.innerText = new Date(res.createTime - 0).toLocaleDateString();
+            closingDate.innerText = new Date(res.deadline - 0).toLocaleDateString();
             var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
             progressContent.style.width = progress + '%';
             progressWave.style.left = progress + '%';

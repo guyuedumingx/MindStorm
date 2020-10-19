@@ -22,7 +22,7 @@ user.push({
     star: 22,
     editable: true,
     lastEditName: '张三',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '张三',
     father: 0,
 });
@@ -35,7 +35,7 @@ user.push({
     star: 19,
     editable: true,
     lastEditName: '李四',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '李四',
     father: 1,
 });
@@ -48,7 +48,7 @@ user.push({
     star: 3,
     editable: true,
     lastEditName: '马六',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '王五',
     father: 1,
 });
@@ -61,7 +61,7 @@ user.push({
     star: 4,
     editable: true,
     lastEditName: '马六',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '马六',
     father: 1,
 });
@@ -74,7 +74,7 @@ user.push({
     star: 8,
     editable: true,
     lastEditName: '陈七',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '张三',
     father: 1,
 });
@@ -87,7 +87,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 1,
 });
@@ -100,7 +100,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 1,
 });
@@ -113,7 +113,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 1,
 });
@@ -126,7 +126,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 3,
 });
@@ -139,7 +139,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 3,
 });
@@ -152,7 +152,7 @@ user.push({
     star: 15,
     editable: true,
     lastEditName: '王五',
-    lastEditTime: new Date('2020/10/10 8:8:8'),
+    lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
     userName: '陈七',
     father: 8,
 });
