@@ -87,12 +87,11 @@ var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
 var projectCreatorName = mainBoxLeft.getDom('.creator h4 span'); // 项目创建者
 var introduceOpen = mainBoxLeft.getDom('.introduce a'); // 项目简介展开的开关
 var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介内容盒子
-var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
+var projectLevel = introduce.getDom('span'); // 获取项目等级盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
-projectIdBox.innerText = projectId;
 
 // 随机颜色
 operationProjectTitle.style.backgroundColor = randomColor(120, 180);
@@ -164,8 +163,8 @@ treeBox.addEventListener('mouseout', function () {
 });
 
 treeBox.addEventListener('mousewheel', function (e) {
-    e.preventDefault();
     if (ctrlState) {
+        e.preventDefault();
         if (e.deltaY < 0) {
             treeMultiple += 0.1;
             treeMultiple = treeMultiple < 5 ? treeMultiple : 5;
@@ -700,7 +699,7 @@ function treeAppendNode(father, nodeData) {
 }
 
 // ——————————————————右侧—————————————————— 
-var projectLevel = getDom('.mainBoxRight .projectLevel h4 span'); // 项目等级
+var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
 var addNode = btnArr[0]; // 创建节点
@@ -746,6 +745,7 @@ operationNodeBoxSubmit.hide();
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
+projectIdBox.innerText = projectId;
 
 // 改变当前节点的函数
 function changeNodeEvent() {
