@@ -449,8 +449,7 @@ body .header {
 
 .mainBoxLeft .creator h4 {
     padding: 0px 20px;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 20px;
     line-height: 60px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -459,8 +458,8 @@ body .header {
 }
 
 .mainBoxLeft .creator h4 span {
-    font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .mainBoxLeft .introduce {

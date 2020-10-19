@@ -84,6 +84,7 @@ document.addEventListener('keyup', function (e) {
 
 // ——————————————————左侧——————————————————
 var mainBoxLeft = getDom('.mainBoxLeft'); // 左侧大盒子
+var projectCreatorName = mainBoxLeft.getDom('.creator h4 span'); // 项目创建者
 var introduceOpen = mainBoxLeft.getDom('.introduce a'); // 项目简介展开的开关
 var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介内容盒子
 var projectIdBox = introduce.getDom('span'); // 获取项目id盒子
@@ -1086,6 +1087,7 @@ window.onload = function () {
         },
         success: function (res) {
             introduceP.innerText = res.introduction;
+            projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
             creationDate.innerText = new Date(res.createTime).toLocaleDateString();
