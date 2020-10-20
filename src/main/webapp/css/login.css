@@ -352,7 +352,23 @@ body::after {
 /* #endregion */
 
 body {
-    background-image: url(../img/background2.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-color: #E6EEF1;
+}
+.flower{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url(../img/flower.png);
+    background-size: contain;
+    animation: upDowm 1.3s ease-in-out 0s infinite alternate;
+}
+
+@keyframes upDowm {
+    from {
+        transform: translate(0, 0)
+    }
+
+    to {
+        transform: translate(0, 20px)
+    }
 }

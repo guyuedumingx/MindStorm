@@ -49,6 +49,13 @@ logOut.addEventListener("click", function () {
     window.location.href = "/login.html";
 })
 
+//个人下拉框
+//获取下拉框
+var spinner = getDom(".spinner");
+//获取个人框
+var headNav = getDom(".head_nav");
+clickOpenBlankClose(headNav, spinner);
+
 
 
 
@@ -145,12 +152,7 @@ back[1].addEventListener("click", function () {
 
 
 
-//个人下拉框
-//获取下拉框
-var spinner = getDom(".spinner");
-//获取个人框
-var headNav = getDom(".head_nav");
-clickOpenBlankClose(headNav, spinner);
+
 
 //是否公开选择-----------
 var onOff = getDom(".onOffBorder");
