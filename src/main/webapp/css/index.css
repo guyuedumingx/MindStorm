@@ -135,23 +135,6 @@ body .header {
     pointer-events: none;
 }
 
-/* 消息通知 */
-.header .personal .message {
-    display: none;
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    border-radius: 50px;
-    background-image: url(../img/message_q.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-.header .personal .message:hover {
-    background-image: url(../img/message.png);
-    box-shadow: 0px 0px 3px 0px #214B5B;
-}
 
 /*#endregion*/
 /*#region---------------主要内容----------------------*/
@@ -198,7 +181,7 @@ body .mainBox {
 .mainBox .Box>div>div {
     border-radius: 15px;
     background-color: #fff;
-    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555, 6px 6px 0px #444, 7px 7px 0px #333, 8px 8px 7px #001135;
+    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555;
     transition: all .3s;
     /* border: solid #EEF7F2; */
      overflow: hidden;
@@ -207,7 +190,7 @@ body .mainBox {
                           
 .mainBox .Box .smallBox:hover {
     box-shadow: 0px 0px 20px 0px #2c3e50;
-    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555;
+    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888;
     transform: translate(5px,5px);
     cursor: pointer;
 }
@@ -326,7 +309,7 @@ body .mainBox {
     height: 520px;
     cursor: default;
 }
-
+/* 导入 */
 .import {
     position: absolute;
     bottom: 30px;
@@ -341,7 +324,7 @@ body .mainBox {
 
 .importBut {
     position: absolute;
-    bottom: 30px;
+    bottom: 45px;
     left: 60px;
     width: 70px;    
     line-height: 25px;
@@ -350,11 +333,10 @@ body .mainBox {
     border: 1px solid;
     pointer-events: none;
 }
-
 /* 位置 */
 .mainBox .est_bigBox>div {
     display: table;
-    margin: 30px auto 0 auto;
+    margin: 25px auto 0 auto;
     font-size: 22px;
     font-weight: bold;
     color: #214B5B;
@@ -372,7 +354,7 @@ body .mainBox {
     font-size: 18px;
     height: 40px;
     width: 400px;
-    border: solid;
+    border: solid #999;
     border-radius: 10px;
     vertical-align: middle;
 }
@@ -389,7 +371,7 @@ body .mainBox {
     padding: 10px;
     line-height: 22px;
     font-size: 15px;
-    border: solid;
+    border: solid #999;
     border-radius: 10px;
     outline: none;
     resize: none;
@@ -399,7 +381,7 @@ body .mainBox {
 .mainBox .Box .est_bigBox .introduction {
     position: relative;
 }
-
+/* 字数统计 */
 .mainBox .Box .est_bigBox .introduction .sum {
     position: absolute;
     bottom: 10px;
@@ -419,16 +401,18 @@ body .mainBox {
     display: flex;
     flex-flow: row nowrap;
     width: 520px;
-    margin-top: 10px;
+    margin-top: 15px;
     justify-content:space-between;
 }
 
-.mainBox .Box .est_bigBox .choice>span {
-    /* display: inline-block; */
-}
+/* .mainBox .Box .est_bigBox .choice>span {
 
+} */
+    
 .mainBox .Box .est_bigBox .choice>span >span{
-    font-size: 16px;
+    float: left;
+    margin-right:5px;
+    font-size: 18px;
     font-weight: normal;
 }
 
@@ -440,7 +424,8 @@ body .mainBox {
 
 /*时间、 等级 */
 #projectRank ,#projectTime{
-    /* padding: 2px; */
+    float: right;
+    padding: 2px 5px;
     border-radius: 5px;
     font-size: 10px;
 }
@@ -448,10 +433,11 @@ body .mainBox {
 /* 是否选择 */
 /* 按钮 */
 .onOffBorder {
-    display: inline-block;
+    float: right;
     position: relative;
     width: 40px;
-    height: 18px;
+    height:18px;
+    margin-top: 4px;
     border-radius: 9px;
     box-sizing: border-box;
     overflow: hidden;
@@ -500,8 +486,8 @@ body .mainBox {
 /* 返回按钮 */
 .mainBox .Box .back {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 15px;
+    right: 15px;
     width: 28px;
     height: 28px;
     background-image: url(../img/back_q.png);
