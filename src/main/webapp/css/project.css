@@ -299,6 +299,13 @@ body .header {
 }
 
 /* logo位置 */
+.header .logoBox{
+    float: left;
+}
+.header .logoBox span{
+    position: absolute;
+    bottom: 15px;
+}
 .header .logo {
     float: left;
     margin-top: 6px;
