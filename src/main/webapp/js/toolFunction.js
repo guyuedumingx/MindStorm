@@ -1344,6 +1344,7 @@ Node.prototype.inputEnterEvent = function (fun) {
  * 
  * @param {Node} dom 
  * @param {string} key 
+ * @author 60rzvvbj
  */
 function getCSS(dom, key) {
     var t = dom.style.cssText.match(new RegExp("(^|\\s)" + key + ": ([^;]+)(;|$)"));
@@ -1352,4 +1353,20 @@ function getCSS(dom, key) {
 
 Node.prototype.getCSS = function (key) {
     return getCSS(this, key);
+}
+
+/**
+ * 
+ * 函数功能：将数据复制到剪切板
+ * 
+ * @param {*} text 要复制到剪切板的内容
+ * @author 60rzvvbj
+ */
+function setShearPlateData(text) {
+    var input = document.createElement('input');
+    document.body.appendChild(input);
+    input.setAttribute('value', text);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
 }

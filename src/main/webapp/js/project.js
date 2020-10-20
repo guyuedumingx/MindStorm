@@ -706,6 +706,7 @@ function treeAppendNode(father, nodeData) {
 
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
+var projectCopyId = getDom('.mainBoxRight .projectId h4 .copyId'); // 复制ID
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
 var addNode = btnArr[0]; // 创建节点
@@ -751,7 +752,14 @@ operationNodeBoxSubmit.hide();
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
+
+// 初始化ID
 projectIdBox.innerText = projectId;
+
+// 添加点击复制ID事件
+projectCopyId.addEventListener('click', function () {
+    setShearPlateData(projectId);
+});
 
 // 改变当前节点的函数
 function changeNodeEvent() {
