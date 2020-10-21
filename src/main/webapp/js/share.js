@@ -39,4 +39,4 @@ logOut.addEventListener("click", function () {
 var spinner = getDom(".spinner");
 //获取个人框
 var headNav = getDom(".head_nav");
-clickOpenBlankClose(headNav, spinner);
+// clickOpenBlankClose(headNav, spinner);
