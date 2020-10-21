@@ -284,16 +284,14 @@ body .mainBox {
 /* 导入 */
 .import {
     position: absolute;
-    bottom: 30px;
+    bottom: 45px;
     left: 60px;
     width: 70px;
     border: 1px solid;
     border-radius: 50px;
     opacity: 0;
     filter: alpha(opacity=0);
-    cursor: pointer
 }
-
 .importBut {
     position: absolute;
     bottom: 45px;
@@ -305,6 +303,7 @@ body .mainBox {
     border: 1px solid;
     pointer-events: none;
 }
+
 /* 位置 */
 .mainBox .est_bigBox>div {
     display: table;
