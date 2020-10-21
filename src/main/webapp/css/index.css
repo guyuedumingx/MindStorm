@@ -31,38 +31,6 @@ body .header {
     background-size: contain;
 }
 
-/* 登录注册容器 */
-.header .logOn {
-    position: relative;
-    float: right;
-    /* display: none; */
-}
-.logOn:hover::after {
-    width: 100%;
-}
-.logOn::after {
-    content: '';
-    position: absolute;
-    border-radius: inherit;
-    width: 0%;
-    height: 3px;
-    background: #214B5B;
-    left: 0px;
-    bottom: 25px;
-    z-index: -1;
-    transition: all .25s ease;
-    left: 50%;
-    transform: translate(-50%);
-}
-
-/* 字体大小位置设置 */
-.header .logOn a {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 100px;
-    color: #214B5B;
-}
-
 /* 个人头像等容器 */
 .header .personal {
     position: relative;
