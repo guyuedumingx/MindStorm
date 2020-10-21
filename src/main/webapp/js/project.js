@@ -88,8 +88,18 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectLevel = introduce.getDom('span'); // 获取项目等级盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+var participantOn = introduce.getDom('.introduceMain .member'); // 成员列表开关
+var participant = getDom('.mainBoxLeft .introduce .participant'); // 成员列表盒子
+var participantOff = participant.getDom('i'); // 成员列表盒子
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
+
+participantOn.addEventListener('click', function () {
+    participant.style.left = '100%';
+});
+participantOff.addEventListener('click', function () {
+    participant.style.left = '0%';
+});
 
 // 随机颜色
 operationProjectTitle.style.backgroundColor = randomColor(120, 180);
