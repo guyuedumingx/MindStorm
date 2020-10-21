@@ -39,4 +39,82 @@ logOut.addEventListener("click", function () {
 var spinner = getDom(".spinner");
 //获取个人框
 var headNav = getDom(".head_nav");
-// clickOpenBlankClose(headNav, spinner);
+clickOpenBlankClose(headNav, spinner);
+
+//获取头像框
+var headBox = getDom(".headBox");
+//获取input
+var inPic = getDom(".inPic");
+//获取but
+var changeH = getDom(".changeH");
+
+headBox.addEventListener("mouseover", function () {
+    inPic.style.display = "block";
+    changeH.style.display = "block";
+});
+headBox.addEventListener("mouseout", function () {
+    inPic.style.display = "none";
+    changeH.style.display = "none";
+});
+//头像上传
+//导入
+var inPic = getDom(".inPic");
+
+function UpladFile() {
+    var file = inPic.files[0];
+    //创建formdata对象
+    var formdata = new FormData();
+    formdata.append("file", file);
+    //创建xhr，使用ajax进行文件上传
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "/user/avatar");
+    xhr.send(formdata);
+    //回调
+    xhr.onreadystatechange = function () {
+        if (xhr.status == 200) {
+            headBox.style.backgroungImg = ""; //跳转页面
+        } else {
+            topAlert("导入失败");
+        }
+    };
+}
+
+//获取name盒子
+var nameBox = getDom(".nameBox");
+nameBox.value = userName;
+
+//获取修改按钮
+var modifyN = getDom(".modifyN");
+//点击修改
+modifyN.addEventListener("click", function () {
+    nameBox.readOnly = false;
+    nameBox.style.borderBottom = "solid 1px";
+});
+//回车修改cookie
+// nameBox.inputEnterEvent(function () {
+//     nameBox.value = userName;
+//     nameBox.readOnly = true;
+//     nameBox.style.borderBottom = "";
+// });
+
+
+//高度自适应-----------
+// function heightAuto() {
+//     //获取个人信息框架
+//     var personalBox = getDom(".personalBox");
+//     //获取项目框架
+//     var bigBox = getDom(".bigBox");
+//     //个人信息高度
+//     var personalHeight = personalBox.offsetHeight;
+//     //项目离顶部距离
+//     var boxTop = personalHeight + 60;
+//     bigBox.style.top = boxTop + "px";
+
+//     //获取项目高度
+//     var projectHeight = bigBox.offsetHeight;
+//     //高度
+//     projectLi.style.maxHeight = projectHeight - 70 + "px"; //70为外边距
+// }
+// heightAuto();
+
+// window.addEventListener('resize', heightAuto);

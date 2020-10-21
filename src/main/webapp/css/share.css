@@ -8,6 +8,7 @@ body .header {
     min-width: 800px;
     width: 100%;
     height: 60px;
+    border: solid;
 }
 
 .mainTitle {
@@ -24,6 +25,7 @@ body .header {
 .header .logoBox {
     float: left;
 }
+
 .header .logo {
     float: left;
     margin-top: 6px;
@@ -32,6 +34,7 @@ body .header {
     background-image: url(../img/logo1.png);
     background-size: contain;
 }
+
 .mainTitle {
     display: inline-block;
     line-height: 60px;
@@ -47,14 +50,18 @@ body .header {
     float: right;
     /* display: none; */
 }
-.logOn a{
+
+.logOn a {
     position: relative;
 }
-.logOn .login:hover::after,.logOn .register:hover::after {
+
+.logOn .login:hover::after,
+.logOn .register:hover::after {
     width: 100%;
 }
 
-.logOn .login::after,.logOn .register::after {
+.logOn .login::after,
+.logOn .register::after {
     content: '';
     position: absolute;
     border-radius: inherit;
@@ -77,9 +84,11 @@ body .header {
     line-height: 60px;
     color: #132C33;
 }
-.header .logOn span{
+
+.header .logOn span {
     cursor: default;
 }
+
 /* 个人头像等容器 */
 .header .personal {
     position: relative;
@@ -96,20 +105,23 @@ body .header {
 .header .personal .spinner {
     position: absolute;
     width: 300px;
-    height:250px;
+    height: 240px;
     top: 60px;
     right: 0px;
-    background-color: #fff;
+    background-color: rgb(243, 246, 250);
     border-radius: 5px;
     border: solid 1px rgba(150, 150, 150, 0.336);
     box-shadow: 0 0 3px #132C33;
-    animation: show 0.5s;
+    animation: show 0.3s;
+    cursor: default;
+    z-index: 99;
 }
+
 /* 小三角 */
-.header .personal .spinner::before{
+.header .personal .spinner::before {
     position: absolute;
     top: -12px;
-    right:20px;
+    right: 20px;
     width: 0px;
     height: 0px;
     border: 10px solid transparent;
@@ -117,10 +129,11 @@ body .header {
     transform: translate(-50%, -50%);
     content: '';
 }
-.header .personal .spinner::after{
+
+.header .personal .spinner::after {
     position: absolute;
     top: -10px;
-    right:20px;
+    right: 20px;
     width: 0px;
     height: 0px;
     border: 10px solid transparent;
@@ -129,42 +142,158 @@ body .header {
     content: '';
 }
 
-/* 头像昵称 */
-.header .personal .spinner .headName{
+/* 头像昵称--- */
+.header .personal .spinner .headName {
     width: 100%;
-    height: 70px;
+    padding: 20px 0 0 0;
 }
+
 /* 头像 */
-.header .personal .spinner .headName span{
-    margin: 12px 20px 0 20px;
+.header .personal .spinner .headName .headBox {
+    position: relative;
     width: 46px;
     height: 46px;
+    margin: 0 20px 0 20px;
     border: solid 1px;
     border-radius: 50px;
+    background-image: url(../img/undraw_Waiting.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    vertical-align: middle;
 }
-.header .personal .spinner .headName input{
-    bottom:10px;
+
+/* 图片上传 */
+.header .personal .spinner .headName .inPic {
+    display: none;
+    position: absolute;
+    bottom: 0px;
     width: 46px;
     height: 15px;
     border-radius: 0 0 50px 50px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+
 }
-/* 邮箱 */
-.header .personal .spinner .mailbox{
+
+/* 覆盖按钮 */
+.header .personal .spinner .headBox span {
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    width: 46px;
+    height: 15px;
+    text-align: center;
+    font-size: 12px;
+    border-top: 1px solid rgba(150, 150, 150, 0.616);
+    box-shadow: 0 0 3px #132C33;
+    background-color: rgb(240, 241, 243);
+    border-radius: 0 0 50px 50px;
+    pointer-events: none;
+}
+
+/* 昵称 */
+.header .personal .spinner .headName .nameBox {
+    font-size: 20px;
+    font-weight: bold;
+    width: 120px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+/* 修改 */
+.header .personal .spinner .headName .modifyN {
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 15px 20px;
+    background-image: url(../img/modify.png);
+    background-size: contain;
+    cursor: pointer;
+}
+
+/* 邮箱--- */
+.header .personal .spinner .mailbox {
     width: 100%;
     height: 50px;
-    border: solid;
 }
-/* 个性签名 */
-.header .personal .spinner .signature{
+
+.mailbox span {
+    margin-left: 25px;
+    line-height: 50px;
+}
+
+.mailbox .email {
+    margin-left: 0;
+    color: #999;
+}
+
+/* 个性签名--- */
+.header .personal .spinner .signature {
     width: 100%;
     height: 50px;
-    border: solid;
 }
-/* 设置 */
-.header .personal .spinner .setUp{
+
+.signature div,
+.signature input {
+    margin-bottom: 8px;
+    margin-left: 25px;
+    font-size: 15px;
+}
+
+.signature input {
+    width: 80%;
+    border: none;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: transparent;
+}
+
+/* 修改 */
+.header .personal .spinner .signature .modifyS {
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 0px 20px;
+    background-image: url(../img/modify.png);
+    background-size: contain;
+    cursor: pointer;
+}
+
+/* 设置---- */
+.header .personal .spinner .setUp {
     width: 100%;
     height: 50px;
-    border: solid;
+}
+
+.setUp div {
+    position: relative;
+    line-height: 50px;
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+.setUp div:hover::after {
+    width: 100%;
+}
+
+.setUp div::after {
+    content: '';
+    position: absolute;
+    border-radius: inherit;
+    width: 0%;
+    height: 2px;
+    background: #214B5B;
+    left: 0px;
+    bottom: 10px;
+    /* z-index: 0; */
+    transition: all .25s ease;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 /* 头像 */
@@ -187,10 +316,11 @@ body .header {
     color: #214B5B;
     pointer-events: none;
 }
+
 /*#endregion*/
 /*#region--------------------- 主要内容--------------------- */
 
 /*#endregion*/
-body{
+body {
     background-color: #E6EEF1;
 }
