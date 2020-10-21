@@ -315,6 +315,7 @@ body .header {
     background-image: url(../img/logo1.png);
     background-size: contain;
 }
+
 /* 个人头像等容器 */
 .header .personal {
     position: relative;
@@ -443,7 +444,6 @@ body .header {
     flex: 4;
     position: relative;
     width: 100%;
-    height: 180px;
     border-radius: 5px;
     margin-top: 10px;
     background-color: #f8fcfa;
@@ -473,7 +473,7 @@ body .header {
     color: #214b5b;
 }
 
-.mainBoxLeft .introduce .introduceMain .member{
+.mainBoxLeft .introduce .introduceMain .member {
     position: absolute;
     top: 13px;
     right: 20px;
@@ -482,7 +482,7 @@ body .header {
     cursor: pointer;
 }
 
-.mainBoxLeft .introduce .introduceMain .member:hover{
+.mainBoxLeft .introduce .introduceMain .member:hover {
     color: rgb(255, 167, 15);
 }
 
@@ -525,90 +525,60 @@ body .header {
     content: '';
 }
 
-.mainBoxLeft .participant {
+.mainBoxLeft .introduce .participant {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
     align-items: stretch;
-    flex: 3;
+    position: absolute;
+    top: 0px;
+    left: 100%;
+    z-index: 999;
     width: 100%;
-    height: 340px;
-    border-radius: 5px;
-    margin-top: 10px;
-    background-color: #f8fcfa;
+    height: 100%;
+    padding: 15px 20px;
+    border-radius: 0px 5px 5px 0px;
+    box-sizing: border-box;
+    /* background-color: rgba(0, 0, 0, 0.3); */
+    background-color: #eee;
 }
 
-.mainBoxLeft .participant h4 {
-    padding: 10px 20px 0px;
-    font-size: 20px;
-    color: #214b5b;
+.mainBoxLeft .introduce .participant h5 {
+    font-size: 16px;
+    color: #214B5B;
 }
 
-.mainBoxLeft .participant ul {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    align-items: stretch;
+.mainBoxLeft .introduce .participant ul {
     flex: 1;
-    padding: 10px 20px 10px;
-    overflow: hidden;
+    padding: 10px 0px;
+    font-size: 16px;
+    color: #214B5B;
+    overflow: auto;
 }
 
-.mainBoxLeft .participant ul li {
+.mainBoxLeft .introduce .participant ul li {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    padding: 5px 0px;
     width: 100%;
-    height: 40px;
-    border-radius: 5px;
-    margin-bottom: 8px;
-    box-sizing: border-box;
-}
-
-.participant ul li .userPhoto {
-    width: 30px;
     height: 30px;
-    border-radius: 20px;
-    background-color: skyblue;
 }
 
-.participant ul li .userName {
+.mainBoxLeft .introduce .participant ul li .userPhoto {
+    width: 30px;
+    height: 100%;
+    border-radius: 15px;
+    background-color: pink;
+}
+
+.mainBoxLeft .introduce .participant ul li .userName {
     flex: 1;
-    height: 40px;
-    margin: 0px 10px;
-    font-size: 14px;
-    /* font-weight: 700; */
-    line-height: 40px;
-    text-overflow: ellipsis;
+    padding-left: 5px;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
-    color: #214B5B;
-    cursor: pointer;
-}
-
-.participant ul li:hover .userName {
-    font-weight: 700;
-    /* color: #132C33; */
-}
-
-.participant ul li span {
-    display: none;
-    width: 60px;
-    height: 24px;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 24px;
-    text-align: center;
-    color: #fff;
-    background-color: #9bb6a8;
-    opacity: 0;
-    cursor: pointer;
-    transition: opacity .5s;
-}
-
-.participant ul li:hover span {
-    opacity: 1;
 }
 
 .mainBoxLeft .displayControl {
