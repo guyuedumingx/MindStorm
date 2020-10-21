@@ -778,6 +778,16 @@ projectCopyId.addEventListener('click', function () {
     setShearPlateData(projectId);
 });
 
+function btnDisable(btn) {
+    btn.jurisdiction = false;
+    btn.style.cursor = 'not-allowed';
+}
+
+function btnCancelDisable(btn) {
+    btn.jurisdiction = true;
+    btn.style.cursor = 'pointer';
+}
+
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
@@ -787,10 +797,10 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
         nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
         nowNodeBox.children[1].innerText = '';
-        addNode.jurisdiction = true;
-        removeNode.jurisdiction = true;
-        changeNode.jurisdiction = true;
-        queryNode.jurisdiction = true;
+        btnCancelDisable(addNode);
+        btnCancelDisable(removeNode);
+        btnCancelDisable(changeNode);
+        btnCancelDisable(queryNode);
     } else {
         nowNodeBox.children[0].innerText = '???';
         nowNodeBox.children[1].style.backgroundColor = '#ccc';
@@ -798,10 +808,10 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = '30px';
         nowNodeBox.children[1].style.borderRadius = '15px';
         nowNodeBox.children[1].innerText = '?';
-        addNode.jurisdiction = false;
-        removeNode.jurisdiction = false;
-        changeNode.jurisdiction = false;
-        queryNode.jurisdiction = false;
+        btnDisable(addNode);
+        btnDisable(removeNode);
+        btnDisable(changeNode);
+        btnDisable(queryNode);
     }
 }
 

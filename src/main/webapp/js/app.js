@@ -271,21 +271,20 @@ app.post('/user/login', function (req, res) {
     }
     // }
 });
-app.get('/util', function (req, res) {
+app.get('/util/email', function (req, res) {
     var text = req.query;
-    console.log(text);
-    if (text.method == 'isExist') {
-        if (text.email == '1808078515@qq.com') {
-            res.send('200');
-        } else {
-            res.send('500');
-        }
-    } else if (text.method == 'sendEmail') {
-        res.send({
-            auth_code: '1234',
-            status_code: '200'
-        });
+    if (text.email == '1808078515@qq.com') {
+        res.send('200');
+    } else {
+        res.send('500');
     }
+});
+app.post('/util/email', function (req, res) {
+    var text = req.body;
+    res.send({
+        auth_code: '123456',
+        status_code: '200'
+    });
 });
 app.get('/project', function (req, res) {
     res.send({

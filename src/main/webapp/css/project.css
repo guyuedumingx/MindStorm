@@ -299,13 +299,15 @@ body .header {
 }
 
 /* logo位置 */
-.header .logoBox{
+.header .logoBox {
     float: left;
 }
-.header .logoBox span{
+
+.header .logoBox span {
     position: absolute;
     bottom: 15px;
 }
+
 .header .logo {
     float: left;
     margin-top: 6px;
@@ -877,10 +879,11 @@ body .header {
 }
 
 .progressBar .progressBarTop .progressBox .progressContent {
-    width: 70%;
+    width: 0%;
     height: 100%;
     border-radius: 7.5px;
     background-color: #214B5B;
+    transition: width 2s;
 }
 
 @keyframes waveRotate {
@@ -896,13 +899,14 @@ body .header {
 .progressBar .progressBarTop .progressBox .wave {
     position: absolute;
     top: -2.5px;
-    left: 70%;
+    left: 0%;
     width: 15px;
     height: 15px;
     border-radius: 45% 47% 44% 42%;
     margin-left: -10px;
     background-color: rgba(33, 75, 91, 0.7);
     animation: waveRotate 3s linear infinite;
+    transition: left 2s;
 }
 
 .progressBar .progressBarTop .progressBox .wave::before {
