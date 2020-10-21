@@ -149,12 +149,14 @@ var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创�
 var closingDate = getDom('.progressBar .progressBarTop .closingDate'); // 截止日期
 var progressContent = getDom('.progressBox .progressContent'); // 进图条盒子
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
+var progressCountDown = getDom('.progressBar .countDown'); // 提示还剩多长时间的盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
 var treeBoxPercentageTips = getDom('.mainBoxMiddle .treeBox .treeBoxPercentageTips'); // 提示树盒子缩放倍数的盒子
 var treeBoxState = false; // 鼠标是否在树盒子中
 var treeMultiple = 100; // 树盒子缩放倍数
 
+// 显示树盒子缩放倍数提示盒子
 function percentageTips(num) {
     if (treeBoxPercentageTips.timer) {
         clearInterval(treeBoxPercentageTips.timer);
@@ -171,6 +173,21 @@ function percentageTips(num) {
             treeBoxPercentageTips.style.opacity = 1 / 30 * (30 - i) + '';
         }
     }, 25);
+}
+
+// 计算剩余时间
+function calculateRemainingTime(millisecond) {
+    if (millisecond < DAY) {
+        return 'Less than a day';
+    } else if (millisecond < WEEK) {
+        return Math.floor(millisecond / DAY) + ' days left';
+    } else if (millisecond < MONTH) {
+        return Math.floor(millisecond / WEEK) + ' weeks left';
+    } else if (millisecond < YEAR) {
+        return Math.floor(millisecond / MONTH) + ' months left';
+    } else {
+        return Math.floor(millisecond / YEAR) + ' years left';
+    }
 }
 
 // 维护treeBoxState变量相关事件
@@ -761,6 +778,16 @@ projectCopyId.addEventListener('click', function () {
     setShearPlateData(projectId);
 });
 
+function btnDisable(btn) {
+    btn.jurisdiction = false;
+    btn.style.cursor = 'not-allowed';
+}
+
+function btnCancelDisable(btn) {
+    btn.jurisdiction = true;
+    btn.style.cursor = 'pointer';
+}
+
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
@@ -770,10 +797,10 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
         nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
         nowNodeBox.children[1].innerText = '';
-        addNode.jurisdiction = true;
-        removeNode.jurisdiction = true;
-        changeNode.jurisdiction = true;
-        queryNode.jurisdiction = true;
+        btnCancelDisable(addNode);
+        btnCancelDisable(removeNode);
+        btnCancelDisable(changeNode);
+        btnCancelDisable(queryNode);
     } else {
         nowNodeBox.children[0].innerText = '???';
         nowNodeBox.children[1].style.backgroundColor = '#ccc';
@@ -781,10 +808,10 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = '30px';
         nowNodeBox.children[1].style.borderRadius = '15px';
         nowNodeBox.children[1].innerText = '?';
-        addNode.jurisdiction = false;
-        removeNode.jurisdiction = false;
-        changeNode.jurisdiction = false;
-        queryNode.jurisdiction = false;
+        btnDisable(addNode);
+        btnDisable(removeNode);
+        btnDisable(changeNode);
+        btnDisable(queryNode);
     }
 }
 
@@ -1157,7 +1184,8 @@ window.onload = function () {
             projectLevel.innerText = res.rank;
             creationDate.innerText = new Date(res.createTime - 0).toLocaleDateString();
             closingDate.innerText = new Date(res.deadline - 0).toLocaleDateString();
-            var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
+            progressCountDown.innerText = calculateRemainingTime(res.deadline - Date.now());
+            var progress = (1 - (res.deadline - Date.now()) / (res.deadline - res.createTime)) * 100;
             progressContent.style.width = progress + '%';
             progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);

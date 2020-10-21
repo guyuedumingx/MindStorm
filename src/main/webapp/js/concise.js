@@ -58,3 +58,8 @@ Node.prototype.getDom = function (str) {
 Node.prototype.getDomA = function (str) {
     return getDomA(str, this);
 }
+
+const DAY = 86400000; // 一天
+const WEEK = 604800000; // 一周
+const MONTH = 2592000000; // 30天
+const YEAR = 31536000000; // 365天
