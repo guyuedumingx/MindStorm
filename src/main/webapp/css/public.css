@@ -19,6 +19,18 @@ a {
     cursor: pointer;
 }
 
+/* 设置祖先元素的高度 */
+html,
+body {
+    position: relative;
+    height: 100%;
+    min-width: 1260px;
+    min-height: 700px;
+}
+
+/*#endregion*/
+
+
 /* 自制屏幕顶部alert样式 */
 .topAlert {
     position: fixed;
@@ -29,15 +41,6 @@ a {
     transform: translate(-50%);
 }
 
-/* 设置祖先元素的高度 */
-html,
-body {
-    position: relative;
-    height: 100%;
-    min-width: 1260px;
-    min-height: 700px;
-}
-
 /*高度塌陷处理*/
 .cleafix::before,
 .cleafix::after {
@@ -45,6 +48,8 @@ body {
     content: "";
     clear: both;
 }
+
+/* ———慢慢变大动画——— */
 
 /* --显示动画--- */
 @keyframes show {
@@ -57,10 +62,6 @@ body {
     }
 }
 
-
-/*#endregion*/
-
-/* ———慢慢变大动画——— */
 @keyframes toBig {
     0% {
         transform: scale(0.5, 0.5);
