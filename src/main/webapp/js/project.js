@@ -27,10 +27,8 @@ var userName = getCookie("user_name");
 //判断是否登录------------
 if (loginPd == null) {
     personal.style.display = "none";
-    logOn.style.display = "block";
 } else {
     personal.style.display = "block";
-    logOn.style.display = "none";
     nameU.innerText = userName;
 }
 // end header

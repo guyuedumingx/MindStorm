@@ -316,21 +316,6 @@ body .header {
     background-image: url(../img/logo1.png);
     background-size: contain;
 }
-
-/* 登录注册容器 */
-.header .logOn {
-    float: right;
-    display: none;
-}
-
-/* 字体大小位置设置 */
-.header .logOn a {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 60px;
-    color: #214B5B;
-}
-
 /* 个人头像等容器 */
 .header .personal {
     position: relative;
