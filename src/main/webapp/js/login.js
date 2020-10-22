@@ -158,12 +158,6 @@ function judgeEmail(node) {
     if (str != '请输入邮箱') {
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(str)) {
             reportError(node, '邮箱格式不正确');
-            try {
-                throw new exception();
-            } catch (e) {
-                console.log(e);
-                topAlert(e.toString());
-            }
             return false;
         }
         clearError(node);
@@ -176,7 +170,7 @@ function setEmailJudge(node) {
     if (judgeEmail(node)) {
         ajax({
             type: 'get',
-            url: '/util/email',
+            url: '/util',
             data: {
                 email: node.value,
             },
@@ -216,7 +210,7 @@ function registerGetVC(node) {
         }, 1000);
         ajax({
             type: 'post',
-            url: '/util/email',
+            url: '/util',
             data: {
                 email: node.value,
                 sendFor: 'register'
