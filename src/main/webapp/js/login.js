@@ -1,3 +1,7 @@
+// 设置文本不可选中
+var tool = new Tool(document, window);
+tool.textProhibition();
+
 // 页面切换
 var loginLink = getDomA('.link a');
 var forgetPasswoed = loginLink[0];
