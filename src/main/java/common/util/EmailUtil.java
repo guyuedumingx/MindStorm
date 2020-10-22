@@ -1,8 +1,6 @@
 package common.util;
 
 import common.dto.StatusCode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
@@ -15,18 +13,15 @@ import java.util.Properties;
 public class EmailUtil {
     static String from = "";
     static String password = "";
-    static Logger logger;
 
     static {
         try {
-            logger = LoggerFactory.getLogger(EmailUtil.class);
             Properties pro = new Properties();
             InputStream is = EmailUtil.class.getClassLoader().getResourceAsStream("email.properties");
             pro.load(is);
             from = pro.getProperty("sender");
             password = pro.getProperty("password");
         } catch (Exception e) {
-            logger.debug("This is a debug message");
         }
     }
 
