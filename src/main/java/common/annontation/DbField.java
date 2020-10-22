@@ -13,4 +13,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface DbField {
     String value();
+    boolean insertIgnore() default false;
 }
