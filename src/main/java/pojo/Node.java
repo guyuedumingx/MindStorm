@@ -11,7 +11,7 @@ public class Node extends BaseModel{
    private int author;
    @DbField("project_id")
    private int projectId;
-   @DbField("star")
+   @DbField(value = "star",insertIgnore = true)
    private long star;
    private boolean isStared;
    @DbField("last_edit_id")

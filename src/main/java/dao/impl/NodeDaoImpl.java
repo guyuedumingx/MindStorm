@@ -33,7 +33,7 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
 
     private String createSql(Node node){
         String sql = "select *,count(user_id) as 'star' from t_node left join t_star " +
-                "on id=node_id group by id having node_id = "+node.getId();
+                "on id=node_id group by id having id = "+node.getId();
         return sql;
     }
 
