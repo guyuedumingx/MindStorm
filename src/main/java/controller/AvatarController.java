@@ -1,9 +1,17 @@
 package controller;
 
+import common.dto.Result;
+import common.dto.StatusCode;
+import common.util.WebUtil;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import pojo.User;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
+import java.util.List;
 
 /**
  * 负责用户头像
@@ -13,6 +21,14 @@ import java.io.*;
 @MultipartConfig
 public class AvatarController extends BaseController {
     private static final long serialVersionUID = 1L;
+    User user = null;
+
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        //获取用户id
+        HttpSession session = req.getSession();
+        user = (User)session.getAttribute("user");
+    }
 
     /**
      * 设置头像
@@ -22,14 +38,31 @@ public class AvatarController extends BaseController {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        Part part = request.getPart("image");
-//        String fileName = getFileName(part);
-//        String realPath = request.getSession().getServletContext().getRealPath("")+"img/";
-//        mkDir(realPath);
-//        writeTo(realPath+fileName,part);
-//        UserService service = new UserServiceImpl();
-//        HttpSession session = request.getSession();
-//        User user = (User)session.getAttribute("user");
+        Result result = new Result();
+        request.setCharacterEncoding("UTf-8");
+        String resPath = getServletContext().getRealPath("/avatar");
+        String filePath = "";
+
+        //检查我们是否有文件上传请求
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        DiskFileItemFactory disk = new DiskFileItemFactory(1024*10,new File(resPath));
+        ServletFileUpload up = new ServletFileUpload(disk);
+
+        try {
+            List<FileItem> list = up.parseRequest(request);
+            FileItem file = list.get(0);
+            InputStream in = file.getInputStream();
+            String name = file.getName();
+            String[] split = name.split("\\.");
+            filePath =user.getId()+"."+split[split.length-1];
+            writeTo(resPath+"/"+filePath,in);
+            result.setStatus_code(StatusCode.OK);
+        }catch (Exception e) {
+            result.setStatus_code(StatusCode.LOST);
+            e.printStackTrace();
+        }
+        result.put("url","/avatar/"+filePath);
+        WebUtil.renderJson(response,result);
     }
 
     /**
@@ -43,14 +76,7 @@ public class AvatarController extends BaseController {
         this.doPost(request, response);
     }
 
-    private String getFileName(Part part) {
-        String head = part.getHeader("Content-Disposition");
-        String fileName = head.substring(head.indexOf("filename=\"") + 10, head.lastIndexOf("\""));
-        return fileName;
-    }
-
-    private void writeTo(String fileName, Part part)throws IOException {
-        InputStream in = part.getInputStream();
+    private void writeTo(String fileName, InputStream in)throws IOException {
         OutputStream out = new FileOutputStream(fileName);
         byte[] b = new byte[1024];
         int length = -1;
@@ -59,13 +85,6 @@ public class AvatarController extends BaseController {
         }
         in.close();
         out.close();
-    }
-
-    private void mkDir(String path){
-        File file = new File(path);
-        if(!file.exists()){
-            file.mkdirs();
-        }
     }
 }
 
