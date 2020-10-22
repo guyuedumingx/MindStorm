@@ -39,4 +39,93 @@ logOut.addEventListener("click", function () {
 var spinner = getDom(".spinner");
 //获取个人框
 var headNav = getDom(".head_nav");
-// clickOpenBlankClose(headNav, spinner);
+clickOpenBlankClose(headNav, spinner);
+
+//获取头像框
+var headBox = getDom(".headBox");
+//获取input
+var inPic = getDom(".inPic");
+//获取but
+var changeH = getDom(".changeH");
+
+headBox.addEventListener("mouseover", function () {
+    inPic.style.display = "block";
+    changeH.style.display = "block";
+});
+headBox.addEventListener("mouseout", function () {
+    inPic.style.display = "none";
+    changeH.style.display = "none";
+});
+//头像上传
+//导入
+var inPic = getDom(".inPic");
+
+function UpladFile() {
+    var file = inPic.files[0];
+    //创建formdata对象
+    var formdata = new FormData();
+    formdata.append("file", file);
+    //创建xhr，使用ajax进行文件上传
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "/user/avatar");
+    xhr.send(formdata);
+    //回调
+    xhr.onreadystatechange = function () {
+        if (xhr.status_code == 200) {
+            headBox.style.backgroungImg = "http://localhost:8080"+ xhr.url; 
+        } else {
+            topAlert("导入失败");
+        }
+    };
+}
+
+//获取name盒子
+var nameBox = getDom(".nameBox");
+nameBox.value = userName;
+
+//获取修改按钮
+var modifyN = getDom(".modifyN");
+//点击修改
+modifyN.addEventListener("click", function () {
+    nameBox.readOnly = false;
+    nameBox.style.borderBottom = "solid 1px";
+});
+//回车修改cookie
+// nameBox.inputEnterEvent(function () {
+//     nameBox.value = userName;
+//     nameBox.readOnly = true;
+//     nameBox.style.borderBottom = "";
+// });
+
+
+//高度自适应-----------
+function heightAuto() {
+    //获取主要内容框架
+    var mainBox = getDom(".mainBox");
+    //项目离顶部距离
+    mainBox.style.top = "60px";
+}
+heightAuto();
+
+window.addEventListener('resize', heightAuto);
+
+
+function projectSize() {
+
+    //获取project显示框架
+    var projectBox = getDom(".projectBox");
+    var projectWidth = projectBox.offsetWidth;
+    var projectHeight = projectBox.offsetHeight;
+    //获取项目大框架
+    var projectLi = getDom(".projectLi");
+    //获取project板块
+    var liNav = getDomA(".liNav");
+    projectLi.style.width = projectWidth * liNav.length + "px";
+
+    for (var i = 0; i < liNav.length; i++) {
+        liNav[i].style.width = projectWidth + "px";
+        liNav[i].style.height = projectHeight + "px";
+    }
+}
+projectSize();
+window.addEventListener('resize', projectSize);
