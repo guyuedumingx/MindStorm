@@ -19,6 +19,18 @@ a {
     cursor: pointer;
 }
 
+/* 设置祖先元素的高度 */
+html,
+body {
+    position: relative;
+    height: 100%;
+    min-width: 1260px;
+    min-height: 700px;
+}
+
+/*#endregion*/
+
+
 /* 自制屏幕顶部alert样式 */
 .topAlert {
     position: fixed;
@@ -27,15 +39,6 @@ a {
     font-size: 3vw;
     font-family: '华文新魏';
     transform: translate(-50%);
-}
-
-/* 设置祖先元素的高度 */
-html,
-body {
-    position: relative;
-    height: 100%;
-    min-width: 1260px;
-    min-height: 700px;
 }
 
 /*高度塌陷处理*/
@@ -56,9 +59,6 @@ body {
         opacity: 1;
     }
 }
-
-
-/*#endregion*/
 
 /* ———慢慢变大动画——— */
 @keyframes toBig {

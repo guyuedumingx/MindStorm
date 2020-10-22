@@ -191,6 +191,39 @@ h5 .onOff .onOffBorder .onOffRod {
     background-color: #101f30;
 }
 
+.operationNodeBox .star {
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    width: 48px;
+    height: 48px;
+}
+
+.operationNodeBox .star .starPhoto {
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+}
+
+.operationNodeBox .star .starFalse {
+    background-image: url(../img/project_starFalse.png);
+}
+
+.operationNodeBox .star .starTrue {
+    background-image: url(../img/project_starTrue.png);
+}
+
+.operationNodeBox .star .starNumber {
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+}
+
 .tipsBox {
     display: none;
     position: fixed;
@@ -283,6 +316,17 @@ h5 .onOff .onOffBorder .onOffRod {
 
 .tipsBox .no:hover {
     background-color: #101f30;
+}
+
+.transparentBaffle {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 109;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 /*#endregion*/
@@ -537,7 +581,7 @@ body .header {
     width: 100%;
     height: 100%;
     padding: 15px 0px;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 5px;
     box-sizing: border-box;
     background-color: #aaa;
     transition: left .5s;
@@ -570,7 +614,7 @@ body .header {
 }
 
 .mainBoxLeft .introduce .participant h5 {
-    padding: 0px 10px;
+    padding: 0px 10px 10px;
     font-size: 16px;
     color: #214B5B;
 }
@@ -579,7 +623,6 @@ body .header {
     flex: 1;
     position: relative;
     z-index: 4;
-    padding: 10px 0px;
     font-size: 16px;
     color: #214B5B;
     background-color: #eee;
@@ -593,12 +636,18 @@ body .header {
 
 .mainBoxLeft .introduce .participant ul::-webkit-scrollbar-thumb {
     border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mainBoxLeft .introduce .participant ul:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
-    background: rgba(0, 0, 0, 0.3);
 }
 
 .mainBoxLeft .introduce .participant ul::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .mainBoxLeft .introduce .participant ul::-webkit-scrollbar-track {

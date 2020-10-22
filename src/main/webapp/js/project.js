@@ -51,27 +51,29 @@ var ctrlState = false;
 // 键盘按下事件
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
-        if (!ctrlState) {
-            if (nowNode) {
-                nowNode.style.boxShadow = 'none';
-                var t = nowNode;
-                while (t.father) {
-                    removeHeightLight(t.father);
-                    t = t.father;
+        if (transparentBaffle.getCSS('display') == 'none') {
+            if (!ctrlState) {
+                if (nowNode) {
+                    nowNode.style.boxShadow = 'none';
+                    var t = nowNode;
+                    while (t.father) {
+                        removeHeightLight(t.father);
+                        t = t.father;
+                    }
+                    changeChild(nowNode, removeHeightLight);
+                    if (hideTheme.state) {
+                        ergodicTree(function (node) {
+                            node.addClass('hideTheme');
+                        });
+                    }
                 }
-                changeChild(nowNode, removeHeightLight);
-                if (hideTheme.state) {
-                    ergodicTree(function (node) {
-                        node.addClass('hideTheme');
-                    });
-                }
+                nowNode = null;
+                changeNodeEvent();
+                lineColor = lineUpColor;
+                document.removeEventListener('mousemove', move);
             }
-            nowNode = null;
-            changeNodeEvent();
-            lineColor = lineUpColor;
-            document.removeEventListener('mousemove', move);
+            ctrlState = true;
         }
-        ctrlState = true;
     }
 });
 document.addEventListener('keyup', function (e) {
@@ -88,8 +90,21 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectLevel = introduce.getDom('span'); // 获取项目等级盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+var participantOn = introduce.getDom('.introduceMain .member'); // 成员列表开关
+var participant = getDom('.mainBoxLeft .introduce .participant'); // 成员列表盒子
+var participantOff = participant.getDom('i'); // 成员列表盒子
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
+
+// 成员列表伸缩功能
+participantOn.addEventListener('click', function () {
+    participant.style.left = '100%';
+    participant.style.borderRadius = '0px 5px 5px 0px';
+});
+participantOff.addEventListener('click', function () {
+    participant.style.left = '0%';
+    participant.style.borderRadius = '5px 5px 5px 5px';
+});
 
 // 随机颜色
 operationProjectTitle.style.backgroundColor = randomColor(120, 180);
@@ -605,6 +620,7 @@ function createTree(node) {
                 node.lastEditName = res.lastEditName; // 最后修改者
                 node.lastEditTime = res.lastEditTime; // 最后修改时间
                 node.star = res.star; // 点赞数
+                node.starStatus = res.starStatus; // 点赞状态
                 for (var i = 0; i < node.childIdArr.length; i++) {
                     nodeRequest++;
                     var ch = document.createElement('div');
@@ -641,19 +657,43 @@ function createRoot(rootID) {
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
+
+        // 求出最大的点赞数
+        var maxStar = 0;
         for (var i = 0; i < nodeSet.length; i++) {
-            nodeSet[i].style.display = 'block';
+            maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
+        }
+
+        // 初始化所有节点
+        for (var i = 0; i < nodeSet.length; i++) {
+
+            // 给所有节点设置宽高圆角和随机位置
+            nodeSet[i].style.width = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
+            nodeSet[i].style.height = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
+            nodeSet[i].style.borderRadius = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) / 2 + 'px';
             nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
             nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+            nodeSet[i].style.display = 'block';
             nodeSet[i].x = nodeSet[i].offsetLeft;
             nodeSet[i].y = nodeSet[i].offsetTop;
+
+            // 添加边界约束
             addConstraint(nodeSet[i], null, 3, null);
+
+            // 给没有直接父子关系的节点间添加最小距离约束
             for (var j = i + 1; j < nodeSet.length; j++) {
                 if ((nodeSet[i].father != nodeSet[j]) && (nodeSet[j].father != nodeSet[i])) {
                     addConstraint(nodeSet[i], nodeSet[j], 2, nodeMinLen);
                 }
             }
         }
+
+        // 根节点最大
+        root.style.width = '40px';
+        root.style.height = '40px';
+        root.style.borderRadius = '20px';
+
+        // 清除定时器
         clearInterval(nodeRequetTimer);
     }
 }, 5);
@@ -737,20 +777,25 @@ var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞按钮
+var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
+var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
 var tipsBox = getDom('.tipsBox'); // 提示框盒子
 var tipsTitle = tipsBox.getDom('.boxTitle'); // 提示框标题
-var tipsContent = tipsBox.getDom('.content'); // 提示内容
+var tipsContent = tipsBox.getDom('.content'); // 提示内容n
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
+var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
 var nowOperation = 'null'; // 盒子当前状态
 var tipsState = 'null'; // 提示盒子状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 var hideLine = onOffArr[0]; // 隐藏节点间线条
 var lockingNode = onOffArr[1]; // 锁定所有节点
 var hideTheme = onOffArr[2]; // 隐藏无关节点主题
-var lockingNodeState = false;
+
+// 初始化
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -764,6 +809,10 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
+operationNodeBoxStarBox.hide();
+transparentBaffle.hide();
+
+// 按钮随机颜色
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
@@ -820,6 +869,7 @@ changeNodeEvent();
 operationNodeBoxClose.addEventListener('click', function () {
     nowOperation = 'null';
     operationNodeBox.hide();
+    transparentBaffle.hide();
     operationNodeBoxClose.hide();
     operationNodeBoxTheme.hide();
     operationNodeBoxJurisdictionBox.hide();
@@ -834,6 +884,7 @@ function tipsCloseFunction() {
     tipsTitle.innerText = '？';
     tipsContent.innerText = '？？？';
     tipsBox.hide();
+    transparentBaffle.hide();
 }
 
 // 提示框中关闭按钮点击事件
@@ -845,6 +896,7 @@ operationProject[0].addEventListener('click', function () {
     tipsTitle.innerText = '导出项目';
     tipsContent.innerText = '项目将会导出到本地，是否继续';
     tipsBox.show();
+    transparentBaffle.show();
 });
 
 // 删除节点框中确定按钮点击事件
@@ -884,6 +936,7 @@ addNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'add';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = '';
@@ -910,6 +963,7 @@ removeNode.addEventListener('click', function () {
         tipsTitle.innerText = '删除节点';
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
+        transparentBaffle.show();
     }
 });
 
@@ -918,6 +972,7 @@ changeNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'change';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
@@ -939,6 +994,7 @@ queryNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'query';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
@@ -954,6 +1010,14 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxLastRevision.show();
         operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
         operationNodeBoxSubmit.hide();
+        // operationNodeBoxStar.innerText = nowNode.star;
+        if (nowNode.starStatus) {
+            operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+        } else {
+            operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+        }
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        operationNodeBoxStarBox.show();
     }
 });
 
@@ -1040,6 +1104,21 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         });
     } else {
         topAlert('淦');
+    }
+});
+
+// 点赞按钮点击事件
+operationNodeBoxStar.addEventListener('click', function () {
+    if (nowNode.starStatus) {
+        nowNode.star--;
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        nowNode.starStatus = false;
+        operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+    } else {
+        nowNode.star++;
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        nowNode.starStatus = true;
+        operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
     }
 });
 
