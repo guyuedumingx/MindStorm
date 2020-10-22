@@ -85,7 +85,7 @@ public class ReflectUtil {
             Object value = f.get(po);
             if(value!=null) {
                 DbField dbField = f.getAnnotation(DbField.class);
-                if(dbField!=null) {
+                if(dbField!=null&&!dbField.insertIgnore()) {
                     map.put(dbField.value(),value);
                 }
             }
