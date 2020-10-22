@@ -24,6 +24,10 @@
         <input type="button" value="提交">
         <div class="nodeCreator">创建者：<span></span></div>
         <div class="lastRevision">最后修改：<span></span></div>
+        <div class="star">
+            <div class="starPhoto starFalse"></div>
+            <div class="starNumber">123</div>
+        </div>
     </div>
     <div class="tipsBox">
         <div class="boxTitle"></div>
@@ -32,15 +36,13 @@
         <div class="yes">是</div>
         <div class="no">否</div>
     </div>
+    <div class="transparentBaffle"></div>
     <!-----------头部----------->
     <div class="header">
         <!--左边logo-->
-        <div class="logo">
-        </div>
-        <!--右边登录注册-->
-        <div class="logOn">
-            <a href="login.html">登录 | 注册</a>
-        </div>
+        <a href="index.html" class="logoBox">
+            <div class="logo"></div><span>返回首页</span>
+        </a>
         <!--右边个人-->
         <div class="personal">
             <div class="message"></div>
@@ -66,49 +68,75 @@
             </div>
             <div class="introduce">
                 <div class="introduceMain">
-                    <h4>项目等级：<span></span></h4>
+                    <h4>项目等级：<span></span>
+                        <div class="member">成员列表</div>
+                    </h4>
                     <h4>项目简介：</h4>
                     <p></p>
                     <a>展开</a>
                 </div>
+                <div class="participant">
+                    <i></i>
+                    <h5>成员列表：</h5>
+                    <ul class="authorUl">
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj张三</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj李四</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj王五</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj马六马六马六马六马六</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj陈七</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj刘八</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj刘八</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj刘八</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj刘八</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj刘八</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                        <li>
+                            <div class="userPhoto"></div>
+                            <div class="userName">60rzvvbj刘八</div>
+                            <div class="kick">踢除</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <!-- <div class="participant">
-                <h4>成员列表：</h4>
-                <ul>
-                    <li>
-                        <div class="userPhoto"></div>
-                        <div class="userName">60rzvvbj张三</div>
-                        <span>+关注</span>
-                    </li>
-                    <li>
-                        <div class="userPhoto"></div>
-                        <div class="userName">60rzvvbj李四</div>
-                        <span>+关注</span>
-                    </li>
-                    <li>
-                        <div class="userPhoto"></div>
-                        <div class="userName">60rzvvbj王五</div>
-                        <span>+关注</span>
-                    </li>
-                    <li>
-                        <div class="userPhoto"></div>
-                        <div class="userName">60rzvvbj马六</div>
-                        <span>+关注</span>
-                    </li>
-                    <li>
-                        <div class="userPhoto"></div>
-                        <div class="userName">60rzvvbj陈七</div>
-                        <span>+关注</span>
-                    </li>
-                    <li>
-                        <div class="userPhoto"></div>
-                        <div class="userName">60rzvvbj刘八</div>
-                        <span>+关注</span>
-                    </li>
-                </ul>
-            </div> -->
-            <!-- <div class="operationProject">
-            </div> -->
             <div class="displayControl">
                 <div class="onOffBox">
                     <div class="onOff">
@@ -160,15 +188,17 @@
             <div class="treeBox">
                 <div class="treeBoxMain"></div>
                 <div class="treeBoxFullScreen"></div>
-                <div class="treeBoxPercentageTips">120%</div>
+                <div class="treeBoxPercentageTips">100%</div>
             </div>
         </div>
         <div class="mainBoxRight">
             <div class="projectId">
-                <h4>ID:<span></span></h4>
+                <h4>ID:<span></span>
+                    <div class="copyId">复制</div>
+                </h4>
             </div>
             <div class="nowNode">
-                <div class="nowNodeTheme">节点主题节点主题节点主题</div>
+                <div class="nowNodeTheme"></div>
                 <div class="nowNodeContent"></div>
                 <div class="nowNodeTitle">当前节点</div>
             </div>

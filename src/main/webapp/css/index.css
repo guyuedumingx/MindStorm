@@ -10,18 +10,10 @@ body .header {
     height: 100px;
 }
 
-.mainTitle {
-    position: absolute;
-    top: 10px;
-    left: 160px;
-    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
-    font-weight: 700;
-    font-size: 56px;
-    color: #214B5B;
-    cursor: default;
-}
-
 /* logo位置 */
+.header .logoBox {
+    float: left;
+}
 .header .logo {
     float: left;
     margin-top: 6px;
@@ -29,38 +21,18 @@ body .header {
     height: 82px;
     background-image: url(../img/logo1.png);
     background-size: contain;
+    background-size: contain;
 }
-
-/* 登录注册容器 */
-.header .logOn {
-    position: relative;
-    float: right;
-    /* display: none; */
-}
-.logOn:hover::after {
-    width: 100%;
-}
-.logOn::after {
-    content: '';
-    position: absolute;
-    border-radius: inherit;
-    width: 0%;
-    height: 3px;
-    background: #214B5B;
-    left: 0px;
-    bottom: 25px;
-    z-index: -1;
-    transition: all .25s ease;
-    left: 50%;
-    transform: translate(-50%);
-}
-
-/* 字体大小位置设置 */
-.header .logOn a {
-    font-weight: bold;
-    font-size: 20px;
+.mainTitle {
+    display: inline-block;
+    top: 10px;
+    left: 160px;
     line-height: 100px;
+    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
+    font-weight: 700;
+    font-size: 56px;
     color: #214B5B;
+    cursor: default;
 }
 
 /* 个人头像等容器 */
@@ -135,23 +107,6 @@ body .header {
     pointer-events: none;
 }
 
-/* 消息通知 */
-.header .personal .message {
-    display: none;
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    border-radius: 50px;
-    background-image: url(../img/message_q.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-.header .personal .message:hover {
-    background-image: url(../img/message.png);
-    box-shadow: 0px 0px 3px 0px #214B5B;
-}
 
 /*#endregion*/
 /*#region---------------主要内容----------------------*/
@@ -329,16 +284,14 @@ body .mainBox {
 /* 导入 */
 .import {
     position: absolute;
-    bottom: 30px;
+    bottom: 45px;
     left: 60px;
     width: 70px;
     border: 1px solid;
     border-radius: 50px;
     opacity: 0;
     filter: alpha(opacity=0);
-    cursor: pointer
 }
-
 .importBut {
     position: absolute;
     bottom: 45px;
@@ -350,6 +303,7 @@ body .mainBox {
     border: 1px solid;
     pointer-events: none;
 }
+
 /* 位置 */
 .mainBox .est_bigBox>div {
     display: table;

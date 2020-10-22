@@ -191,6 +191,39 @@ h5 .onOff .onOffBorder .onOffRod {
     background-color: #101f30;
 }
 
+.operationNodeBox .star {
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    width: 48px;
+    height: 54px;
+}
+
+.operationNodeBox .star .starPhoto {
+    width: 24px;
+    height: 24px;
+    margin: 0px auto 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+}
+
+.operationNodeBox .star .starFalse {
+    background-image: url(../img/project_starFalse.png);
+}
+
+.operationNodeBox .star .starTrue {
+    background-image: url(../img/project_starTrue.png);
+}
+
+.operationNodeBox .star .starNumber {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    color: #999;
+}
+
 .tipsBox {
     display: none;
     position: fixed;
@@ -285,6 +318,17 @@ h5 .onOff .onOffBorder .onOffRod {
     background-color: #101f30;
 }
 
+.transparentBaffle {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 109;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 /*#endregion*/
 /*#region--------------------- 头部--------------------- */
 /* 头部容器样式 */
@@ -299,6 +343,14 @@ body .header {
 }
 
 /* logo位置 */
+.header .logoBox {
+    float: left;
+}
+
+.header .logoBox span {
+    line-height: 60px;
+}
+
 .header .logo {
     float: left;
     margin-top: 6px;
@@ -306,20 +358,6 @@ body .header {
     height: 42px;
     background-image: url(../img/logo1.png);
     background-size: contain;
-}
-
-/* 登录注册容器 */
-.header .logOn {
-    float: right;
-    display: none;
-}
-
-/* 字体大小位置设置 */
-.header .logOn a {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 60px;
-    color: #214B5B;
 }
 
 /* 个人头像等容器 */
@@ -396,23 +434,6 @@ body .header {
     pointer-events: none;
 }
 
-/* 消息通知 */
-.header .personal .message {
-    display: none;
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    border-radius: 50px;
-    background-image: url(../img/message_q.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-.header .personal .message:hover {
-    background-image: url(../img/message.png);
-    box-shadow: 0px 0px 3px 0px #214B5B;
-}
 
 /*#endregion*/
 /*#region--------------------- mainBox --------------------- */
@@ -467,7 +488,6 @@ body .header {
     flex: 4;
     position: relative;
     width: 100%;
-    height: 180px;
     border-radius: 5px;
     margin-top: 10px;
     background-color: #f8fcfa;
@@ -488,12 +508,26 @@ body .header {
 }
 
 .mainBoxLeft .introduce h4 {
+    position: relative;
     padding: 10px 20px 0px;
     font-size: 14px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     color: #214b5b;
+}
+
+.mainBoxLeft .introduce .introduceMain .member {
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.mainBoxLeft .introduce .introduceMain .member:hover {
+    color: rgb(255, 167, 15);
 }
 
 .mainBoxLeft .introduce h4 span {
@@ -535,90 +569,150 @@ body .header {
     content: '';
 }
 
-.mainBoxLeft .participant {
+.mainBoxLeft .introduce .participant {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
     align-items: stretch;
-    flex: 3;
+    position: absolute;
+    top: 0px;
+    left: 0%;
+    z-index: 4;
     width: 100%;
-    height: 340px;
+    height: 100%;
+    padding: 15px 0px;
     border-radius: 5px;
-    margin-top: 10px;
-    background-color: #f8fcfa;
+    box-sizing: border-box;
+    background-color: #aaa;
+    transition: left .5s;
 }
 
-.mainBoxLeft .participant h4 {
-    padding: 10px 20px 0px;
-    font-size: 20px;
-    color: #214b5b;
+.mainBoxLeft .introduce .participant i {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    z-index: 3;
+    width: 20px;
+    height: 50px;
+    border-radius: 0px 5px 5px 0px;
+    background-image: url(../img/public_arrow999999.png);
+    background-repeat: no-repeat;
+    background-size: 300%;
+    background-position: -21px center;
+    background-color: #f00;
+    cursor: pointer;
+    transform: translate(0, -50%);
+    transition: right .5s;
 }
 
-.mainBoxLeft .participant ul {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    align-items: stretch;
+.mainBoxLeft .introduce .participant:hover i {
+    right: -20px;
+}
+
+.mainBoxLeft .introduce .participant i:hover {
+    background-image: url(../img/public_arrowWhite.png);
+}
+
+.mainBoxLeft .introduce .participant h5 {
+    padding: 0px 10px 10px;
+    font-size: 16px;
+    color: #214B5B;
+}
+
+.mainBoxLeft .introduce .participant ul {
     flex: 1;
-    padding: 10px 20px 10px;
-    overflow: hidden;
+    position: relative;
+    z-index: 4;
+    font-size: 16px;
+    color: #214B5B;
+    background-color: #eee;
+    overflow: auto;
 }
 
-.mainBoxLeft .participant ul li {
+/*滚动条样式*/
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mainBoxLeft .introduce .participant ul:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mainBoxLeft .introduce .participant ul li {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     width: 100%;
     height: 40px;
-    border-radius: 5px;
-    margin-bottom: 8px;
+    padding: 5px 10px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
-.participant ul li .userPhoto {
+.mainBoxLeft .introduce .participant ul li:hover {
+    background-color: #fff;
+}
+
+.mainBoxLeft .introduce .participant ul li .userPhoto {
     width: 30px;
     height: 30px;
-    border-radius: 20px;
-    background-color: skyblue;
+    border-radius: 15px;
+    background-color: pink;
 }
 
-.participant ul li .userName {
+.mainBoxLeft .introduce .participant ul li .userName {
     flex: 1;
-    height: 40px;
-    margin: 0px 10px;
-    font-size: 14px;
-    /* font-weight: 700; */
-    line-height: 40px;
-    text-overflow: ellipsis;
+    padding-left: 5px;
     overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
     white-space: nowrap;
     color: #214B5B;
-    cursor: pointer;
 }
 
-.participant ul li:hover .userName {
-    font-weight: 700;
-    /* color: #132C33; */
-}
-
-.participant ul li span {
+.mainBoxLeft .introduce .participant ul li .kick {
     display: none;
-    width: 60px;
-    height: 24px;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 24px;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    width: 36px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    line-height: 20px;
     text-align: center;
-    color: #fff;
-    background-color: #9bb6a8;
-    opacity: 0;
-    cursor: pointer;
-    transition: opacity .5s;
+    background-color: #fff;
+    animation-name: toBig;
+    animation-duration: .2s;
 }
 
-.participant ul li:hover span {
-    opacity: 1;
+.mainBoxLeft .introduce .participant ul li .kick:hover {
+    background-color: #f5f5f5;
+}
+
+.mainBoxLeft .introduce .participant .authorUl li:hover .kick {
+    display: block;
 }
 
 .mainBoxLeft .displayControl {
@@ -635,13 +729,14 @@ body .header {
 }
 
 .onOffBox {
-    flex: 5;
+    flex: 8;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: stretch;
     width: 100%;
     height: 100%;
+    padding: 20px 0px;
     overflow: hidden;
 }
 
@@ -697,7 +792,7 @@ body .header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
-    align-items: flex-end;
+    align-items: center;
     padding: 0px 24px 12px;
 }
 
@@ -758,18 +853,19 @@ body .header {
 .displayControl .operationProject div span {
     display: none;
     position: absolute;
-    bottom: 125%;
+    top: 125%;
     left: 50%;
     width: 64px;
     height: 20px;
     border-radius: 5px;
     margin-left: -32px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
     font-size: 12px;
     line-height: 20px;
     text-align: center;
     color: #214b5b;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
-    animation-name: btnTipsDisplay;
+    background-color: #fff;
+    animation-name: toBig;
     animation-duration: .2s;
 }
 
@@ -779,25 +875,25 @@ body .header {
 
 .displayControl .operationProject div span::before {
     position: absolute;
-    bottom: -5px;
+    top: -5px;
     left: 50%;
     width: 0px;
     height: 0px;
     border: 5px solid transparent;
-    border-top-color: #ccc;
-    transform: translate(-50%, 50%);
+    border-bottom-color: #ccc;
+    transform: translate(-50%, -50%);
     content: '';
 }
 
 .displayControl .operationProject div span::after {
     position: absolute;
-    bottom: -4px;
+    top: -4px;
     left: 50%;
     width: 0px;
     height: 0px;
     border: 5px solid transparent;
-    border-top-color: #fff;
-    transform: translate(-50%, 50%);
+    border-bottom-color: #fff;
+    transform: translate(-50%, -50%);
     content: '';
 }
 
@@ -870,10 +966,11 @@ body .header {
 }
 
 .progressBar .progressBarTop .progressBox .progressContent {
-    width: 70%;
+    width: 0%;
     height: 100%;
     border-radius: 7.5px;
     background-color: #214B5B;
+    transition: width 1s;
 }
 
 @keyframes waveRotate {
@@ -889,13 +986,14 @@ body .header {
 .progressBar .progressBarTop .progressBox .wave {
     position: absolute;
     top: -2.5px;
-    left: 70%;
+    left: 0%;
     width: 15px;
     height: 15px;
     border-radius: 45% 47% 44% 42%;
     margin-left: -10px;
     background-color: rgba(33, 75, 91, 0.7);
     animation: waveRotate 3s linear infinite;
+    transition: left 1s;
 }
 
 .progressBar .progressBarTop .progressBox .wave::before {
@@ -1039,6 +1137,7 @@ body .header {
 }
 
 .mainBoxRight .projectId h4 {
+    position: relative;
     padding: 0px 16px;
     font-size: 14px;
     line-height: 60px;
@@ -1047,11 +1146,39 @@ body .header {
     overflow: hidden;
     white-space: nowrap;
     color: #214b5b;
-    cursor: pointer;
+    cursor: default;
 }
 
 .mainBoxRight .projectId h4 span {
     font-size: 14px;
+}
+
+.mainBoxRight .projectId h4 .copyId {
+    display: none;
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    width: 36px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: -18px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #214B5B;
+    background-color: #fff;
+    cursor: pointer;
+    animation-name: toBig;
+    animation-duration: .2s;
+}
+
+.mainBoxRight .projectId h4 .copyId:hover {
+    background-color: #f5f5f5;
+}
+
+.mainBoxRight .projectId h4:hover .copyId {
+    display: block;
 }
 
 .mainBoxRight .controller {
@@ -1107,16 +1234,6 @@ body .header {
     background-color: rgba(255, 255, 255, 0);
 }
 
-@keyframes btnTipsDisplay {
-    0% {
-        transform: scale(0.5, 0.5);
-    }
-
-    100% {
-        transform: scale(1, 1);
-    }
-}
-
 .mainBoxRight .controller .btnBox .btn .btnTips {
     display: none;
     position: absolute;
@@ -1132,7 +1249,7 @@ body .header {
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
     color: #214B5B;
     background-color: #fff;
-    animation-name: btnTipsDisplay;
+    animation-name: toBig;
     animation-duration: .2s;
 }
 

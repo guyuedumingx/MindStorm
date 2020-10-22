@@ -1342,8 +1342,9 @@ Node.prototype.inputEnterEvent = function (fun) {
  * 
  * 函数功能：通过样式名获取元素行内style中样式
  * 
- * @param {Node} dom 
- * @param {string} key 
+ * @param {Node} dom dom对象
+ * @param {string} key 属性名
+ * @author 60rzvvbj
  */
 function getCSS(dom, key) {
     var t = dom.style.cssText.match(new RegExp("(^|\\s)" + key + ": ([^;]+)(;|$)"));
@@ -1352,4 +1353,20 @@ function getCSS(dom, key) {
 
 Node.prototype.getCSS = function (key) {
     return getCSS(this, key);
+}
+
+/**
+ * 
+ * 函数功能：将数据复制到剪切板
+ * 
+ * @param {string} text 要复制到剪切板的内容
+ * @author 60rzvvbj
+ */
+function setShearPlateData(text) {
+    var input = document.createElement('input');
+    document.body.appendChild(input);
+    input.setAttribute('value', text);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
 }

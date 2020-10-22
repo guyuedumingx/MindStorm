@@ -27,10 +27,8 @@ var userName = getCookie("user_name");
 //判断是否登录------------
 if (loginPd == null) {
     personal.style.display = "none";
-    logOn.style.display = "block";
 } else {
     personal.style.display = "block";
-    logOn.style.display = "none";
     nameU.innerText = userName;
 }
 // end header
@@ -53,27 +51,29 @@ var ctrlState = false;
 // 键盘按下事件
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
-        if (!ctrlState) {
-            if (nowNode) {
-                nowNode.style.boxShadow = 'none';
-                var t = nowNode;
-                while (t.father) {
-                    removeHeightLight(t.father);
-                    t = t.father;
+        if (transparentBaffle.getCSS('display') == 'none') {
+            if (!ctrlState) {
+                if (nowNode) {
+                    nowNode.style.boxShadow = 'none';
+                    var t = nowNode;
+                    while (t.father) {
+                        removeHeightLight(t.father);
+                        t = t.father;
+                    }
+                    changeChild(nowNode, removeHeightLight);
+                    if (hideTheme.state) {
+                        ergodicTree(function (node) {
+                            node.addClass('hideTheme');
+                        });
+                    }
                 }
-                changeChild(nowNode, removeHeightLight);
-                if (hideTheme.state) {
-                    ergodicTree(function (node) {
-                        node.addClass('hideTheme');
-                    });
-                }
+                nowNode = null;
+                changeNodeEvent();
+                lineColor = lineUpColor;
+                document.removeEventListener('mousemove', move);
             }
-            nowNode = null;
-            changeNodeEvent();
-            lineColor = lineUpColor;
-            document.removeEventListener('mousemove', move);
+            ctrlState = true;
         }
-        ctrlState = true;
     }
 });
 document.addEventListener('keyup', function (e) {
@@ -90,8 +90,21 @@ var introduce = mainBoxLeft.getDom('.introduce .introduceMain'); // 项目简介
 var projectLevel = introduce.getDom('span'); // 获取项目等级盒子
 var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
+var participantOn = introduce.getDom('.introduceMain .member'); // 成员列表开关
+var participant = getDom('.mainBoxLeft .introduce .participant'); // 成员列表盒子
+var participantOff = participant.getDom('i'); // 成员列表盒子
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
+
+// 成员列表伸缩功能
+participantOn.addEventListener('click', function () {
+    participant.style.left = '100%';
+    participant.style.borderRadius = '0px 5px 5px 0px';
+});
+participantOff.addEventListener('click', function () {
+    participant.style.left = '0%';
+    participant.style.borderRadius = '5px 5px 5px 5px';
+});
 
 // 随机颜色
 operationProjectTitle.style.backgroundColor = randomColor(120, 180);
@@ -149,12 +162,14 @@ var creationDate = getDom('.progressBar .progressBarTop .creationDate'); // 创�
 var closingDate = getDom('.progressBar .progressBarTop .closingDate'); // 截止日期
 var progressContent = getDom('.progressBox .progressContent'); // 进图条盒子
 var progressWave = getDom('.progressBox .wave'); // 流动效果盒子
+var progressCountDown = getDom('.progressBar .countDown'); // 提示还剩多长时间的盒子
 var treeBox = getDom('.mainBoxMiddle .treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.mainBoxMiddle .treeBox .treeBoxMain'); // 树盒子
 var treeBoxPercentageTips = getDom('.mainBoxMiddle .treeBox .treeBoxPercentageTips'); // 提示树盒子缩放倍数的盒子
 var treeBoxState = false; // 鼠标是否在树盒子中
 var treeMultiple = 100; // 树盒子缩放倍数
 
+// 显示树盒子缩放倍数提示盒子
 function percentageTips(num) {
     if (treeBoxPercentageTips.timer) {
         clearInterval(treeBoxPercentageTips.timer);
@@ -171,6 +186,21 @@ function percentageTips(num) {
             treeBoxPercentageTips.style.opacity = 1 / 30 * (30 - i) + '';
         }
     }, 25);
+}
+
+// 计算剩余时间
+function calculateRemainingTime(millisecond) {
+    if (millisecond < DAY) {
+        return 'Less than a day';
+    } else if (millisecond < WEEK) {
+        return Math.floor(millisecond / DAY) + ' days left';
+    } else if (millisecond < MONTH) {
+        return Math.floor(millisecond / WEEK) + ' weeks left';
+    } else if (millisecond < YEAR) {
+        return Math.floor(millisecond / MONTH) + ' months left';
+    } else {
+        return Math.floor(millisecond / YEAR) + ' years left';
+    }
 }
 
 // 维护treeBoxState变量相关事件
@@ -590,6 +620,7 @@ function createTree(node) {
                 node.lastEditName = res.lastEditName; // 最后修改者
                 node.lastEditTime = res.lastEditTime; // 最后修改时间
                 node.star = res.star; // 点赞数
+                node.stared = res.stared; // 点赞状态
                 for (var i = 0; i < node.childIdArr.length; i++) {
                     nodeRequest++;
                     var ch = document.createElement('div');
@@ -626,19 +657,43 @@ function createRoot(rootID) {
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
+
+        // 求出最大的点赞数
+        var maxStar = 0;
         for (var i = 0; i < nodeSet.length; i++) {
-            nodeSet[i].style.display = 'block';
+            maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
+        }
+
+        // 初始化所有节点
+        for (var i = 0; i < nodeSet.length; i++) {
+
+            // 给所有节点设置宽高圆角和随机位置
+            nodeSet[i].style.width = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
+            nodeSet[i].style.height = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
+            nodeSet[i].style.borderRadius = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) / 2 + 'px';
             nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
             nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+            nodeSet[i].style.display = 'block';
             nodeSet[i].x = nodeSet[i].offsetLeft;
             nodeSet[i].y = nodeSet[i].offsetTop;
+
+            // 添加边界约束
             addConstraint(nodeSet[i], null, 3, null);
+
+            // 给没有直接父子关系的节点间添加最小距离约束
             for (var j = i + 1; j < nodeSet.length; j++) {
                 if ((nodeSet[i].father != nodeSet[j]) && (nodeSet[j].father != nodeSet[i])) {
                     addConstraint(nodeSet[i], nodeSet[j], 2, nodeMinLen);
                 }
             }
         }
+
+        // 根节点最大
+        root.style.width = '40px';
+        root.style.height = '40px';
+        root.style.borderRadius = '20px';
+
+        // 清除定时器
         clearInterval(nodeRequetTimer);
     }
 }, 5);
@@ -706,6 +761,7 @@ function treeAppendNode(father, nodeData) {
 
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
+var projectCopyId = getDom('.mainBoxRight .projectId h4 .copyId'); // 复制ID
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
 var addNode = btnArr[0]; // 创建节点
@@ -721,20 +777,25 @@ var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞按钮
+var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
+var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
 var tipsBox = getDom('.tipsBox'); // 提示框盒子
 var tipsTitle = tipsBox.getDom('.boxTitle'); // 提示框标题
-var tipsContent = tipsBox.getDom('.content'); // 提示内容
+var tipsContent = tipsBox.getDom('.content'); // 提示内容n
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
+var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
 var nowOperation = 'null'; // 盒子当前状态
 var tipsState = 'null'; // 提示盒子状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 var hideLine = onOffArr[0]; // 隐藏节点间线条
 var lockingNode = onOffArr[1]; // 锁定所有节点
 var hideTheme = onOffArr[2]; // 隐藏无关节点主题
-var lockingNodeState = false;
+
+// 初始化
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -748,10 +809,31 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
+operationNodeBoxStarBox.hide();
+transparentBaffle.hide();
+
+// 按钮随机颜色
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
+
+// 初始化ID
 projectIdBox.innerText = projectId;
+
+// 添加点击复制ID事件
+projectCopyId.addEventListener('click', function () {
+    setShearPlateData(projectId);
+});
+
+function btnDisable(btn) {
+    btn.jurisdiction = false;
+    btn.style.cursor = 'not-allowed';
+}
+
+function btnCancelDisable(btn) {
+    btn.jurisdiction = true;
+    btn.style.cursor = 'pointer';
+}
 
 // 改变当前节点的函数
 function changeNodeEvent() {
@@ -762,10 +844,10 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
         nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
         nowNodeBox.children[1].innerText = '';
-        addNode.jurisdiction = true;
-        removeNode.jurisdiction = true;
-        changeNode.jurisdiction = true;
-        queryNode.jurisdiction = true;
+        btnCancelDisable(addNode);
+        btnCancelDisable(removeNode);
+        btnCancelDisable(changeNode);
+        btnCancelDisable(queryNode);
     } else {
         nowNodeBox.children[0].innerText = '???';
         nowNodeBox.children[1].style.backgroundColor = '#ccc';
@@ -773,10 +855,10 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = '30px';
         nowNodeBox.children[1].style.borderRadius = '15px';
         nowNodeBox.children[1].innerText = '?';
-        addNode.jurisdiction = false;
-        removeNode.jurisdiction = false;
-        changeNode.jurisdiction = false;
-        queryNode.jurisdiction = false;
+        btnDisable(addNode);
+        btnDisable(removeNode);
+        btnDisable(changeNode);
+        btnDisable(queryNode);
     }
 }
 
@@ -787,6 +869,7 @@ changeNodeEvent();
 operationNodeBoxClose.addEventListener('click', function () {
     nowOperation = 'null';
     operationNodeBox.hide();
+    transparentBaffle.hide();
     operationNodeBoxClose.hide();
     operationNodeBoxTheme.hide();
     operationNodeBoxJurisdictionBox.hide();
@@ -801,6 +884,7 @@ function tipsCloseFunction() {
     tipsTitle.innerText = '？';
     tipsContent.innerText = '？？？';
     tipsBox.hide();
+    transparentBaffle.hide();
 }
 
 // 提示框中关闭按钮点击事件
@@ -812,6 +896,7 @@ operationProject[0].addEventListener('click', function () {
     tipsTitle.innerText = '导出项目';
     tipsContent.innerText = '项目将会导出到本地，是否继续';
     tipsBox.show();
+    transparentBaffle.show();
 });
 
 // 删除节点框中确定按钮点击事件
@@ -851,6 +936,7 @@ addNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'add';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = '';
@@ -877,6 +963,7 @@ removeNode.addEventListener('click', function () {
         tipsTitle.innerText = '删除节点';
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
+        transparentBaffle.show();
     }
 });
 
@@ -885,6 +972,7 @@ changeNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'change';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
@@ -906,6 +994,7 @@ queryNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'query';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
@@ -921,6 +1010,14 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxLastRevision.show();
         operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
         operationNodeBoxSubmit.hide();
+        // operationNodeBoxStar.innerText = nowNode.star;
+        if (nowNode.stared) {
+            operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+        } else {
+            operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+        }
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        operationNodeBoxStarBox.show();
     }
 });
 
@@ -1007,6 +1104,21 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         });
     } else {
         topAlert('淦');
+    }
+});
+
+// 点赞按钮点击事件
+operationNodeBoxStar.addEventListener('click', function () {
+    if (nowNode.stared) {
+        nowNode.star--;
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        nowNode.stared = false;
+        operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+    } else {
+        nowNode.star++;
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        nowNode.stared = true;
+        operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
     }
 });
 
@@ -1149,7 +1261,8 @@ window.onload = function () {
             projectLevel.innerText = res.rank;
             creationDate.innerText = new Date(res.createTime - 0).toLocaleDateString();
             closingDate.innerText = new Date(res.deadline - 0).toLocaleDateString();
-            var progress = (1 - (res.ddl - Date.now()) / (res.ddl - res.creatTime)) * 100;
+            progressCountDown.innerText = calculateRemainingTime(res.deadline - Date.now());
+            var progress = (1 - (res.deadline - Date.now()) / (res.deadline - res.createTime)) * 100;
             progressContent.style.width = progress + '%';
             progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);

@@ -254,13 +254,3 @@ body .personalBox {
 }
 
 /*#endregion*/
-
-@keyframes upDowm {
-    from {
-        transform: translate(0, 0)
-    }
-
-    to {
-        transform: translate(0, 20px)
-    }
-}

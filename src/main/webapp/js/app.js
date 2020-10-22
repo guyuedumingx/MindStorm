@@ -20,6 +20,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [2, 3, 4, 5, 6, 7, 8],
     star: 22,
+    stared: false,
     editable: true,
     lastEditName: '张三',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -33,6 +34,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 19,
+    stared: true,
     editable: true,
     lastEditName: '李四',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -46,6 +48,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [9, 10],
     star: 3,
+    stared: true,
     editable: true,
     lastEditName: '马六',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -59,6 +62,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 4,
+    stared: true,
     editable: true,
     lastEditName: '马六',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -72,6 +76,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 8,
+    stared: true,
     editable: true,
     lastEditName: '陈七',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -85,6 +90,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 15,
+    stared: false,
     editable: true,
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -98,6 +104,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 15,
+    stared: true,
     editable: true,
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -111,6 +118,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [11],
     star: 15,
+    stared: false,
     editable: true,
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -124,6 +132,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 15,
+    stared: false,
     editable: true,
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -137,6 +146,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 15,
+    stared: false,
     editable: true,
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -150,6 +160,7 @@ user.push({
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [],
     star: 15,
+    stared: true,
     editable: true,
     lastEditName: '王五',
     lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
@@ -271,21 +282,20 @@ app.post('/user/login', function (req, res) {
     }
     // }
 });
-app.get('/util', function (req, res) {
+app.get('/util/email', function (req, res) {
     var text = req.query;
-    console.log(text);
-    if (text.method == 'isExist') {
-        if (text.email == '1808078515@qq.com') {
-            res.send('200');
-        } else {
-            res.send('500');
-        }
-    } else if (text.method == 'sendEmail') {
-        res.send({
-            auth_code: '1234',
-            status_code: '200'
-        });
+    if (text.email == '1808078515@qq.com') {
+        res.send('200');
+    } else {
+        res.send('500');
     }
+});
+app.post('/util/email', function (req, res) {
+    var text = req.body;
+    res.send({
+        auth_code: '123456',
+        status_code: '200'
+    });
 });
 app.get('/project', function (req, res) {
     res.send({
@@ -298,7 +308,7 @@ app.get('/project', function (req, res) {
         introduction: '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹',
         contributors: [123456, 123457, 123458, 123459, 123450, 123455],
         createTime: new Date('2020-10-3 8:8:8').valueOf(),
-        deadline: new Date('2020-10-20 8:8:8').valueOf()
+        deadline: new Date('2020-10-28 8:8:8').valueOf()
     });
 });
 app.listen(8848);
