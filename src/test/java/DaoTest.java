@@ -1,5 +1,3 @@
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
@@ -35,9 +33,11 @@ public class DaoTest {
     }
 
     @Test
-    public void logTest(){
-        Logger logger = LoggerFactory.getLogger(DaoTest.class);
-        logger.warn("warn");
+    public void selectTest(){
+        NodeDao dao = new NodeDaoImpl();
+        Node node = new Node();
+        node.setId(100102);
+        Node node1 = dao.selectOne(node);
     }
 
     @Test

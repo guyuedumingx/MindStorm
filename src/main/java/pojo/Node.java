@@ -11,7 +11,9 @@ public class Node extends BaseModel{
    private int author;
    @DbField("project_id")
    private int projectId;
-   private int star;
+   @DbField("star")
+   private long star;
+   private boolean isStared;
    @DbField("last_edit_id")
    private int lastEditId;
    private int[] children;
@@ -62,7 +64,7 @@ public class Node extends BaseModel{
       this.author = author;
    }
 
-   public int getStar() {
+   public long getStar() {
       return star;
    }
 
@@ -140,5 +142,17 @@ public class Node extends BaseModel{
 
    public void setProjectId(int projectId) {
       this.projectId = projectId;
+   }
+
+   public void setStar(long star) {
+      this.star = star;
+   }
+
+   public boolean isStared() {
+      return isStared;
+   }
+
+   public void setStared(boolean stared) {
+      isStared = stared;
    }
 }

@@ -4,15 +4,16 @@ import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
+import dao.auxiliary.impl.StarDaoImpl;
 import pojo.Node;
 import pojo.Project;
+import pojo.auxiliary.Star;
 import service.NodeService;
-
-import java.sql.SQLException;
 
 public class NodeServiceImpl implements NodeService {
     NodeDao nodeDao = DaoFactory.getNodeDao();
     ProjectDao projectDao = DaoFactory.getProjectDao();
+    StarDaoImpl starDao = DaoFactory.getStarDao();
 
     @Override
     public int newNode(Node node) {
@@ -45,8 +46,14 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public Node getNode(int nodeId) {
+    public Node getNode(int nodeId,int userId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
+        Star star = starDao.selectOne(new Star(userId,nodeId));
+        if(star!=null){
+            node.setStared(true);
+        }else {
+            node.setStared(false);
+        }
         int[] children = nodeDao.selectChildren(nodeId);
         node.setChildren(children);
         return node;

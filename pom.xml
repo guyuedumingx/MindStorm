@@ -87,10 +87,6 @@
       <version>0.8.1</version>
       <exclusions>
         <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
         </exclusion>
@@ -152,11 +148,6 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>mail</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
       <groupId>com.sun.mail</groupId>
       <artifactId>javax.mail</artifactId>
       <version>1.4.4</version>
@@ -186,5 +177,4 @@
       </systemPath>
     </dependency>
   </dependencies>
-
 </project>

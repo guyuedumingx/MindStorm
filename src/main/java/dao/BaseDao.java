@@ -27,7 +27,7 @@ public interface BaseDao<T> {
     int updateOne(T object);
 
     /**
-     * 获取
+     * 删除
      * @param id
      */
     int deleteOne(int id);
@@ -40,6 +40,22 @@ public interface BaseDao<T> {
      * @return
      */
     T selectOne(T object);
+
+    /**
+     * 根据id获取
+     * @param object
+     * @param sql
+     * @return
+     */
+    T selectOne(T object,String sql);
+
+    /**
+     * 根据传入的是sql语句获取
+     * @param object
+     * @param sql
+     * @return
+     */
+    List<T> select(T object, String sql);
 
     /**
      *根据对象获取一堆数据并返回

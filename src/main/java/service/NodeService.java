@@ -29,5 +29,5 @@ public interface NodeService {
      * @param nodeId
      * @return
      */
-    public Node getNode(int nodeId);
+    public Node getNode(int nodeId, int userId);
 }
