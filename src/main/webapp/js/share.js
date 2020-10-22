@@ -99,22 +99,12 @@ modifyN.addEventListener("click", function () {
 
 
 //高度自适应-----------
-// function heightAuto() {
-//     //获取个人信息框架
-//     var personalBox = getDom(".personalBox");
-//     //获取项目框架
-//     var bigBox = getDom(".bigBox");
-//     //个人信息高度
-//     var personalHeight = personalBox.offsetHeight;
-//     //项目离顶部距离
-//     var boxTop = personalHeight + 60;
-//     bigBox.style.top = boxTop + "px";
+function heightAuto() {
+    //获取主要内容框架
+    var mainBox = getDom(".mainBox");
+    //项目离顶部距离
+    mainBox.style.top = "60px";
+}
+heightAuto();
 
-//     //获取项目高度
-//     var projectHeight = bigBox.offsetHeight;
-//     //高度
-//     projectLi.style.maxHeight = projectHeight - 70 + "px"; //70为外边距
-// }
-// heightAuto();
-
-// window.addEventListener('resize', heightAuto);
+window.addEventListener('resize', heightAuto);
