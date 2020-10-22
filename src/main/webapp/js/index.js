@@ -316,23 +316,6 @@ var importNav = getDom(".import");
 
 function UpladFile() {
     var file = importNav.files[0];
-    // ajax({
-    //     type: 'post',
-    //     url: '/until/xmind',
-    //     data: {
-    //         fileObj
-    //     },
-    //     header: {
-    //         'Content-Type': 'multipart/form-data'
-    //     }, // 请求头
-    //     success: function (res) {
-    //         if (res.status_code == '200') {
-    //             window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-    //         } else {
-    //             topAlert("导入失败");
-    //         }
-    //     }
-    // });
     //创建formdata对象
     var formdata = new FormData();
     formdata.append("file", file);

@@ -1115,6 +1115,10 @@ operationNodeBoxStar.addEventListener('click', function () {
         data: {
             nodeId: nowNode.id
         },
+        header: {
+            'Content-Type': 'application/json',
+            "X-HTTP-Method-Override": "PUT"
+        }, // 请求头
         success: function (res) {
             if (res.status_code == '200') {
                 if (nowNode.stared) {

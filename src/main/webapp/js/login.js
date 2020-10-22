@@ -1,3 +1,7 @@
+// 设置文本不可选中
+var tool = new Tool(document, window);
+tool.textProhibition();
+
 // 页面切换
 var loginLink = getDomA('.link a');
 var forgetPasswoed = loginLink[0];
@@ -55,11 +59,11 @@ var registerSubmit = registerInput[6]; // 提交
 var registerRealVerificationCode; //后端返回的验证码
 var registerGetVerificationCodeState = true;
 registerEmail.judge = true;
-inputTips(registerUserName, '请输入昵称');
-inputTips(registerEmail, '请输入邮箱');
-inputTips(registerVerificationCode, '请输入验证码');
-inputTips(registerPassword, '请输入密码');
-inputTips(registerConfirmPassword, '请确认密码');
+inputTips(registerUserName, '请输入昵称', 'inputTips');
+inputTips(registerEmail, '请输入邮箱', 'inputTips');
+inputTips(registerVerificationCode, '请输入验证码', 'inputTips');
+inputTips(registerPassword, '请输入密码', 'inputTips');
+inputTips(registerConfirmPassword, '请确认密码', 'inputTips');
 
 function reportError(node, errorTips) {
     var nodeFather = node.parentNode;
@@ -158,12 +162,6 @@ function judgeEmail(node) {
     if (str != '请输入邮箱') {
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(str)) {
             reportError(node, '邮箱格式不正确');
-            try {
-                throw new exception();
-            } catch (e) {
-                console.log(e);
-                topAlert(e.toString());
-            }
             return false;
         }
         clearError(node);
@@ -176,7 +174,7 @@ function setEmailJudge(node) {
     if (judgeEmail(node)) {
         ajax({
             type: 'get',
-            url: '/util/email',
+            url: '/util',
             data: {
                 email: node.value,
             },
@@ -216,7 +214,7 @@ function registerGetVC(node) {
         }, 1000);
         ajax({
             type: 'post',
-            url: '/util/email',
+            url: '/util',
             data: {
                 email: node.value,
                 sendFor: 'register'

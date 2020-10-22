@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录</title>
-    	<!--网页logo设置-->
-	<link rel="icon" href="img/logo1.png">
+    <!--网页logo设置-->
+    <link rel="icon" href="img/logo1.png">
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
@@ -15,7 +15,10 @@
     <!-----------头部----------->
     <div class="header">
         <!--左边logo-->
-        <a href="/src/main/webapp/index.html" title="返回首页" class="logoBox"  ><div class="logo"></div><p class="mainTitle">MINDSTORM</p></a>
+        <a href="/src/main/webapp/index.html" title="返回首页" class="logoBox">
+            <div class="logo"></div>
+            <p class="mainTitle">MINDSTORM</p>
+        </a>
     </div>
     <div class="mainBox">
         <div class="login">
@@ -24,7 +27,7 @@
             <input type="text">
             <span class="password">密码</span>
             <input type="password">
-            <input type="button" value="登录" >
+            <input type="button" value="登录">
             <ul class="link">
                 <a href="resetPassword.html">忘记密码</a>
                 <a>免费注册</a>
@@ -33,28 +36,32 @@
         <div class="register">
             <h4>注册</h4>
             <div>
+                <span>昵称</span>
                 <input type="text" maxlength="20">
             </div>
             <div>
+                <span>邮箱</span>
                 <input type="text">
             </div>
             <div class="vc">
+                <span>验证码</span>
                 <div>
                     <input type="text" class="VC" maxlength="6">
                 </div>
                 <input type="button" class="getVC" value="获取验证码">
             </div>
             <div>
+                <span>密码</span>
                 <input type="password">
             </div>
             <div>
+                <span>确认密码</span>
                 <input type="password">
             </div>
             <input type="button" class="submit" value="注册">
             <a>已有账号，直接登录</a>
         </div>
     </div>
-    <div class="flower"></div>
     <script src="js/jquery.js"></script>
     <script src="js/concise.js"></script>
     <script src="js/toolFunction.js"></script>
