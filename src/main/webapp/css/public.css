@@ -49,8 +49,6 @@ body {
     clear: both;
 }
 
-/* ———慢慢变大动画——— */
-
 /* --显示动画--- */
 @keyframes show {
     0% {
@@ -62,6 +60,7 @@ body {
     }
 }
 
+/* ———慢慢变大动画——— */
 @keyframes toBig {
     0% {
         transform: scale(0.5, 0.5);
