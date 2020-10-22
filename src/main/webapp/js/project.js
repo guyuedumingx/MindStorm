@@ -1109,17 +1109,30 @@ operationNodeBoxSubmit.addEventListener('click', function () {
 
 // 点赞按钮点击事件
 operationNodeBoxStar.addEventListener('click', function () {
-    if (nowNode.stared) {
-        nowNode.star--;
-        operationNodeBoxStarNumber.innerText = nowNode.star;
-        nowNode.stared = false;
-        operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
-    } else {
-        nowNode.star++;
-        operationNodeBoxStarNumber.innerText = nowNode.star;
-        nowNode.stared = true;
-        operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
-    }
+    ajax({
+        type: 'put',
+        url: '/util',
+        data: {
+            nodeId: nowNode.id
+        },
+        success: function (res) {
+            if (res.status_code == '200') {
+                if (nowNode.stared) {
+                    nowNode.star--;
+                    operationNodeBoxStarNumber.innerText = nowNode.star;
+                    nowNode.stared = false;
+                    operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+                } else {
+                    nowNode.star++;
+                    operationNodeBoxStarNumber.innerText = nowNode.star;
+                    nowNode.stared = true;
+                    operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+                }
+            } else {
+                topAlert('操作失败');
+            }
+        }
+    });
 });
 
 // 循环按钮精灵图
