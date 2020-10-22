@@ -33,6 +33,14 @@ public class DaoTest {
     }
 
     @Test
+    public void selectTest(){
+        NodeDao dao = new NodeDaoImpl();
+        Node node = new Node();
+        node.setId(100102);
+        Node node1 = dao.selectOne(node);
+    }
+
+    @Test
     public void projectDaoImplTest() {
         ProjectDao projectDao = new ProjectDaoImpl();
         String time = new Date().toString();

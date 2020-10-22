@@ -91,7 +91,7 @@ public class NodeController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nodeId = request.getParameter("id");
-        Node node = service.getNode(Integer.valueOf(nodeId));
+        Node node = service.getNode(Integer.valueOf(nodeId),user.getId());
         WebUtil.renderJson(response,node);
     }
 

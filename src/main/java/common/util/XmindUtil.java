@@ -114,7 +114,7 @@ public class XmindUtil {
         int rootId = project.getHeadNodeId();
         workbook = builder.createWorkbook();
         ISheet sheet = workbook.getPrimarySheet();
-        Node rootNode = nodeService.getNode(rootId);
+        Node rootNode = nodeService.getNode(rootId,userId);
         ITopic rootTopic = sheet.getRootTopic();
         rootTopic.setTitleText(rootNode.getTheme());
         writeITopics(rootTopic, rootNode);
@@ -145,7 +145,7 @@ public class XmindUtil {
         if(children==null){return root;}
 
         for (int n : children) {
-            Node child = nodeService.getNode(n);
+            Node child = nodeService.getNode(n,userId);
             ITopic topic = workbook.createTopic();
             topic.setTitleText(child.getTheme());
             topic.addLabel(child.getContent());

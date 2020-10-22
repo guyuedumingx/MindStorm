@@ -5,7 +5,6 @@ import pojo.Project;
 import pojo.User;
 import service.ProjectService;
 import service.impl.ProjectServiceImpl;
-import service.impl.UserServiceImpl;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

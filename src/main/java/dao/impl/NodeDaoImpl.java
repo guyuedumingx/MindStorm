@@ -27,6 +27,17 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
     }
 
     @Override
+    public Node selectOne(Node object) {
+        return super.selectOne(object,createSql(object));
+    }
+
+    private String createSql(Node node){
+        String sql = "select *,count(user_id) as 'star' from t_node left join t_star " +
+                "on id=node_id group by id having node_id = "+node.getId();
+        return sql;
+    }
+
+    @Override
     public int[] selectChildren(int id) {
         String base = "select id from {0} where parent_id = " + id;
         String sql = MessageFormat.format(base, getTableName());
