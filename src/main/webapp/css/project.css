@@ -205,6 +205,7 @@ h5 .onOff .onOffBorder .onOffRod {
     height: 36px;
     margin: auto;
     background-color: skyblue;
+    cursor: pointer;
 }
 
 .operationNodeBox .star .starFalse {

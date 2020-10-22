@@ -791,7 +791,8 @@ var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
 var hideLine = onOffArr[0]; // 隐藏节点间线条
 var lockingNode = onOffArr[1]; // 锁定所有节点
 var hideTheme = onOffArr[2]; // 隐藏无关节点主题
-var lockingNodeState = false;
+
+// 初始化
 addNode.jurisdiction = false;
 removeNode.jurisdiction = false;
 changeNode.jurisdiction = false;
@@ -806,6 +807,8 @@ operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
 operationNodeBoxStarBox.hide();
+
+// 按钮随机颜色
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
@@ -1090,6 +1093,21 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         });
     } else {
         topAlert('淦');
+    }
+});
+
+// 点赞按钮点击事件
+operationNodeBoxStar.addEventListener('click', function () {
+    if (nowNode.starStatus) {
+        nowNode.star--;
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        nowNode.starStatus = false;
+        operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+    } else {
+        nowNode.star++;
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        nowNode.starStatus = true;
+        operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
     }
 });
 
