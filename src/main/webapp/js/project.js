@@ -620,7 +620,7 @@ function createTree(node) {
                 node.lastEditName = res.lastEditName; // 最后修改者
                 node.lastEditTime = res.lastEditTime; // 最后修改时间
                 node.star = res.star; // 点赞数
-                node.starStatus = res.starStatus; // 点赞状态
+                node.stared = res.stared; // 点赞状态
                 for (var i = 0; i < node.childIdArr.length; i++) {
                     nodeRequest++;
                     var ch = document.createElement('div');
@@ -1011,7 +1011,7 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
         operationNodeBoxSubmit.hide();
         // operationNodeBoxStar.innerText = nowNode.star;
-        if (nowNode.starStatus) {
+        if (nowNode.stared) {
             operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
         } else {
             operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
@@ -1109,15 +1109,15 @@ operationNodeBoxSubmit.addEventListener('click', function () {
 
 // 点赞按钮点击事件
 operationNodeBoxStar.addEventListener('click', function () {
-    if (nowNode.starStatus) {
+    if (nowNode.stared) {
         nowNode.star--;
         operationNodeBoxStarNumber.innerText = nowNode.star;
-        nowNode.starStatus = false;
+        nowNode.stared = false;
         operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
     } else {
         nowNode.star++;
         operationNodeBoxStarNumber.innerText = nowNode.star;
-        nowNode.starStatus = true;
+        nowNode.stared = true;
         operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
     }
 });
