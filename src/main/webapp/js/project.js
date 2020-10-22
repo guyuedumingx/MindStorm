@@ -51,27 +51,29 @@ var ctrlState = false;
 // 键盘按下事件
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
-        if (!ctrlState) {
-            if (nowNode) {
-                nowNode.style.boxShadow = 'none';
-                var t = nowNode;
-                while (t.father) {
-                    removeHeightLight(t.father);
-                    t = t.father;
+        if (transparentBaffle.getCSS('display') == 'none') {
+            if (!ctrlState) {
+                if (nowNode) {
+                    nowNode.style.boxShadow = 'none';
+                    var t = nowNode;
+                    while (t.father) {
+                        removeHeightLight(t.father);
+                        t = t.father;
+                    }
+                    changeChild(nowNode, removeHeightLight);
+                    if (hideTheme.state) {
+                        ergodicTree(function (node) {
+                            node.addClass('hideTheme');
+                        });
+                    }
                 }
-                changeChild(nowNode, removeHeightLight);
-                if (hideTheme.state) {
-                    ergodicTree(function (node) {
-                        node.addClass('hideTheme');
-                    });
-                }
+                nowNode = null;
+                changeNodeEvent();
+                lineColor = lineUpColor;
+                document.removeEventListener('mousemove', move);
             }
-            nowNode = null;
-            changeNodeEvent();
-            lineColor = lineUpColor;
-            document.removeEventListener('mousemove', move);
+            ctrlState = true;
         }
-        ctrlState = true;
     }
 });
 document.addEventListener('keyup', function (e) {
@@ -785,6 +787,7 @@ var tipsContent = tipsBox.getDom('.content'); // 提示内容n
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
+var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
 var nowOperation = 'null'; // 盒子当前状态
 var tipsState = 'null'; // 提示盒子状态
 var nowNodeBox = getDom('.nowNode'); // 显示当前节点的盒子
@@ -807,6 +810,7 @@ operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
 operationNodeBoxStarBox.hide();
+transparentBaffle.hide();
 
 // 按钮随机颜色
 for (var i = 0; i < btnArr.length; i++) {
@@ -865,6 +869,7 @@ changeNodeEvent();
 operationNodeBoxClose.addEventListener('click', function () {
     nowOperation = 'null';
     operationNodeBox.hide();
+    transparentBaffle.hide();
     operationNodeBoxClose.hide();
     operationNodeBoxTheme.hide();
     operationNodeBoxJurisdictionBox.hide();
@@ -879,6 +884,7 @@ function tipsCloseFunction() {
     tipsTitle.innerText = '？';
     tipsContent.innerText = '？？？';
     tipsBox.hide();
+    transparentBaffle.hide();
 }
 
 // 提示框中关闭按钮点击事件
@@ -890,6 +896,7 @@ operationProject[0].addEventListener('click', function () {
     tipsTitle.innerText = '导出项目';
     tipsContent.innerText = '项目将会导出到本地，是否继续';
     tipsBox.show();
+    transparentBaffle.show();
 });
 
 // 删除节点框中确定按钮点击事件
@@ -929,6 +936,7 @@ addNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'add';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = '';
@@ -955,6 +963,7 @@ removeNode.addEventListener('click', function () {
         tipsTitle.innerText = '删除节点';
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
+        transparentBaffle.show();
     }
 });
 
@@ -963,6 +972,7 @@ changeNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'change';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
@@ -984,6 +994,7 @@ queryNode.addEventListener('click', function () {
     if (this.jurisdiction) {
         nowOperation = 'query';
         operationNodeBox.show();
+        transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
