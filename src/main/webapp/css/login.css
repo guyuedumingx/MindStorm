@@ -260,8 +260,13 @@ body::after {
     margin-left: 84px;
     font-size: 14px;
     text-indent: 0.2em;
+    color: #000;
     background-color: transparent;
     transition: border-bottom .3s, box-shadow .3s;
+}
+
+.mainBox .register .inputTips {
+    color: #999;
 }
 
 .mainBox .register input:focus {

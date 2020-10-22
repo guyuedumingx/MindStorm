@@ -55,11 +55,11 @@ var registerSubmit = registerInput[6]; // 提交
 var registerRealVerificationCode; //后端返回的验证码
 var registerGetVerificationCodeState = true;
 registerEmail.judge = true;
-inputTips(registerUserName, '请输入昵称');
-inputTips(registerEmail, '请输入邮箱');
-inputTips(registerVerificationCode, '请输入验证码');
-inputTips(registerPassword, '请输入密码');
-inputTips(registerConfirmPassword, '请确认密码');
+inputTips(registerUserName, '请输入昵称', 'inputTips');
+inputTips(registerEmail, '请输入邮箱', 'inputTips');
+inputTips(registerVerificationCode, '请输入验证码', 'inputTips');
+inputTips(registerPassword, '请输入密码', 'inputTips');
+inputTips(registerConfirmPassword, '请确认密码', 'inputTips');
 
 function reportError(node, errorTips) {
     var nodeFather = node.parentNode;
