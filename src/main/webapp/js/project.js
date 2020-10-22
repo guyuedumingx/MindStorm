@@ -94,11 +94,14 @@ var participantOff = participant.getDom('i'); // 成员列表盒子
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
 
+// 成员列表伸缩功能
 participantOn.addEventListener('click', function () {
     participant.style.left = '100%';
+    participant.style.borderRadius = '0px 5px 5px 0px';
 });
 participantOff.addEventListener('click', function () {
     participant.style.left = '0%';
+    participant.style.borderRadius = '5px 5px 5px 5px';
 });
 
 // 随机颜色
@@ -615,6 +618,7 @@ function createTree(node) {
                 node.lastEditName = res.lastEditName; // 最后修改者
                 node.lastEditTime = res.lastEditTime; // 最后修改时间
                 node.star = res.star; // 点赞数
+                node.starStatus = res.starStatus; // 点赞状态
                 for (var i = 0; i < node.childIdArr.length; i++) {
                     nodeRequest++;
                     var ch = document.createElement('div');
@@ -651,19 +655,43 @@ function createRoot(rootID) {
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
+
+        // 求出最大的点赞数
+        var maxStar = 0;
         for (var i = 0; i < nodeSet.length; i++) {
-            nodeSet[i].style.display = 'block';
+            maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
+        }
+
+        // 初始化所有节点
+        for (var i = 0; i < nodeSet.length; i++) {
+
+            // 给所有节点设置宽高圆角和随机位置
+            nodeSet[i].style.width = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
+            nodeSet[i].style.height = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
+            nodeSet[i].style.borderRadius = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) / 2 + 'px';
             nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
             nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+            nodeSet[i].style.display = 'block';
             nodeSet[i].x = nodeSet[i].offsetLeft;
             nodeSet[i].y = nodeSet[i].offsetTop;
+
+            // 添加边界约束
             addConstraint(nodeSet[i], null, 3, null);
+
+            // 给没有直接父子关系的节点间添加最小距离约束
             for (var j = i + 1; j < nodeSet.length; j++) {
                 if ((nodeSet[i].father != nodeSet[j]) && (nodeSet[j].father != nodeSet[i])) {
                     addConstraint(nodeSet[i], nodeSet[j], 2, nodeMinLen);
                 }
             }
         }
+
+        // 根节点最大
+        root.style.width = '40px';
+        root.style.height = '40px';
+        root.style.borderRadius = '20px';
+
+        // 清除定时器
         clearInterval(nodeRequetTimer);
     }
 }, 5);
@@ -747,10 +775,13 @@ var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞按钮
+var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
+var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
 var tipsBox = getDom('.tipsBox'); // 提示框盒子
 var tipsTitle = tipsBox.getDom('.boxTitle'); // 提示框标题
-var tipsContent = tipsBox.getDom('.content'); // 提示内容
+var tipsContent = tipsBox.getDom('.content'); // 提示内容n
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
@@ -774,6 +805,7 @@ operationNodeBoxContent.hide();
 operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
+operationNodeBoxStarBox.hide();
 for (var i = 0; i < btnArr.length; i++) {
     btnArr[i].style.backgroundColor = randomColor(120, 180);
 }
@@ -964,6 +996,14 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxLastRevision.show();
         operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
         operationNodeBoxSubmit.hide();
+        // operationNodeBoxStar.innerText = nowNode.star;
+        if (nowNode.starStatus) {
+            operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+        } else {
+            operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+        }
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        operationNodeBoxStarBox.show();
     }
 });
 
