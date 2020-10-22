@@ -8,7 +8,7 @@
  * @author 60rzvvbj
  */
 function addClass(node, theClass) {
-    if (node) {
+    if (node && theClass) {
         var str = node.getAttribute('class');
         if (str) {
             var arr = str.split(' ');
@@ -38,7 +38,7 @@ function addClass(node, theClass) {
  * @author 60rzvvbj
  */
 function removeClass(node, theClass) {
-    if (node) {
+    if (node && theClass) {
         var str = node.getAttribute('class');
         if (str) {
             var arr = str.split(' ');
@@ -65,7 +65,7 @@ function removeClass(node, theClass) {
  * @author 60rzvvbj
  */
 function toggleClass(node, theClass) {
-    if (node) {
+    if (node && theClass) {
         var str = node.getAttribute('class');
         if (str) {
             var arr = str.split(' ');
@@ -101,7 +101,7 @@ function toggleClass(node, theClass) {
  * @author 60rzvvbj
  */
 function replaceClass(node, oldClass, newClass) {
-    if (node) {
+    if (node && theClass) {
         var str = node.getAttribute('class');
         var arr = str.split(' ');
         var res = '';

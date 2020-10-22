@@ -12,6 +12,7 @@ body .header {
 .header .logoBox {
     float: left;
 }
+
 .header .logo {
     float: left;
     margin-top: 6px;
@@ -21,6 +22,7 @@ body .header {
     background-size: contain;
     background-size: contain;
 }
+
 .mainTitle {
     display: inline-block;
     top: 10px;
@@ -37,6 +39,7 @@ body .header {
 /* #region —————————————————————mainBox——————————————————————— */
 body {
     perspective: 2000px;
+    background-color: #E6EEF1;
 }
 
 body::before,
@@ -220,8 +223,20 @@ body::after {
 
 .mainBox .register div {
     position: relative;
+    width: 110%;
     height: 26.5px;
     margin-top: 25px;
+    transform: translate3d(-5%, 0, 60px);
+}
+
+.mainBox .register div span {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 64px;
+    height: 20px;
+    text-align-last: justify;
+    color: #214B5B;
 }
 
 .mainBox .register h4 {
@@ -236,17 +251,22 @@ body::after {
 
 .mainBox .register input {
     display: block;
-    width: 100%;
+    width: calc(100% - 80px);
     height: 20px;
     padding-bottom: 5px;
     border: 0px;
     border-bottom: 1.5px solid #3a6c65;
     margin-top: 25px;
+    margin-left: 84px;
     font-size: 14px;
     text-indent: 0.2em;
+    color: #000;
     background-color: transparent;
-    transform: translateZ(60px);
     transition: border-bottom .3s, box-shadow .3s;
+}
+
+.mainBox .register .inputTips {
+    color: #999;
 }
 
 .mainBox .register input:focus {
@@ -254,25 +274,31 @@ body::after {
 }
 
 .mainBox .register .vc {
-    width: 100%;
+    width: 110%;
     height: 25px;
     margin-top: 25px;
 }
 
+.mainBox .register .vc>div {
+    transform: translate3d(0, 0, 60px);
+}
+
 .mainBox .register .VC {
     float: left;
+    width: 34%;
     margin: 0px;
-    width: 50%;
+    margin-left: 84px;
 }
 
 .mainBox .register .getVC {
     float: right;
-    width: 42%;
+    width: 32%;
     height: 40px;
     padding: 0px;
     border: 0px;
     border-radius: 4px;
     margin-top: -37px;
+    margin-right: -4px;
     font-size: 12px;
     color: #fff;
     background-color: #214b5b;
@@ -293,9 +319,11 @@ body::after {
     position: relative;
     top: 0px;
     left: 0px;
+    width: 100%;
     height: 55px;
     border-radius: 5px;
     margin-top: 48px;
+    margin-left: 0px;
     margin-bottom: 10px;
     text-align: center;
     font-size: 18px;
@@ -330,8 +358,8 @@ body::after {
 
 .mainBox .register .errorTips {
     position: absolute;
-    bottom: -28px;
-    left: 2px;
+    bottom: -30px;
+    left: 86px;
     padding-left: 12px;
     margin: 0px;
     font-size: 10px;
@@ -354,25 +382,3 @@ body::after {
 }
 
 /* #endregion */
-
-body {
-    background-color: #E6EEF1;
-}
-.flower{
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-image: url(../img/flower.png);
-    background-size: contain;
-    animation: upDowm 1.3s ease-in-out 0s infinite alternate;
-}
-
-@keyframes upDowm {
-    from {
-        transform: translate(0, 0)
-    }
-
-    to {
-        transform: translate(0, 20px)
-    }
-}
