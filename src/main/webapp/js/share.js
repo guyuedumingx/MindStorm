@@ -71,8 +71,8 @@ function UpladFile() {
     xhr.send(formdata);
     //回调
     xhr.onreadystatechange = function () {
-        if (xhr.status == 200) {
-            headBox.style.backgroungImg = ""; //跳转页面
+        if (xhr.status_code == 200) {
+            headBox.style.backgroungImg = "http://localhost:8080"+ xhr.url; 
         } else {
             topAlert("导入失败");
         }
@@ -108,3 +108,24 @@ function heightAuto() {
 heightAuto();
 
 window.addEventListener('resize', heightAuto);
+
+
+function projectSize() {
+
+    //获取project显示框架
+    var projectBox = getDom(".projectBox");
+    var projectWidth = projectBox.offsetWidth;
+    var projectHeight = projectBox.offsetHeight;
+    //获取项目大框架
+    var projectLi = getDom(".projectLi");
+    //获取project板块
+    var liNav = getDomA(".liNav");
+    projectLi.style.width = projectWidth * liNav.length + "px";
+
+    for (var i = 0; i < liNav.length; i++) {
+        liNav[i].style.width = projectWidth + "px";
+        liNav[i].style.height = projectHeight + "px";
+    }
+}
+projectSize();
+window.addEventListener('resize', projectSize);
