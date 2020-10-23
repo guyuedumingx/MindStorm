@@ -78,7 +78,7 @@ function UpladFile() {
         }
     };
 }
-importNav.addEventListener("change", UpladFile);
+inPic.addEventListener("change", UpladFile);
 //获取name盒子
 var nameBox = getDom(".nameBox");
 nameBox.value = userName;
@@ -136,7 +136,7 @@ function projectSize(project) {
     //获取项目大框架
     var projectLi = getDom(".projectLi", project);
     //获取project板块
-    var liNav = getDomA(".liNav", project);
+    var liNav = getDomA(".liNav",project);
     projectLi.style.width = projectWidth * liNav.length + "px";
 
     for (var i = 0; i < liNav.length; i++) {
@@ -151,7 +151,7 @@ function colorB() {
     personalBox.style.backgroundColor = "rgb(241, 240, 230)";
     personalBox.style.color = "#071f3d";
     projectSize(personalNav);
-
+   
 }
 colorB();
 // // 点击共享项目
