@@ -920,13 +920,14 @@ tipsYes.addEventListener('click', function () {
             }
         });
     } else if (tipsState == 'exportProject') {
-        ajax({
-            type: 'get',
-            url: '/util/xmind',
-            data: {
-                project_id: projectId
-            }
-        });
+        window.location = '/util/xmind?project_id=' + projectId;
+        // ajax({
+        //     type: 'get',
+        //     url: '/util/xmind',
+        //     data: {
+        //         project_id: projectId
+        //     }
+        // });
     }
     tipsCloseFunction();
 });
