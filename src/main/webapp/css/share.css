@@ -345,8 +345,8 @@ body .header {
 /* 搜索框 */
 .mainBox .navigationBar .searchBox {
     width: 90%;
-    height: 40px;
-    margin: 30px 0;
+    height: 6%;
+    margin: 12% 0;
     background-color: #E6EEF1;
     border-radius: 50px;
 }
@@ -354,42 +354,61 @@ body .header {
 /* 搜索按钮 */
 .mainBox .navigationBar .searchBox .iconS {
     float: right;
-    width: 50px;
-    height: 40px;
+    width: 20%;
+    height: 100%;
     border-radius: 50px;
     background-color: rgb(176, 200, 211);
     background-image: url(../img/search.png);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
 }
-
+/* 搜索内容 */
+.mainBox .navigationBar .searchBox .searchCont{
+    float: left;
+    width: 70%;
+    height: 100%;
+    margin-left: 10px;
+    padding: 10px 5px;
+    line-height: 30px;
+    font-size: 18px;
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+}
 /* 项目分类 */
 .mainBox .navigationBar .shareBox,
 .mainBox .navigationBar .personalBox {
     width: 100%;
-    line-height: 50px;
+    height: 7%;
     color: #E6EEF1;
+    cursor: pointer;
 }
 
-.mainBox .navigationBar .personalBox {
+.mainBox .navigationBar .personalBox:hover,.mainBox .navigationBar .shareBox:hover {
     color: #071f3d;
-    background-color: rgb(241, 240, 230);
+    background-color: rgb(134, 134, 125);
 }
+/* .mainBox .navigationBar .personalBox{
+    color: #071f3d;
+    background-color:rgb(241, 240, 230);
+} */
 
 /* 新建加入按钮 */
 .mainBox .navigationBar .buildJoin {
     position: absolute;
     left: 50%;
     bottom: 50px;
-    width: 200px;
-    line-height: 50px;
+    height: 8%;
+    width: 80%;
     transform: translateX(-50%);
+    font-size: 20px;
     color: #071f3d;
     border-radius: 5px;
     background: linear-gradient(0deg, #d4c78c, rgb(241, 240, 230));
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: color 0.5s ease;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 4px 4px 5px 0px rgba(0, 0, 0, .1);
 }
 
@@ -432,11 +451,12 @@ body .header {
     position: relative;
     flex: 4;
     height: 100%;
-    background-color:#F1F0E6;
     border-radius: 5px;
     overflow: hidden;
 }
-
+.mainBox .shareNav{
+    display:none;
+}
 /* 项目容器 */
 .mainBox .projectBox .projectLi {
     width: 200%;
@@ -451,20 +471,22 @@ body .header {
     justify-content: space-around;
     float: left;
     box-sizing: border-box;
-    background-color: #f8f4df;
+    border: solid;
 }
 
 .mainBox .projectBox .projectLi li {
+    position: relative;
     margin: 0 2.6%;
     width: 28%;
     height: 40%;
     border-radius: 5px;
     background-color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 .mainBox .projectBox .projectLi li>div{
     padding: 10px 20px;
 }
-.mainBox .projectBox .projectLi li:hover {
+.mainBox .projectBox .projectLi .boxS:hover {
     box-shadow: 0 0 5px #214B5B;
 }
 /* 项目名称 */
@@ -519,6 +541,27 @@ body .header {
     background-size: contain;
 }
 
+/* 左右按钮 */
+.leftBut,.rightBut{
+    position: absolute;
+    left: 3%;
+    top: 50%;
+    height:7%;
+    width: 5%;
+    background-image: url(../img/share_left_s.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.rightBut{
+  left: 92%;
+  background-image: url(../img/share_right_s.png);
+}
+.leftBut:hover,.rightBut:hover{
+    box-shadow: inset 0 0 5px #214B5B;
+}
 /*#endregion*/
 body {
     background-color: #E6EEF1;
