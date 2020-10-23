@@ -22,12 +22,73 @@ forgetPasswoed.addEventListener('click', function (e) {
     topAlert('密码忘了活该');
 });
 
+// 邮箱提示键盘上下键事件函数
+function emailTipsKeyDowm(e) {
+    if (e.key == 'ArrowUp') {
+        e.preventDefault();
+        this.tips.children[this.nowTips].removeClass('heightLight');
+        this.nowTips = (this.nowTips + 5) % 6;
+        this.value = this.tips.children[this.nowTips].innerText;
+        this.tips.children[this.nowTips].addClass('heightLight');
+    } else if (e.key == 'ArrowDown') {
+        e.preventDefault();
+        this.tips.children[this.nowTips].removeClass('heightLight');
+        this.nowTips = (this.nowTips + 1) % 6;
+        this.value = this.tips.children[this.nowTips].innerText;
+        this.tips.children[this.nowTips].addClass('heightLight');
+
+    } else if (e.key == 'Enter') {
+        e.preventDefault();
+        this.tips.hide();
+        this.tips.children[this.nowTips].removeClass('heightLight');
+        this.removeEventListener('keydown', emailTipsKeyDowm);
+        this.removeEventListener('blur', emailTipsBlur);
+    }
+}
+
+function emailTipsBlur() {
+    this.tips.hide();
+    this.tips.children[this.nowTips].removeClass('heightLight');
+    this.removeEventListener('keydown', emailTipsKeyDowm);
+    this.removeEventListener('blur', emailTipsBlur);
+}
+
+// function emailTipsMouseOver() {
+
+// }
+
+// 邮箱提示
+function emailTips(input) {
+    input.addEventListener('keydown', function (e) {
+        if (e.key == '@') {
+            e.preventDefault();
+            var str = input.value;
+            input.nowTips = 0;
+            input.tips.children[0].innerText = str + '@qq.com';
+            input.tips.children[1].innerText = str + '@126.com';
+            input.tips.children[2].innerText = str + '@163.com';
+            input.tips.children[3].innerText = str + '@sina.com';
+            input.tips.children[4].innerText = str + '@21cn.com';
+            input.tips.children[5].innerText = str + '@souhu.com';
+            input.value = input.tips.children[input.nowTips].innerText;
+            input.tips.children[input.nowTips].addClass('heightLight');
+            input.tips.show();
+            input.addEventListener('keydown', emailTipsKeyDowm);
+            input.addEventListener('blur', emailTipsBlur);
+        }
+    });
+}
+
 // 登录
 var login = getDom('.login');
 var loginInput = getDomA('input', login);
 var loginEmail = loginInput[0];
+loginEmail.tips = loginEmail.parentNode.getDom('.emailTips');
 var loginPassword = loginInput[1];
 var loginSubmit = loginInput[2];
+
+emailTips(loginEmail);
+
 function runLogin() {
     var em = loginEmail.value;
     var pa = loginPassword.value;
