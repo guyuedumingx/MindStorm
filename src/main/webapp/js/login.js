@@ -8,12 +8,15 @@ var forgetPasswoed = loginLink[0];
 var goRegister = loginLink[1];
 var goLogin = getDom('.register a');
 var mainBox = getDom('.mainBox');
+
 goRegister.addEventListener('click', function () {
     mainBox.style.transform = 'rotateY(-180deg)';
 });
+
 goLogin.addEventListener('click', function () {
     mainBox.style.transform = 'rotateY(0deg)';
 });
+
 forgetPasswoed.addEventListener('click', function (e) {
     e.preventDefault();
     topAlert('密码忘了活该');
@@ -44,8 +47,11 @@ function runLogin() {
         }
     })
 }
+
+// 添加提交按钮点击事件
 loginSubmit.addEventListener('click', runLogin);
 loginPassword.inputEnterEvent(runLogin);
+
 // 注册
 var register = getDom('.register');
 var registerInput = getDomA('input', register);
@@ -59,12 +65,15 @@ var registerSubmit = registerInput[6]; // 提交
 var registerRealVerificationCode; //后端返回的验证码
 var registerGetVerificationCodeState = true;
 registerEmail.judge = true;
+
+// 初始化提示信息
 inputTips(registerUserName, '请输入昵称', 'inputTips');
 inputTips(registerEmail, '请输入邮箱', 'inputTips');
 inputTips(registerVerificationCode, '请输入验证码', 'inputTips');
 inputTips(registerPassword, '请输入密码', 'inputTips');
 inputTips(registerConfirmPassword, '请确认密码', 'inputTips');
 
+// 报错
 function reportError(node, errorTips) {
     var nodeFather = node.parentNode;
     if (node.errorDiv) {
@@ -76,6 +85,7 @@ function reportError(node, errorTips) {
     nodeFather.appendChild(node.errorDiv);
 }
 
+// 清除报错
 function clearError(node) {
     var nodeFather = node.parentNode;
     if (node.errorDiv) {
@@ -87,6 +97,7 @@ function clearError(node) {
     }
 }
 
+// 判断密码
 function judgePassword(node) {
     var str = node.value;
     if (str != '请输入密码') {
@@ -275,30 +286,37 @@ function registerJudge() {
 registerUserName.addEventListener('blur', function () {
     judgeUserName(this);
 });
+
 registerEmail.addEventListener('blur', function () {
     setEmailJudge(this);
 });
+
 registerGetVerificationCode.addEventListener('click', function () {
     if (registerGetVerificationCodeState) {
         registerGetVC(registerEmail);
     }
 });
+
 registerGetVerificationCode.addEventListener('mouseover', function () {
     if (registerGetVerificationCodeState) {
         this.style.backgroundColor = '#101f30';
     }
 });
+
 registerGetVerificationCode.addEventListener('mouseout', function () {
     if (registerGetVerificationCodeState) {
         this.style.backgroundColor = '#214b5b';
     }
 });
+
 registerPassword.addEventListener('blur', function () {
     judgePassword(this);
 });
+
 registerConfirmPassword.addEventListener('blur', function () {
     judgeCPassword(registerPassword, this);
 });
+
 registerSubmit.addEventListener('click', function () {
     if (registerJudge()) {
         var em = registerEmail.value;
