@@ -1402,7 +1402,7 @@ function textVerticalCenter(node) {
     node.style.lineHeight = node.offsetHeight + 'px';
     window.addEventListener('resize', function () {
         node.style.lineHeight = node.offsetHeight + 'px';
-    })
+    });
 }
 Node.prototype.textVerticalCenter = function () {
     textVerticalCenter(this);

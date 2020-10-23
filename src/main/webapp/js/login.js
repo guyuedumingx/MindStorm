@@ -27,6 +27,7 @@ function emailTipsBlur() {
     this.tips.hide();
     if (this.nowTips != null) {
         this.tips.children[this.nowTips].removeClass('heightLight');
+        this.value = this.tips.children[this.nowTips].innerText;
     }
     clearEmailTipsEvent(this);
 }
@@ -37,14 +38,22 @@ function emailTipsMouseOver() {
         this.father.tips.children[this.father.nowTips].removeClass('heightLight');
     }
     this.father.nowTips = this.index;
-    this.father.value = this.father.tips.children[this.father.nowTips].innerText;
     this.father.tips.children[this.father.nowTips].addClass('heightLight');
+}
+
+// 邮箱提示mouseout事件
+function emailTipsMouseOut() {
+    console.log(1);
+    if (this.father.nowTips != null) {
+        this.father.tips.children[this.father.nowTips].removeClass('heightLight');
+    }
 }
 
 function clearEmailTipsEvent(input) {
     input.removeEventListener('blur', emailTipsBlur);
     for (var i = 0; i < input.tips.children.length; i++) {
         input.tips.children[i].removeEventListener('mouseover', emailTipsMouseOver);
+        input.tips.children[i].removeEventListener('mouseout', emailTipsMouseOut);
     }
 }
 
@@ -106,6 +115,9 @@ function emailTips(input) {
             clearEmailTipsEvent(input);
         } else {
             clearEmailTipsEvent(input);
+            if (input.nowTips != null) {
+                input.tips.children[input.nowTips].removeClass('heightLight');
+            }
             input.nowTips = null;
             input.tips.children[0].innerText = str + '@qq.com';
             input.tips.children[1].innerText = str + '@126.com';
@@ -118,6 +130,7 @@ function emailTips(input) {
             for (var i = 0; i < input.tips.children.length; i++) {
                 input.tips.children[i].index = i;
                 input.tips.children[i].addEventListener('mouseover', emailTipsMouseOver);
+                input.tips.children[i].addEventListener('mouseout', emailTipsMouseOut);
                 input.tips.children[i].father = input;
             }
         }
@@ -127,10 +140,7 @@ function emailTips(input) {
         if (e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt') {
             return 0;
         }
-        if (e.key == 'ArrowUp') {
-        } else if (e.key == 'ArrowDown') {
-        } else if (e.key == 'Enter') {
-        } else if (str.length == 0) {
+        if (e.key == 'ArrowUp') { } else if (e.key == 'ArrowDown') { } else if (e.key == 'Enter') { } else if (str.length == 0) {
             input.tips.hide();
             if (input.nowTips != null) {
                 input.tips.children[input.nowTips].removeClass('heightLight');
@@ -153,6 +163,7 @@ function emailTips(input) {
             for (var i = 0; i < input.tips.children.length; i++) {
                 input.tips.children[i].index = i;
                 input.tips.children[i].addEventListener('mouseover', emailTipsMouseOver);
+                input.tips.children[i].addEventListener('mouseout', emailTipsMouseOut);
                 input.tips.children[i].father = input;
             }
         }
