@@ -34,8 +34,11 @@ function emailTipsBlur() {
 
 // 邮箱提示mouseover事件
 function emailTipsMouseOver() {
-    if (this.father.nowTips != null) {
-        this.father.tips.children[this.father.nowTips].removeClass('heightLight');
+    // if (this.father.nowTips != null) {
+    //     this.father.tips.children[this.father.nowTips].removeClass('heightLight');
+    // }
+    for (var i = 0; i < this.father.tips.children.length; i++) {
+        this.father.tips.children[i].removeClass('heightLight');
     }
     this.father.nowTips = this.index;
     this.father.tips.children[this.father.nowTips].addClass('heightLight');
@@ -147,8 +150,13 @@ function emailTips(input) {
             }
             clearEmailTipsEvent(input);
         } else if (/@/.test(str)) {
+            if (/@$/) {
+                input.tips.hide();
+                if (input.nowTips != null) {
+                    input.tips.children[input.nowTips].removeClass('heightLight');
+                }
+            }
             clearEmailTipsEvent(input);
-            str = str.split('@')[0];
         } else {
             clearEmailTipsEvent(input);
             input.nowTips = null;
