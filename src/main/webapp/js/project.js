@@ -653,6 +653,9 @@ function createRoot(rootID) {
     createTree(root);
 }
 
+var nodeMaxSize = 30; // 子节点最大尺寸
+var nodeMinSize = 12; // 子节点最小尺寸
+
 // 判断是否所有节点都请求完毕的定时器，全部加载完之后开始添加相关约束
 var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
@@ -668,9 +671,9 @@ var nodeRequetTimer = setInterval(function () {
         for (var i = 0; i < nodeSet.length; i++) {
 
             // 给所有节点设置宽高圆角和随机位置
-            nodeSet[i].style.width = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
-            nodeSet[i].style.height = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) + 'px';
-            nodeSet[i].style.borderRadius = Math.max(parseInt(36 * nodeSet[i].star / maxStar), 20) / 2 + 'px';
+            nodeSet[i].style.width = Math.max(parseInt(nodeMaxSize * nodeSet[i].star / maxStar), nodeMinSize) + 'px';
+            nodeSet[i].style.height = Math.max(parseInt(nodeMaxSize * nodeSet[i].star / maxStar), nodeMinSize) + 'px';
+            nodeSet[i].style.borderRadius = Math.max(parseInt(nodeMaxSize * nodeSet[i].star / maxStar), nodeMinSize) / 2 + 'px';
             nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
             nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
             nodeSet[i].style.display = 'block';
