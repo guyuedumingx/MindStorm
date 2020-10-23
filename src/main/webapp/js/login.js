@@ -95,9 +95,14 @@ loginEmail.tips = loginEmail.parentNode.getDom('.emailTips');
 var loginPassword = loginInput[1];
 var loginSubmit = loginInput[2];
 
+// 添加邮箱地址提示功能
 emailTips(loginEmail);
-inputSelectAllText(loginEmail);
 
+// 添加ctrl+A事件
+loginEmail.inputSelectAllText();
+loginPassword.inputSelectAllText();
+
+// 发送登录请求
 function runLogin() {
     var em = loginEmail.value;
     var pa = loginPassword.value;
@@ -127,6 +132,7 @@ var register = getDom('.register');
 var registerInput = getDomA('input', register);
 var registerUserName = registerInput[0]; // 用户名
 var registerEmail = registerInput[1]; // 邮箱
+registerEmail.tips = registerEmail.parentNode.getDom('.emailTips'); // 邮箱提示框
 var registerVerificationCode = registerInput[2]; //输入验证码
 var registerGetVerificationCode = registerInput[3]; //获取验证码
 var registerPassword = registerInput[4]; //输入密码
@@ -136,12 +142,22 @@ var registerRealVerificationCode; //后端返回的验证码
 var registerGetVerificationCodeState = true;
 registerEmail.judge = true;
 
+// 添加邮箱地址提示功能
+emailTips(registerEmail);
+
 // 初始化提示信息
 inputTips(registerUserName, '请输入昵称', 'inputTips');
 inputTips(registerEmail, '请输入邮箱', 'inputTips');
 inputTips(registerVerificationCode, '请输入验证码', 'inputTips');
 inputTips(registerPassword, '请输入密码', 'inputTips');
 inputTips(registerConfirmPassword, '请确认密码', 'inputTips');
+
+// 添加ctrl+A事件
+registerUserName.inputSelectAllText();
+registerEmail.inputSelectAllText();
+registerVerificationCode.inputSelectAllText();
+registerPassword.inputSelectAllText();
+registerConfirmPassword.inputSelectAllText();
 
 // 报错
 function reportError(node, errorTips) {
