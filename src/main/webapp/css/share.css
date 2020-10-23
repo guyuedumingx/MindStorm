@@ -372,7 +372,7 @@ body .header {
     margin-left: 10px;
     padding: 10px 5px;
     line-height: 30px;
-    font-size: 18px;
+    font-size: 16px;
     box-sizing: border-box;
     border: none;
     background-color: transparent;
@@ -470,8 +470,6 @@ body .header {
     align-content: space-around;
     justify-content: space-around;
     float: left;
-    box-sizing: border-box;
-    border: solid;
 }
 
 .mainBox .projectBox .projectLi li {
