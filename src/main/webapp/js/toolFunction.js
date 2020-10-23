@@ -1390,3 +1390,20 @@ function inputSelectAllText(input) {
 Node.prototype.inputSelectAllText = function () {
     inputSelectAllText(this);
 }
+
+/**
+ * 
+ * 设置文本动态垂直居中
+ * 
+ * @param {Node} node 要垂直居中文本的盒子
+ * @author 60rzvvbj
+ */
+function textVerticalCenter(node) {
+    node.style.lineHeight = node.offsetHeight + 'px';
+    window.addEventListener('resize', function () {
+        node.style.lineHeight = node.offsetHeight + 'px';
+    })
+}
+Node.prototype.textVerticalCenter = function () {
+    textVerticalCenter(this);
+}
