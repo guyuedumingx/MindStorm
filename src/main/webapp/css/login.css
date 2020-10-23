@@ -67,7 +67,9 @@ body::after {
     display: none;
     position: absolute;
     height: 150px;
+    border-radius: 0px 0px 5px 5px;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
     background-color: #fff;
     transform: translateZ(61px);
 }
@@ -88,8 +90,11 @@ body::after {
 .mainBox .emailTips li {
     padding: 0px 0px 0px 5px;
     box-sizing: border-box;
+    overflow: hidden;
     font-size: 12px;
     line-height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: #909ab0;
     background-color: #fafbfd;
     cursor: pointer;
@@ -408,7 +413,7 @@ body::after {
     font-size: 10px;
     line-height: 12px;
     color: #aa0000;
-    transform: translateZ(60px);
+    transform: translateZ(0px);
 }
 
 .errorTips::before {
