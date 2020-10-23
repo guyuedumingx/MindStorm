@@ -1373,7 +1373,7 @@ function setShearPlateData(text) {
 
 /**
  * 
- * 函数功能：给输入框添加ctrl + A全选文本事件
+ * 函数功能：给输入框添加 ctrl + A 全选文本事件
  * 
  * @param {Node} input 要添加全选的输入框
  * @author 60rzvvbj
@@ -1386,4 +1386,7 @@ function inputSelectAllText(input) {
             }
         }
     });
+}
+Node.prototype.inputSelectAllText = function () {
+    inputSelectAllText(this);
 }
