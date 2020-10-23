@@ -53,7 +53,7 @@ function emailTips(input) {
     input.addEventListener('keydown', function (e) {
         var str = input.value;
         if (e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt') {
-            return 0;
+            return;
         }
         if (e.key == ' ') {
             e.preventDefault();
@@ -66,6 +66,9 @@ function emailTips(input) {
             clearEmailTipsEvent(input);
         } else if (e.key == 'ArrowUp') {
             e.preventDefault();
+            if (input.tips.getCSS('display') == 'none') {
+                return;
+            }
             if (input.nowTips == null) {
                 input.nowTips = 0;
             }
@@ -75,6 +78,9 @@ function emailTips(input) {
             input.tips.children[input.nowTips].addClass('heightLight');
         } else if (e.key == 'ArrowDown') {
             e.preventDefault();
+            if (input.tips.getCSS('display') == 'none') {
+                return;
+            }
             if (input.nowTips == null) {
                 input.nowTips = 5;
             }
@@ -84,6 +90,9 @@ function emailTips(input) {
             input.tips.children[input.nowTips].addClass('heightLight');
         } else if (e.key == 'Enter') {
             e.preventDefault();
+            if (input.tips.getCSS('display') == 'none') {
+                return;
+            }
             input.tips.hide();
             if (input.nowTips != null) {
                 input.tips.children[input.nowTips].removeClass('heightLight');
