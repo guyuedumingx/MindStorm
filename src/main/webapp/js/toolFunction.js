@@ -1370,3 +1370,20 @@ function setShearPlateData(text) {
     document.execCommand('copy');
     document.body.removeChild(input);
 }
+
+/**
+ * 
+ * 函数功能：给输入框添加ctrl + A全选文本事件
+ * 
+ * @param {Node} input 要添加全选的输入框
+ * @author 60rzvvbj
+ */
+function inputSelectAllText(input) {
+    input.addEventListener('keydown', function (e) {
+        if (e.key == 'a') {
+            if (e.ctrlKey) {
+                input.setSelectionRange(0, input.value.length);
+            }
+        }
+    });
+}

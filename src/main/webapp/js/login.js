@@ -53,9 +53,12 @@ function emailTipsBlur() {
     this.removeEventListener('blur', emailTipsBlur);
 }
 
-// function emailTipsMouseOver() {
-
-// }
+function emailTipsMouseOver() {
+    this.father.tips.children[this.father.nowTips].removeClass('heightLight');
+    this.father.nowTips = this.index;
+    this.father.value = this.father.tips.children[this.father.nowTips].innerText;
+    this.father.tips.children[this.father.nowTips].addClass('heightLight');
+}
 
 // 邮箱提示
 function emailTips(input) {
@@ -75,6 +78,11 @@ function emailTips(input) {
             input.tips.show();
             input.addEventListener('keydown', emailTipsKeyDowm);
             input.addEventListener('blur', emailTipsBlur);
+            for (var i = 0; i < input.tips.children.length; i++) {
+                input.tips.children[i].index = i;
+                input.tips.children[i].addEventListener('mouseover', emailTipsMouseOver);
+                input.tips.children[i].father = input;
+            }
         }
     });
 }
@@ -88,6 +96,7 @@ var loginPassword = loginInput[1];
 var loginSubmit = loginInput[2];
 
 emailTips(loginEmail);
+inputSelectAllText(loginEmail);
 
 function runLogin() {
     var em = loginEmail.value;

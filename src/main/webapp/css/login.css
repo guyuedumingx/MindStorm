@@ -92,6 +92,7 @@ body::after {
     line-height: 25px;
     color: #909ab0;
     background-color: #fafbfd;
+    cursor: pointer;
 }
 
 .mainBox .emailTips .heightLight {
