@@ -1,13 +1,14 @@
 package service.impl;
 
-
 import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
+import dao.UserDao;
 import dao.auxiliary.impl.StarDaoImpl;
 import pojo.Node;
 import pojo.Project;
+import pojo.User;
 import pojo.auxiliary.Star;
 import service.NodeService;
 
@@ -15,6 +16,7 @@ public class NodeServiceImpl implements NodeService {
     NodeDao nodeDao = DaoFactory.getNodeDao();
     ProjectDao projectDao = DaoFactory.getProjectDao();
     StarDaoImpl starDao = DaoFactory.getStarDao();
+    UserDao userDao = DaoFactory.getUserDao();
 
     @Override
     public int newNode(Node node) {
@@ -47,6 +49,10 @@ public class NodeServiceImpl implements NodeService {
     public Node getNode(int nodeId,int userId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
         Star star = starDao.selectOne(new Star(userId,nodeId));
+        User lastEditUser = userDao.selectOne(new User(node.getLastEditId()));
+        if(lastEditUser!=null) {
+            node.setLastEditName(lastEditUser.getName());
+        }
         if(star!=null){
             node.setStared(true);
         }else {
