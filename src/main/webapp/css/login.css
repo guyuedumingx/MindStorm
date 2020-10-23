@@ -63,6 +63,41 @@ body::after {
     transform-style: preserve-3d;
 }
 
+.mainBox .emailTips {
+    position: absolute;
+    height: 150px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    transform: translateZ(61px);
+}
+
+.mainBox .login .emailTips {
+    top: 25px;
+    left: 0px;
+    width: 100%;
+}
+
+.mainBox .register .emailTips {
+    top: 26px;
+    left: 84px;
+    width: calc(100% - 80px);
+    transform: translateZ(1px);
+}
+
+.mainBox .emailTips li {
+    padding: 0px 0px 0px 5px;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 25px;
+    color: #909ab0;
+    background-color: #fafbfd;
+}
+
+.mainBox .emailTips .heightLight {
+    color: #000;
+    background-color: #e1eaf1;
+}
+
 .mainBox .login {
     position: absolute;
     top: 0px;
@@ -101,6 +136,10 @@ body::after {
     background-size: 100%;
     background-position: center;
     content: '';
+}
+
+.mainBox .login div {
+    position: relative;
 }
 
 .mainBox .login .email::before {
@@ -227,6 +266,7 @@ body::after {
     height: 26.5px;
     margin-top: 25px;
     transform: translate3d(-5%, 0, 60px);
+    transform-style: preserve-3d;
 }
 
 .mainBox .register div span {
@@ -277,6 +317,7 @@ body::after {
     width: 110%;
     height: 25px;
     margin-top: 25px;
+    transform-style: flat;
 }
 
 .mainBox .register .vc>div {
