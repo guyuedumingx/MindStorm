@@ -259,9 +259,7 @@ registerConfirmPassword.inputSelectAllText();
 function reportError(node, errorTips) {
     var nodeFather = node.parentNode;
     if (node.errorDiv) {
-        console.log(node.errorDiv);
         nodeFather.removeChild(node.errorDiv);
-        node.errorDiv = null;
     }
     node.errorDiv = document.createElement("div");
     addClass(node.errorDiv, "errorTips");
@@ -393,7 +391,6 @@ function registerGetVC(node) {
         registerGetVerificationCode.style.backgroundColor = "#b7cfd8";
         registerGetVerificationCode.style.backgroundColor = "#b7cfd8";
         registerGetVerificationCode.style.cursor = "not-allowed";
-        console.log(registerGetVerificationCode.style.backgroundColor);
         registerGetVerificationCode.timerI = 60;
         registerGetVerificationCodeState = false;
         registerGetVerificationCode.timer = setInterval(function () {
