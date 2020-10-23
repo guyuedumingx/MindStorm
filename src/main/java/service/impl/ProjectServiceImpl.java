@@ -3,10 +3,12 @@ package service.impl;
 import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import dao.ProjectDao;
+import dao.UserDao;
 import dao.auxiliary.impl.ContributorDaoImpl;
 import dao.auxiliary.impl.RecentProjectDaoImpl;
 import pojo.Node;
 import pojo.Project;
+import pojo.User;
 import pojo.auxiliary.Contributor;
 import pojo.auxiliary.RecentProject;
 import service.ProjectService;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 public class ProjectServiceImpl implements ProjectService {
     ProjectDao projectDao = DaoFactory.getProjectDao();
+    UserDao userDao = DaoFactory.getUserDao();
     ContributorDaoImpl contributorDao = new ContributorDaoImpl();
     RecentProjectDaoImpl recentProjectDao = new RecentProjectDaoImpl();
 
@@ -76,6 +79,8 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectDao.selectOne(new Project(projectId));
         List<Contributor> contributors = contributorDao.selectObjectList(new Contributor(projectId));
         Iterator<Contributor> iterator = contributors.iterator();
+        User author = userDao.selectOne(new User(project.getAuthor()));
+        project.setCreatorName(author.getName());
         int[] cons = new int[contributors.size()];
         for(int i=0; iterator.hasNext();i++){
             cons[i] = iterator.next().getContributorId();

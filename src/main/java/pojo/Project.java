@@ -25,6 +25,7 @@ public class Project extends BaseModel{
     private String createTime = "";
     @DbField("deadline")
     private String deadline = "";
+    private String creatorName = "";
 
     public Project() {}
     public Project(int id) {this.id = id;}
@@ -110,5 +111,13 @@ public class Project extends BaseModel{
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
     }
 }
