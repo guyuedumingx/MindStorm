@@ -551,7 +551,7 @@ function addTreeConstraint(root, n) {
             t = t.father;
         }
         changeChild(root, addHeightLight);
-        nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
+        nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
         if (ctrlState && !lockingNode.state) {
             document.addEventListener('mousemove', move);
         }
@@ -920,13 +920,14 @@ tipsYes.addEventListener('click', function () {
             }
         });
     } else if (tipsState == 'exportProject') {
-        ajax({
-            type: 'get',
-            url: '/util/xmind',
-            data: {
-                project_id: projectId
-            }
-        });
+        window.location = '/util/xmind?project_id=' + projectId;
+        // ajax({
+        //     type: 'get',
+        //     url: '/util/xmind',
+        //     data: {
+        //         project_id: projectId
+        //     }
+        // });
     }
     tipsCloseFunction();
 });
