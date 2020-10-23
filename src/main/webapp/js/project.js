@@ -551,7 +551,7 @@ function addTreeConstraint(root, n) {
             t = t.father;
         }
         changeChild(root, addHeightLight);
-        nowNode.style.boxShadow = '0px 0px 30px ' + nowNodeBoxShadowColor;
+        nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
         if (ctrlState && !lockingNode.state) {
             document.addEventListener('mousemove', move);
         }
