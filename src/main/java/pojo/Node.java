@@ -7,27 +7,27 @@ import common.annontation.DbField;
  * @author yohoyes
  */
 public class Node extends BaseModel{
-   @DbField("author_id")
+   @DbField(value = "author_id",update = false)
    private int author;
-   @DbField("project_id")
+   @DbField(value = "project_id",update = false)
    private int projectId;
-   @DbField(value = "star",insertIgnore = true)
+   @DbField(value = "star",insertIgnore = true,update = false)
    private long star;
    private boolean isStared;
-   @DbField("last_edit_id")
+   @DbField(value = "last_edit_id")
    private int lastEditId;
    private int[] children;
-   @DbField("parent_id")
+   @DbField(value = "parent_id",update = false)
    private int parentId;
-   @DbField("editable")
+   @DbField(value = "editable")
    private boolean editable = true;
-   @DbField("nameless")
+   @DbField(value = "nameless",update = false)
    private boolean nameless;
-   @DbField("theme")
+   @DbField(value = "theme")
    private String theme = "";
-   @DbField("content")
+   @DbField(value = "content")
    private String content = "请输入内容";
-   @DbField("last_edit_time")
+   @DbField(value = "last_edit_time",update = false)
    private String lastEditTime = "";
 
    public Node(Project project){

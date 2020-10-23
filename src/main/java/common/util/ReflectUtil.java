@@ -19,7 +19,7 @@ public class ReflectUtil {
     public static <T> Map<String,Object> getParas(T po) throws IllegalAccessException {
         Class clazz = po.getClass();
         Map<String, Object> map = new HashMap<String, Object>();
-        return getFieldsMap(po, clazz, map);
+        return getFieldsMapForInsert(po, clazz, map);
     }
 
     public static <T> Field[] getAllFields(T object){
@@ -34,11 +34,18 @@ public class ReflectUtil {
         return fields;
     }
 
+    public static <T> Map<String,Object> getParaForInsert(T po) throws IllegalAccessException {
+        Class clazz = po.getClass();
+        Map<String, Object> map = new HashMap<String, Object>(16);
+        return getFieldsMapForInsert(po, clazz, map);
+    }
+
     public static <T> Map<String,Object> getParaForUpdate(T po) throws IllegalAccessException {
         Class clazz = po.getClass();
         Map<String, Object> map = new HashMap<String, Object>(16);
-        return getFieldsMap(po, clazz, map);
+        return getFieldsMapForUpdate(po, clazz, map);
     }
+
 
     public static <T> String getSqlFragment(T po,List<Object> list) {
         StringBuilder sb = new StringBuilder(" set ");
@@ -62,7 +69,7 @@ public class ReflectUtil {
     public static <T> String getSqlForInsert(T po, List<Object> list) {
         StringBuilder sb = new StringBuilder();
         try {
-            Map<String, Object> paraForUpdate = getParaForUpdate(po);
+            Map<String, Object> paraForUpdate = getParaForInsert(po);
             Set<Map.Entry<String,Object>> set = paraForUpdate.entrySet();
             Iterator<Map.Entry<String, Object>> iterator = set.iterator();
             while (iterator.hasNext()) {
@@ -79,17 +86,35 @@ public class ReflectUtil {
         return sb.toString();
     }
 
-    private static <T> Map<String, Object> getFieldsMap(T po, Class clazz, Map<String, Object> map) throws IllegalAccessException {
+    private static <T> Map<String, Object> getFieldsMapForInsert(T po, Class clazz, Map<String, Object> map) throws IllegalAccessException {
         for (Field f : clazz.getDeclaredFields()) {
             f.setAccessible(true);
-            Object value = f.get(po);
-            if(value!=null) {
-                DbField dbField = f.getAnnotation(DbField.class);
-                if(dbField!=null&&!dbField.insertIgnore()) {
-                    map.put(dbField.value(),value);
-                }
+            DbField dbField = f.getAnnotation(DbField.class);
+            if(dbField!=null) {
+                getFieldsMap(f, dbField, po, clazz, map, !dbField.insertIgnore());
             }
         }
         return map;
+    }
+
+    private static <T> Map<String, Object> getFieldsMapForUpdate(T po, Class clazz, Map<String, Object> map) throws IllegalAccessException {
+        for (Field f : clazz.getDeclaredFields()) {
+            f.setAccessible(true);
+            DbField dbField = f.getAnnotation(DbField.class);
+            if(dbField!=null) {
+                getFieldsMap(f, dbField, po, clazz, map, dbField.update());
+            }
+        }
+        return map;
+    }
+
+
+    private static <T> void getFieldsMap(Field f,DbField dbField,T po, Class clazz, Map<String, Object> map,boolean condition) throws IllegalAccessException {
+        Object value = f.get(po);
+        if(value!=null) {
+            if(dbField!=null&&condition) {
+                map.put(dbField.value(),value);
+            }
+        }
     }
 }

@@ -39,11 +39,8 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int chNode(Node node) {
-        if(node.isEditable()) {
-            int i = nodeDao.updateOne(node);
-            return i==0 ? StatusCode.LOST : StatusCode.OK;
-        }
-        return StatusCode.LOST;
+        int i = nodeDao.updateOne(node);
+        return i==0 ? StatusCode.LOST : StatusCode.OK;
     }
 
     @Override

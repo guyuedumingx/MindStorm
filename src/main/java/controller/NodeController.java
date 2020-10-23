@@ -78,6 +78,7 @@ public class NodeController extends BaseController{
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Node node = WebUtil.getJson(request, Node.class);
+        node.setLastEditId(user.getId());
         int statusCode = service.chNode(node);
         WebUtil.renderMap(response,"status_code",statusCode+"");
     }

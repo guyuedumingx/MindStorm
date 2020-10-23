@@ -9,7 +9,7 @@ import common.annontation.DbFieldId;
  */
 public class BaseModel {
     @DbFieldId
-    @DbField("id")
+    @DbField(value = "id",update = false)
     int id;
 
     public int getId() {
