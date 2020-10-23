@@ -22,61 +22,124 @@ forgetPasswoed.addEventListener('click', function (e) {
     topAlert('密码忘了活该');
 });
 
-// 邮箱提示键盘上下键事件函数
-function emailTipsKeyDowm(e) {
-    if (e.key == 'ArrowUp') {
-        e.preventDefault();
-        this.tips.children[this.nowTips].removeClass('heightLight');
-        this.nowTips = (this.nowTips + 5) % 6;
-        this.value = this.tips.children[this.nowTips].innerText;
-        this.tips.children[this.nowTips].addClass('heightLight');
-    } else if (e.key == 'ArrowDown') {
-        e.preventDefault();
-        this.tips.children[this.nowTips].removeClass('heightLight');
-        this.nowTips = (this.nowTips + 1) % 6;
-        this.value = this.tips.children[this.nowTips].innerText;
-        this.tips.children[this.nowTips].addClass('heightLight');
-
-    } else if (e.key == 'Enter') {
-        e.preventDefault();
-        this.tips.hide();
-        this.tips.children[this.nowTips].removeClass('heightLight');
-        this.removeEventListener('keydown', emailTipsKeyDowm);
-        this.removeEventListener('blur', emailTipsBlur);
-    }
-}
-
+// 邮箱提示blur事件
 function emailTipsBlur() {
     this.tips.hide();
-    this.tips.children[this.nowTips].removeClass('heightLight');
-    this.removeEventListener('keydown', emailTipsKeyDowm);
-    this.removeEventListener('blur', emailTipsBlur);
+    if (this.nowTips != null) {
+        this.tips.children[this.nowTips].removeClass('heightLight');
+    }
+    clearEmailTipsEvent(this);
 }
 
+// 邮箱提示mouseover事件
 function emailTipsMouseOver() {
-    this.father.tips.children[this.father.nowTips].removeClass('heightLight');
+    if (this.father.nowTips != null) {
+        this.father.tips.children[this.father.nowTips].removeClass('heightLight');
+    }
     this.father.nowTips = this.index;
     this.father.value = this.father.tips.children[this.father.nowTips].innerText;
     this.father.tips.children[this.father.nowTips].addClass('heightLight');
 }
 
-// 邮箱提示
+function clearEmailTipsEvent(input) {
+    input.removeEventListener('blur', emailTipsBlur);
+    for (var i = 0; i < input.tips.children.length; i++) {
+        input.tips.children[i].removeEventListener('mouseover', emailTipsMouseOver);
+    }
+}
+
+// 邮箱提示函数
 function emailTips(input) {
     input.addEventListener('keydown', function (e) {
-        if (e.key == '@') {
+        var str = input.value;
+        if (e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt') {
+            return 0;
+        }
+        if (e.key == ' ') {
             e.preventDefault();
-            var str = input.value;
-            input.nowTips = 0;
+        }
+        if (str.length == 0) {
+            input.tips.hide();
+            if (input.nowTips != null) {
+                input.tips.children[input.nowTips].removeClass('heightLight');
+            }
+            clearEmailTipsEvent(input);
+        } else if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            if (input.nowTips == null) {
+                input.nowTips = 0;
+            }
+            input.tips.children[input.nowTips].removeClass('heightLight');
+            input.nowTips = (input.nowTips + 5) % 6;
+            input.value = input.tips.children[input.nowTips].innerText;
+            input.tips.children[input.nowTips].addClass('heightLight');
+        } else if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            if (input.nowTips == null) {
+                input.nowTips = 5;
+            }
+            input.tips.children[input.nowTips].removeClass('heightLight');
+            input.nowTips = (input.nowTips + 1) % 6;
+            input.value = input.tips.children[input.nowTips].innerText;
+            input.tips.children[input.nowTips].addClass('heightLight');
+        } else if (e.key == 'Enter') {
+            e.preventDefault();
+            input.tips.hide();
+            if (input.nowTips != null) {
+                input.tips.children[input.nowTips].removeClass('heightLight');
+            }
+            clearEmailTipsEvent(input);
+        } else if (/@/.test(str)) {
+            input.tips.hide();
+            if (input.nowTips != null) {
+                input.tips.children[input.nowTips].removeClass('heightLight');
+            }
+            clearEmailTipsEvent(input);
+        } else {
+            clearEmailTipsEvent(input);
+            input.nowTips = null;
             input.tips.children[0].innerText = str + '@qq.com';
             input.tips.children[1].innerText = str + '@126.com';
             input.tips.children[2].innerText = str + '@163.com';
             input.tips.children[3].innerText = str + '@sina.com';
             input.tips.children[4].innerText = str + '@21cn.com';
             input.tips.children[5].innerText = str + '@souhu.com';
-            input.value = input.tips.children[input.nowTips].innerText;
-            input.tips.children[input.nowTips].addClass('heightLight');
             input.tips.show();
-            input.addEventListener('keydown', emailTipsKeyDowm);
+            input.addEventListener('blur', emailTipsBlur);
+            for (var i = 0; i < input.tips.children.length; i++) {
+                input.tips.children[i].index = i;
+                input.tips.children[i].addEventListener('mouseover', emailTipsMouseOver);
+                input.tips.children[i].father = input;
+            }
+        }
+    });
+    input.addEventListener('keyup', function (e) {
+        var str = input.value;
+        if (e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt') {
+            return 0;
+        }
+        if (e.key == 'ArrowUp') {
+        } else if (e.key == 'ArrowDown') {
+        } else if (e.key == 'Enter') {
+        } else if (str.length == 0) {
+            input.tips.hide();
+            if (input.nowTips != null) {
+                input.tips.children[input.nowTips].removeClass('heightLight');
+            }
+            clearEmailTipsEvent(input);
+        } else if (/@/.test(str)) {
+            clearEmailTipsEvent(input);
+            str = str.split('@')[0];
+        } else {
+            clearEmailTipsEvent(input);
+            input.nowTips = null;
+            input.tips.children[0].innerText = str + '@qq.com';
+            input.tips.children[1].innerText = str + '@126.com';
+            input.tips.children[2].innerText = str + '@163.com';
+            input.tips.children[3].innerText = str + '@sina.com';
+            input.tips.children[4].innerText = str + '@21cn.com';
+            input.tips.children[5].innerText = str + '@souhu.com';
+            input.tips.show();
             input.addEventListener('blur', emailTipsBlur);
             for (var i = 0; i < input.tips.children.length; i++) {
                 input.tips.children[i].index = i;
