@@ -13,6 +13,7 @@ public class Node extends BaseModel{
    private int projectId;
    @DbField(value = "star",insertIgnore = true,update = false)
    private long star;
+   private String lastEditName = "";
    private boolean isStared;
    @DbField(value = "last_edit_id")
    private int lastEditId;
@@ -154,5 +155,13 @@ public class Node extends BaseModel{
 
    public void setStared(boolean stared) {
       isStared = stared;
+   }
+
+   public String getLastEditName() {
+      return lastEditName;
+   }
+
+   public void setLastEditName(String lastEditName) {
+      this.lastEditName = lastEditName;
    }
 }

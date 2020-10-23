@@ -101,7 +101,7 @@ function toggleClass(node, theClass) {
  * @author 60rzvvbj
  */
 function replaceClass(node, oldClass, newClass) {
-    if (node && theClass) {
+    if (node && oldClass && newClass) {
         var str = node.getAttribute('class');
         var arr = str.split(' ');
         var res = '';
