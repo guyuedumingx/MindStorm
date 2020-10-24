@@ -61,7 +61,6 @@ headBox.addEventListener("mouseout", function () {
 var inPic = getDom(".inPic");
 
 function UpladFile() {
-    console.log(1);
     var file = inPic.files[0];
     //创建formdata对象
     var formdata = new FormData();
@@ -87,7 +86,8 @@ function UpladFile() {
         data: formdata,
         success: function (res) {
             if (res.status_code == '200') {
-                headBox.style.backgroungImg = "url(" + res.url + ")";
+                headBox.style.backgroundImage = "url(" + res.url+"?asd="+getIntRandom(0,1000000) + ")";
+                console.log(headBox);
             } else {
                 topAlert("导入失败");
             }
