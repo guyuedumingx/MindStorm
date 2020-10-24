@@ -92,9 +92,38 @@ var introduceP = introduce.getDom('p'); // 项目简介内容
 var introduceState = false; // 项目简介展开状态
 var participantOn = introduce.getDom('.introduceMain .member'); // 成员列表开关
 var participant = getDom('.mainBoxLeft .introduce .participant'); // 成员列表盒子
-var participantOff = participant.getDom('i'); // 成员列表盒子
+var participantUl = participant.getDom('ul'); // 成员列表表中的Ul
+var participantOff = participant.getDom('i'); // 成员列表盒子关闭按钮
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
 var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
+
+// 生成成员列表
+function generateParticipant(arr) {
+    console.log(arr);
+    for (var i = 0; i < arr.length; i++) {
+        ajax({
+            type: 'get',
+            url: '/user',
+            data: {
+                id: arr[i]
+            },
+            success: function (res) {
+                console.log(res);
+                var li = document.createElement('li');
+                var userPhoto = document.createElement('div');
+                var userName = document.createElement('div');
+                userName.innerText = res.name;
+                userName.addClass('userName');
+                userPhoto.style.backgroundImage = 'url(' + res.userAvatar + ')';
+                userPhoto.addClass('userPhoto');
+                li.appendChild(userPhoto);
+                li.appendChild(userName);
+                participantUl.appendChild(li);
+            }
+        });
+    }
+}
+
 
 // 成员列表伸缩功能
 participantOn.addEventListener('click', function () {
@@ -368,7 +397,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) {}
+    } catch (e) { }
     node1.line = document.createElement('div');
     var x1 = node1.offsetLeft + node1.offsetWidth / 2;
     var y1 = node1.offsetTop + node1.offsetHeight / 2;
@@ -1319,6 +1348,7 @@ window.onload = function () {
             introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
+            generateParticipant(res.contributors);
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
             var date = new Date(res.createTime - 0);
