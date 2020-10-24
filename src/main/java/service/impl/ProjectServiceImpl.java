@@ -29,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int newProject(Project project,int userId) {
-        return newProject(project,true,userId);
+        return newProject(project, true, userId);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
         }else {
             //这里可以用多线程
             project.setId(projectId);
+            contributorDao.insertOne(new Contributor(projectId,userId));
             if(hasRootNode) {
                 Node node = new Node(project);
                 node.setLastEditTime(System.currentTimeMillis()+"");

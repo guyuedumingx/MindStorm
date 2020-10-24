@@ -5,10 +5,12 @@ import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
 import dao.UserDao;
+import dao.auxiliary.impl.RecentProjectDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
 import pojo.Node;
 import pojo.Project;
 import pojo.User;
+import pojo.auxiliary.RecentProject;
 import pojo.auxiliary.Star;
 import service.NodeService;
 
@@ -20,14 +22,17 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int newNode(Node node) {
+        //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
-        return nodeDao.insertOne(node);
+        int nodeId = nodeDao.insertOne(node);
+        addUserAsContributors(nodeId,node.getAuthor());
+        return nodeId;
     }
 
     @Override
     public int delNode(int nodeId, int operatorId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
-        //如果存在字节点,不能删除
+        //如果存在子节点,不能删除
         if(node.getChildren()!=null && node.getChildren().length!=0){
             return StatusCode.LOST;
         }
@@ -42,8 +47,10 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int chNode(Node node) {
+        //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
         int i = nodeDao.updateOne(node);
+        addUserAsContributors(i,node.getLastEditId());
         return i==0 ? StatusCode.LOST : StatusCode.OK;
     }
 
@@ -65,5 +72,20 @@ public class NodeServiceImpl implements NodeService {
         int[] children = nodeDao.selectChildren(nodeId);
         node.setChildren(children);
         return node;
+    }
+
+    /**
+     * 把操作者设置成项目的贡献者
+     * @param nodeId
+     * @param userId
+     */
+    public void addUserAsContributors(int nodeId,int userId){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Node node = nodeDao.selectOne(new Node(nodeId));
+                new RecentProjectDaoImpl().insertOne(new RecentProject(node.getProjectId(), userId));
+            }
+        }).start();
     }
 }
