@@ -40,8 +40,6 @@ headBox.addEventListener("mouseout", function () {
 var userProject;
 //我参加的项目
 var userProjectLength;
-//user保存返回值
-var user;
 //请求获得数组对象-----------
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
@@ -52,23 +50,22 @@ function userMess(head, headBox, emailBox, perSig) {
         },
         header: {},
         success: function (res) {
-            user = res;
             //项目数组--
-            userProject = user.recentProject;
+            userProject = res.recentProject;
             // 长度
             userProjectLength = userProject.length;
             //获取个人简介--
-            var userIntroduce = user.userSignature;
+            var userIntroduce = res.userSignature;
             //获取邮箱
-            var email = user.email;
+            var email = res.email;
             //获取头像
-            var head = user.userAvatar;
+            var head = res.userAvatar;
             headBox.style.backgroundImage = "url(" + head + ")";
             head.style.backgroundImage = "url(" + head + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
-        error: function () {}
+        error: function () { }
     });
 
 }

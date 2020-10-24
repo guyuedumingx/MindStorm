@@ -23,7 +23,7 @@ var userName = getCookie("user_name");
 //个人容器
 var personal = getDom(".personal");
 //获取外部昵称框
-var nameU = getDom(".user_name");
+// var nameU = getDom(".user_name");
 //获取内部昵称框
 var nameBox = getDom(".nameBox");
 //获取简介框
@@ -51,8 +51,6 @@ headBox.addEventListener("mouseout", function () {
 //获取登录注册容器
 // var logOn = getDom(".logOn");
 
-//user保存返回值
-var user;
 //请求获得数组对象-----------
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
@@ -63,19 +61,18 @@ function userMess(head, headBox, emailBox, perSig) {
         },
         header: {},
         success: function (res) {
-            user = res;
             //获取个人简介--
-            var userIntroduce = user.userSignature;
+            var userIntroduce = res.userSignature;
             //获取邮箱
-            var email = user.email;
+            var email = res.email;
             //获取头像
-            var head = user.userAvatar;
+            var head = res.userAvatar;
             headBox.style.backgroundImage = "url(" + head + ")";
             head.style.backgroundImage = "url(" + head + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
-        error: function () {}
+        error: function () { }
     });
 
 }
@@ -88,7 +85,7 @@ if (loginPd == null) {
     personal.style.display = "block";
     //调用获取用户信息
     // userMess(headBox, emailBox, perSig);
-    nameU.innerText = userName;
+    // nameU.innerText = userName;
     nameBox.value = userName;
 }
 
