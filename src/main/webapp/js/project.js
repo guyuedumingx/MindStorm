@@ -108,7 +108,6 @@ function generateParticipant(arr) {
                 id: arr[i]
             },
             success: function (res) {
-                console.log(res);
                 var li = document.createElement('li');
                 var userPhoto = document.createElement('div');
                 var userName = document.createElement('div');
@@ -127,8 +126,13 @@ function generateParticipant(arr) {
 
 // 成员列表伸缩功能
 participantOn.addEventListener('click', function () {
-    participant.style.left = '100%';
-    participant.style.borderRadius = '0px 5px 5px 0px';
+    if (participant.getCSS('left') == '100%') {
+        participant.style.left = '0%';
+        participant.style.borderRadius = '5px 5px 5px 5px';
+    } else {
+        participant.style.left = '100%';
+        participant.style.borderRadius = '0px 5px 5px 0px';
+    }
 });
 participantOff.addEventListener('click', function () {
     participant.style.left = '0%';

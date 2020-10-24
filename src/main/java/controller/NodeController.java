@@ -5,8 +5,10 @@ import common.dto.StatusCode;
 import common.factory.DaoFactory;
 import common.util.WebUtil;
 import dao.NodeDao;
+import dao.auxiliary.impl.RecentProjectDaoImpl;
 import pojo.Node;
 import pojo.User;
+import pojo.auxiliary.RecentProject;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
 
@@ -105,4 +108,5 @@ public class NodeController extends BaseController{
     public void star(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
+
 }
