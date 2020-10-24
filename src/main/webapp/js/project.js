@@ -914,6 +914,19 @@ operationProject[0].addEventListener('click', function () {
     transparentBaffle.show();
 });
 
+// 删除按钮点击事件
+operationProject[1].addEventListener('click', function () {
+    if (projectCreatorId != user.userId) {
+        topAlert('您没有权限执行此操作');
+    } else {
+        tipsState = 'deleteProject';
+        tipsTitle.innerText = '删除项目';
+        tipsContent.innerText = '此项目将会被删除，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+});
+
 // 提示框中确定按钮点击事件
 tipsYes.addEventListener('click', function () {
     if (tipsState == 'deleteNode') {
@@ -933,6 +946,8 @@ tipsYes.addEventListener('click', function () {
         });
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
+    } else if (tipsState == 'deleteProject') {
+        console.log('删除项目');
     }
     tipsCloseFunction();
 });
@@ -962,6 +977,7 @@ addNode.addEventListener('click', function () {
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
+        operationNodeBoxStarBox.hide();
     }
 });
 
@@ -995,6 +1011,7 @@ changeNode.addEventListener('click', function () {
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
+        operationNodeBoxStarBox.hide();
     }
 });
 
@@ -1282,6 +1299,7 @@ window.onload = function () {
         },
         success: function (res) {
             introduceP.innerText = res.introduction;
+            projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
