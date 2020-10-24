@@ -20,8 +20,8 @@ public class Contributor {
 
     public Contributor(){}
 
-    public Contributor(int contributorId) {
-        this.contributorId = contributorId;
+    public Contributor(int projectId) {
+        this.projectId = projectId;
     }
     public Contributor(Project project){
         this.contributorId = project.getAuthor();

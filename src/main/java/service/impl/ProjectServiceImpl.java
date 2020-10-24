@@ -38,19 +38,23 @@ public class ProjectServiceImpl implements ProjectService {
         if(projectId==0){
             return projectId;
         }else {
-            //这里可以用多线程
-            project.setId(projectId);
-            contributorDao.insertOne(new Contributor(projectId,userId));
-            if(hasRootNode) {
-                Node node = new Node(project);
-                node.setLastEditTime(System.currentTimeMillis()+"");
-                node.setEditable(true);
-                int headNodeId = DaoFactory.getNodeDao().insertOne(node);
-                project.setHeadNodeId(headNodeId);
-            }
-            projectDao.updateOne(project);
-            contributorDao.insertOne(new Contributor(project));
-            recentProjectDao.insertOne(new RecentProject(userId,projectId));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    project.setId(projectId);
+                    contributorDao.insertOne(new Contributor(projectId,userId));
+                    if(hasRootNode) {
+                        Node node = new Node(project);
+                        node.setLastEditTime(System.currentTimeMillis()+"");
+                        node.setEditable(true);
+                        int headNodeId = DaoFactory.getNodeDao().insertOne(node);
+                        project.setHeadNodeId(headNodeId);
+                    }
+                    projectDao.updateOne(project);
+                    contributorDao.insertOne(new Contributor(project));
+                    recentProjectDao.insertOne(new RecentProject(userId,projectId));
+                }
+            }).start();
         }
         return projectId;
     }
