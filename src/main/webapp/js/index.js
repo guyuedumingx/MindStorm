@@ -23,7 +23,7 @@ var userName = getCookie("user_name");
 //个人容器
 var personal = getDom(".personal");
 //获取外部昵称框
-var nameU = getDom(".user_name");
+// var nameU = getDom(".user_name");
 //获取内部昵称框
 var nameBox = getDom(".nameBox");
 //获取简介框
@@ -88,7 +88,7 @@ if (loginPd == null) {
     personal.style.display = "block";
     //调用获取用户信息
     // userMess(headBox, emailBox, perSig);
-    nameU.innerText = userName;
+    // nameU.innerText = userName;
     nameBox.value = userName;
 }
 
