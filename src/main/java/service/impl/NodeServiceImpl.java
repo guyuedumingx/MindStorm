@@ -20,6 +20,7 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int newNode(Node node) {
+        node.setLastEditTime(System.currentTimeMillis()+"");
         return nodeDao.insertOne(node);
     }
 
@@ -41,6 +42,7 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int chNode(Node node) {
+        node.setLastEditTime(System.currentTimeMillis()+"");
         int i = nodeDao.updateOne(node);
         return i==0 ? StatusCode.LOST : StatusCode.OK;
     }
@@ -50,8 +52,10 @@ public class NodeServiceImpl implements NodeService {
         Node node = nodeDao.selectOne(new Node(nodeId));
         Star star = starDao.selectOne(new Star(userId,nodeId));
         User lastEditUser = userDao.selectOne(new User(node.getLastEditId()));
+        User author = userDao.selectOne(new User(node.getAuthor()));
         if(lastEditUser!=null) {
             node.setLastEditName(lastEditUser.getName());
+            node.setUserName(author.getName());
         }
         if(star!=null){
             node.setStared(true);

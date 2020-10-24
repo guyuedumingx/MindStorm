@@ -61,6 +61,7 @@ headBox.addEventListener("mouseout", function () {
 var inPic = getDom(".inPic");
 
 function UpladFile() {
+    console.log(1);
     var file = inPic.files[0];
     //创建formdata对象
     var formdata = new FormData();
