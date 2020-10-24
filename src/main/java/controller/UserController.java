@@ -4,7 +4,10 @@ import common.util.WebUtil;
 import pojo.Project;
 import pojo.User;
 import service.ProjectService;
+import service.UserService;
 import service.impl.ProjectServiceImpl;
+import service.impl.UserServiceImpl;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,10 +60,17 @@ public class UserController extends BaseController{
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ProjectService service = new ProjectServiceImpl();
-        List<Project> recentProjectList = service.getRecentProjectList(user.getId());
-        user.setRecentProject(recentProjectList);
-        WebUtil.renderJson(response,user);
+        String str = request.getParameter("id");
+        ProjectService projectService = new ProjectServiceImpl();
+        UserService userService = new UserServiceImpl();
+        if("".equals(str)){
+            List<Project> recentProjectList = projectService.getRecentProjectList(user.getId());
+            user.setRecentProject(recentProjectList);
+            WebUtil.renderJson(response,user);
+        }else {
+            User operator = userService.getUser(Integer.valueOf(str));
+            WebUtil.renderJson(response,operator);
+        }
     }
 
 }

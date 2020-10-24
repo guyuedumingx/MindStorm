@@ -76,6 +76,7 @@ public class NodeServiceImpl implements NodeService {
         return node;
     }
 
+
     /**
      * 把操作者设置成项目的贡献者
      * @param nodeId
