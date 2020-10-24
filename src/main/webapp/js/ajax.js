@@ -52,6 +52,8 @@ function ajax(options, fileState) {
         if (defaults.type != 'post') {
             defaults.url = defaults.url + '?' + parameter;
             xhr.open(defaults.type, defaults.url);
+            var contentType = defaults.header['Content-Type'];
+            xhr.setRequestHeader('Content-Type', contentType);
             xhr.send();
         } else {
             xhr.open(defaults.type, defaults.url);
