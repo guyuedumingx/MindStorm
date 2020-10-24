@@ -50,7 +50,7 @@ var introduceNav = getDom(".intro_txt");
 
 introduceNav.innerText = userIntroduce;
 //获取名字--
-var userName = res.name;
+var userName = user.name;
 //获取昵称框
 var nameU = getDom(".userName");
 
