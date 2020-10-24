@@ -36,4 +36,6 @@ public interface UserService {
      * @return
      */
     User register(User user);
+
+    int updateUser(User user);
 }

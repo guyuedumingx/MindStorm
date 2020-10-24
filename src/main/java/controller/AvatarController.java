@@ -7,6 +7,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import pojo.User;
+import service.UserService;
+import service.impl.UserServiceImpl;
+
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -21,6 +24,7 @@ import java.util.List;
 @MultipartConfig
 public class AvatarController extends BaseController {
     private static final long serialVersionUID = 1L;
+    UserService service = new UserServiceImpl();
     User user = null;
 
     @Override
@@ -61,7 +65,9 @@ public class AvatarController extends BaseController {
             result.setStatus_code(StatusCode.LOST);
             e.printStackTrace();
         }
-        result.put("url","/avatar/"+filePath);
+        String urlPath = "/avatar/"+filePath+"?ran="+Math.random();
+        user.setUserAvatar(urlPath);
+        result.put("url",urlPath);
         WebUtil.renderJson(response,result);
     }
 
