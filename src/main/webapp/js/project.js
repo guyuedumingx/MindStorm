@@ -1057,7 +1057,13 @@ changeNode.addEventListener('click', function () {
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = false;
         operationNodeBoxTheme.addClass('editable');
-        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        if (nowNode.editable) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = false;
@@ -1164,7 +1170,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 id: nowNode.id,
                 theme: inpTheme,
                 content: inpContent,
-                editable: nowNode.editable,
+                editable: operationNodeBoxJurisdiction.state,
                 projectId: projectId
             },
             header: {
@@ -1313,7 +1319,7 @@ setOnOffEvent(hideTheme, function () {
     }
 });
 
-// 设置节点是否可被其他人修改
+// 设置节点允许追加子节点
 setOnOffEvent(operationNodeBoxJurisdiction);
 
 // 维护约束的定时器
