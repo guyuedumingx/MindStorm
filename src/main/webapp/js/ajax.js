@@ -52,12 +52,12 @@ function ajax(options, fileState) {
         if (defaults.type != 'post') {
             defaults.url = defaults.url + '?' + parameter;
             xhr.open(defaults.type, defaults.url);
-            var contentType = defaults.header['Content-Type'];
-            xhr.setRequestHeader('Content-Type', contentType);
-            if (defaults.type == 'put') {
-                var XHTTP = defaults.header['X-HTTP-Method-Override'];
-                xhr.setRequestHeader('X-HTTP-Method-Override', XHTTP);
-            }
+            // var contentType = defaults.header['Content-Type'];
+            // xhr.setRequestHeader('Content-Type', contentType);
+            // if (defaults.type == 'put') {
+            //     var XHTTP = defaults.header['X-HTTP-Method-Override'];
+            //     xhr.setRequestHeader('X-HTTP-Method-Override', XHTTP);
+            // }
             xhr.send();
         } else {
             xhr.open(defaults.type, defaults.url);
