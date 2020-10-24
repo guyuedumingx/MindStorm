@@ -3,23 +3,83 @@ tool.textProhibition();
 
 //获取用户id
 var loginPd = getCookie("user_id");
-//个人容器
-var personal = getDom(".personal");
-//获取登录注册容器
-var logOn = getDom(".logOn");
-//获取昵称框
-var nameU = getDom(".user_name");
 //获取用户名
 var userName = getCookie("user_name");
+//个人容器
+var personal = getDom(".personal");
+//获取外部昵称框
+var nameU = getDom(".user_name");
+//获取内部昵称框
+var nameBox = getDom(".nameBox");
+//获取简介框
+var perSig = getDom(".perSig");
+//获取邮箱框
+var emailBox = getDom(".email");
+//获取头像框------
+var headBox = getDom(".headBox");
+//获取input
+var inPic = getDom(".inPic");
+//获取but
+var changeH = getDom(".changeH");
+
+//头像更换样式
+headBox.addEventListener("mouseover", function () {
+    inPic.style.display = "block";
+    changeH.style.display = "block";
+});
+headBox.addEventListener("mouseout", function () {
+    inPic.style.display = "none";
+    changeH.style.display = "none";
+});
+
+//获取登录注册容器
+// var logOn = getDom(".logOn");
+
+//保存返回项目
+var userProject;
+//我参加的项目
+var userProjectLength;
+//user保存返回值
+var user;
+//请求获得数组对象-----------
+function userMess(headBox,emailBox,perSig) {
+    ajax({
+        type: 'get',
+        url: '/user',
+        data: {
+            
+        },
+        header: {},
+        success: function (res) {
+            user = res;
+        },
+        error: function () {}
+    });
+    //项目数组--
+    userProject = user.recentProject;
+    // 长度
+    userProjectLength = userProject.length;
+    //获取个人简介--
+    var userIntroduce = user.userSignature;
+    //获取邮箱
+    var email = user.email;
+    //获取头像
+    var head = user.userAvatar;
+    headBox.style.backgroundImage = "url(" + head + ")";
+    emailBox.innerText = email;
+    perSig.value = userIntroduce;
+}
+
 
 //判断是否登录------------
 if (loginPd == null) {
     personal.style.display = "none";
-    logOn.style.display = "block";
 } else {
     personal.style.display = "block";
-    logOn.style.display = "none";
+    //调用获取用户信息
+    // userMess(headBox, emailBox, perSig);
     nameU.innerText = userName;
+    nameBox.value = userName;
 }
 
 //退出登录
@@ -34,6 +94,8 @@ logOut.addEventListener("click", function () {
     window.location.href = "/login.html";
 })
 
+
+
 //个人下拉框
 //获取下拉框
 var spinner = getDom(".spinner");
@@ -41,45 +103,14 @@ var spinner = getDom(".spinner");
 var headNav = getDom(".head_nav");
 clickOpenBlankClose(headNav, spinner);
 
-//获取头像框
-var headBox = getDom(".headBox");
-//获取input
-var inPic = getDom(".inPic");
-//获取but
-var changeH = getDom(".changeH");
 
-headBox.addEventListener("mouseover", function () {
-    inPic.style.display = "block";
-    changeH.style.display = "block";
-});
-headBox.addEventListener("mouseout", function () {
-    inPic.style.display = "none";
-    changeH.style.display = "none";
-});
 //头像上传
 //导入
 var inPic = getDom(".inPic");
-
 function UpladFile() {
     var file = inPic.files[0];
-    //创建formdata对象
     var formdata = new FormData();
     formdata.append("file", file);
-    //创建xhr，使用ajax进行文件上传
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("post", "/user/avatar");
-    // xhr.send(formdata);
-    // //回调
-    // xhr.onreadystatechange = function () {
-    //     back = xhr.responseText;
-    //     console.log(back);
-    //     res = JSON.parse(back);
-    //     if (res.status_code == '200' ) {
-    //         headBox.style.backgroungImg = "http://localhost:8080" + res.url;
-    //     } else {
-    //         topAlert("导入失败");
-    //     }
-    // };
     ajax({
         type: 'post',
         url: "/user/avatar",
@@ -95,9 +126,7 @@ function UpladFile() {
     }, true);
 }
 inPic.addEventListener("change", UpladFile);
-//获取name盒子
-var nameBox = getDom(".nameBox");
-nameBox.value = userName;
+
 
 //获取修改按钮
 var modifyN = getDom(".modifyN");
@@ -236,7 +265,7 @@ personalBox.addEventListener("click", function () {
     projectSize(personalNav);
 });
 
-
+// 项目板块----------------
 
 
 // 获取li数组
@@ -310,3 +339,5 @@ function addLi(li, name, introduce, author, number) {
 for (var i = 1; i < liArrA.length; i++) {
     addLi(liArrA[i], "name", "introduce", "author", "number");
 }
+
+
