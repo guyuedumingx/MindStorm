@@ -40,9 +40,9 @@ public class LoginController extends BaseController {
             Cookie userName = new Cookie("user_name", user.getName());
             Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
             Cookie userId = new Cookie("user_id", user.getId() + "");
-            userName.setMaxAge(60*60*24*7);
-            userAvatar.setMaxAge(60*60*24*7);
-            userId.setMaxAge(60*60*24*7);
+//            userName.setMaxAge(60*60*24*7);
+//            userAvatar.setMaxAge(60*60*24*7);
+//            userId.setMaxAge(60*60*24*7);
             userName.setPath("/");
             userId.setPath("/");
             userAvatar.setPath("/");

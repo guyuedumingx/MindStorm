@@ -20,6 +20,7 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int newNode(Node node) {
+        node.setLastEditTime(System.currentTimeMillis()+"");
         return nodeDao.insertOne(node);
     }
 
@@ -41,6 +42,7 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public int chNode(Node node) {
+        node.setLastEditTime(System.currentTimeMillis()+"");
         int i = nodeDao.updateOne(node);
         return i==0 ? StatusCode.LOST : StatusCode.OK;
     }
