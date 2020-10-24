@@ -82,17 +82,17 @@ function UpladFile() {
     //     }
     // };
     ajax({
-        type:'post',
-        url:"/user/avatar",
-        data:formdata,
-        success:function (res) {
-            if (res.status_code == '200' ) {
-                headBox.style.backgroungImg = "http://localhost:8080" + res.url;
+        type: 'post',
+        url: "/user/avatar",
+        data: formdata,
+        success: function (res) {
+            if (res.status_code == '200') {
+                headBox.style.backgroungImg = "url(" + res.url + ")";
             } else {
                 topAlert("导入失败");
             }
         }
-    },true);
+    }, true);
 }
 inPic.addEventListener("change", UpladFile);
 //获取name盒子
@@ -263,7 +263,7 @@ liStyle(liArrB);
 function butStyle(project, liArr) {
     var leftBut = getDom(".leftBut", project);
     var rightBut = getDom(".rightBut", project);
-    if (liArr.length<7) {
+    if (liArr.length < 7) {
         leftBut.style.display = "none";
         rightBut.style.display = "none";
     }
@@ -275,7 +275,7 @@ butStyle(shareNav, liArrB);
 
 
 //项目添加---------
-function addLi(li,name, introduce,author,number) {
+function addLi(li, name, introduce, author, number) {
     var divName = document.createElement("div");
     divName.className = "projectName";
     divName.innerText = name;
@@ -308,7 +308,7 @@ function addLi(li,name, introduce,author,number) {
     divMan.appendChild(iMan);
     divMan.appendChild(spanMan);
 }
-for (var i = 1; i < liArrA.length; i++){
+for (var i = 1; i < liArrA.length; i++) {
     addLi(liArrA[i], "name", "introduce", "author", "number");
 }
 
