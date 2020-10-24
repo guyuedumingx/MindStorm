@@ -197,10 +197,9 @@ function projectSize(project) {
         liNav[i].style.height = projectHeight + "px";
     }
 }
-
 // 板块切换-----------
 // 开始样式
-function colorB() {
+function start() {
     personalBox.style.backgroundColor = "rgb(241, 240, 230)";
     personalBox.style.color = "#071f3d";
     projectSize(personalNav);
@@ -209,7 +208,7 @@ function colorB() {
         projectSize(shareNav);
     });
 }
-colorB();
+start();
 // 点击共享项目
 shareBox.addEventListener("click", function () {
     // 点击按钮样式
