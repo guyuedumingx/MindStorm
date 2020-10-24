@@ -72,8 +72,11 @@ function UpladFile() {
     xhr.send(formdata);
     //回调
     xhr.onreadystatechange = function () {
-        if (xhr.status_code == 200) {
-            headBox.style.backgroungImg = "http://localhost:8080" + xhr.url;
+        back = xhr.responseText;
+        console.log(back);
+        res = JSON.parse(back);
+        if (res.status_code == '200' ) {
+            headBox.style.backgroungImg = "http://localhost:8080" + res.url;
         } else {
             topAlert("导入失败");
         }

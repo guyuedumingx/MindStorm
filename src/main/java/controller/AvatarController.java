@@ -61,8 +61,8 @@ public class AvatarController extends BaseController {
             result.setStatus_code(StatusCode.LOST);
             e.printStackTrace();
         }
-        result.put("url","/avatar/"+filePath);
-        WebUtil.renderJson(response,result);
+//        result.put("url","/avatar/"+filePath);
+        WebUtil.renderMap(response,"status_code",result.get("status_code"));
     }
 
     /**
