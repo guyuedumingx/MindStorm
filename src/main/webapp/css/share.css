@@ -11,16 +11,6 @@ body .header {
     z-index: 9999;
 }
 
-.mainTitle {
-    top: 12px;
-    left: 110px;
-    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
-    font-weight: 700;
-    font-size: 26px;
-    color: #214B5B;
-    cursor: default;
-}
-
 /* logo位置 */
 .header .logoBox {
     float: left;
@@ -46,9 +36,9 @@ body .header {
 }
 
 /* 登录注册容器 */
-.header .logOn {
+/* .header .logOn {
     float: right;
-    /* display: none; */
+    display: none;
 }
 
 .logOn a {
@@ -74,10 +64,10 @@ body .header {
     transition: all .25s ease;
     left: 50%;
     transform: translate(-50%);
-}
+}*/
 
 /* 字体大小位置设置 */
-.header .logOn a,
+/* .header .logOn a,
 .header .logOn span {
     font-weight: bold;
     font-size: 18px;
@@ -87,7 +77,7 @@ body .header {
 
 .header .logOn span {
     cursor: default;
-}
+}  */
 
 /* 个人头像等容器 */
 .header .personal {
@@ -99,6 +89,29 @@ body .header {
 
 .header .personal div {
     display: inline-block;
+}
+/* 头像 */
+.header .personal .head {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin: 10px;
+    border-radius: 50px;
+    pointer-events: none;
+    background-image: url(../img/undraw_Waiting.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* 昵称 */
+.header .personal .head_nav .user_name {
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 60px;
+    color: #214B5B;
+    pointer-events: none;
 }
 
 /*下拉框------ */
@@ -295,26 +308,7 @@ body .header {
     transform: translate(-50%);
 }
 
-/* 头像 */
-.header .personal .head {
-    display: inline-block;
-    width: 34px;
-    height: 34px;
-    margin: 10px;
-    border: solid;
-    border-radius: 50px;
-    pointer-events: none;
-}
 
-/* 昵称 */
-.header .personal .head_nav .user_name {
-    float: right;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 60px;
-    color: #214B5B;
-    pointer-events: none;
-}
 
 /*#endregion*/
 /*#region--------------------- 主要内容--------------------- */
