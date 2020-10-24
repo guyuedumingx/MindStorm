@@ -123,11 +123,11 @@ function UpladFile() {
     var size = file.size;
     //首先对格式进行验证
     if (extName.indexOf(format.toUpperCase()) == -1) {
-        alert("您只能输入" + extName + "格式的文件");
+        topAlert("您只能输入" + extName + "格式的文件");
     } else {
         //大小判断
         if (size > maxSize) {
-            alert("图片大小不能超过2M");
+            topAlert("图片大小不能超过2M");
         } else {
             ajax({
                 type: 'post',
@@ -146,6 +146,7 @@ function UpladFile() {
     }
 }
 var url = getCookie("user_avatar");
+console.log(url);
 headBox.style.backgroundImage = "url(" + url + ")";
 head.style.backgroundImage = "url(" + url + ")";
 inPic.addEventListener("change", UpladFile);
@@ -159,11 +160,11 @@ modifyN.addEventListener("click", function () {
     nameBox.style.borderBottom = "solid 1px";
 });
 //回车修改cookie
-// nameBox.inputEnterEvent(function () {
-//     nameBox.value = userName;
-//     nameBox.readOnly = true;
-//     nameBox.style.borderBottom = "";
-// });
+nameBox.inputEnterEvent(function () {
+    nameBox.value = userName;
+    nameBox.readOnly = true;
+    nameBox.style.borderBottom = "";
+});
 
 //搜索-----------
 //搜索框
@@ -385,3 +386,4 @@ function create(project, projectLength, liArr) {
         addLi(liArr[i], name, introduce, author, "number");
     }
 }
+create(userProject, userProjectLength, liArrA);
