@@ -1,14 +1,19 @@
 package controller;
 
+import common.dto.Result;
+import common.dto.StatusCode;
 import common.util.WebUtil;
 import common.util.XmindUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import pojo.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +21,14 @@ import java.util.List;
 
 @WebServlet("/util/xmind")
 public class XmindController extends BaseController {
+    User user = null;
+
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        //获取用户id
+        HttpSession session = req.getSession();
+        user = (User)session.getAttribute("user");
+    }
 
     /**
      * 下载xmind文件
@@ -39,6 +52,7 @@ public class XmindController extends BaseController {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Result result = new Result();
         req.setCharacterEncoding("UTf-8");
         String tmpPath = getServletContext().getRealPath("/tmp");
 
@@ -51,8 +65,10 @@ public class XmindController extends BaseController {
             List<FileItem> list = up.parseRequest(req);
             FileItem file = list.get(0);
             InputStream in = file.getInputStream();
-            int projectId = XmindUtil.getWorkBook(in);
-            WebUtil.renderMap(resp, "project_id", projectId + "");
+            int projectId = XmindUtil.getWorkBook(in,user);
+            result.setStatus_code(StatusCode.OK);
+            result.put("project_id",projectId+"");
+            WebUtil.renderJson(resp,result);
         }catch (Exception e) {
             e.printStackTrace();
         }

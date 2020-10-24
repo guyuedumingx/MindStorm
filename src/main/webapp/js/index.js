@@ -312,16 +312,18 @@ var importNav = getDom(".import");
 
 function UpladFile() {
     var file = importNav.files[0];
-    // //创建formdata对象
+    //创建formdata对象
     var formdata = new FormData();
     formdata.append("file", file);
-    // //创建xhr，使用ajax进行文件上传
+    //创建xhr，使用ajax进行文件上传
     // var xhr = new XMLHttpRequest();
     // xhr.open("post", "/util/xmind");
     // xhr.send(formdata);
     // //回调
     // xhr.onreadystatechange = function () {
-    //     if (xhr.status == 200) {
+    //     console.log(xhr.responseText);
+    //     res = JSON.parse(xhr.responseText);
+    //     if (res.status_code== 200) {
     //         window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
     //     } else {
     //         topAlert("导入失败");
@@ -331,6 +333,7 @@ function UpladFile() {
         type: 'post',
         url: '/util/xmind',
         data: formdata,
+        // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
         success: function (res) {
             if (res.status_code == '200') {
                 window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面

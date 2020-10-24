@@ -108,6 +108,7 @@ participantOff.addEventListener('click', function () {
 
 // 随机颜色
 operationProjectTitle.style.backgroundColor = randomColor(120, 180);
+
 function setOperationProject() {
     for (var i = 0; i < operationProject.length; i++) {
         operationProject[i].style.backgroundColor = randomColor(120, 180);
@@ -367,7 +368,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) { }
+    } catch (e) {}
     node1.line = document.createElement('div');
     var x1 = node1.offsetLeft + node1.offsetWidth / 2;
     var y1 = node1.offsetTop + node1.offsetHeight / 2;
@@ -743,7 +744,7 @@ function treeAppendNode(father, nodeData) {
     node.content = nodeData.content; // 主要内容
     node.editable = nodeData.editable; // 是否可被编辑
     node.userName = user.userName; // 创建者
-    node.authorId = user.userId;// 创建者Id
+    node.authorId = user.userId; // 创建者Id
     node.lastEditName = user.userName; // 最后修改者
     node.lastEditTime = Date.now(); // 最后修改时间
     node.star = 0; // 点赞数
@@ -776,7 +777,7 @@ var refreshTree = btnArr[4]; // 刷新树
 var operationNodeBox = getDom('.operationNodeBox'); // 操作节点盒子
 var operationNodeBoxClose = operationNodeBox.getDom('.close'); // 操作节点盒子中关闭按钮
 var operationNodeBoxTheme = operationNodeBox.getDom('h4 input'); // 节点主题
-var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.onOff');// 允许追加子节点盒子
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.onOff'); // 允许追加子节点盒子
 var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'); // 允许追加子节点开关
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
@@ -1054,7 +1055,9 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxNodeCreator.show();
         operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
         operationNodeBoxLastRevision.show();
-        operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + new Date(nowNode.lastEditTime - 0).toLocaleDateString();
+        var date = new Date(nowNode.lastEditTime - 0);
+        var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+        operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + str;
         operationNodeBoxSubmit.hide();
         // operationNodeBoxStar.innerText = nowNode.star;
         if (nowNode.stared) {
@@ -1102,11 +1105,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    // treeAppendNode(nowNode, {
-                    //     theme: inpTheme,
-                    //     content: inpContent,
-                    //     editable: operationNodeBoxJurisdiction.state
-                    // });
                     location.reload();
                 } else {
                     topAlert('淦');
@@ -1323,8 +1321,12 @@ window.onload = function () {
             projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
-            creationDate.innerText = new Date(res.createTime - 0).toLocaleDateString();
-            closingDate.innerText = new Date(res.deadline - 0).toLocaleDateString();
+            var date = new Date(res.createTime - 0);
+            var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+            creationDate.innerText = str;
+            date = new Date(res.deadline - 0);
+            str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+            closingDate.innerText = str;
             progressCountDown.innerText = calculateRemainingTime(res.deadline - Date.now());
             var progress = (1 - (res.deadline - Date.now()) / (res.deadline - res.createTime)) * 100;
             progressContent.style.width = progress + '%';
