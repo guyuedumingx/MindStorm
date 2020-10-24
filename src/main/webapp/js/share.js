@@ -308,6 +308,7 @@ function addLiBox(projectLength, project) {
 
 
 }
+addLiBox(userProjectLength, personalNav);
 //项目添加---------
 function addLi(li, name, introduce, author, number) {
     var divName = document.createElement("div");
