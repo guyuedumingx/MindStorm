@@ -136,7 +136,7 @@ function projectSize(project) {
     //获取项目大框架
     var projectLi = getDom(".projectLi", project);
     //获取project板块
-    var liNav = getDomA(".liNav",project);
+    var liNav = getDomA(".liNav", project);
     projectLi.style.width = projectWidth * liNav.length + "px";
 
     for (var i = 0; i < liNav.length; i++) {
@@ -144,38 +144,45 @@ function projectSize(project) {
         liNav[i].style.height = projectHeight + "px";
     }
 }
-window.addEventListener('resize', projectSize(personalNav));
+
 // 板块切换-----------
 // 开始样式
 function colorB() {
     personalBox.style.backgroundColor = "rgb(241, 240, 230)";
     personalBox.style.color = "#071f3d";
     projectSize(personalNav);
-   
+    window.addEventListener('resize', function () {
+        projectSize(personalNav);
+        projectSize(shareNav);
+    });
 }
 colorB();
-// // 点击共享项目
-// shareBox.addEventListener("click", function () {
-//     // 点击按钮样式
-//     shareBox.style.backgroundColor = "rgb(241, 240, 230)";
-//     shareBox.style.color = "#071f3d";
-//     personalBox.style.backgroundColor = "";
-//     personalBox.style.color = "#fff";
-//     // 板块显示
-//     shareNav.style.display = "block";
-//     personalNav.style.display = "none";
-//     projectSize(shareNav);
-//     window.addEventListener('resize', projectSize(shareNav));
-// });
-// // 点击参加项目
-// personalBox.addEventListener("click", function () {
-//     personalBox.style.backgroundColor = "rgb(241, 240, 230)";
-//     personalBox.style.color = "#071f3d";
-//     shareBox.style.backgroundColor = "";
-//     shareBox.style.color = "#fff";
-//     personalNav.style.display = "block";
-//     shareNav.style.display = "none";
-// });
+// 点击共享项目
+shareBox.addEventListener("click", function () {
+    // 点击按钮样式
+    shareBox.style.backgroundColor = "rgb(241, 240, 230)";
+    shareBox.style.color = "#071f3d";
+    personalBox.style.backgroundColor = "";
+    personalBox.style.color = "#fff";
+    // 板块显示
+    shareNav.style.display = "block";
+    personalNav.style.display = "none";
+    projectSize(shareNav);
+    window.addEventListener('resize', function () {
+        projectSize(shareNav);
+        projectSize(personalNav);
+    });
+});
+// 点击参加项目
+personalBox.addEventListener("click", function () {
+    personalBox.style.backgroundColor = "rgb(241, 240, 230)";
+    personalBox.style.color = "#071f3d";
+    shareBox.style.backgroundColor = "";
+    shareBox.style.color = "#fff";
+    personalNav.style.display = "block";
+    shareNav.style.display = "none";
+    projectSize(personalNav);
+});
 
 
 
@@ -196,7 +203,7 @@ function liStyle(liArr) {
         }
     }
 }
-// liStyle(liArrA);
+liStyle(liArrA);
 liStyle(liArrB);
 
 //获取左右按钮-----------------
@@ -211,3 +218,9 @@ function butStyle(project, liArr) {
 
 butStyle(personalNav, liArrA);
 butStyle(shareNav, liArrB);
+
+//获取项目标题
+var projectNameArr = getDomA(".projectName");
+for (var i = 0; i < projectNameArr.length; i++){
+    textVerticalCenter(projectNameArr[i]);
+}
