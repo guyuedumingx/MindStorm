@@ -1399,9 +1399,9 @@ Node.prototype.inputSelectAllText = function () {
  * @author 60rzvvbj
  */
 function textVerticalCenter(node) {
-    node.style.lineHeight = node.offsetHeight + 'px';
+    node.style.lineHeight = node.clientHeight + 'px';
     window.addEventListener('resize', function () {
-        node.style.lineHeight = node.offsetHeight + 'px';
+        node.style.lineHeight = node.clientHeight + 'px';
     });
 }
 Node.prototype.textVerticalCenter = function () {
