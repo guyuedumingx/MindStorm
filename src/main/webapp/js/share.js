@@ -65,7 +65,7 @@ function userMess(head, headBox, emailBox, perSig) {
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
-        error: function () { }
+        error: function () {}
     });
 
 }
@@ -169,6 +169,7 @@ var searchCont = getDom(".searchCont");
 //搜索按钮
 var searchBut = getDom(".iconS");
 
+var txt = searchCont.value;
 
 function search() {
     var content = searchCont.value;
@@ -176,17 +177,16 @@ function search() {
         type: 'put',
         url: '/project',
         data: {
-            
+            key: txt
         },
         header: {
             'Content-Type': 'application/json'
         }, // 请求头
         success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                // "test2.html?"+"txt="+encodeURI(s.value);
+            if (res) {
+
             } else {
-                topAlert("项目创建失败");
+
             }
         }
     });
