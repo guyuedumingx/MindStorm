@@ -5,6 +5,7 @@ import dao.ProjectDao;
 import pojo.Project;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * @author yohoyes
@@ -20,5 +21,10 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
     public String getQueryCondition(Project po) {
         String base = "id = " + po.getId();
         return base;
+    }
+
+    @Override
+    public List<Project> selectProjectsFormPage(int page) {
+        return null;
     }
 }

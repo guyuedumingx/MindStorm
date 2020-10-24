@@ -5,11 +5,13 @@ import common.factory.DaoFactory;
 import dao.NodeDao;
 import dao.ProjectDao;
 import dao.UserDao;
+import dao.auxiliary.impl.ContributorDaoImpl;
 import dao.auxiliary.impl.RecentProjectDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
 import pojo.Node;
 import pojo.Project;
 import pojo.User;
+import pojo.auxiliary.Contributor;
 import pojo.auxiliary.RecentProject;
 import pojo.auxiliary.Star;
 import service.NodeService;
@@ -74,6 +76,7 @@ public class NodeServiceImpl implements NodeService {
         return node;
     }
 
+
     /**
      * 把操作者设置成项目的贡献者
      * @param nodeId
@@ -84,7 +87,7 @@ public class NodeServiceImpl implements NodeService {
             @Override
             public void run() {
                 Node node = nodeDao.selectOne(new Node(nodeId));
-                new RecentProjectDaoImpl().insertOne(new RecentProject(userId,node.getProjectId()));
+                new ContributorDaoImpl().insertOne(new Contributor(node.getProjectId(),userId));
             }
         }).start();
     }

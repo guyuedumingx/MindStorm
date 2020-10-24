@@ -5,7 +5,7 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
 
-
+//-----------------------------------------------------
 // 获取快捷键按钮
 var shortcut = getDom(".shortcutKey");
 // 获取帮助按钮
@@ -18,19 +18,78 @@ clickOpenBlankClose(shortcut, shotcutNav);
 
 //获取用户id
 var loginPd = getCookie("user_id");
-//个人容器
-var personal = getDom(".personal");
-//获取昵称框
-var nameU = getDom(".user_name");
 //获取用户名
 var userName = getCookie("user_name");
+//个人容器
+var personal = getDom(".personal");
+//获取外部昵称框
+// var nameU = getDom(".user_name");
+//获取内部昵称框
+var nameBox = getDom(".nameBox");
+//获取简介框
+var perSig = getDom(".perSig");
+//获取邮箱框
+var emailBox = getDom(".email");
+//获取头像框------
+var headBox = getDom(".headBox");
+var head = getDom(".head");
+//获取input
+var inPic = getDom(".inPic");
+//获取but
+var changeH = getDom(".changeH");
+
+//头像更换样式
+headBox.addEventListener("mouseover", function () {
+    inPic.style.display = "block";
+    changeH.style.display = "block";
+});
+headBox.addEventListener("mouseout", function () {
+    inPic.style.display = "none";
+    changeH.style.display = "none";
+});
+
+//获取登录注册容器
+// var logOn = getDom(".logOn");
+
+//user保存返回值
+var user;
+//请求获得数组对象-----------
+function userMess(head, headBox, emailBox, perSig) {
+    ajax({
+        type: 'get',
+        url: '/user',
+        data: {
+
+        },
+        header: {},
+        success: function (res) {
+            user = res;
+            //获取个人简介--
+            var userIntroduce = user.userSignature;
+            //获取邮箱
+            var email = user.email;
+            //获取头像
+            var head = user.userAvatar;
+            headBox.style.backgroundImage = "url(" + head + ")";
+            head.style.backgroundImage = "url(" + head + ")";
+            emailBox.innerText = email;
+            perSig.value = userIntroduce;
+        },
+        error: function () {}
+    });
+
+}
+
 
 //判断是否登录------------
 if (loginPd == null) {
     personal.style.display = "none";
 } else {
     personal.style.display = "block";
-    nameU.innerText = userName;
+    //调用获取用户信息
+    // userMess(headBox, emailBox, perSig);
+    // nameU.innerText = userName;
+    nameBox.value = userName;
 }
 
 //退出登录
@@ -45,6 +104,8 @@ logOut.addEventListener("click", function () {
     window.location.href = "/login.html";
 })
 
+
+
 //个人下拉框
 //获取下拉框
 var spinner = getDom(".spinner");
@@ -53,8 +114,66 @@ var headNav = getDom(".head_nav");
 clickOpenBlankClose(headNav, spinner);
 
 
+//头像上传
+//导入
+var inPic = getDom(".inPic");
+
+function UpladFile() {
+    var file = inPic.files[0];
+    var formdata = new FormData();
+    formdata.append("file", file);
+    //获取文件后缀
+    var format = file.name.slice(file.name.lastIndexOf('.') + 1);
+    var extName = "GIF,JPG,JPEG,PNG";
+    //图片大小限制
+    var maxSize = 2 * 1024 * 1024; //2m
+    var size = file.size;
+    //首先对格式进行验证
+    if (extName.indexOf(format.toUpperCase()) == -1) {
+        topAlert("您只能输入" + extName + "格式的文件");
+    } else {
+        //大小判断
+        if (size > maxSize) {
+            topAlert("图片大小不能超过2M");
+        } else {
+            ajax({
+                type: 'post',
+                url: "/user/avatar",
+                data: formdata,
+                success: function (res) {
+                    if (res.status_code == '200') {
+                        headBox.style.backgroundImage = "url(" + res.url + ")";
+                        head.style.backgroundImage = "url(" + res.url + ")";
+                    } else {
+                        topAlert("导入失败");
+                    }
+                }
+            }, true);
+        }
+    }
+}
+var url = getCookie("user_avatar");
+console.log(url);
+headBox.style.backgroundImage = "url(" + url + ")";
+head.style.backgroundImage = "url(" + url + ")";
+inPic.addEventListener("change", UpladFile);
 
 
+//获取修改按钮
+var modifyN = getDom(".modifyN");
+//点击修改
+modifyN.addEventListener("click", function () {
+    nameBox.readOnly = false;
+    nameBox.style.borderBottom = "solid 1px";
+});
+//回车修改cookie
+nameBox.inputEnterEvent(function () {
+    nameBox.value = userName;
+    nameBox.readOnly = true;
+    nameBox.style.borderBottom = "";
+});
+
+//----------------------------------------------
 
 //放大新建
 

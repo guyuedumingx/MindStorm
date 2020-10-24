@@ -85,20 +85,13 @@ public class WebUtil {
      * @param <T>
      * @return
      */
-    public static <T> T getJson(HttpServletRequest request, Class<T> clazz) {
-        try {
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
-            StringBuilder responseStrBuilder = new StringBuilder();
-            String inputStr;
-            while ((inputStr = streamReader.readLine()) != null) {
-                responseStrBuilder.append(inputStr);
-            }
-            return JSON.parseObject(responseStrBuilder.toString(), clazz);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static <T> T getJson(HttpServletRequest request, Class<T> clazz) throws IOException{
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
         }
-
-        return null;
-
+        return JSON.parseObject(responseStrBuilder.toString(), clazz);
     }
 }
