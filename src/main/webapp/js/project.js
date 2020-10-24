@@ -854,12 +854,19 @@ function changeNodeEvent() {
         // 判断按钮权限
         if (nowNode.editable || (nowNode.authorId == user.userId)) {
             btnCancelDisable(addNode);
+        } else {
+            btnDisable(addNode);
         }
         if (nowNode.authorId == user.userId) {
             btnCancelDisable(changeNode);
             if (nowNode.childArr.length == 0) {
                 btnCancelDisable(removeNode);
+            } else {
+                btnDisable(removeNode);
             }
+        } else {
+            btnDisable(removeNode);
+            btnDisable(changeNode);
         }
         btnCancelDisable(queryNode);
     } else {
