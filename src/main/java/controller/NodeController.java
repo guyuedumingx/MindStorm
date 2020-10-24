@@ -80,10 +80,25 @@ public class NodeController extends BaseController{
      */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Node node = WebUtil.getJson(request, Node.class);
-        node.setLastEditId(user.getId());
+        Node node = initNode(request);
         int statusCode = service.chNode(node);
         WebUtil.renderMap(response,"status_code",statusCode+"");
+    }
+
+    private Node initNode(HttpServletRequest request) {
+        int id = Integer.valueOf(request.getParameter("id"));
+        String theme = request.getParameter("theme");
+        String content = request.getParameter("content");
+        boolean editable = Boolean.valueOf(request.getParameter("editable"));
+        int projectId = Integer.valueOf(request.getParameter("projectId"));
+        Node node = new Node();
+        node.setId(id);
+        node.setTheme(theme);
+        node.setContent(content);
+        node.setEditable(editable);
+        node.setProjectId(projectId);
+        node.setLastEditId(user.getId());
+        return node;
     }
 
     /**

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int id,boolean isAuthor) {
+    public User getUser(int id) {
         User user = userDao.selectOne(new User(id));
         List<Follow> follows = followDao.selectObjectList(new Follow(user.getId(),0));
         Integer[] followers = IntListUtil.getIntList(follows, "following");
@@ -35,9 +35,6 @@ public class UserServiceImpl implements UserService {
         Integer[] following = IntListUtil.getIntList(follows, "follower");
         user.setFollowing(following);
         user.setPassword("");
-        if(!isAuthor){
-            user.setToken("");
-        }
         return user;
     }
 
@@ -49,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
         user.setExp(0);
-        user.setUserAvatar("/avatar/default"+(int)(Math.random()*3)+".png");
+        user.setUserAvatar("/img/avatar/default"+(int)(Math.random()*3)+".png");
         user.setUserSignature("这家伙很懒,什么也没留下!");
         int i = userDao.insertOne(user);
         if(i!=0) {

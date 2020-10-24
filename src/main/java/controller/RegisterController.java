@@ -26,14 +26,14 @@ public class RegisterController extends BaseController {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        User usr = WebUtil.getJson(request, User.class);
+        User user = WebUtil.getJson(request, User.class);
         UserService userService = new UserServiceImpl();
-        User register = userService.register(usr);
+        User register = userService.register(user);
         int i = StatusCode.nullObjcet(register);
         if(!(StatusCode.OK+"").equals(i)){
             WebUtil.renderMap(response,"status_code",i+"");
         }
-        request.getRequestDispatcher("/user/login?email="+usr.getEmail()+"&password="+usr.getPassword()).forward(request,response);
+        request.getRequestDispatcher("/user/login?email="+user.getEmail()+"&password="+user.getPassword()).forward(request,response);
     }
 
     @Override
