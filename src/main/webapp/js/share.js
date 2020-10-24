@@ -175,29 +175,24 @@ var searchBut = getDom(".iconS");
 
 function search() {
     var content = searchCont.value;
-    // ajax({
-    //     type: 'post',
-    //     url: '/project',
-    //     data: {
-    //         public: public,
-    //         name: name,
-    //         deadline: createTime + time,
-    //         rank: rank,
-    //         createTime: createTime,
-    //         introduction: indu
-    //     },
-    //     header: {
-    //         'Content-Type': 'application/json'
-    //     }, // 请求头
-    //     success: function (res) {
-    //         if (res.status_code == '200') {
-    //             window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-    //             // "test2.html?"+"txt="+encodeURI(s.value);
-    //         } else {
-    //             topAlert("项目创建失败");
-    //         }
-    //     }
-    // });
+    ajax({
+        type: 'put',
+        url: '/project',
+        data: {
+            
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                // "test2.html?"+"txt="+encodeURI(s.value);
+            } else {
+                topAlert("项目创建失败");
+            }
+        }
+    });
 }
 // 搜索提交
 searchBut.addEventListener("click", search);
