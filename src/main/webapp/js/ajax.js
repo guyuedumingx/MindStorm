@@ -19,7 +19,7 @@
  * ```
  * @author 60rzvvbj
  */
-function ajax(options) {
+function ajax(options, fileState) {
 
     // 默认的请求配置对象,再用传入的对象覆盖默认配置对象,这样可以避免传参数的时候需要写所有的属性
     var defaults = {
@@ -37,26 +37,31 @@ function ajax(options) {
     // 创建XMLHttpRequest对象
     var xhr = new XMLHttpRequest();
 
-    // 拼接参数
-    var parameter = '';
-    for (var t in defaults.data) {
-        parameter += t + '=' + defaults.data[t] + '&';
-    }
-    parameter = parameter.substring(0, parameter.length - 1);
-
-    // 判断请求方式，并根据请求方式做不同的处理
-    if (defaults.type != 'post') {
-        defaults.url = defaults.url + '?' + parameter;
-        xhr.open(defaults.type, defaults.url);
-        xhr.send();
+    if (fileState) {
+        xhr.open(options.type, options.url);
+        xhr.send(options.data);
     } else {
-        xhr.open(defaults.type, defaults.url);
-        var contentType = defaults.header['Content-Type'];
-        xhr.setRequestHeader('Content-Type', contentType);
-        if (contentType == 'application/json') {
-            xhr.send(JSON.stringify(defaults.data));
+        // 拼接参数
+        var parameter = '';
+        for (var t in defaults.data) {
+            parameter += t + '=' + defaults.data[t] + '&';
+        }
+        parameter = parameter.substring(0, parameter.length - 1);
+
+        // 判断请求方式，并根据请求方式做不同的处理
+        if (defaults.type != 'post') {
+            defaults.url = defaults.url + '?' + parameter;
+            xhr.open(defaults.type, defaults.url);
+            xhr.send();
         } else {
-            xhr.send(parameter);
+            xhr.open(defaults.type, defaults.url);
+            var contentType = defaults.header['Content-Type'];
+            xhr.setRequestHeader('Content-Type', contentType);
+            if (contentType == 'application/json') {
+                xhr.send(JSON.stringify(defaults.data));
+            } else {
+                xhr.send(parameter);
+            }
         }
     }
 
