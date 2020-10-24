@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
         user.setExp(0);
-        user.setUserAvatar("default.png");
+        user.setUserAvatar("/avatar/default"+(int)(Math.random()*3)+".png");
         user.setUserSignature("这家伙很懒,什么也没留下!");
         int i = userDao.insertOne(user);
         if(i!=0) {

@@ -9,7 +9,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import pojo.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
-
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -24,6 +23,7 @@ import java.util.List;
 @MultipartConfig
 public class AvatarController extends BaseController {
     private static final long serialVersionUID = 1L;
+    String resPath = "";
     UserService service = new UserServiceImpl();
     User user = null;
 
@@ -32,6 +32,7 @@ public class AvatarController extends BaseController {
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        resPath = getServletContext().getRealPath("/avatar");
     }
 
     /**
@@ -44,7 +45,6 @@ public class AvatarController extends BaseController {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Result result = new Result();
         request.setCharacterEncoding("UTf-8");
-        String resPath = getServletContext().getRealPath("/avatar");
         String filePath = "";
 
         //检查我们是否有文件上传请求
@@ -57,9 +57,18 @@ public class AvatarController extends BaseController {
             FileItem file = list.get(0);
             InputStream in = file.getInputStream();
             String name = file.getName();
+            long size = file.getSize();
+
+            if((size/1024/8)>1){
+               result.setStatus_code(StatusCode.ERROR);
+               WebUtil.renderJson(response,result);
+                return;
+            }
+            delPreviousAvatar();
             String[] split = name.split("\\.");
             filePath =user.getId()+"."+split[split.length-1];
             writeTo(resPath+"/"+filePath,in);
+            file.delete();
             result.setStatus_code(StatusCode.OK);
         }catch (Exception e) {
             result.setStatus_code(StatusCode.LOST);
@@ -67,6 +76,8 @@ public class AvatarController extends BaseController {
         }
         String urlPath = "/avatar/"+filePath+"?ran="+Math.random();
         user.setUserAvatar(urlPath);
+        Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
+        response.addCookie(userAvatar);
         result.put("url",urlPath);
         WebUtil.renderJson(response,result);
     }
@@ -92,5 +103,12 @@ public class AvatarController extends BaseController {
         in.close();
         out.close();
     }
-}
 
+    private void delPreviousAvatar(){
+        String avatar = user.getUserAvatar();
+        if(!avatar.contains("defualt")){
+            File file = new File(resPath+"/"+avatar);
+            file.delete();
+        }
+    }
+}

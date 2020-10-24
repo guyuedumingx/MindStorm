@@ -84,7 +84,7 @@ public class NodeServiceImpl implements NodeService {
             @Override
             public void run() {
                 Node node = nodeDao.selectOne(new Node(nodeId));
-                new RecentProjectDaoImpl().insertOne(new RecentProject(node.getProjectId(), userId));
+                new RecentProjectDaoImpl().insertOne(new RecentProject(userId,node.getProjectId()));
             }
         }).start();
     }
