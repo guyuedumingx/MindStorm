@@ -3,6 +3,7 @@ package common.util;
 import org.xmind.core.*;
 import pojo.Node;
 import pojo.Project;
+import pojo.User;
 import service.NodeService;
 import service.ProjectService;
 import service.impl.NodeServiceImpl;
@@ -46,9 +47,9 @@ public class XmindUtil {
         return projectId;
     }
 
-    public static int getWorkBook(InputStream in) {
+    public static int getWorkBook(InputStream in, User user) {
         //userId = Integer.valueOf(req.getParameter("user_id"));
-        userId = 1;
+        userId = user.getId();
         try {
             workbook = builder.loadFromStream(in);
         }catch (Exception e) {

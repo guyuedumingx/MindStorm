@@ -67,20 +67,32 @@ function UpladFile() {
     var formdata = new FormData();
     formdata.append("file", file);
     //创建xhr，使用ajax进行文件上传
-    var xhr = new XMLHttpRequest();
-    xhr.open("post", "/user/avatar");
-    xhr.send(formdata);
-    //回调
-    xhr.onreadystatechange = function () {
-        back = xhr.responseText;
-        console.log(back);
-        res = JSON.parse(back);
-        if (res.status_code == '200' ) {
-            headBox.style.backgroungImg = "http://localhost:8080" + res.url;
-        } else {
-            topAlert("导入失败");
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("post", "/user/avatar");
+    // xhr.send(formdata);
+    // //回调
+    // xhr.onreadystatechange = function () {
+    //     back = xhr.responseText;
+    //     console.log(back);
+    //     res = JSON.parse(back);
+    //     if (res.status_code == '200' ) {
+    //         headBox.style.backgroungImg = "http://localhost:8080" + res.url;
+    //     } else {
+    //         topAlert("导入失败");
+    //     }
+    // };
+    ajax({
+        type:'post',
+        url:"/user/avatar",
+        data:formdata,
+        success:function (res) {
+            if (res.status_code == '200' ) {
+                headBox.style.backgroungImg = "http://localhost:8080" + res.url;
+            } else {
+                topAlert("导入失败");
+            }
         }
-    };
+    },true);
 }
 inPic.addEventListener("change", UpladFile);
 //获取name盒子
@@ -110,29 +122,29 @@ var searchBut = getDom(".iconS");
 
 function search() {
     var content = searchCont.value;
-    ajax({
-        type: 'post',
-        url: '/project',
-        data: {
-            public: public,
-            name: name,
-            deadline: createTime + time,
-            rank: rank,
-            createTime: createTime,
-            introduction: indu
-        },
-        header: {
-            'Content-Type': 'application/json'
-        }, // 请求头
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                // "test2.html?"+"txt="+encodeURI(s.value);
-            } else {
-                topAlert("项目创建失败");
-            }
-        }
-    });
+    // ajax({
+    //     type: 'post',
+    //     url: '/project',
+    //     data: {
+    //         public: public,
+    //         name: name,
+    //         deadline: createTime + time,
+    //         rank: rank,
+    //         createTime: createTime,
+    //         introduction: indu
+    //     },
+    //     header: {
+    //         'Content-Type': 'application/json'
+    //     }, // 请求头
+    //     success: function (res) {
+    //         if (res.status_code == '200') {
+    //             window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+    //             // "test2.html?"+"txt="+encodeURI(s.value);
+    //         } else {
+    //             topAlert("项目创建失败");
+    //         }
+    //     }
+    // });
 }
 // 搜索提交
 searchBut.addEventListener("click", search);
