@@ -145,6 +145,9 @@ function UpladFile() {
         }
     }
 }
+var url = getCookie("user_avatar");
+headBox.style.backgroundImage = "url(" + url + ")";
+head.style.backgroundImage = "url(" + url + ")";
 inPic.addEventListener("change", UpladFile);
 
 
