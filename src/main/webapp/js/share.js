@@ -115,19 +115,35 @@ function UpladFile() {
     var file = inPic.files[0];
     var formdata = new FormData();
     formdata.append("file", file);
-    ajax({
-        type: 'post',
-        url: "/user/avatar",
-        data: formdata,
-        success: function (res) {
-            if (res.status_code == '200') {
-                headBox.style.backgroundImage = "url(" + res.url + ")";
-                console.log(headBox);
-            } else {
-                topAlert("导入失败");
-            }
+    //获取文件后缀
+    var format = file.name.slice(file.name.lastIndexOf('.') + 1);
+    var extName = "GIF,JPG,JPEG,PNG";
+    //图片大小限制
+    var maxSize = 2 * 1024 * 1024; //2m
+    var size = file.size;
+    //首先对格式进行验证
+    if (extName.indexOf(format.toUpperCase()) == -1) {
+        alert("您只能输入" + extName + "格式的文件");
+    } else {
+        //大小判断
+        if (size > maxSize) {
+            alert("图片大小不能超过2M");
+        } else {
+            ajax({
+                type: 'post',
+                url: "/user/avatar",
+                data: formdata,
+                success: function (res) {
+                    if (res.status_code == '200') {
+                        headBox.style.backgroundImage = "url(" + res.url + ")";
+                        head.style.backgroundImage = "url(" + res.url + ")";
+                    } else {
+                        topAlert("导入失败");
+                    }
+                }
+            }, true);
         }
-    }, true);
+    }
 }
 inPic.addEventListener("change", UpladFile);
 
@@ -298,6 +314,7 @@ function addLi(li, name, introduce, author, number) {
     divIn.innerText = "内容：";
     var spanTxt = document.createElement("span");
     spanTxt.innerText = introduce;
+    spanTxt.title = introduce;
     var divBot = document.createElement("div");
     divBot.className = "bot cleafix";
     var divAut = document.createElement("div");
@@ -357,7 +374,11 @@ function butStyle(project, liArr) {
 butStyle(personalNav, liArrA);
 butStyle(shareNav, liArrB);
 
-
-for (var i = 1; i < liArrA.length; i++) {
-    addLi(liArrA[i], "name", "introduce", "author", "number");
+function create(project, projectLength, liArr) {
+    for (var i = 1; i < projectLength; i++) {
+        var name = project[i].name;
+        var introduce = project[i].introduction;
+        var author = project[i].author;
+        addLi(liArr[i], name, introduce, author, "number");
+    }
 }
