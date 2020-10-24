@@ -86,7 +86,7 @@ function UpladFile() {
         data: formdata,
         success: function (res) {
             if (res.status_code == '200') {
-                headBox.style.backgroundImage = "url(" + res.url+"?asd="+getIntRandom(0,1000000) + ")";
+                headBox.style.backgroundImage = "url(" + res.url + ")";
                 console.log(headBox);
             } else {
                 topAlert("导入失败");
@@ -311,4 +311,3 @@ function addLi(li, name, introduce, author, number) {
 for (var i = 1; i < liArrA.length; i++) {
     addLi(liArrA[i], "name", "introduce", "author", "number");
 }
-
