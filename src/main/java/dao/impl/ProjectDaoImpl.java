@@ -24,7 +24,9 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
     }
 
     @Override
-    public List<Project> selectProjectsFormPage(int page) {
-        return null;
+    public List<Project> searchProjects(String key) {
+        String sql = "select * from t_project where project_name like '%" + key + "%' or" +
+                " introduction like '%" + key + "%'";
+        return this.select(new Project(), sql);
     }
 }

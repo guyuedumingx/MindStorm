@@ -1,8 +1,6 @@
 package service;
 
-import pojo.Node;
 import pojo.Project;
-
 import java.util.List;
 
 /**
@@ -22,6 +20,7 @@ import java.util.List;
      * 新建项目
      * @param project
      * @param hasRootNode 是否生成根节点
+     * @param id
      * @return
      */
      int newProject(Project project, boolean hasRootNode, int id);
@@ -53,6 +52,13 @@ import java.util.List;
      * 项目是否存在
      */
     int existProject(int projectId);
+
+    /**
+     * 根据关键词搜索项目
+     * @param key
+     * @return
+     */
+    List<Project> search(String key);
 
     List<Project> getRecentProjectList(int userId);
 }

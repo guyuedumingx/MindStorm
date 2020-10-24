@@ -11,9 +11,9 @@ import java.util.List;
 public interface ProjectDao extends BaseDao<Project>{
 
     /**
-     * 根据页数获取项目
-     * @param page
+     * 根据标题获取项目
+     * @param key
      * @return
      */
-    List<Project> selectProjectsFormPage(int page);
+    List<Project> searchProjects(String key);
 }
