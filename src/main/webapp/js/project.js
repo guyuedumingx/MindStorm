@@ -99,7 +99,6 @@ var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目�
 
 // 生成成员列表
 function generateParticipant(arr) {
-    console.log(arr);
     for (var i = 0; i < arr.length; i++) {
         ajax({
             type: 'get',
