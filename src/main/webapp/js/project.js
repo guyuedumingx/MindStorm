@@ -279,7 +279,8 @@ window.addEventListener('resize', function () {
 var nowNode; // 当前正在拖动的节点
 // var nodeConstLen = [150, 120, 90, 80, 80, 80];
 // var nodeConstLen = [50, 60, 70, 80, 80];
-var nodeConstLen = [80, 80, 80, 80, 80, 80, 80, 80, 80, 80];
+// var nodeConstLen = [80, 80, 80, 80, 80, 80, 80, 80, 80, 80];
+var nodeConstLen = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
 // var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
@@ -653,8 +654,8 @@ function createRoot(rootID) {
     createTree(root);
 }
 
-var nodeMaxSize = 30; // 子节点最大尺寸
-var nodeMinSize = 12; // 子节点最小尺寸
+var nodeMaxSize = 36; // 子节点最大尺寸
+var nodeMinSize = 18; // 子节点最小尺寸
 
 // 判断是否所有节点都请求完毕的定时器，全部加载完之后开始添加相关约束
 var nodeRequetTimer = setInterval(function () {
@@ -671,9 +672,9 @@ var nodeRequetTimer = setInterval(function () {
         for (var i = 0; i < nodeSet.length; i++) {
 
             // 给所有节点设置宽高圆角和随机位置
-            nodeSet[i].style.width = Math.max(parseInt(nodeMaxSize * nodeSet[i].star / maxStar), nodeMinSize) + 'px';
-            nodeSet[i].style.height = Math.max(parseInt(nodeMaxSize * nodeSet[i].star / maxStar), nodeMinSize) + 'px';
-            nodeSet[i].style.borderRadius = Math.max(parseInt(nodeMaxSize * nodeSet[i].star / maxStar), nodeMinSize) / 2 + 'px';
+            nodeSet[i].style.width = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
+            nodeSet[i].style.height = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
+            nodeSet[i].style.borderRadius = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) / 2 + 'px';
             nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
             nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
             nodeSet[i].style.display = 'block';
@@ -692,9 +693,9 @@ var nodeRequetTimer = setInterval(function () {
         }
 
         // 根节点最大
-        root.style.width = '40px';
-        root.style.height = '40px';
-        root.style.borderRadius = '20px';
+        root.style.width = '54px';
+        root.style.height = '54px';
+        root.style.borderRadius = '27px';
 
         // 清除定时器
         clearInterval(nodeRequetTimer);
@@ -775,8 +776,8 @@ var refreshTree = btnArr[4]; // 刷新树
 var operationNodeBox = getDom('.operationNodeBox'); // 操作节点盒子
 var operationNodeBoxClose = operationNodeBox.getDom('.close'); // 操作节点盒子中关闭按钮
 var operationNodeBoxTheme = operationNodeBox.getDom('h4 input'); // 节点主题
-var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.onOff');// 是否允许被其他人修改盒子
-var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'); // 是否允许被其他人修改开关
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.onOff');// 允许追加子节点盒子
+var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'); // 允许追加子节点开关
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
@@ -828,11 +829,13 @@ projectCopyId.addEventListener('click', function () {
     setShearPlateData(projectId);
 });
 
+// 按钮禁用
 function btnDisable(btn) {
     btn.jurisdiction = false;
     btn.style.cursor = 'not-allowed';
 }
 
+// 取消按钮禁用
 function btnCancelDisable(btn) {
     btn.jurisdiction = true;
     btn.style.cursor = 'pointer';
@@ -847,9 +850,17 @@ function changeNodeEvent() {
         nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
         nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
         nowNodeBox.children[1].innerText = '';
-        btnCancelDisable(addNode);
-        btnCancelDisable(removeNode);
-        btnCancelDisable(changeNode);
+
+        // 判断按钮权限
+        if (nowNode.editable || (nowNode.authorId == user.userId)) {
+            btnCancelDisable(addNode);
+        }
+        if (nowNode.authorId == user.userId) {
+            btnCancelDisable(changeNode);
+            if (nowNode.childArr.length == 0) {
+                btnCancelDisable(removeNode);
+            }
+        }
         btnCancelDisable(queryNode);
     } else {
         nowNodeBox.children[0].innerText = '???';
@@ -882,6 +893,7 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxSubmit.hide();
 });
 
+// 关闭提示框函数
 function tipsCloseFunction() {
     tipsState = 'null';
     tipsTitle.innerText = '？';
@@ -902,7 +914,7 @@ operationProject[0].addEventListener('click', function () {
     transparentBaffle.show();
 });
 
-// 删除节点框中确定按钮点击事件
+// 提示框中确定按钮点击事件
 tipsYes.addEventListener('click', function () {
     if (tipsState == 'deleteNode') {
         ajax({
@@ -921,18 +933,11 @@ tipsYes.addEventListener('click', function () {
         });
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
-        // ajax({
-        //     type: 'get',
-        //     url: '/util/xmind',
-        //     data: {
-        //         project_id: projectId
-        //     }
-        // });
     }
     tipsCloseFunction();
 });
 
-// 删除节点框中取消按钮点击事件
+// 提示框中取消按钮点击事件
 tipsNo.addEventListener('click', tipsCloseFunction);
 
 // 创建节点按钮的点击事件
