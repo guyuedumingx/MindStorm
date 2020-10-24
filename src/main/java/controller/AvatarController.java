@@ -32,7 +32,7 @@ public class AvatarController extends BaseController {
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
-        resPath = getServletContext().getRealPath("/avatar");
+        resPath = getServletContext().getRealPath("/img/avatar");
     }
 
     /**
@@ -74,7 +74,7 @@ public class AvatarController extends BaseController {
             result.setStatus_code(StatusCode.LOST);
             e.printStackTrace();
         }
-        String urlPath = "/avatar/"+filePath+"?ran="+Math.random();
+        String urlPath = "/img/avatar/"+filePath+"?ran="+Math.random();
         user.setUserAvatar(urlPath);
         service.updateUser(user);
         Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
