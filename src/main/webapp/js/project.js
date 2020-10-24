@@ -947,7 +947,20 @@ tipsYes.addEventListener('click', function () {
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
     } else if (tipsState == 'deleteProject') {
-        console.log('删除项目');
+        ajax({
+            type: 'delete',
+            url: '/project',
+            data: {
+                id: projectId
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location = 'share.html'
+                } else {
+                    topAlert('删除失败');
+                }
+            }
+        });
     }
     tipsCloseFunction();
 });
