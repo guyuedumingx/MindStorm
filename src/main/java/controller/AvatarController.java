@@ -59,7 +59,7 @@ public class AvatarController extends BaseController {
             String name = file.getName();
             long size = file.getSize();
 
-            if((size/1024/8)>1){
+            if((size/1024/1024/8)>2){
                result.setStatus_code(StatusCode.ERROR);
                WebUtil.renderJson(response,result);
                 return;
@@ -76,6 +76,7 @@ public class AvatarController extends BaseController {
         }
         String urlPath = "/avatar/"+filePath+"?ran="+Math.random();
         user.setUserAvatar(urlPath);
+        service.updateUser(user);
         Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
         response.addCookie(userAvatar);
         result.put("url",urlPath);
@@ -106,8 +107,9 @@ public class AvatarController extends BaseController {
 
     private void delPreviousAvatar(){
         String avatar = user.getUserAvatar();
-        if(!avatar.contains("defualt")){
-            File file = new File(resPath+"/"+avatar);
+        String[] split = avatar.split("\\?");
+        if(!split[0].contains("default")){
+            File file = new File(resPath+"/"+split[0]);
             file.delete();
         }
     }
