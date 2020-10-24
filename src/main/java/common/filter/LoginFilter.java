@@ -31,6 +31,7 @@ public class LoginFilter implements Filter {
                 System.out.println("放行");
                 filterChain.doFilter(servletRequest, servletResponse);
             }else {
+                System.out.println("不放行");
                 request.getRequestDispatcher("login.html").forward(servletRequest, servletResponse);
             }
         }
