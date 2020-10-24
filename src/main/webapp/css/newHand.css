@@ -10,18 +10,10 @@ body .header {
     height: 100px;
 }
 
-.mainTitle {
-    position: absolute;
-    top: 10px;
-    left: 160px;
-    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
-    font-weight: 700;
-    font-size: 56px;
-    color: #214B5B;
-    cursor: default;
-}
-
 /* logo位置 */
+.header .logoBox {
+    float: left;
+}
 .header .logo {
     float: left;
     margin-top: 6px;
@@ -29,36 +21,60 @@ body .header {
     height: 82px;
     background-image: url(../img/logo1.png);
     background-size: contain;
+    background-size: contain;
+}
+.mainTitle {
+    display: inline-block;
+    top: 10px;
+    left: 160px;
+    line-height: 100px;
+    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
+    font-weight: 700;
+    font-size: 56px;
+    color: #214B5B;
+    cursor: default;
 }
 
 /* 登录注册容器 */
 .header .logOn {
-    position: relative;
     float: right;
+    /* display: none; */
 }
 
-/* 字体大小位置设置 */
-.header .logOn a {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 60px;
-    color: #53656d;
+.logOn a {
+    position: relative;
 }
-.logOn:hover::after {
+
+.logOn .login:hover::after,
+.logOn .register:hover::after {
     width: 100%;
 }
-.logOn::after {
+
+.logOn .login::after,
+.logOn .register::after {
     content: '';
     position: absolute;
-    border-radius: inherit;
     width: 0%;
-    height: 3px;
+    height: 5px;
     background: #214B5B;
     left: 0px;
-    bottom: 5px;
+    bottom: -8px;
     z-index: -1;
     transition: all .25s ease;
     left: 50%;
     transform: translate(-50%);
+}
+
+/* 字体大小位置设置 */
+.header .logOn a,
+.header .logOn span {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 100px;
+    color: #132C33;
+}
+
+.header .logOn span {
+    cursor: default;
 }
 /*#endregion*/

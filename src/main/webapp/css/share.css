@@ -406,7 +406,7 @@ body .header {
     font-size: 20px;
     color: #071f3d;
     border-radius: 5px;
-    background: linear-gradient(0deg, #d4c78c, rgb(241, 240, 230));
+    background: rgb(241, 240, 230);
     cursor: pointer;
     transition: color 0.5s ease;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 4px 4px 5px 0px rgba(0, 0, 0, .1);
@@ -500,7 +500,6 @@ body .header {
     height: 50%;
     font-weight: bold;
     box-sizing: border-box;
-
 }
 /* 简介内容 */
 .mainBox .projectBox .projectLi li .introduce span {

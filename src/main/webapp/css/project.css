@@ -674,8 +674,13 @@ body .header {
 .mainBoxLeft .introduce .participant ul li .userPhoto {
     width: 30px;
     height: 30px;
+    border: 1px solid #214B5B;
     border-radius: 15px;
-    background-color: pink;
+    box-sizing: border-box;
+    background-image: url(../img/logo1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .mainBoxLeft .introduce .participant ul li .userName {
