@@ -97,6 +97,43 @@ modifyN.addEventListener("click", function () {
 //     nameBox.style.borderBottom = "";
 // });
 
+//搜索-----------
+//搜索框
+var searchCont = getDom(".searchCont");
+//搜索按钮
+var searchBut = getDom(".iconS");
+
+
+function search() {
+    var content = searchCont.value;
+    ajax({
+        type: 'post',
+        url: '/project',
+        data: {
+            public: public,
+            name: name,
+            deadline: createTime + time,
+            rank: rank,
+            createTime: createTime,
+            introduction: indu
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                // "test2.html?"+"txt="+encodeURI(s.value);
+            } else {
+                topAlert("项目创建失败");
+            }
+        }
+    });
+}
+// 搜索提交
+searchBut.addEventListener("click", search);
+window.addEventListener('resize', search);
+
 
 //高度自适应-----------
 function heightAuto() {
@@ -210,7 +247,7 @@ liStyle(liArrB);
 function butStyle(project, liArr) {
     var leftBut = getDom(".leftBut", project);
     var rightBut = getDom(".rightBut", project);
-    if (liArr.length) {
+    if (liArr.length<7) {
         leftBut.style.display = "none";
         rightBut.style.display = "none";
     }
@@ -219,8 +256,43 @@ function butStyle(project, liArr) {
 butStyle(personalNav, liArrA);
 butStyle(shareNav, liArrB);
 
-//获取项目标题
-var projectNameArr = getDomA(".projectName");
-for (var i = 0; i < projectNameArr.length; i++){
-    textVerticalCenter(projectNameArr[i]);
+
+
+//项目添加---------
+function addLi(li,name, introduce,author,number) {
+    var divName = document.createElement("div");
+    divName.className = "projectName";
+    divName.innerText = name;
+    var divIn = document.createElement("div");
+    divIn.className = "introduce";
+    divIn.innerText = "内容：";
+    var spanTxt = document.createElement("span");
+    spanTxt.innerText = introduce;
+    var divBot = document.createElement("div");
+    divBot.className = "bot cleafix";
+    var divAut = document.createElement("div");
+    divAut.className = "author";
+    divAut.innerText = "创建人：";
+    var spanName = document.createElement("span");
+    spanName.innerText = author;
+    var divMan = document.createElement("div");
+    divMan.className = "people";
+    var iMan = document.createElement("i");
+    iMan.className = "team";
+    var spanMan = document.createElement("span");
+    spanName.className = "team_num";
+    spanMan.innerText = number;
+    li.appendChild(divName);
+    li.appendChild(divIn);
+    divIn.appendChild(spanTxt);
+    li.appendChild(divBot);
+    divBot.appendChild(divAut);
+    divAut.appendChild(spanName);
+    divBot.appendChild(divMan);
+    divMan.appendChild(iMan);
+    divMan.appendChild(spanMan);
 }
+for (var i = 1; i < liArrA.length; i++){
+    addLi(liArrA[i], "name", "introduce", "author", "number");
+}
+

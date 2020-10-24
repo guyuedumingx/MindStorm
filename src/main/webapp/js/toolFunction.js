@@ -1397,11 +1397,13 @@ Node.prototype.inputSelectAllText = function () {
  * 
  * @param {Node} node 要垂直居中文本的盒子
  * @author 60rzvvbj
+ * @author tracy
  */
 function textVerticalCenter(node) {
-    node.style.lineHeight = node.clientHeight + 'px';
+    var height = width1 = window.getComputedStyle ? window.getComputedStyle(node).height : 'nothing!';
+    node.style.lineHeight = height;
     window.addEventListener('resize', function () {
-        node.style.lineHeight = node.clientHeight + 'px';
+        node.style.lineHeight = height;
     });
 }
 Node.prototype.textVerticalCenter = function () {
