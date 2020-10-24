@@ -41,7 +41,7 @@ tool.textProhibition();
 var user = {};
 
 // 从cookie中获取值
-user.userId = getCookie('user_id');
+user.userId = getCookie('user_id') - 0;
 user.userName = getCookie('user_name');
 
 // 从url中获取项目id
@@ -800,10 +800,10 @@ var lockingNode = onOffArr[1]; // 锁定所有节点
 var hideTheme = onOffArr[2]; // 隐藏无关节点主题
 
 // 初始化
-addNode.jurisdiction = false;
-removeNode.jurisdiction = false;
-changeNode.jurisdiction = false;
-queryNode.jurisdiction = false;
+btnDisable(addNode);
+btnDisable(removeNode);
+btnDisable(changeNode);
+btnDisable(queryNode);
 refreshTree.jurisdiction = true;
 operationNodeBox.hide();
 operationNodeBoxClose.hide();
