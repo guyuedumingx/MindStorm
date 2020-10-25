@@ -112,4 +112,9 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return res;
     }
+
+    @Override
+    public List<Project> search(String key) {
+       return projectDao.searchProjects(key);
+    }
 }

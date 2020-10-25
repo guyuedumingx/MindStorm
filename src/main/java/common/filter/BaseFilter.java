@@ -11,6 +11,7 @@ import java.io.IOException;
  * response编码
  * @author yohoyes
  */
+@WebFilter("/*")
 public class BaseFilter implements Filter {
 
     @Override
@@ -22,8 +23,11 @@ public class BaseFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setCharacterEncoding("utf-8");
         HttpServletResponse response = (HttpServletResponse)servletResponse;
-
         response.setHeader("Access-Control-Allow-Origin","*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Allow-Credentials","true");
+        System.out.println("过滤器被访问");
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

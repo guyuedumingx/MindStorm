@@ -55,7 +55,7 @@ headBox.addEventListener("mouseout", function () {
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
         type: 'get',
-        url: '/user',
+        url: 'http://192.168.43.247:8080/user',
         data: {
 
         },
@@ -66,9 +66,9 @@ function userMess(head, headBox, emailBox, perSig) {
             //获取邮箱
             var email = res.email;
             //获取头像
-            var head = res.userAvatar;
-            headBox.style.backgroundImage = "url(" + head + ")";
-            head.style.backgroundImage = "url(" + head + ")";
+            var header = res.userAvatar;
+            headBox.style.backgroundImage = "url(" + header + ")";
+            head.style.backgroundImage = "url(" + header + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
@@ -135,7 +135,7 @@ function UpladFile() {
         } else {
             ajax({
                 type: 'post',
-                url: "/user/avatar",
+                url: "http://192.168.43.247:8080/user/avatar",
                 data: formdata,
                 success: function (res) {
                     if (res.status_code == '200') {
@@ -304,7 +304,7 @@ function joinButClick() {
         var idnum = inputID.value;
         ajax({
             type: 'get',
-            url: '/util/project',
+            url: 'http://192.168.43.247:8080/util/project',
             data: {
                 id: idnum
             },
@@ -375,7 +375,7 @@ estBut.addEventListener("click", function () {
         }
         ajax({
             type: 'post',
-            url: '/project',
+            url: 'http://192.168.43.247:8080/project',
             data: {
                 public: public,
                 name: name,
@@ -416,12 +416,12 @@ introduceInput.addEventListener("keyup", function () {
     }
 })
 
-//获取个人中心按钮
-var center = getDom(".presonal_cen");
-//跳转到个人中心
-center.addEventListener("click", function () {
-    window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
-})
+// //获取个人中心按钮
+// var center = getDom(".presonal_cen");
+// //跳转到个人中心
+// center.addEventListener("click", function () {
+//     window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
+// })
 
 //导入
 var importNav = getDom(".import");
@@ -431,23 +431,10 @@ function UpladFile() {
     //创建formdata对象
     var formdata = new FormData();
     formdata.append("file", file);
-    //创建xhr，使用ajax进行文件上传
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("post", "/util/xmind");
-    // xhr.send(formdata);
-    // //回调
-    // xhr.onreadystatechange = function () {
-    //     console.log(xhr.responseText);
-    //     res = JSON.parse(xhr.responseText);
-    //     if (res.status_code== 200) {
-    //         window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-    //     } else {
-    //         topAlert("导入失败");
-    //     }
-    // };
+
     ajax({
         type: 'post',
-        url: '/util/xmind',
+        url: 'http://192.168.43.247:8080/util/xmind',
         data: formdata,
         // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
         success: function (res) {
