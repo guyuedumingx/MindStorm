@@ -204,14 +204,14 @@ function runLogin() {
     var pa = loginPassword.value;
     ajax({
         type: "post",
-        url: "/user/login",
+        url: "http://192.168.43.247:8080/user/login",
         data: {
             email: em,
             password: pa,
         },
         success: function (res) {
             if (res.status_code == "200") {
-                window.location = "index.html";
+                window.location = "share.html";
             } else {
                 topAlert("邮箱或密码不正确");
             }
@@ -366,7 +366,7 @@ function setEmailJudge(node) {
     if (judgeEmail(node)) {
         ajax({
             type: "get",
-            url: "/util",
+            url: "http://192.168.43.247:8080/util",
             data: {
                 email: node.value,
             },
@@ -406,7 +406,7 @@ function registerGetVC(node) {
         }, 1000);
         ajax({
             type: "post",
-            url: "/util",
+            url: "http://192.168.43.247:8080/util",
             data: {
                 email: node.value,
                 sendFor: "register",
@@ -512,7 +512,7 @@ registerSubmit.addEventListener("click", function () {
         var psd = registerPassword.value;
         ajax({
             type: "post",
-            url: "/user/register",
+            url: "http://192.168.43.247:8080/user/register",
             data: {
                 email: em,
                 name: userName,

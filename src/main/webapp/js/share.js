@@ -44,9 +44,9 @@ var userProjectLength;
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
         type: 'get',
-        url: '/user',
+        url: 'http://192.168.43.247:8080/user',
         data: {
-
+            
         },
         header: {},
         success: function (res) {
@@ -59,15 +59,18 @@ function userMess(head, headBox, emailBox, perSig) {
             //获取邮箱
             var email = res.email;
             //获取头像
-            var head = res.userAvatar;
-            headBox.style.backgroundImage = "url(" + head + ")";
-            head.style.backgroundImage = "url(" + head + ")";
+            var header = res.userAvatar;
+            headBox.style.backgroundImage = "url(" + header + ")";
+            head.style.backgroundImage = "url(" + header + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
+           
         },
         error: function () {}
     });
-
+    	console.log(userProject);
+    addLiBox(userProjectLength, personalNav);
+    create(userProject, userProjectLength, liArrA);
 }
 
 
@@ -128,7 +131,7 @@ function UpladFile() {
         } else {
             ajax({
                 type: 'post',
-                url: "/user/avatar",
+                url: "http://192.168.43.247:8080/user/avatar",
                 data: formdata,
                 success: function (res) {
                     if (res.status_code == '200') {
@@ -171,30 +174,36 @@ var searchBut = getDom(".iconS");
 
 function search() {
     var content = searchCont.value;
-    ajax({
-        type: 'put',
-        url: '/project',
-        data: {
-            key: content
-        },
-        header: {
-            'Content-Type': 'application/json'
-        }, // 请求头
-        success: function (res) {
-            if (res) {
+    	console.log(content);
+    if (!content) {
+        topAlert("请输入内容！");
+    } else {
+        ajax({
+            type: 'put',
+            url: 'http://192.168.43.247:8080/project',
+            data: {
+                key: content
+            },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
+            success: function (res) {
+                if (res) {
+                    	console.log(res);
+                } else {
 
-            } else {
-
+                }
             }
-        }
-    });
+        });
+    }
+
 }
 // 搜索提交
 searchBut.addEventListener("click", search);
-window.addEventListener('resize', search);
+// window.addEventListener('resize', search);
 
 
-//高度自适应-----------
+//高度自适应--------------------
 function heightAuto() {
     //获取主要内容框架
     var mainBox = getDom(".mainBox");
@@ -204,6 +213,8 @@ function heightAuto() {
 heightAuto();
 
 window.addEventListener('resize', heightAuto);
+
+// 项目添加-------------------------------------
 
 // 获取公开项目
 var shareBox = getDom(".shareBox");
@@ -295,10 +306,8 @@ function addLiBox(projectLength, project) {
             div.appendChild(li);
         }
     }
-
-
 }
-addLiBox(userProjectLength, personalNav);
+
 //项目添加---------
 function addLi(li, name, introduce, author, number) {
     var divName = document.createElement("div");
@@ -377,4 +386,5 @@ function create(project, projectLength, liArr) {
         addLi(liArr[i], name, introduce, author, "number");
     }
 }
-create(userProject, userProjectLength, liArrA);
+
+userMess(head, headBox, emailBox, perSig);
