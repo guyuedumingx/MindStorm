@@ -1,3 +1,58 @@
+// 设置文本不可选中
+var tool = new Tool(document, window);
+tool.textProhibition();
+
+// 设置主题色
+// var mainColor = '#1e1e1e'; // 主背景色
+// var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
+// var textColor = 'rgba(255, 255, 255, 0.8)'; // 文字颜色
+// var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
+// var progressColor = '#cccccc'; // 进度条颜色
+// var progressBoxColor = '#666666'; // 进度条盒子颜色
+var mainColor = '#1e1e1e'; // 主背景色
+var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
+var textColor = 'rgba(255, 255, 255, 0.8)'; // 文字颜色
+var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
+var progressColor = '#cccccc'; // 进度条颜色
+var progressBoxColor = '#666666'; // 进度条盒子颜色
+getDom('body').style.backgroundColor = mainColor;
+var mainBox = getDom('.mainBox');
+for (var i = 0; i < mainBox.children.length; i++) {
+    for (var j = 0; j < mainBox.children[i].children.length; j++) {
+        mainBox.children[i].children[j].style.backgroundColor = modularColor;
+    }
+}
+getDom('.mainBoxLeft .creator h4').style.color = textColor;
+getDom('.mainBoxLeft .introduce .introduceMain').style.backgroundColor = modularColor;
+getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
+getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
+getDom('.mainBoxLeft .introduce p').style.color = textColor;
+getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.background = 'linear-gradient(rgba(' + modularColor.split(')')[0].split('(')[1] + ', 0), rgba(' + modularColor.split(')')[0].split('(')[1] + ', 1))';
+getDom('.mainBoxLeft .introduce a').style.color = textLightColor;
+var setColor = getDomA('.onOffBox .onOff .onOffTips');
+for (var i = 0; i < setColor.length; i++) {
+    setColor[i].style.color = textColor;
+}
+getDom('.mainBoxMiddle .treeBox').style.border = '20px solid ' + modularColor;
+getDom('.mainBoxMiddle .treeBox .treeBoxMain').style.backgroundColor = mainColor;
+getDom('.progressBar .projectName').style.color = textColor;
+getDom('.progressBar .progressBarTop .creationDate').style.color = textColor;
+getDom('.progressBar .progressBarTop .closingDate').style.color = textColor;
+getDom('.progressBar .countDown').style.color = textColor;
+getDom('.progressBar .progressBarTop .progressBox .progressContent').style.backgroundColor = progressColor;
+getDom('.progressBar .progressBarTop .progressBox .wave').style.backgroundColor = progressColor;
+getDom('.progressBar .progressBarTop .progressBox').style.backgroundColor = progressBoxColor;
+getDom('.mainBoxRight .projectId h4').style.color = textColor;
+getDom('.mainBoxRight .nowNode .nowNodeTheme').style.color = textColor;
+getDom('.mainBoxRight .nowNode .nowNodeTitle').style.color = textColor;
+setColor = getDomA('.displayControl .operationProject div .Before');
+for (var i = 0; i < setColor.length; i++) {
+    setColor[i].style.backgroundColor = modularColor;
+}
+setColor = getDomA('.mainBoxRight .controller .btnBox .btn .Before');
+for (var i = 0; i < setColor.length; i++) {
+    setColor[i].style.backgroundColor = modularColor;
+}
 // header
 
 //-----------------------------------------------------
@@ -158,10 +213,6 @@ nameBox.inputEnterEvent(function () {
 
 //----------------------------------------------
 // end header
-
-// 设置文本不可选中
-var tool = new Tool(document, window);
-tool.textProhibition();
 
 // 创建user对象
 var user = {};
@@ -446,7 +497,7 @@ var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
 var lineDownColor = '#6AC1ED'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色
-var lineUpColor = '#333'; // 非高亮时的颜色
+var lineUpColor = textColor; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
 var nowNodeBoxShadowColor = '#b410e6'; // 当前选中节点盒子阴影颜色
 var constraintArr = new Array(); // 记录约束的数组
@@ -771,6 +822,7 @@ function createTree(node) {
                 node.childIdArr = res.children;
                 var theme = document.createElement('div');
                 theme.addClass('theme');
+                theme.style.color = textColor;
                 theme.innerText = res.theme;
                 node.appendChild(theme);
                 node.content = res.content; // 主要内容
@@ -1385,9 +1437,9 @@ function setOnOffEvent(onOff, fun) {
 // 隐藏节点间线条
 setOnOffEvent(hideLine, function () {
     if (hideLine.state) {
-        lineUpColor = '#e6eef1';
+        lineUpColor = mainColor;
         ergodicTree(function (node) {
-            node.lineColor = '#e6eef1';
+            node.lineColor = mainColor;
         });
         if (nowNode) {
             var t = nowNode;
@@ -1400,9 +1452,9 @@ setOnOffEvent(hideLine, function () {
             });
         }
     } else {
-        lineUpColor = '#333';
+        lineUpColor = textColor;
         ergodicTree(function (node) {
-            node.lineColor = '#333';
+            node.lineColor = textColor;
         });
         if (nowNode) {
             var t = nowNode;
