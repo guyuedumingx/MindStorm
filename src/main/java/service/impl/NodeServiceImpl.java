@@ -6,13 +6,11 @@ import dao.NodeDao;
 import dao.ProjectDao;
 import dao.UserDao;
 import dao.auxiliary.impl.ContributorDaoImpl;
-import dao.auxiliary.impl.RecentProjectDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
 import pojo.Node;
 import pojo.Project;
 import pojo.User;
 import pojo.auxiliary.Contributor;
-import pojo.auxiliary.RecentProject;
 import pojo.auxiliary.Star;
 import service.NodeService;
 
@@ -26,9 +24,13 @@ public class NodeServiceImpl implements NodeService {
     public int newNode(Node node) {
         //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
-        int nodeId = nodeDao.insertOne(node);
-        addUserAsContributors(nodeId,node.getAuthor());
-        return nodeId;
+        Node parent =  nodeDao.selectOne(new Node(node.getParentId()));
+        if(parent.isEditable()) {
+            int nodeId = nodeDao.insertOne(node);
+            addUserAsContributors(nodeId,node.getAuthor());
+            return nodeId;
+        }
+        return 0;
     }
 
     @Override
@@ -51,6 +53,10 @@ public class NodeServiceImpl implements NodeService {
     public int chNode(Node node) {
         //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
+        Node preNode = nodeDao.selectOne(new Node(node.getId()));
+        if(preNode.getAuthor()!=node.getLastEditId()){
+            return StatusCode.LOST;
+        }
         int i = nodeDao.updateOne(node);
         addUserAsContributors(i,node.getLastEditId());
         return i==0 ? StatusCode.LOST : StatusCode.OK;

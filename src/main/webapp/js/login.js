@@ -204,7 +204,7 @@ function runLogin() {
     var pa = loginPassword.value;
     ajax({
         type: "post",
-        url: "http://192.168.43.247:8080/user/login",
+        url: "/user/login",
         data: {
             email: em,
             password: pa,
@@ -366,7 +366,7 @@ function setEmailJudge(node) {
     if (judgeEmail(node)) {
         ajax({
             type: "get",
-            url: "http://192.168.43.247:8080/util",
+            url: "/util",
             data: {
                 email: node.value,
             },
@@ -406,7 +406,7 @@ function registerGetVC(node) {
         }, 1000);
         ajax({
             type: "post",
-            url: "http://192.168.43.247:8080/util",
+            url: "/util",
             data: {
                 email: node.value,
                 sendFor: "register",
@@ -512,7 +512,7 @@ registerSubmit.addEventListener("click", function () {
         var psd = registerPassword.value;
         ajax({
             type: "post",
-            url: "http://192.168.43.247:8080/user/register",
+            url: "/register",
             data: {
                 email: em,
                 name: userName,

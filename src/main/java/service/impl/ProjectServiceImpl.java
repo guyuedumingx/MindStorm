@@ -88,6 +88,7 @@ public class ProjectServiceImpl implements ProjectService {
         Iterator<Contributor> iterator = contributors.iterator();
         User author = userDao.selectOne(new User(project.getAuthor()));
         project.setCreatorName(author.getName());
+        project.setNumbers(contributors.size());
         int[] cons = new int[contributors.size()];
         for(int i=0; iterator.hasNext();i++){
             cons[i] = iterator.next().getContributorId();
@@ -108,7 +109,7 @@ public class ProjectServiceImpl implements ProjectService {
         Iterator<RecentProject> iterator = recentProjects.iterator();
         List<Project> res = new ArrayList<Project>();
         while (iterator.hasNext()){
-            res.add(projectDao.selectOne(new Project(iterator.next().getProjectId())));
+            res.add(this.getProject(iterator.next().getProjectId()));
         }
         return res;
     }
