@@ -267,19 +267,20 @@ function start() {
 start();
 // 点击共享项目
 shareBox.addEventListener("click", function () {
-    // 点击按钮样式
-    shareBox.style.backgroundColor = "rgb(241, 240, 230)";
-    shareBox.style.color = "#071f3d";
-    personalBox.style.backgroundColor = "";
-    personalBox.style.color = "#fff";
-    // 板块显示
-    shareNav.style.display = "block";
-    personalNav.style.display = "none";
-    projectSize(shareNav);
-    window.addEventListener('resize', function () {
-        projectSize(shareNav);
-        projectSize(personalNav);
-    });
+    // // 点击按钮样式
+    // shareBox.style.backgroundColor = "rgb(241, 240, 230)";
+    // shareBox.style.color = "#071f3d";
+    // personalBox.style.backgroundColor = "";
+    // personalBox.style.color = "#fff";
+    // // 板块显示
+    // shareNav.style.display = "block";
+    // personalNav.style.display = "none";
+    // projectSize(shareNav);
+    // window.addEventListener('resize', function () {
+    //     projectSize(shareNav);
+    //     projectSize(personalNav);
+    // });
+    topAlert("暂未开发！");
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
@@ -357,9 +358,10 @@ function create(project, projectLength, liArr) {
     for (var i = 0; i < projectLength; i++) {
         var name = project[i].name;
         var introduce = project[i].introduction;
-        var author = project[i].author;
+        var author = project[i].creatorName;
+        var numbers = project[i].numbers;
         //将内容放进去
-        addLi(liArr[i], name, introduce, author, "number");
+        addLi(liArr[i], name, introduce, author, numbers);
     }
 }
 

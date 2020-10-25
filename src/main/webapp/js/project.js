@@ -117,7 +117,7 @@ function userMess(head, headBox, emailBox, perSig) {
     });
 
 }
-
+userMess(head, headBox, emailBox, perSig);
 
 //判断是否登录------------
 if (loginPd == null) {
@@ -191,7 +191,6 @@ function UpladFile() {
     }
 }
 var url = getCookie("user_avatar");
-console.log(url);
 headBox.style.backgroundImage = "url(" + url + ")";
 head.style.backgroundImage = "url(" + url + ")";
 inPic.addEventListener("change", UpladFile);
