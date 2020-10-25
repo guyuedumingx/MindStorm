@@ -44,16 +44,12 @@ var shareNav = getDom(".shareNav");
 var userProject;
 //我参加的项目
 var userProjectLength;
-
-var user;
 //请求获得数组对象-----------
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
         type: 'get',
         url: 'http://192.168.43.247:8080/user',
-        data: {
-
-        },
+        data: {},
         header: {},
         success: function (res) {
 
@@ -320,7 +316,7 @@ function move(y) {
         leftBut.style.display = "none";
     }
     rightBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (-projectWidth), 100);
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth/10);
         x++;
         leftBut.style.display = "block";
         if (x == y) {
@@ -328,7 +324,7 @@ function move(y) {
         }
     })
     leftBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (projectWidth), 100);
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth/10);
         x--;
         rightBut.style.display = "block";
         if (x == 1) {
@@ -339,16 +335,21 @@ function move(y) {
 //获取左右按钮-----------------
 //project 父元素
 //liArr 项目长度
-function butStyle(project, liArr,x) {
+function butStyle(project, liArr, x) {
     var leftBut = getDom(".leftBut", project);
     var rightBut = getDom(".rightBut", project);
     if (liArr.length < 7) {
         leftBut.style.display = "none";
         rightBut.style.display = "none";
     } else {
+
+        //左右滑动
+        move(x);
+    window.addEventListener('resize', function () {
+        move(x);
+    });
         
-    //左右滑动
-    move(x);
+
     }
 }
 
@@ -403,7 +404,6 @@ function create(project, projectLength, liArr) {
 
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
-
     //项目板块数目
     var x = Math.ceil(projectLength / 6);
     //获取项目大框架
@@ -424,7 +424,7 @@ function addLiBox(projectLength, project, projectNav) {
     // var liArrB = getDomA("li", shareNav);
 
     //按钮
-    butStyle(projectNav, liArr,x);
+    butStyle(projectNav, liArr, x);
     // butStyle(shareNav, liArrB);
 
     // 将项目放进板块
@@ -438,5 +438,3 @@ function addLiBox(projectLength, project, projectNav) {
 }
 
 userMess(head, headBox, emailBox, perSig);
-
-
