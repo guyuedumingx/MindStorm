@@ -1,6 +1,8 @@
 package common.util;
 
 import common.dto.StatusCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ import java.util.Properties;
 public class EmailUtil {
     static String from = "";
     static String password = "";
+    static Logger logger = LoggerFactory.getLogger(EmailUtil.class);
 
     static {
         try {
@@ -22,6 +25,7 @@ public class EmailUtil {
             from = pro.getProperty("sender");
             password = pro.getProperty("password");
         } catch (Exception e) {
+            logger.error(e.getMessage());
         }
     }
 
@@ -42,7 +46,8 @@ public class EmailUtil {
         props.setProperty("mail.transport.protocol", "smtp");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "25");
+        props.put("mail.smtp.ssl.enable", true);
+        props.put("mail.smtp.port", "465");
 
 
         Session session = Session.getInstance(props);
@@ -65,7 +70,7 @@ public class EmailUtil {
             transport.sendMessage(msg, new Address[]{new InternetAddress(to)});
             return StatusCode.OK;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return StatusCode.ERROR;
         }finally {
             try {
@@ -73,7 +78,7 @@ public class EmailUtil {
                     transport.close();
                 }
             }catch (MessagingException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }
