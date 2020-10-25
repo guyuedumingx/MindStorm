@@ -30,11 +30,11 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         UserService service = new UserServiceImpl();
         User user = service.login(email, password);
-        user.setPassword(null);
         int isSuccess = StatusCode.nullObjcet(user);
 
         //把用户Id存储在session中
         if(isSuccess==StatusCode.OK){
+            user.setPassword(null);
             session.setAttribute("user",user);
             Cookie userName = new Cookie("user_name", user.getName());
             Cookie userAvatar = new Cookie("user_avatar", user.getUserAvatar());
