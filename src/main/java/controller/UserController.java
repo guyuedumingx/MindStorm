@@ -7,7 +7,6 @@ import service.ProjectService;
 import service.UserService;
 import service.impl.ProjectServiceImpl;
 import service.impl.UserServiceImpl;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,12 +60,18 @@ public class UserController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String str = request.getParameter("id");
+        System.out.println(str);
         ProjectService projectService = new ProjectServiceImpl();
         UserService userService = new UserServiceImpl();
-        if("".equals(str)){
-            List<Project> recentProjectList = projectService.getRecentProjectList(user.getId());
-            user.setRecentProject(recentProjectList);
-            WebUtil.renderJson(response,user);
+        if(str==null){
+//            List<Project> recentProjectList = projectService.getRecentProjectList(user.getId());
+//            user.setRecentProject(recentProjectList);
+//            WebUtil.renderJson(response,user);
+            User usr = userService.getUser(49);
+            List<Project> recentProjectList = projectService.getRecentProjectList(usr.getId());
+            usr.setRecentProject(recentProjectList);
+            WebUtil.renderJson(response,usr);
+
         }else {
             User operator = userService.getUser(Integer.valueOf(str));
             WebUtil.renderJson(response,operator);

@@ -43,9 +43,9 @@ public class LoginController extends BaseController {
 //            userName.setMaxAge(60*60*24*7);
 //            userAvatar.setMaxAge(60*60*24*7);
 //            userId.setMaxAge(60*60*24*7);
-            userName.setPath("/");
-            userId.setPath("/");
-            userAvatar.setPath("/");
+//            userName.setPath("/");
+//            userId.setPath("/");
+//            userAvatar.setPath("/");
             response.addCookie(userName);
             response.addCookie(userId);
             response.addCookie(userAvatar);
