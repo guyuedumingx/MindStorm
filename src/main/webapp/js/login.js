@@ -374,7 +374,7 @@ function setEmailJudge(node) {
                 "Content-Type": "application/json",
             }, // 请求头
             success: function (res) {
-                if (res.status_code == "200") {
+                if (res.exist_code == "200") {
                     node.judge = true;
                     reportError(node, "用户名已存在");
                 } else {
