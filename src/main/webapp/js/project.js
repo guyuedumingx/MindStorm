@@ -107,9 +107,9 @@ function userMess(head, headBox, emailBox, perSig) {
             //获取邮箱
             var email = res.email;
             //获取头像
-            var head = res.userAvatar;
-            headBox.style.backgroundImage = "url(" + head + ")";
-            head.style.backgroundImage = "url(" + head + ")";
+            var header = res.userAvatar;
+            headBox.style.backgroundImage = "url(" + header + ")";
+            head.style.backgroundImage = "url(" + header + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
