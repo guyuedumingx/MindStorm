@@ -46,6 +46,9 @@ var userProject;
 var userProjectLength;
 //请求获得数组对象-----------
 function userMess(head, headBox, emailBox, perSig) {
+    if (!loginPd) {
+        window.location = "newHand.html";
+    }
     ajax({
         type: 'get',
         url: 'http://192.168.43.247:8080/user',
