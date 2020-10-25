@@ -211,7 +211,7 @@ function runLogin() {
         },
         success: function (res) {
             if (res.status_code == "200") {
-                window.location = "share.html";
+                window.location = "index.html";
             } else {
                 topAlert("邮箱或密码不正确");
             }
