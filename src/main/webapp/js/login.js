@@ -512,7 +512,7 @@ registerSubmit.addEventListener("click", function () {
         var psd = registerPassword.value;
         ajax({
             type: "post",
-            url: "/register",
+            url: "/user/register",
             data: {
                 email: em,
                 name: userName,
