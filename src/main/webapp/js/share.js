@@ -163,13 +163,11 @@ nameBox.inputEnterEvent(function () {
     nameBox.style.borderBottom = "";
 });
 
-//搜索-----------
+//搜索---------------------------
 //搜索框
 var searchCont = getDom(".searchCont");
 //搜索按钮
 var searchBut = getDom(".iconS");
-
-var txt = searchCont.value;
 
 function search() {
     var content = searchCont.value;
@@ -177,7 +175,7 @@ function search() {
         type: 'put',
         url: '/project',
         data: {
-            key: txt
+            key: content
         },
         header: {
             'Content-Type': 'application/json'
