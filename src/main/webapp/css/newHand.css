@@ -1,80 +1,95 @@
-/*#region--------------------- 头部--------------------- */
-/* 头部容器样式 */
-body .header {
-    position: fixed;
-    top: 0;
-    padding: 0 60px;
+/* —————————————简介————————————— */
+.briefIntroduction {
+    width: 100%;
+    height: 400px;
+    margin-top: 100px;
+}
+
+.briefIntroduction h4 {
+    margin: 0px 0px 30px;
+    font-size: 48px;
+    text-align: center;
+}
+
+.briefIntroduction p {
+    margin: 0px 0px 10px;
+    font-size: 24px;
+    text-align: center;
+    color: #999;
+}
+
+.briefIntroduction .enter {
+    width: 200px;
+    height: 72px;
+    margin: 60px auto 0px;
+    border-radius: 15px;
+    font-size: 24px;
+    line-height: 72px;
+    text-align: center;
+    color: #fff;
+    background-color: skyblue;
+}
+
+.w4 {
+    width: 80%;
+    margin: 50px auto 0px;
+}
+
+.w4>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.w4 .tag {
+    flex: 4;
+    font-size: 64px;
+    line-height: 300px;
+    text-align: center;
+    color: skyblue;
+}
+
+.w4 .main {
+    flex: 6;
+}
+
+.w4 .main .title {
+    width: 100%;
+    margin: 50px 0px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.w4 .main .content {
+    padding: 0px 100px;
     box-sizing: border-box;
-    min-width: 800px;
-    width: 100%;
-    height: 100px;
+    font-size: 24px;
+    text-align: center;
 }
 
-/* logo位置 */
-.header .logoBox {
-    float: left;
-}
-.header .logo {
-    float: left;
-    margin-top: 6px;
-    width: 82px;
-    height: 82px;
-    background-image: url(../img/logo1.png);
-    background-size: contain;
-    background-size: contain;
-}
-.mainTitle {
-    display: inline-block;
-    top: 10px;
-    left: 160px;
-    line-height: 100px;
-    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
-    font-weight: 700;
-    font-size: 56px;
-    color: #214B5B;
-    cursor: default;
-}
-
-/* 登录注册容器 */
-.header .logOn {
-    float: right;
-    /* display: none; */
-}
-
-.logOn a {
-    position: relative;
-}
-
-.logOn .login:hover::after,
-.logOn .register:hover::after {
+.how {
     width: 100%;
 }
 
-.logOn .login::after,
-.logOn .register::after {
-    content: '';
-    position: absolute;
-    width: 0%;
-    height: 5px;
-    background: #214B5B;
-    left: 0px;
-    bottom: -8px;
-    z-index: -1;
-    transition: all .25s ease;
-    left: 50%;
-    transform: translate(-50%);
+.how .tag {
+    width: 100%;
+    margin-bottom: 50px;
+    font-size: 64px;
+    text-align: center;
+    color: rgb(167, 135, 235);
 }
 
-/* 字体大小位置设置 */
-.header .logOn a,
-.header .logOn span {
-    font-weight: bold;
-    font-size: 28px;
-    line-height: 100px;
-    color: #132C33;
+.how h4 {
+    font-size: 36px;
+    font-weight: 400;
+    text-align: center;
 }
 
-.header .logOn span {
-    cursor: default;
+.how .content {
+    width: 100%;
+    height: 800px;
+    background-color: #f5f5f5;
 }
-/*#endregion*/
