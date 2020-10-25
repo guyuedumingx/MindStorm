@@ -583,7 +583,7 @@ body .header {
     padding: 15px 0px;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #aaa;
+    background-color: #ddd;
     transition: left .5s;
 }
 
@@ -595,11 +595,11 @@ body .header {
     width: 20px;
     height: 50px;
     border-radius: 0px 5px 5px 0px;
-    background-image: url(../img/public_arrow999999.png);
+    background-image: url(../img/public_arrowWhite.png);
     background-repeat: no-repeat;
     background-size: 300%;
     background-position: -21px center;
-    background-color: #f00;
+    background-color: rgba(150, 150, 150, 0.5);
     cursor: pointer;
     transform: translate(0, -50%);
     transition: right .5s;
@@ -610,7 +610,7 @@ body .header {
 }
 
 .mainBoxLeft .introduce .participant i:hover {
-    background-image: url(../img/public_arrowWhite.png);
+    background-color: rgba(120, 120, 120, 0.5);
 }
 
 .mainBoxLeft .introduce .participant h5 {
@@ -625,7 +625,7 @@ body .header {
     z-index: 4;
     font-size: 16px;
     color: #214B5B;
-    background-color: #eee;
+    background-color: #ddd;
     overflow: auto;
 }
 
@@ -668,7 +668,7 @@ body .header {
 }
 
 .mainBoxLeft .introduce .participant ul li:hover {
-    background-color: #fff;
+    background-color: #eee;
 }
 
 .mainBoxLeft .introduce .participant ul li .userPhoto {
