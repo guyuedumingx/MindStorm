@@ -371,6 +371,7 @@ body .header {
 .header .personal div {
     display: inline-block;
 }
+
 /* 头像 */
 .header .personal .head {
     display: inline-block;
@@ -713,7 +714,7 @@ body .header {
     color: #FFA70F;
 }
 
-.mainBoxLeft .introduce .introduceMain::after {
+.mainBoxLeft .introduce .introduceMain .introduceMainAfter {
     position: absolute;
     bottom: 21px;
     left: 50%;
@@ -722,7 +723,6 @@ body .header {
     height: 50px;
     background: linear-gradient(rgba(248, 252, 250, 0), rgba(248, 252, 250, 1));
     transform: translate(-50%, 0);
-    content: '';
 }
 
 .mainBoxLeft .introduce .participant {
@@ -971,18 +971,18 @@ body .header {
     cursor: pointer;
 }
 
-.displayControl .operationProject .operationProjectTitle::before {
+.displayControl .operationProject .operationProjectTitle .Before {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    content: '';
+    background-color: rgba(255, 255, 255);
+    opacity: 0.5;
 }
 
-.displayControl .operationProject .operationProjectTitle:hover::before {
-    background-color: rgba(255, 255, 255, 0);
+.displayControl .operationProject .operationProjectTitle:hover .Before {
+    opacity: 0;
 }
 
 .displayControl .operationProject div {
@@ -997,18 +997,17 @@ body .header {
     cursor: pointer;
 }
 
-.displayControl .operationProject div::before {
+.displayControl .operationProject div .Before {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    content: '';
+    opacity: 0;
 }
 
-.displayControl .operationProject div:hover::before {
-    background-color: rgba(255, 255, 255, 0);
+.displayControl .operationProject div:hover .Before {
+    opacity: 0.2;
 }
 
 .displayControl .operationProject div span {
@@ -1152,7 +1151,6 @@ body .header {
     height: 15px;
     border-radius: 45% 47% 44% 42%;
     margin-left: -10px;
-    background-color: rgba(33, 75, 91, 0.7);
     animation: waveRotate 3s linear infinite;
     transition: left 1s;
 }
@@ -1164,7 +1162,7 @@ body .header {
     width: 100%;
     height: 100%;
     border-radius: 42% 46% 37% 40%;
-    background-color: rgba(33, 75, 91, 0.7);
+    background-color: inherit;
     content: '';
 }
 
@@ -1175,7 +1173,7 @@ body .header {
     width: 100%;
     height: 100%;
     border-radius: 38% 46% 43% 47%;
-    background-color: rgba(33, 75, 91, 0.7);
+    background-color: inherit;
     content: '';
 }
 
@@ -1380,19 +1378,18 @@ body .header {
     transition: background-color .5s;
 }
 
-.mainBoxRight .controller .btnBox .btn::before {
+.mainBoxRight .controller .btnBox .btn .Before {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 0;
     transition: background-color .3s;
-    content: '';
 }
 
-.mainBoxRight .controller .btnBox .btn:hover::before {
-    background-color: rgba(255, 255, 255, 0);
+.mainBoxRight .controller .btnBox .btn:hover .Before {
+    opacity: 0.2;
 }
 
 .mainBoxRight .controller .btnBox .btn .btnTips {
@@ -1474,7 +1471,6 @@ body .header {
     height: 20px;
     border-radius: 10px;
     font-size: 16px;
-    color: #fff;
     line-height: 30px;
     text-align: center;
     background-color: #aaa;
@@ -1491,5 +1487,1236 @@ body .header {
     text-align: center;
     color: #214b5b;
 }
+
+/*#endregion*/
+
+/* html,
+body {
+    background-color: #1e1e1e;
+    min-width: 800px;
+} */
+
+/*#region--------------------- 操作节点的框 --------------------- */
+/* .operationNodeBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 110;
+    width: 384px;
+    height: 400px;
+    padding: 25px 35px;
+    border-radius: 10px;
+    margin-top: -200px;
+    margin-left: -192px;
+    box-shadow: 0px 0px 10px #ccc;
+    background-color: #fff;
+}
+
+.operationNodeBox .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/project_close.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.operationNodeBox .close:hover {
+    background-image: url(../img/project_closeHover.png);
+}
+
+.operationNodeBox h4 {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    color: #214B5B;
+}
+
+.operationNodeBox h4 span {
+    float: left;
+}
+
+.operationNodeBox h4 input {
+    display: block;
+    float: left;
+    padding-bottom: 1px;
+    border: 0px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 700;
+    color: #214B5B;
+    background-color: transparent;
+}
+
+.operationNodeBox h4 .editable {
+    border-bottom: 2px solid #214b5b;
+}
+
+.operationNodeBox h5 {
+    position: relative;
+    border: 0px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #214B5B;
+    background-color: transparent;
+}
+
+h5 .onOff {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 240px;
+    height: 100%;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+h5 .onOff .onOffTips {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 15px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 15px;
+    color: #214B5B;
+    transform: translate(0, -50%);
+}
+
+h5 .onOff .onOffBorder {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    width: 40px;
+    height: 18px;
+    border-radius: 9px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #16a085;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transform: translate(0, -50%);
+    transition: all .3s;
+}
+
+h5 .onOff .onOffBorder .onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #46607b;
+    transition: all .3s;
+}
+
+.operationNodeBox textarea {
+    border: 0px;
+    width: 100%;
+    height: 240px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #214B5B;
+    background-color: transparent;
+    resize: none;
+}
+
+.operationNodeBox .textareaEditable {
+    border: 1px solid #214b5b;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.operationNodeBox .nodeCreator {
+    display: none;
+    margin: 10px 0px;
+    width: 100%;
+    font-size: 16px;
+    color: #214B5B;
+}
+
+.operationNodeBox .nodeCreator span {
+    font-size: 14px;
+}
+
+.operationNodeBox .lastRevision {
+    display: none;
+    margin: 10px 0px;
+    width: 100%;
+    font-size: 16px;
+    color: #214B5B;
+}
+
+.operationNodeBox .lastRevision span {
+    font-size: 14px;
+}
+
+.operationNodeBox>input {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    width: 80px;
+    height: 32px;
+    border: 0px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transform: translate(-50%, 0);
+    transition: background-color .3s;
+}
+
+.operationNodeBox>input:hover {
+    background-color: #101f30;
+}
+
+.operationNodeBox .star {
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    width: 48px;
+    height: 54px;
+}
+
+.operationNodeBox .star .starPhoto {
+    width: 24px;
+    height: 24px;
+    margin: 0px auto 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+}
+
+.operationNodeBox .star .starFalse {
+    background-image: url(../img/project_starFalse.png);
+}
+
+.operationNodeBox .star .starTrue {
+    background-image: url(../img/project_starTrue.png);
+}
+
+.operationNodeBox .star .starNumber {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    color: #999;
+}
+
+.tipsBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 110;
+    width: 360px;
+    height: 150px;
+    border-radius: 10px;
+    margin-top: -75px;
+    margin-left: -180px;
+    box-shadow: 0px 0px 10px #ccc;
+    background-color: #fff;
+}
+
+.tipsBox .boxTitle {
+    width: 100%;
+    height: 50px;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    color: #214B5B;
+}
+
+.tipsBox .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/project_close.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.tipsBox .close:hover {
+    background-image: url(../img/project_closeHover.png);
+}
+
+.tipsBox .content {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    color: #214b5b;
+}
+
+.tipsBox .yes {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    width: 50px;
+    height: 24px;
+    border-radius: 5px;
+    margin-left: -80px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.tipsBox .yes:hover {
+    background-color: #101f30;
+}
+
+.tipsBox .no {
+    position: absolute;
+    right: 50%;
+    bottom: 20px;
+    width: 50px;
+    height: 24px;
+    border-radius: 5px;
+    margin-right: -80px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: #214b5b;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.tipsBox .no:hover {
+    background-color: #101f30;
+}
+
+.transparentBaffle {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 109;
+    background-color: rgba(0, 0, 0, 0.3);
+} */
+
+/*#endregion*/
+/*#region--------------------- mainBox --------------------- */
+/* .emptyLine {
+    width: 100%;
+    height: 8%;
+}
+
+.mainBox {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 85%;
+    padding: 0px 60px;
+    box-sizing: border-box;
+}
+
+.mainBox .mainBoxLeft {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    min-width: 180px;
+    width: 15%;
+    height: 100%;
+}
+
+.mainBoxLeft .creator {
+    width: 100%;
+    height: 60px;
+    border-radius: 5px;
+    background-color: #333333;
+}
+
+.mainBoxLeft .creator h4 {
+    padding: 0px 20px;
+    font-size: 20px;
+    line-height: 60px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mainBoxLeft .creator h4 span {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.mainBoxLeft .introduce {
+    flex: 4;
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.mainBoxLeft .introduce .introduceMain {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    padding-top: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #333333;
+    transition: height .5s;
+}
+
+.mainBoxLeft .introduce h4 {
+    position: relative;
+    padding: 10px 20px 0px;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mainBoxLeft .introduce .introduceMain .member {
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.mainBoxLeft .introduce .introduceMain .member:hover {
+    color: rgb(255, 167, 15);
+}
+
+.mainBoxLeft .introduce h4 span {
+    font-size: 16px;
+    color: rgb(255, 167, 15);
+}
+
+.mainBoxLeft .introduce p {
+    height: calc(100% - 90px);
+    padding: 5px 20px 0px;
+    font-size: 14px;
+    line-height: 1.5em;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mainBoxLeft .introduce a {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    z-index: 7;
+    font-size: 12px;
+    transform: translate(-50%, 0);
+}
+
+.mainBoxLeft .introduce a:hover {
+    color: #FFA70F;
+}
+
+.mainBoxLeft .introduce .introduceMain::after {
+    position: absolute;
+    bottom: 21px;
+    left: 50%;
+    z-index: 6;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, 1));
+    transform: translate(-50%, 0);
+    content: '';
+}
+
+.mainBoxLeft .introduce .participant {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    position: absolute;
+    top: 0px;
+    left: 0%;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    padding: 15px 0px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #ddd;
+    transition: left .5s;
+}
+
+.mainBoxLeft .introduce .participant i {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    z-index: 3;
+    width: 20px;
+    height: 50px;
+    border-radius: 0px 5px 5px 0px;
+    background-image: url(../img/public_arrowWhite.png);
+    background-repeat: no-repeat;
+    background-size: 300%;
+    background-position: -21px center;
+    background-color: rgba(150, 150, 150, 0.5);
+    cursor: pointer;
+    transform: translate(0, -50%);
+    transition: right .5s;
+}
+
+.mainBoxLeft .introduce .participant:hover i {
+    right: -20px;
+}
+
+.mainBoxLeft .introduce .participant i:hover {
+    background-color: rgba(120, 120, 120, 0.5);
+}
+
+.mainBoxLeft .introduce .participant h5 {
+    padding: 0px 10px 10px;
+    font-size: 16px;
+    color: #214B5B;
+}
+
+.mainBoxLeft .introduce .participant ul {
+    flex: 1;
+    position: relative;
+    z-index: 4;
+    font-size: 16px;
+    color: #214B5B;
+    background-color: #ddd;
+    overflow: auto;
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mainBoxLeft .introduce .participant ul:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.mainBoxLeft .introduce .participant ul::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mainBoxLeft .introduce .participant ul li {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.mainBoxLeft .introduce .participant ul li:hover {
+    background-color: #eee;
+}
+
+.mainBoxLeft .introduce .participant ul li .userPhoto {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #214B5B;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background-image: url(../img/logo1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.mainBoxLeft .introduce .participant ul li .userName {
+    flex: 1;
+    padding-left: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #214B5B;
+}
+
+.mainBoxLeft .introduce .participant ul li .kick {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    width: 36px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #fff;
+    animation-name: toBig;
+    animation-duration: .2s;
+}
+
+.mainBoxLeft .introduce .participant ul li .kick:hover {
+    background-color: #f5f5f5;
+}
+
+.mainBoxLeft .introduce .participant .authorUl li:hover .kick {
+    display: block;
+}
+
+.mainBoxLeft .displayControl {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 3;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    background-color: #333333;
+}
+
+.onOffBox {
+    flex: 8;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    padding: 20px 0px;
+    overflow: hidden;
+}
+
+.onOffBox .onOff {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.onOffBox .onOff .onOffTips {
+    width: 100%;
+    height: 12px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.onOffBox .onOff .onOffBorder {
+    position: relative;
+    width: 40px;
+    height: 18px;
+    border-radius: 9px;
+    margin: 5px auto 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-image: url(../img/public_onOffFalse.png);
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
+    background-color: #46607b;
+    transition: all .3s;
+}
+
+.displayControl .operationProject {
+    flex: 2;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0px 24px 12px;
+}
+
+.displayControl .operationProject .operationProjectTitle {
+    position: relative;
+    width: 80px;
+    height: 26px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+    color: #fff;
+    background-color: skyblue;
+    cursor: pointer;
+}
+
+.displayControl .operationProject .operationProjectTitle::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.2);
+    content: '';
+}
+
+.displayControl .operationProject .operationProjectTitle:hover::before {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.displayControl .operationProject div {
+    display: none;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.displayControl .operationProject div::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.2);
+    content: '';
+}
+
+.displayControl .operationProject div:hover::before {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.displayControl .operationProject div span {
+    display: none;
+    position: absolute;
+    top: 125%;
+    left: 50%;
+    width: 64px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: -32px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #214b5b;
+    background-color: #fff;
+    animation-name: toBig;
+    animation-duration: .2s;
+}
+
+.displayControl .operationProject div:hover span {
+    display: block;
+}
+
+.displayControl .operationProject div span::before {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #ccc;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.displayControl .operationProject div span::after {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 0px;
+    height: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #fff;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.mainBox .mainBoxMiddle {
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    padding-left: 10px;
+}
+
+.mainBoxMiddle .progressBar {
+    position: relative;
+    height: 60px;
+    border-radius: 5px;
+    background-color: #333333;
+}
+
+.mainBoxMiddle .progressBar .progressBarTop {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 35px;
+}
+
+.progressBar .projectName {
+    position: absolute;
+    top: -48px;
+    z-index: 101;
+    left: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, 0);
+}
+
+.progressBar .progressBarTop .creationDate {
+    height: 35px;
+    margin: 0px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 35px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.progressBar .progressBarTop .closingDate {
+    height: 35px;
+    margin: 0px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 35px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.progressBar .progressBarTop .progressBox {
+    flex: 1;
+    position: relative;
+    width: 70%;
+    height: 10px;
+    border-radius: 7.5px;
+    margin-top: 12.5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    background-color: #666666;
+    overflow: hidden;
+}
+
+.progressBar .progressBarTop .progressBox .progressContent {
+    width: 0%;
+    height: 100%;
+    border-radius: 7.5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: width 1s;
+}
+
+@keyframes waveRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.progressBar .progressBarTop .progressBox .wave {
+    position: absolute;
+    top: -2.5px;
+    left: 0%;
+    width: 15px;
+    height: 15px;
+    border-radius: 45% 47% 44% 42%;
+    margin-left: -10px;
+    background-color: #e0e0e0;
+    animation: waveRotate 3s linear infinite;
+    transition: left 1s;
+}
+
+.progressBar .progressBarTop .progressBox .wave::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 42% 46% 37% 40%;
+    background-color: #e0e0e0;
+    content: '';
+}
+
+.progressBar .progressBarTop .progressBox .wave::after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 38% 46% 43% 47%;
+    background-color: #e0e0e0;
+    content: '';
+}
+
+.progressBar .countDown {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, 0);
+}
+
+.mainBoxMiddle .treeBox {
+    flex: 1;
+    position: relative;
+    height: 530px;
+    border: 20px solid #333333;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    background-color: #333333;
+    overflow: hidden;
+}
+
+.mainBoxMiddle .treeBox .treeBoxMain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    min-width: 1260px;
+    min-height: 700px;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    transform: translate(-50%, -50%);
+}
+
+.mainBoxMiddle .treeBox .root {
+    position: absolute;
+    z-index: 20;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.mainBoxMiddle .treeBox .node {
+    position: absolute;
+    z-index: 20;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.mainBoxMiddle .treeBox .theme {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    width: 200px;
+    height: 15px;
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    transform: translate(-50%, 0);
+}
+
+.mainBoxMiddle .treeBox .hideTheme .theme {
+    display: none;
+}
+
+.mainBoxMiddle .treeBox .treeBoxFullScreen {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/project_fullScreen.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.mainBoxMiddle .treeBox .treeBoxPercentageTips {
+    display: none;
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, 0);
+}
+
+.mainBox .mainBoxRight {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 10%;
+    min-width: 120px;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.mainBoxRight .projectId {
+    height: 60px;
+    border-radius: 5px;
+    background-color: #333333;
+}
+
+.mainBoxRight .projectId h4 {
+    position: relative;
+    padding: 0px 16px;
+    font-size: 14px;
+    line-height: 60px;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: default;
+}
+
+.mainBoxRight .projectId h4 span {
+    font-size: 14px;
+}
+
+.mainBoxRight .projectId h4 .copyId {
+    display: none;
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    width: 36px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: -18px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #214B5B;
+    background-color: #fff;
+    cursor: pointer;
+    animation-name: toBig;
+    animation-duration: .2s;
+}
+
+.mainBoxRight .projectId h4 .copyId:hover {
+    background-color: #f5f5f5;
+}
+
+.mainBoxRight .projectId h4:hover .copyId {
+    display: block;
+}
+
+.mainBoxRight .controller {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 200px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #333333;
+}
+
+.mainBoxRight .controller .btnBox {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 40px;
+    height: 80%;
+    margin: 0px auto;
+}
+
+.mainBoxRight .controller .btnBox .btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 27px;
+    color: #fff;
+    background-image: url(../img/project_rightButton.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: #aaa;
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+.mainBoxRight .controller .btnBox .btn::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.2);
+    transition: background-color .3s;
+    content: '';
+}
+
+.mainBoxRight .controller .btnBox .btn:hover::before {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.mainBoxRight .controller .btnBox .btn .btnTips {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 80px;
+    height: 26px;
+    font-size: 16px;
+    line-height: 26px;
+    border-radius: 5px;
+    margin-top: -13px;
+    margin-left: 12px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    color: #214B5B;
+    background-color: #fff;
+    animation-name: toBig;
+    animation-duration: .2s;
+}
+
+.mainBoxRight .controller .btnBox .btn:hover .btnTips {
+    display: block;
+}
+
+.btnBox .btn .btnTips::before {
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    width: 0px;
+    height: 0px;
+    border: 8px solid transparent;
+    border-right-color: #ccc;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.btnBox .btn .btnTips::after {
+    position: absolute;
+    top: 50%;
+    left: -7px;
+    width: 0px;
+    height: 0px;
+    border: 8px solid transparent;
+    border-right-color: #fff;
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.mainBoxRight .nowNode {
+    position: relative;
+    height: 20%;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #333333;
+}
+
+.mainBoxRight .nowNode .nowNodeTheme {
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    height: 20px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mainBoxRight .nowNode .nowNodeContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    line-height: 30px;
+    text-align: center;
+    background-color: #ccc;
+    transform: translate(-50%, -50%);
+}
+
+.mainBoxRight .nowNode .nowNodeTitle {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+} */
 
 /*#endregion*/

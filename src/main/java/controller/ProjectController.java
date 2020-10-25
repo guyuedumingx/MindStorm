@@ -75,7 +75,7 @@ public class ProjectController extends BaseController{
     }
 
     /**
-     * 获取项目信息
+     * 搜索项目
      * @param req
      * @param resp
      * @throws ServletException
@@ -83,5 +83,8 @@ public class ProjectController extends BaseController{
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String key = req.getParameter("key");
+        List<Project> search = service.search(key);
+        WebUtil.renderJson(resp,search);
     }
 }
