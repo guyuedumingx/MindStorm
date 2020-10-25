@@ -1,0 +1,748 @@
+/*#region--------------------- 头部--------------------- */
+/* 头部容器样式 */
+body .header {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    padding: 0 60px;
+    box-sizing: border-box;
+    min-width: 800px;
+    width: 100%;
+    height: 100px;
+}
+
+/* logo位置 */
+.header .logoBox {
+    float: left;
+}
+
+.header .logo {
+    float: left;
+    margin-top: 6px;
+    width: 82px;
+    height: 82px;
+    background-image: url(../img/logo1.png);
+    background-size: contain;
+    background-size: contain;
+}
+
+.mainTitle {
+    display: inline-block;
+    top: 10px;
+    left: 160px;
+    line-height: 100px;
+    /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
+    font-weight: 700;
+    font-size: 56px;
+    color: #214B5B;
+    cursor: default;
+}
+
+/* 个人头像等容器 */
+.header .personal {
+    position: relative;
+    display: none;
+    float: right;
+    cursor: pointer;
+}
+
+.header .personal div {
+    display: inline-block;
+}
+
+/* 头像 */
+.header .personal .head {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    margin: 20px;
+    border-radius: 50px;
+    pointer-events: none;
+    background-image: url(../img/undraw_Waiting.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* 昵称 */
+.header .personal .head_nav .user_name {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 100px;
+    color: #214B5B;
+    pointer-events: none;
+}
+
+/*下拉框------ */
+.header .personal .spinner {
+    position: absolute;
+    width: 300px;
+    height: 240px;
+    top: 80px;
+    right: 0px;
+    background-color: rgb(243, 246, 250);
+    border-radius: 5px;
+    border: solid 1px rgba(150, 150, 150, 0.336);
+    box-shadow: 0 0 3px #132C33;
+    animation: show 0.5s;
+    cursor: default;
+    z-index: 999;
+}
+
+/* 小三角 */
+.header .personal .spinner::before {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    width: 0px;
+    height: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: rgba(150, 150, 150, 0.616);
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+.header .personal .spinner::after {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 0px;
+    height: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: rgb(243, 246, 250);
+    transform: translate(-50%, -50%);
+    content: '';
+}
+
+/* 头像昵称--- */
+.header .personal .spinner .headName {
+    width: 100%;
+    padding: 20px 0 0 0;
+}
+
+/* 头像 */
+.header .personal .spinner .headName .headBox {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    margin: 0 20px 0 20px;
+    /* border: solid 1px; */
+    border-radius: 50px;
+    /* background-image: url(../img/undraw_Waiting.png); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+/* 图片上传 */
+.header .personal .spinner .headName .inPic {
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    width: 46px;
+    height: 15px;
+    border-radius: 0 0 50px 50px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+
+}
+
+/* 覆盖按钮 */
+.header .personal .spinner .headBox span {
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    width: 46px;
+    height: 15px;
+    text-align: center;
+    font-size: 12px;
+    border-top: 1px solid rgba(150, 150, 150, 0.616);
+    box-shadow: 0 0 3px #132C33;
+    background-color: rgb(240, 241, 243);
+    border-radius: 0 0 50px 50px;
+    pointer-events: none;
+}
+
+/* 昵称 */
+.header .personal .spinner .headName .nameBox {
+    font-size: 20px;
+    font-weight: bold;
+    width: 120px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+/* 修改 */
+.header .personal .spinner .headName .modifyN {
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 15px 20px;
+    background-image: url(../img/modify.png);
+    background-size: contain;
+    cursor: pointer;
+}
+
+/* 邮箱--- */
+.header .personal .spinner .mailbox {
+    width: 100%;
+    height: 50px;
+}
+
+.mailbox span {
+    margin-left: 25px;
+    line-height: 50px;
+}
+
+.mailbox .email {
+    margin-left: 0;
+    color: #999;
+}
+
+/* 个性签名--- */
+.header .personal .spinner .signature {
+    width: 100%;
+    height: 50px;
+}
+
+.signature div,
+.signature input {
+    margin-bottom: 8px;
+    margin-left: 25px;
+    font-size: 15px;
+}
+
+.signature input {
+    width: 80%;
+    border: none;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: transparent;
+}
+
+/* 修改 */
+.header .personal .spinner .signature .modifyS {
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 0px 20px;
+    background-image: url(../img/modify.png);
+    background-size: contain;
+    cursor: pointer;
+}
+
+/* 设置---- */
+.header .personal .spinner .setUp {
+    width: 100%;
+    height: 50px;
+}
+
+.setUp div {
+    position: relative;
+    line-height: 50px;
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+.setUp div:hover::after {
+    width: 100%;
+}
+
+.setUp div::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #214B5B;
+    left: 0px;
+    bottom: 10px;
+    /* z-index: 0; */
+    transition: all .25s ease;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+
+
+/*#endregion*/
+/*#region---------------主要内容----------------------*/
+/* 容器 */
+body .mainBox {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    /*z-index: -1;*/
+}
+
+/* 框框的盒子 */
+.mainBox .Box {
+    position: relative;
+    display: table;
+    margin: 0 auto;
+    /* border: solid;
+    width: 728px;
+    height: 300px; */
+    /* overflow: hidden; */
+    /* ---56*4边距+4边线+250*2宽度-- */
+}
+
+/* 点击的框框 */
+.mainBox .Box>div {
+    display: inline-block;
+
+}
+
+/* 隐藏 */
+.mainBox .Box .est_bigBox,
+.mainBox .Box .join_bigBox {
+    display: none;
+}
+
+/* 链接 */
+.mainBox .Box .smallBox {
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 300px;
+    margin: 0 56px;
+}
+
+.mainBox .Box>div>div {
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555;
+    transition: all .3s;
+    /* border: solid #EEF7F2; */
+    overflow: hidden;
+    /* 外边距塌陷 */
+}
+
+.mainBox .Box .smallBox:hover {
+    box-shadow: 0px 0px 20px 0px #2c3e50;
+    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888;
+    transform: translate(5px, 5px);
+    cursor: pointer;
+}
+
+/* 提示 */
+.mainBox .Box .est_tips,
+.mainBox .Box .join_tips {
+    display: table;
+    margin: 20px auto;
+    color: #214B5B;
+    letter-spacing: 10px;
+    font-size: 36px;
+}
+
+/* 图标 */
+.mainBox .Box .est_icon,
+.mainBox .Box .join_icon {
+    display: block;
+    position: relative;
+    top: 40%;
+    width: 40%;
+    height: 33%;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+.mainBox .Box .establish .est_icon {
+    background-image: url(../img/index_establish.png);
+}
+
+.mainBox .Box .join .join_icon {
+    background-image: url(../img/index_join.png);
+}
+
+/*---- 加入大盒子 ---*/
+/* .mainBox .Box .establish{
+    display: none;
+} */
+.mainBox .Box .join_bigBox {
+    position: relative;
+    width: 500px;
+    height: 300px;
+}
+
+/* 标题 */
+.mainBox .Box .join_bigBox .join_til {
+    display: table;
+    margin: 40px auto 50px auto;
+    font-weight: bold;
+    font-size: 28px;
+    color: #132C33;
+    cursor: default;
+}
+
+/* 输入盒子 */
+.mainBox .Box .join_bigBox .input_nav {
+    border: solid;
+    width: 310px;
+    margin: 0 auto;
+    border: solid #517c8d;
+    border-radius: 5px;
+}
+
+.mainBox .Box .join_bigBox .input_nav:hover {
+    border: solid #214B5B;
+}
+
+/* 输入框 */
+.mainBox .Box .join_bigBox input {
+    display: inline-block;
+    line-height: 60px;
+    width: 230px;
+    padding-left: 10px;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+}
+
+.idTips {
+    font-size: 16px !important;
+    color: #999999;
+}
+
+.idPd {
+    color: rgb(196, 60, 60);
+}
+
+/* 点击进入 */
+.mainBox .Box .join_bigBox .click_join {
+    float: right;
+    width: 60px;
+    height: 60px;
+    border-left: solid #2c3e50;
+    background-image: url(../img/join_logo_q.png);
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.mainBox .Box .join_bigBox .click_join:hover {
+    cursor: pointer;
+    background-image: url(../img/join_logo.png);
+}
+
+/* ----新建大盒子--- */
+/* .mainBox .Box .join{
+    display: none;
+} */
+.mainBox .Box .est_bigBox {
+    position: relative;
+    width: 650px;
+    height: 520px;
+    cursor: default;
+}
+
+/* 导入 */
+.import {
+    position: absolute;
+    bottom: 45px;
+    left: 60px;
+    width: 70px;
+    border: 1px solid;
+    border-radius: 50px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.importBut {
+    position: absolute;
+    bottom: 45px;
+    left: 60px;
+    width: 70px;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 50px;
+    border: 1px solid;
+    pointer-events: none;
+}
+
+/* 位置 */
+.mainBox .est_bigBox>div {
+    display: table;
+    margin: 25px auto 0 auto;
+    font-size: 22px;
+    font-weight: bold;
+    color: #214B5B;
+}
+
+/* 标题 */
+.mainBox .est_bigBox .est_til {
+    font-size: 32px;
+    color: #132C33;
+}
+
+/* 名称输入框 */
+.mainBox .Box .est_bigBox .project_name input {
+    padding-left: 10px;
+    font-size: 18px;
+    height: 40px;
+    width: 400px;
+    border: solid #999;
+    border-radius: 10px;
+    vertical-align: middle;
+}
+
+.mainBox .Box .est_bigBox .project_name span {
+    /* float: left; */
+    vertical-align: middle;
+}
+
+/* 简介输入框 */
+.mainBox .Box .est_bigBox .introduction textarea {
+    height: 180px;
+    width: 395px;
+    padding: 10px;
+    line-height: 22px;
+    font-size: 15px;
+    border: solid #999;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    /*不可调节*/
+}
+
+.mainBox .Box .est_bigBox .introduction {
+    position: relative;
+}
+
+/* 字数统计 */
+.mainBox .Box .est_bigBox .introduction .sum {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #88b3c4;
+}
+
+.mainBox .Box .est_bigBox .introduce {
+    float: left;
+    letter-spacing: 4px;
+    padding-left: 3px;
+}
+
+/* 选择 */
+.mainBox .Box .est_bigBox .choice {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 520px;
+    margin-top: 15px;
+    justify-content: space-between;
+}
+
+/* .mainBox .Box .est_bigBox .choice>span {
+
+} */
+
+.mainBox .Box .est_bigBox .choice>span>span {
+    float: left;
+    margin-right: 5px;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.mainBox .Box .est_bigBox .choice i {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+
+/*时间、 等级 */
+#projectRank,
+#projectTime {
+    float: right;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+/* 是否选择 */
+/* 按钮 */
+.onOffBorder {
+    float: right;
+    position: relative;
+    width: 40px;
+    height: 18px;
+    margin-top: 4px;
+    border-radius: 9px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transition: all .3s;
+    vertical-align: middle;
+}
+
+.onOffBorder .onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #46607b;
+    transition: all .3s;
+}
+
+.mainBox .Box .est_bigBox .est_but input {
+    display: inline-block;
+    width: 120px;
+    height: 36px;
+    margin: 0px 20px;
+    border: none;
+    background-color: #214B5B;
+    color: #EEF7F2;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.mainBox .Box .est_bigBox .est_but input:hover {
+    background-color: #132C33;
+    box-shadow: 0px 0px 3px 0px #214B5B;
+}
+
+/* 返回按钮 */
+.mainBox .Box .back {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 28px;
+    height: 28px;
+    background-image: url(../img/back_q.png);
+    background-size: contain;
+    cursor: pointer;
+}
+
+.mainBox .Box .back:hover {
+    background-image: url(../img/back.png);
+
+}
+
+/* ----------显示新建大盒子------- */
+
+@keyframes toEstBig {
+    0% {
+        width: 250px;
+        height: 300px;
+        margin: 0 56px;
+    }
+
+    99% {
+        width: 650px;
+        height: 520px;
+        margin: 0;
+    }
+}
+
+@keyframes toJoinBig {
+    0% {
+        width: 250px;
+        height: 300px;
+        margin: 0 56px;
+    }
+
+    99% {
+        width: 500px;
+        height: 300px;
+        margin: 0;
+    }
+}
+
+@keyframes toSmall {
+    0% {
+        width: 250px;
+        height: 300px;
+        margin: 0 56px;
+    }
+
+    99% {
+        width: 0px;
+        height: 00px;
+        margin: 0;
+    }
+}
+
+/*#endregion*/
+/*#region ----------------底部----------------*/
+body .footer {
+    position: fixed;
+    bottom: 0;
+    padding: 0 60px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+}
+
+/* 图标容器 */
+.footer .foot_icon {
+    float: right;
+    height: 60px;
+}
+
+/* 链接位置大小 */
+.footer .foot_icon a {
+    display: inline-block;
+    margin-top: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50px;
+    background-size: 32px;
+    background-position: center;
+}
+
+/* 帮助图标 */
+.footer .foot_icon .help {
+    background-image: url(../img/public_help999.png);
+}
+
+.footer .foot_icon .help:hover {
+    background-image: url(../img/public_help.png);
+    box-shadow: 0px 0px 3px 0px #214B5B;
+}
+
+/* 快捷键图标 */
+.footer .foot_icon .shortcutKey {
+    background-image: url(../img/public_shortcutKey999.png);
+    margin-right: 10px;
+}
+
+.footer .foot_icon .shortcutKey:hover {
+    background-image: url(../img/public_shortcutKey.png);
+    box-shadow: 0px 0px 3px 0px #214B5B;
+}
+
+/* 显示框 */
+.footer .shortcut_nav {
+    position: absolute;
+    top: -280px;
+    right: 60px;
+    width: 200px;
+    height: 280px;
+    background-color: #F3F7F5;
+}
+
+/*#endregion*/
+
+body {
+    background-color: #E6EEF1;
+}
