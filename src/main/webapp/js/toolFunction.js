@@ -1409,3 +1409,46 @@ function textVerticalCenter(node) {
 Node.prototype.textVerticalCenter = function () {
     textVerticalCenter(this);
 }
+
+
+/**
+ * 左右滑动
+ * 
+ * @param {object} obj 对象
+ * @param {*} attr 要执行动画的样式比如：left height
+ * @param {*} target 目标位置 
+ * @param {*} speed 速度
+ * @param {*} callback 回调函数，动画执行完毕以后执行
+ * @author tracy
+ */
+function moveLeftRight(obj, attr, target, speed, callback) {
+    //关闭上一个定时器
+    clearInterval(obj.timer);
+    //获取原来位置
+    var current = parseInt(getStyle(obj, attr));
+    //判断速度正负值
+    if (current > target) {
+        //速度负值
+        speed = -speed;
+    }
+    //定时器动画效果
+    //执行对象添加timer属性
+    obj.timer = setInterval(function () {
+        //获取原来位置
+        var oldvalue = parseInt(getStyle(obj, attr));
+        //旧值基础上增加
+        var newvalue = oldvalue + speed;
+        //判断大于小于
+        if (speed < 0 && newvalue < target || speed > 0 && newvalue > target)
+            newvalue = target;
+        //将新值设置给元素
+        obj.style[attr] = newvalue + "px";
+        //当移动到位置停下
+        if (newvalue == target) {
+            //关闭定时器
+            clearInterval(obj.timer);
+            //动画执行完毕，调用回调函数
+            callback && callback();
+        }
+    }, 30);
+}
