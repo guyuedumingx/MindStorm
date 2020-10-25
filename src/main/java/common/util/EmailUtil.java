@@ -44,7 +44,7 @@ public class EmailUtil {
         //网易的smtp服务器地址
         props.put("mail.smtp.host", "smtp.163.com");
         props.setProperty("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.enable", false);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.ssl.enable", true);
         props.put("mail.smtp.port", "465");

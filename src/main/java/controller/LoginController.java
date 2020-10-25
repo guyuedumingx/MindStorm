@@ -29,10 +29,6 @@ public class LoginController extends BaseController {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("begin");
-        logger.warn("login");
-        logger.error("login");
-        logger.debug("login");
-        System.out.println("end");
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
