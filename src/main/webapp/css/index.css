@@ -3,12 +3,12 @@
 body .header {
     position: fixed;
     top: 0;
-    z-index: 100;
     padding: 0 60px;
     box-sizing: border-box;
     min-width: 800px;
     width: 100%;
-    height: 100px;
+    height: 60px;
+    z-index: 9999;
 }
 
 /* logo位置 */
@@ -19,24 +19,65 @@ body .header {
 .header .logo {
     float: left;
     margin-top: 6px;
-    width: 82px;
-    height: 82px;
+    width: 42px;
+    height: 42px;
     background-image: url(../img/logo1.png);
-    background-size: contain;
     background-size: contain;
 }
 
 .mainTitle {
     display: inline-block;
-    top: 10px;
-    left: 160px;
-    line-height: 100px;
+    line-height: 60px;
     /* text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135; */
     font-weight: 700;
-    font-size: 56px;
+    font-size: 26px;
     color: #214B5B;
     cursor: default;
 }
+
+/* 登录注册容器 */
+/* .header .logOn {
+    float: right;
+    display: none;
+}
+
+.logOn a {
+    position: relative;
+}
+
+.logOn .login:hover::after,
+.logOn .register:hover::after {
+    width: 100%;
+}
+
+.logOn .login::after,
+.logOn .register::after {
+    content: '';
+    position: absolute;
+    border-radius: inherit;
+    width: 0%;
+    height: 2px;
+    background: #214B5B;
+    left: 0px;
+    bottom: -5px;
+    z-index: -1;
+    transition: all .25s ease;
+    left: 50%;
+    transform: translate(-50%);
+}*/
+
+/* 字体大小位置设置 */
+/* .header .logOn a,
+.header .logOn span {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 60px;
+    color: #132C33;
+}
+
+.header .logOn span {
+    cursor: default;
+}  */
 
 /* 个人头像等容器 */
 .header .personal {
@@ -49,13 +90,12 @@ body .header {
 .header .personal div {
     display: inline-block;
 }
-
 /* 头像 */
 .header .personal .head {
     display: inline-block;
-    width: 44px;
-    height: 44px;
-    margin: 20px;
+    width: 34px;
+    height: 34px;
+    margin: 10px;
     border-radius: 50px;
     pointer-events: none;
     background-image: url(../img/undraw_Waiting.png);
@@ -67,9 +107,9 @@ body .header {
 /* 昵称 */
 .header .personal .head_nav .user_name {
     float: right;
-    font-size: 28px;
+    font-size: 18px;
     font-weight: bold;
-    line-height: 100px;
+    line-height: 60px;
     color: #214B5B;
     pointer-events: none;
 }
@@ -79,7 +119,7 @@ body .header {
     position: absolute;
     width: 300px;
     height: 240px;
-    top: 80px;
+    top: 60px;
     right: 0px;
     background-color: rgb(243, 246, 250);
     border-radius: 5px;
@@ -271,478 +311,256 @@ body .header {
 
 
 /*#endregion*/
-/*#region---------------主要内容----------------------*/
-/* 容器 */
-body .mainBox {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    /*z-index: -1;*/
-}
-
-/* 框框的盒子 */
-.mainBox .Box {
-    position: relative;
-    display: table;
-    margin: 0 auto;
-    /* border: solid;
-    width: 728px;
-    height: 300px; */
-    /* overflow: hidden; */
-    /* ---56*4边距+4边线+250*2宽度-- */
-}
-
-/* 点击的框框 */
-.mainBox .Box>div {
-    display: inline-block;
-
-}
-
-/* 隐藏 */
-.mainBox .Box .est_bigBox,
-.mainBox .Box .join_bigBox {
-    display: none;
-}
-
-/* 链接 */
-.mainBox .Box .smallBox {
-    position: relative;
-    display: inline-block;
-    width: 250px;
-    height: 300px;
-    margin: 0 56px;
-}
-
-.mainBox .Box>div>div {
-    border-radius: 15px;
-    background-color: #fff;
-    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888, 3px 3px 0px #777, 4px 4px 0px #666, 5px 5px 0px #555;
-    transition: all .3s;
-    /* border: solid #EEF7F2; */
-    overflow: hidden;
-    /* 外边距塌陷 */
-}
-
-.mainBox .Box .smallBox:hover {
-    box-shadow: 0px 0px 20px 0px #2c3e50;
-    box-shadow: 1px 1px 0px #999, 02px 2px 0px #888;
-    transform: translate(5px, 5px);
-    cursor: pointer;
-}
-
-/* 提示 */
-.mainBox .Box .est_tips,
-.mainBox .Box .join_tips {
-    display: table;
-    margin: 20px auto;
-    color: #214B5B;
-    letter-spacing: 10px;
-    font-size: 36px;
-}
-
-/* 图标 */
-.mainBox .Box .est_icon,
-.mainBox .Box .join_icon {
-    display: block;
-    position: relative;
-    top: 40%;
-    width: 40%;
-    height: 33%;
-    margin: 0 auto;
-    transform: translateY(-50%);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    pointer-events: none;
-}
-
-.mainBox .Box .establish .est_icon {
-    background-image: url(../img/index_establish.png);
-}
-
-.mainBox .Box .join .join_icon {
-    background-image: url(../img/index_join.png);
-}
-
-/*---- 加入大盒子 ---*/
-/* .mainBox .Box .establish{
-    display: none;
-} */
-.mainBox .Box .join_bigBox {
-    position: relative;
-    width: 500px;
-    height: 300px;
-}
-
-/* 标题 */
-.mainBox .Box .join_bigBox .join_til {
-    display: table;
-    margin: 40px auto 50px auto;
-    font-weight: bold;
-    font-size: 28px;
-    color: #132C33;
-    cursor: default;
-}
-
-/* 输入盒子 */
-.mainBox .Box .join_bigBox .input_nav {
-    border: solid;
-    width: 310px;
-    margin: 0 auto;
-    border: solid #517c8d;
-    border-radius: 5px;
-}
-
-.mainBox .Box .join_bigBox .input_nav:hover {
-    border: solid #214B5B;
-}
-
-/* 输入框 */
-.mainBox .Box .join_bigBox input {
-    display: inline-block;
-    line-height: 60px;
-    width: 230px;
-    padding-left: 10px;
-    font-size: 24px;
-    border: none;
-    border-radius: 5px;
-}
-
-.idTips {
-    font-size: 16px !important;
-    color: #999999;
-}
-
-.idPd {
-    color: rgb(196, 60, 60);
-}
-
-/* 点击进入 */
-.mainBox .Box .join_bigBox .click_join {
-    float: right;
-    width: 60px;
-    height: 60px;
-    border-left: solid #2c3e50;
-    background-image: url(../img/join_logo_q.png);
-    background-size: 70%;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.mainBox .Box .join_bigBox .click_join:hover {
-    cursor: pointer;
-    background-image: url(../img/join_logo.png);
-}
-
-/* ----新建大盒子--- */
-/* .mainBox .Box .join{
-    display: none;
-} */
-.mainBox .Box .est_bigBox {
-    position: relative;
-    width: 650px;
-    height: 520px;
-    cursor: default;
-}
-
-/* 导入 */
-.import {
-    position: absolute;
-    bottom: 45px;
-    left: 60px;
-    width: 70px;
-    border: 1px solid;
-    border-radius: 50px;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-
-.importBut {
-    position: absolute;
-    bottom: 45px;
-    left: 60px;
-    width: 70px;
-    line-height: 25px;
-    text-align: center;
-    border-radius: 50px;
-    border: 1px solid;
-    pointer-events: none;
-}
-
-/* 位置 */
-.mainBox .est_bigBox>div {
-    display: table;
-    margin: 25px auto 0 auto;
-    font-size: 22px;
-    font-weight: bold;
-    color: #214B5B;
-}
-
-/* 标题 */
-.mainBox .est_bigBox .est_til {
-    font-size: 32px;
-    color: #132C33;
-}
-
-/* 名称输入框 */
-.mainBox .Box .est_bigBox .project_name input {
-    padding-left: 10px;
-    font-size: 18px;
-    height: 40px;
-    width: 400px;
-    border: solid #999;
-    border-radius: 10px;
-    vertical-align: middle;
-}
-
-.mainBox .Box .est_bigBox .project_name span {
-    /* float: left; */
-    vertical-align: middle;
-}
-
-/* 简介输入框 */
-.mainBox .Box .est_bigBox .introduction textarea {
-    height: 180px;
-    width: 395px;
-    padding: 10px;
-    line-height: 22px;
-    font-size: 15px;
-    border: solid #999;
-    border-radius: 10px;
-    outline: none;
-    resize: none;
-    /*不可调节*/
-}
-
-.mainBox .Box .est_bigBox .introduction {
-    position: relative;
-}
-
-/* 字数统计 */
-.mainBox .Box .est_bigBox .introduction .sum {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 12px;
-    color: #88b3c4;
-}
-
-.mainBox .Box .est_bigBox .introduce {
-    float: left;
-    letter-spacing: 4px;
-    padding-left: 3px;
-}
-
-/* 选择 */
-.mainBox .Box .est_bigBox .choice {
+/*#region--------------------- 主要内容--------------------- */
+.mainBox {
     display: flex;
-    flex-flow: row nowrap;
-    width: 520px;
-    margin-top: 15px;
-    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    padding: 0 60px;
+    bottom: 30px;
+    box-sizing: border-box;
 }
 
-/* .mainBox .Box .est_bigBox .choice>span {
+/* 左边导航----------- */
+.mainBox .navigationBar {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    background-color: #132C33;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+}
 
+.mainBox .navigationBar>div {
+    display: inline-block;
+}
+
+/* 搜索框 */
+.mainBox .navigationBar .searchBox {
+    width: 90%;
+    height: 6%;
+    margin: 12% 0;
+    background-color: #E6EEF1;
+    border-radius: 50px;
+}
+
+/* 搜索按钮 */
+.mainBox .navigationBar .searchBox .iconS {
+    float: right;
+    width: 20%;
+    height: 100%;
+    border-radius: 50px;
+    background-color: rgb(176, 200, 211);
+    background-image: url(../img/search.png);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+/* 搜索内容 */
+.mainBox .navigationBar .searchBox .searchCont{
+    float: left;
+    width: 70%;
+    height: 100%;
+    margin-left: 10px;
+    padding: 10px 5px;
+    line-height: 30px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+}
+/* 项目分类 */
+.mainBox .navigationBar .shareBox,
+.mainBox .navigationBar .personalBox {
+    width: 100%;
+    height: 7%;
+    color: #E6EEF1;
+    cursor: pointer;
+}
+
+.mainBox .navigationBar .personalBox:hover,.mainBox .navigationBar .shareBox:hover {
+    color: #071f3d;
+    background-color: rgb(134, 134, 125);
+}
+/* .mainBox .navigationBar .personalBox{
+    color: #071f3d;
+    background-color:rgb(241, 240, 230);
 } */
 
-.mainBox .Box .est_bigBox .choice>span>span {
-    float: left;
-    margin-right: 5px;
-    font-size: 18px;
-    font-weight: normal;
-}
-
-.mainBox .Box .est_bigBox .choice i {
-    display: inline-block;
-    margin-left: 5px;
-}
-
-
-/*时间、 等级 */
-#projectRank,
-#projectTime {
-    float: right;
-    padding: 2px 5px;
+/* 新建加入按钮 */
+.mainBox .navigationBar .buildJoin {
+    position: absolute;
+    left: 50%;
+    bottom: 50px;
+    height: 8%;
+    width: 80%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #071f3d;
     border-radius: 5px;
-    font-size: 10px;
+    background: rgb(241, 240, 230);
+    cursor: pointer;
+    transition: color 0.5s ease;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 4px 4px 5px 0px rgba(0, 0, 0, .1);
 }
 
-/* 是否选择 */
-/* 按钮 */
-.onOffBorder {
-    float: right;
+.mainBox .navigationBar .buildJoin:hover {
+    color: #E6EEF1;
+    background: transparent;
+    box-shadow: none;
+}
+
+.buildJoin:before,
+.buildJoin:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #d4c78c;
+    box-shadow:
+        -1px -1px 5px 0px #fff,
+        7px 7px 20px 0px #0003,
+        4px 4px 5px 0px #0002;
+    transition: 400ms ease all;
+}
+
+.buildJoin:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+.buildJoin:hover:before,
+.buildJoin:hover:after {
+    width: 100%;
+}
+
+/* 右边内容---------------- */
+.mainBox .projectBox {
     position: relative;
-    width: 40px;
-    height: 18px;
-    margin-top: 4px;
-    border-radius: 9px;
-    box-sizing: border-box;
+    flex: 4;
+    height: 100%;
+    border-radius: 5px;
     overflow: hidden;
-    background-color: #2c3e50;
+}
+.mainBox .projectBox ul{
+    position: absolute;
+}
+.mainBox .shareNav{
+    display:none;
+}
+/* 项目容器 */
+.mainBox .projectBox .projectLi {
+    width: 200%;
+    height: 100%;
+}
+
+/* 项目板块 */
+.mainBox .projectBox .projectLi>div {
+    display: flex;
+    flex-flow: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    float: left;
+}
+
+.mainBox .projectBox .projectLi li {
+    position: relative;
+    margin: 0 2.6%;
+    width: 28%;
+    height: 40%;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
     cursor: pointer;
-    transition: all .3s;
+}
+.mainBox .projectBox .projectLi li>div{
+    padding: 10px 20px;
+}
+.mainBox .projectBox .projectLi .boxS:hover {
+    box-shadow: 0 0 5px #214B5B;
+}
+/* 项目名称 */
+.mainBox .projectBox .projectLi li .projectName {
+    height: 20%;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+}
+/* 简介盒子 */
+.mainBox .projectBox .projectLi li .introduce {
+    width: 100%;
+    height: 50%;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+/* 简介内容 */
+.mainBox .projectBox .projectLi li .introduce span {
+    display: -webkit-box;
+    font-weight: normal;
+    text-indent: 2em;
+    line-height: 28px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+/* 创建人 */
+.mainBox .projectBox .projectLi li .author{
+    float: left;
+    width: 50%;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mainBox .projectBox .projectLi li .people{
+    float:right;
+    margin-right: 5px;
     vertical-align: middle;
 }
-
-.onOffBorder .onOffRod {
-    position: absolute;
-    top: 1.5px;
-    left: 1.5px;
-    width: 15px;
-    height: 15px;
-    border-radius: 7.5px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-    font-size: 10px;
-    line-height: 15px;
-    text-align: center;
-    color: #fff;
-    background-color: #46607b;
-    transition: all .3s;
-}
-
-.mainBox .Box .est_bigBox .est_but input {
+.mainBox .projectBox .projectLi li .people span{
+    font-size: 14px;
+    color: #999;
+    vertical-align: middle;
+} 
+/* 小图标logo */
+.mainBox .projectLi li i {
+    vertical-align: middle;
     display: inline-block;
-    width: 120px;
-    height: 36px;
-    margin: 0px 20px;
-    border: none;
-    background-color: #214B5B;
-    color: #EEF7F2;
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.mainBox .Box .est_bigBox .est_but input:hover {
-    background-color: #132C33;
-    box-shadow: 0px 0px 3px 0px #214B5B;
-}
-
-/* 返回按钮 */
-.mainBox .Box .back {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    width: 28px;
-    height: 28px;
-    background-image: url(../img/back_q.png);
+    margin: 0 5px;
+    width: 14px;
+    height: 14px;
+    background-image: url(../img/team.png);
     background-size: contain;
+}
+
+/* 左右按钮 */
+.leftBut,.rightBut{
+    position: absolute;
+    left: 3%;
+    top: 50%;
+    height:7%;
+    width: 5%;
+    background-image: url(../img/share_left_s.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: translateY(-50%);
     cursor: pointer;
 }
-
-.mainBox .Box .back:hover {
-    background-image: url(../img/back.png);
-
+.rightBut{
+  left: 92%;
+  background-image: url(../img/share_right_s.png);
 }
-
-/* ----------显示新建大盒子------- */
-
-@keyframes toEstBig {
-    0% {
-        width: 250px;
-        height: 300px;
-        margin: 0 56px;
-    }
-
-    99% {
-        width: 650px;
-        height: 520px;
-        margin: 0;
-    }
+.leftBut:hover,.rightBut:hover{
+    box-shadow: inset 0 0 5px #214B5B;
 }
-
-@keyframes toJoinBig {
-    0% {
-        width: 250px;
-        height: 300px;
-        margin: 0 56px;
-    }
-
-    99% {
-        width: 500px;
-        height: 300px;
-        margin: 0;
-    }
-}
-
-@keyframes toSmall {
-    0% {
-        width: 250px;
-        height: 300px;
-        margin: 0 56px;
-    }
-
-    99% {
-        width: 0px;
-        height: 00px;
-        margin: 0;
-    }
-}
-
 /*#endregion*/
-/*#region ----------------底部----------------*/
-body .footer {
-    position: fixed;
-    bottom: 0;
-    padding: 0 60px;
-    box-sizing: border-box;
-    width: 100%;
-    height: 60px;
-}
-
-/* 图标容器 */
-.footer .foot_icon {
-    float: right;
-    height: 60px;
-}
-
-/* 链接位置大小 */
-.footer .foot_icon a {
-    display: inline-block;
-    margin-top: 16px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50px;
-    background-size: 32px;
-    background-position: center;
-}
-
-/* 帮助图标 */
-.footer .foot_icon .help {
-    background-image: url(../img/public_help999.png);
-}
-
-.footer .foot_icon .help:hover {
-    background-image: url(../img/public_help.png);
-    box-shadow: 0px 0px 3px 0px #214B5B;
-}
-
-/* 快捷键图标 */
-.footer .foot_icon .shortcutKey {
-    background-image: url(../img/public_shortcutKey999.png);
-    margin-right: 10px;
-}
-
-.footer .foot_icon .shortcutKey:hover {
-    background-image: url(../img/public_shortcutKey.png);
-    box-shadow: 0px 0px 3px 0px #214B5B;
-}
-
-/* 显示框 */
-.footer .shortcut_nav {
-    position: absolute;
-    top: -280px;
-    right: 60px;
-    width: 200px;
-    height: 280px;
-    background-color: #F3F7F5;
-}
-
-/*#endregion*/
-
 body {
     background-color: #E6EEF1;
 }

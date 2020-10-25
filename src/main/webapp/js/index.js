@@ -1,20 +1,5 @@
-// 引入工具类js
-// document.write("<script language='javascript' src='js/concise.js'></script>");
-// document.write("<script language='javascript' src='js/toolFunction.js'></script>");
-
 var tool = new Tool(document, window);
 tool.textProhibition();
-
-//-----------------------------------------------------
-// 获取快捷键按钮
-var shortcut = getDom(".shortcutKey");
-// 获取帮助按钮
-var help = getDom('.help');
-// 获取快捷键框
-var shotcutNav = getDom(".shortcut_nav");
-
-//快捷键显示
-clickOpenBlankClose(shortcut, shotcutNav);
 
 //获取用户id
 var loginPd = getCookie("user_id");
@@ -23,7 +8,7 @@ var userName = getCookie("user_name");
 //个人容器
 var personal = getDom(".personal");
 //获取外部昵称框
-// var nameU = getDom(".user_name");
+var nameU = getDom(".user_name");
 //获取内部昵称框
 var nameBox = getDom(".nameBox");
 //获取简介框
@@ -51,16 +36,27 @@ headBox.addEventListener("mouseout", function () {
 //获取登录注册容器
 // var logOn = getDom(".logOn");
 
+//获取项目盒子
+var personalNav = getDom(".personalNav");
+var shareNav = getDom(".shareNav");
+
+//保存返回项目
+var userProject;
+//我参加的项目
+var userProjectLength;
 //请求获得数组对象-----------
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
         type: 'get',
-        url: '/user',
-        data: {
-
-        },
+        url: 'http://192.168.43.247:8080/user',
+        data: {},
         header: {},
         success: function (res) {
+
+            //项目数组--
+            userProject = res.recentProject;
+            // 长度
+            userProjectLength = userProject.length;
             //获取个人简介--
             var userIntroduce = res.userSignature;
             //获取邮箱
@@ -71,12 +67,14 @@ function userMess(head, headBox, emailBox, perSig) {
             head.style.backgroundImage = "url(" + header + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
+            addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () { }
+        error: function () {}
     });
 
+
+
 }
-userMess(head, headBox, emailBox, perSig);
 
 //判断是否登录------------
 if (loginPd == null) {
@@ -85,7 +83,7 @@ if (loginPd == null) {
     personal.style.display = "block";
     //调用获取用户信息
     // userMess(headBox, emailBox, perSig);
-    // nameU.innerText = userName;
+    nameU.innerText = userName;
     nameBox.value = userName;
 }
 
@@ -135,7 +133,7 @@ function UpladFile() {
         } else {
             ajax({
                 type: 'post',
-                url: "/user/avatar",
+                url: "http://192.168.43.247:8080/user/avatar",
                 data: formdata,
                 success: function (res) {
                     if (res.status_code == '200') {
@@ -169,281 +167,274 @@ nameBox.inputEnterEvent(function () {
     nameBox.style.borderBottom = "";
 });
 
-//----------------------------------------------
+//搜索---------------------------
+//搜索框
+var searchCont = getDom(".searchCont");
+//搜索按钮
+var searchBut = getDom(".iconS");
 
-//放大新建
-
-// 获取新建盒子
-var changeEst = getDom(".change_est");
-// 获取加入盒子
-var changeJoin = getDom(".change_join");
-//获取新建输入大盒子
-var estBig = getDom(".est_bigBox");
-//获取加入输入大盒子
-var joinBig = getDom(".join_bigBox");
-//获取加入外盒子
-var join = getDom(".join");
-//获取新建外盒子
-var establish = getDom(".establish");
-//获取新建提示
-var estTips = getDom(".est_tips");
-//获取新建提示
-var joinTips = getDom(".join_tips");
-
-// 选中提示
-changeEst.addEventListener("mouseover", function () {
-    estTips.style.animation = "show 0.5s ease-in-out 0s forwards  normal"
-})
-changeEst.addEventListener("mouseout", function () {
-    estTips.style.animation = ""
-})
-changeJoin.addEventListener("mouseover", function () {
-    joinTips.style.animation = "show 0.5s ease-in-out 0s forwards  normal"
-})
-changeJoin.addEventListener("mouseout", function () {
-    joinTips.style.animation = ""
-})
-
-
-// 点击新建放大
-changeEst.addEventListener("click", function () {
-    if (!loginPd) {
-        window.location.href = "/login.html";
+function search() {
+    var content = searchCont.value;
+    console.log(content);
+    if (!content) {
+        topAlert("请输入内容！");
     } else {
-        changeEst.style.animation = "toEstBig 0.3s ease-in-out 0s forwards  normal";
-        changeJoin.style.animation = "toSmall 0.3s ease-in-out 0s forwards normal";
-        estTips.style.animation = ""
-        joinTips.style.display = "none";
-        setTimeout(function () {
-            changeEst.style.display = "none";
-            join.style.display = "none";
-            estBig.style.display = "block";
-        }, 200);
-    }
-})
-// 点击加入放大
-changeJoin.addEventListener("click", function () {
-    if (!loginPd) {
-        window.location.href = "/login.html";
-    } else {
-        changeEst.style.animation = "toSmall 0.3s ease-in-out 0s forwards  normal";
-        changeJoin.style.animation = "toJoinBig 0.3s ease-in-out 0s forwards normal";
-        joinTips.style.animation = ""
-        estTips.style.display = "none";
-        setTimeout(function () {
-            changeJoin.style.display = "none";
-            establish.style.display = "none";
-            joinBig.style.display = "block";
-        }, 200);
-    }
-
-})
-
-// 新建返回
-var back = getDomA(".back");
-back[0].addEventListener("click", function () {
-    changeEst.style.animation = "";
-    changeJoin.style.animation = "";
-    //新建返回
-    changeEst.style.display = "inline-block";
-    join.style.display = "inline-block";
-    estBig.style.display = "none";
-    joinTips.style.display = "table";
-})
-back[1].addEventListener("click", function () {
-    changeEst.style.animation = "";
-    changeJoin.style.animation = "";
-    estTips.style.display = "table";
-    //加入返回
-    changeJoin.style.display = "inline-block";
-    establish.style.display = "inline-block";
-    joinBig.style.display = "none";
-    inputID.removeClass("idPd");
-})
-
-
-
-
-
-//是否公开选择-----------
-var onOff = getDom(".onOffBorder");
-var onOffRod = getDom(".onOffRod");
-//初始状态
-onOff.state = false;
-
-//点击改变
-onOff.addEventListener('click', function () {
-
-    if (onOff.state) {
-        onOff.state = false;
-        onOff.style.backgroundColor = '#2c3e50';
-        onOffRod.style.left = '1.5px';
-        onOffRod.style.backgroundColor = ' #46607b';
-        onOffRod.innerText = 'x';
-    } else {
-        onOff.state = true;
-        onOff.style.backgroundColor = '#16a085';
-        onOffRod.style.left = '23.5px';
-        onOffRod.style.backgroundColor = '#1abc9c';
-        onOffRod.innerText = '✔';
-    }
-})
-
-// 表单判断------------
-// 获取加入按钮
-var joinBut = getDom(".click_join");
-
-// 获取输入id框
-var inputID = getDom(".inputID");
-
-function joinButClick() {
-    if (inputID.value == "请输入项目ID") {
-        inputID.addClass("idPd");
-    } else {
-        var idnum = inputID.value;
         ajax({
-            type: 'get',
-            url: '/util/project',
+            type: 'put',
+            url: 'http://192.168.43.247:8080/project',
             data: {
-                id: idnum
+                key: content
             },
             header: {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res.status_code == '200') {
-                    window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
-                    // "test2.html?"+"txt="+encodeURI(s.value);
+                if (res) {
+                    console.log(res);
                 } else {
-                    topAlert("该房间不存在");
+
                 }
             }
         });
     }
+
 }
-//回车进入
-inputEnterEvent(inputID, joinButClick);
+// 搜索提交
+searchBut.addEventListener("click", search);
+// window.addEventListener('resize', search);
 
-// 点击进入
-joinBut.addEventListener("click", joinButClick);
 
-// 移除样式
-inputID.addEventListener("click", function () {
-    inputID.removeClass("idPd");
+//高度自适应--------------------
+function heightAuto() {
+    //获取主要内容框架
+    var mainBox = getDom(".mainBox");
+    //项目离顶部距离
+    mainBox.style.top = "60px";
+}
+heightAuto();
+
+window.addEventListener('resize', heightAuto);
+
+// 项目添加-------------------------------------
+
+// 获取公开项目
+var shareBox = getDom(".shareBox");
+
+textVerticalCenter(shareBox);
+// 获取参加项目
+var personalBox = getDom(".personalBox");
+
+//获取新建加入按钮
+var buildJoin = getDom(".buildJoin");
+// 文字垂直居中
+textVerticalCenter(buildJoin);
+
+
+textVerticalCenter(personalBox);
+
+
+// 项目大小
+function projectSize(project) {
+    //获取project显示框架
+    var projectWidth = project.offsetWidth;
+    var projectHeight = project.offsetHeight;
+    //获取项目大框架
+    var projectLi = getDom(".projectLi", project);
+    //获取project板块
+    var liNav = getDomA(".liNav", project);
+    projectLi.style.width = projectWidth * liNav.length + "px";
+
+    for (var i = 0; i < liNav.length; i++) {
+        liNav[i].style.width = projectWidth + "px";
+        liNav[i].style.height = projectHeight + "px";
+    }
+}
+
+// 板块切换-----------
+// 开始样式
+function start() {
+    personalBox.style.backgroundColor = "rgb(241, 240, 230)";
+    personalBox.style.color = "#071f3d";
+    projectSize(personalNav);
+    window.addEventListener('resize', function () {
+        projectSize(personalNav);
+        projectSize(shareNav);
+    });
+}
+start();
+// 点击共享项目
+shareBox.addEventListener("click", function () {
+    // // 点击按钮样式
+    // shareBox.style.backgroundColor = "rgb(241, 240, 230)";
+    // shareBox.style.color = "#071f3d";
+    // personalBox.style.backgroundColor = "";
+    // personalBox.style.color = "#fff";
+    // // 板块显示
+    // shareNav.style.display = "block";
+    // personalNav.style.display = "none";
+    // projectSize(shareNav);
+    // window.addEventListener('resize', function () {
+    //     projectSize(shareNav);
+    //     projectSize(personalNav);
+    // });
+    topAlert("暂未开发！");
+});
+// 点击参加项目
+personalBox.addEventListener("click", function () {
+    personalBox.style.backgroundColor = "rgb(241, 240, 230)";
+    personalBox.style.color = "#071f3d";
+    shareBox.style.backgroundColor = "";
+    shareBox.style.color = "#fff";
+    personalNav.style.display = "block";
+    shareNav.style.display = "none";
+    projectSize(personalNav);
 });
 
-inputTips(inputID, "请输入项目ID", "idTips");
+// 项目板块----------------
 
-
-
-// 新建交互------
-// 获取新建按钮
-var estBut = getDom(".click_est");
-
-//获取项目名称
-var inputName = getDom(".inputName");
-
-// 获取简介框
-var introduceInput = getDom(".introduce_input");
-
-
-//获取时间
-var timeInput = getDom("#projectTime");
-//获取等级
-var rankInput = getDom("#projectRank");
-
-var timeArr = [86400000, 259200000, 604800000, 2592000000, 7776000000, 15552000000, 31104000000];
-
-estBut.addEventListener("click", function () {
-    if (inputName.value == "") {
-        inputName.style.color = "rgb(196, 60, 60)";
-        inputName.style.boxShadow = "0 0 5px rgb(196, 60, 60)";
-    } else {
-        var createTime = Date.now();
-        var name = inputName.value;
-        var indu = introduceInput.value;
-        if (!indu)
-            indu = "暂无";
-        var index = (timeInput.selectedIndex);
-        var time = timeArr[index];
-        var rank = rankInput.options[rankInput.selectedIndex].text;
-        if (onOffRod.state) {
-            var public = true;
+//li背景-----------
+function liStyle(liArr) {
+    for (var i = 0; i < liArr.length; i++) {
+        var liChild = liArr[i].children.length;
+        if (liChild == 0) {
+            liArr[i].style.backgroundColor = "transparent";
+            liArr[i].className = "";
         } else {
-            var public = false;
+            liArr[i].className = "boxS";
         }
-        ajax({
-            type: 'post',
-            url: '/project',
-            data: {
-                public: public,
-                name: name,
-                deadline: createTime + time,
-                rank: rank,
-                createTime: createTime,
-                introduction: indu
-            },
-            header: {
-                'Content-Type': 'application/json'
-            }, // 请求头
-            success: function (res) {
-                if (res.status_code == '200') {
-                    window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                    // "test2.html?"+"txt="+encodeURI(s.value);
-                } else {
-                    topAlert("项目创建失败");
-                }
-            }
-        });
     }
-})
-inputName.addEventListener("click", function () {
-    inputName.style.color = "#132C33";
-    inputName.style.boxShadow = "";
-})
-
-
-var sum = getDom(".sum");
-
-//字数限制
-introduceInput.addEventListener("keyup", function () {
-    sum.innerText = introduceInput.value.length + "/200";
-    if (introduceInput.value.length > 200)
-        sum.style.color = "rgb(196, 60, 60)";
-    else {
-        sum.style.color = "#88b3c4";
-    }
-})
-
-// //获取个人中心按钮
-// var center = getDom(".presonal_cen");
-// //跳转到个人中心
-// center.addEventListener("click", function () {
-//     window.location.href = "/project.html?id=" + getCookie("user_id"); //跳转页面
-// })
-
-//导入
-var importNav = getDom(".import");
-
-function UpladFile() {
-    var file = importNav.files[0];
-    //创建formdata对象
-    var formdata = new FormData();
-    formdata.append("file", file);
-
-    ajax({
-        type: 'post',
-        url: '/util/xmind',
-        data: formdata,
-        // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                // "test2.html?"+"txt="+encodeURI(s.value);
-            } else {
-                topAlert("导入失败");
-            }
-        }
-    }, true);
 }
-importNav.addEventListener("change", UpladFile);
+//左右移动
+function move(y) {
+    //获取project显示框架
+    var projectWidth = personalNav.offsetWidth;
+    var rightBut = getDom(".rightBut", personalNav);
+    var leftBut = getDom(".leftBut", personalNav);
+    var projectLiA = getDom(".projectLi", personalNav);
+    var x = 1;
+    if (x == 1) {
+        leftBut.style.display = "none";
+    }
+    rightBut.addEventListener("click", function () {
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth/10);
+        x++;
+        leftBut.style.display = "block";
+        if (x == y) {
+            rightBut.style.display = "none";
+        }
+    })
+    leftBut.addEventListener("click", function () {
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth/10);
+        x--;
+        rightBut.style.display = "block";
+        if (x == 1) {
+            leftBut.style.display = "none";
+        }
+    })
+}
+//获取左右按钮-----------------
+//project 父元素
+//liArr 项目长度
+function butStyle(project, liArr, x) {
+    var leftBut = getDom(".leftBut", project);
+    var rightBut = getDom(".rightBut", project);
+    if (liArr.length < 7) {
+        leftBut.style.display = "none";
+        rightBut.style.display = "none";
+    } else {
+
+        //左右滑动
+        move(x);
+    window.addEventListener('resize', function () {
+        move(x);
+    });
+        
+
+    }
+}
+
+//项目添加---------
+function addLi(li, name, introduce, author, number) {
+    var divName = document.createElement("div");
+    divName.className = "projectName";
+    divName.innerText = name;
+    var divIn = document.createElement("div");
+    divIn.className = "introduce";
+    divIn.innerText = "内容：";
+    var spanTxt = document.createElement("span");
+    spanTxt.innerText = introduce;
+    spanTxt.title = introduce;
+    var divBot = document.createElement("div");
+    divBot.className = "bot cleafix";
+    var divAut = document.createElement("div");
+    divAut.className = "author";
+    divAut.innerText = "创建人：";
+    var spanName = document.createElement("span");
+    spanName.innerText = author;
+    var divMan = document.createElement("div");
+    divMan.className = "people";
+    var iMan = document.createElement("i");
+    iMan.className = "team";
+    var spanMan = document.createElement("span");
+    spanName.className = "team_num";
+    spanMan.innerText = number;
+    li.appendChild(divName);
+    li.appendChild(divIn);
+    divIn.appendChild(spanTxt);
+    li.appendChild(divBot);
+    divBot.appendChild(divAut);
+    divAut.appendChild(spanName);
+    divBot.appendChild(divMan);
+    divMan.appendChild(iMan);
+    divMan.appendChild(spanMan);
+}
+
+function create(project, projectLength, liArr) {
+    for (var i = 0; i < projectLength; i++) {
+        var name = project[i].name;
+        var introduce = project[i].introduction;
+        var author = project[i].creatorName;
+        var numbers = project[i].numbers;
+        //将内容放进去
+        addLi(liArr[i], name, introduce, author, numbers);
+    }
+}
+
+
+
+//项目板块添加
+function addLiBox(projectLength, project, projectNav) {
+    //项目板块数目
+    var x = Math.ceil(projectLength / 6);
+    //获取项目大框架
+    var projectLi = getDom(".projectLi", projectNav);
+    for (var i = 0; i < x; i++) {
+        var div = document.createElement("div");
+        div.className = "liNav";
+        projectLi.appendChild(div);
+        for (var j = 0; j < 6; j++) {
+            var li = document.createElement("li");
+            div.appendChild(li);
+        }
+    }
+    projectSize(projectNav);
+    // 获取li数组
+    var liArr = getDomA("li", projectNav);
+
+    // var liArrB = getDomA("li", shareNav);
+
+    //按钮
+    butStyle(projectNav, liArr, x);
+    // butStyle(shareNav, liArrB);
+
+    // 将项目放进板块
+    create(project, projectLength, liArr);
+    // create(shareProject, shareProjectLength, liArrB);
+
+    //判断是否有内容
+    liStyle(liArr);
+    // liStyle(liArrB);
+
+}
+
+userMess(head, headBox, emailBox, perSig);

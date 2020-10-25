@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MindStorm</title>
+	<title>share</title>
 	<!--网页logo设置-->
 	<link rel="icon" href="img/logo1.png">
 	<!--样式重置-->
@@ -16,139 +16,116 @@
 <body>
 	<!-----------头部----------->
 	<div class="header">
-		 <!--左边logo-->
-		 <a href="share.html" title="返回首页" class="logoBox"  ><div class="logo"></div><p class="mainTitle">MINDSTORM</p></a>
-				<!--右边个人-->
-				<div class="personal">
-					<div class="message"></div>
-					<div class="head_nav cleafix">
-						<div class="head"></div>
-						<!-- <span class="user_name"></span> -->
-					</div>
-					<div class="spinner">
-						<div class="headName">
-							<div class="headBox">
-								<input type="file" title="更换头像" class="inPic">
-								<span class="changeH">更换</span>
-							</div>
-							<input type="text" readonly="true" class="nameBox"></input>
-							<div class="modifyN"></div>
-						</div>
-						<div class="mailbox">
-							<span>邮箱：</span>
-							<span class="email"></span>
-						</div>
-						<div class="signature">
-							<div>个性签名：</div>
-							<div class="modifyS"></div>
-							<input class="perSig" readonly="true" value="这个人很懒什么都没留下。。。">
-						</div>
-						<div class="setUp">
-							<div class="cPassword">修改密码</div>
-							<div class="logOut">退出登录</div>
-						</div>
-					</div>
-				</div>
+		<!--左边logo-->
+		<div class="logoBox">
+			<div class="logo"></div>
+			<p class="mainTitle">MINDSTORM</p>
+		</div>
+		<!--右边登录注册-->
+		<!-- <div class="logOn">
+			<a href="login.html?state=login" class="login">登录</a>
+			<span>|</span>
+			<a href="login.html?state=register" class="register"> 注册</a>
+		</div> -->
+		<!--右边个人-->
+		<div class="personal">
+			<div class="message"></div>
+			<div class="head_nav cleafix">
+				<div class="head"></div>
+				<span class="user_name"></span>
 			</div>
-	<!------------------- 主要内容------------- -->
-	<div class="mainBox cleafix">
-		<!-- 框框的盒子 -->
-		<div class="Box cleafix">
-			<!-- 创建 -->
-			<div class="establish ">
-				<!-- 新建链接 -->
-				<div class="smallBox change_est">
-					<div class="est_tips">新建项目</div>
-
-					<!-- 新建图标 -->
-					<div class="est_icon"></div>
+			<div class="spinner">
+				<div class="headName">
+					<div class="headBox">
+						<input type="file" title="更换头像" class="inPic">
+						<span class="changeH">更换</span>
+					</div>
+					<input type="text" readonly="true" class="nameBox"></input>
+					<div class="modifyN"></div>
 				</div>
-				<div class="est_bigBox">
-					<div class="est_til">新建项目</div>
-					<span class="importBut">导入</span>
-					<input type="file" value="导入" class="import">
-					<!-- <input type="button" οnclick="UpladFile()" value="导入"  class="importBut"> -->
-					<div class="project_name">
-						<span class="prjName">项目名称：</span>
-						<input type="text" maxlength="20" class="inputName">
-					</div>
-					<div class="introduction">
-						<span class="introduce">简&nbsp;&nbsp;介 ：</span>
-						<textarea class="introduce_input"></textarea>
-						<span class="sum">0/200</span>
-					</div>
-					<div class="choice">
-						<span class="open"><span>是否公开:</span>
-							<div class="onOffBorder">
-								<div class="onOffRod">x</div>
-							</div>
-						</span>
-
-						<span class="time"><span>项目时长:</span><i class="timeBut">
-								<select name="" id="projectTime">
-									<option value="">一天</option>
-									<option value="">三天</option>
-									<option value="">一周</option>
-									<option value="">一个月</option>
-									<option value="">三个月</option>
-									<option value="">半年</option>
-									<option value="">一年</option>
-								</select>
-							</i></span>
-
-						<span class="rank"><span>项目等级:</span><i class="rankBut">
-								<select name="" id="projectRank">
-
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">3</option>
-									<option value="">4</option>
-									<option value="">5</option>
-								</select>
-							</i></span>
-
-					</div>
-					<div class="est_but">
-
-						<!-- <input type="submit" value="导入" class="click_import"> -->
-						<input type="submit" value="创建" class="click_est">
-					</div>
-					<div class="back"></div>
+				<div class="mailbox">
+					<span>邮箱：</span>
+					<span class="email"></span>
 				</div>
-			</div>
-			<!-- 加入 -->
-			<div class="join">
-				<!-- 加入链接 -->
-				<div class="smallBox change_join">
-					<div class="join_tips">加入项目</div>
-					<!-- 加入图标 -->
-					<div class="join_icon"></div>
+				<div class="signature">
+					<div>个性签名：</div>
+					<div class="modifyS"></div>
+					<input class="perSig" readonly="true" value="这个人很懒什么都没留下。。。">
 				</div>
-				<div class="join_bigBox">
-					<div class="join_til">加入项目</div>
-					<div class="input_nav">
-						<input type="text" class="inputID">
-						<div class="click_join"></div>
-					</div>
-					<div class="back"></div>
+				<div class="setUp">
+					<div class="cPassword">修改密码</div>
+					<div class="logOut">退出登录</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!------------------------ 底部----------------------- -->
-	<div class="footer">
-		<!-- 图标容器 -->
-		<div class="foot_icon">
-			<a href="javascript:;" class="shortcutKey" title="快捷键"></a>
-			<a href="javascript:;" class="help" title="帮助"></a>
+	<!---------------- 主要内容------------ -->
+	<div class="mainBox">
+		<div class="navigationBar">
+			<div class="searchBox"><input type="text" class="searchCont" value=""><span class="iconS"></span></div>
+			<div class="shareBox">公开项目</div>
+			<div class="personalBox">我参加的项目</div>
+			<a href="create.html">
+				<div class="buildJoin">新建/加入</div>
+			</a>
 		</div>
-		<div class="shortcut_nav">
+		<div class="projectBox personalNav">
+			<ul class="projectLi cleafix">
+				<!-- <div class="liNav cleafix">
+					<li>
+						<div class="projectName">思维风暴</div>
+						<div class="introduce">简介：<span title="哈德国际化技术的就卡省的 是的共和国 的 刚好是 大会感受到和给和较高的萨哈帝国 是个大汉奸河是德国决定恢复决定恢复的空间裂缝离开点击返回哈公司的环境 大滑水 的话就是">哈德国际化技术的就卡省的 是的共和国 的 刚好是 大会感受到和给和较高的萨哈帝国 是个大汉奸
+								河是德国决定恢复决定恢复的空间裂缝离开点击返回哈公司的环境 大滑水 的话就是</span></div>
 
+						<div class="bot cleafix">
+							<div class="author">创建人：<span>tkrjtkrjtkrjtkrjtkrj</span></div>
+							<div class="people"><i class="team"></i>
+								<span class="team_num">23</span></div>
+						</div>
+					</li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</div> -->
+			</ul>
+			<div class="leftBut"></div>
+			<div class="rightBut"></div>
 		</div>
+		<div class="projectBox shareNav">
+			<ul class="projectLi cleafix">
+				<!-- <div class="liNav cleafix">
+					<li>
+						<div class="projectName hh">头脑风暴</div>
+						<div class="introduce">简介：<span>哈德国际化技术的就卡省的 是的共和国 的 刚好是 大会感受到和给和较高的萨哈帝国 是个大汉奸
+								河是德国决定恢复决定恢复的空间裂缝离开点击返回哈公司的环境 大滑水 的话就是</span></div>
+
+						<div class="bot cleafix">
+							<div class="author">创建人：<span>tkrjtkrjtkrjtkrjtkrj</span></div>
+							<div class="people"><i class="team"></i>
+								<span class="team_num">23</span></div>
+						</div>
+
+					</li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</div> -->
+				<!-- <div class="liNav cleafix">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</div> -->
+			</ul>
+			<div class="leftBut"></div>
+			<div class="rightBut"></div>
+		</div>
+
 	</div>
-
-	<!-- <div class="undraw_tree"></div> -->
-
 
 	<script src="js/concise.js"></script>
 	<script src="js/toolFunction.js"></script>

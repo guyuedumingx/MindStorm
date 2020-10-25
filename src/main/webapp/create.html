@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MindStorm</title>
+	<!--网页logo设置-->
+	<link rel="icon" href="img/logo1.png">
+	<!--样式重置-->
+	<link rel="stylesheet" href="css/public.css">
+	<!--本页样式-->
+	<link rel="stylesheet" href="css/create.css">
+</head>
+
+<body>
+	<!-----------头部----------->
+	<div class="header">
+		<!--左边logo-->
+		<a href="index.html" title="返回首页" class="logoBox">
+			<div class="logo"></div>
+			<p class="mainTitle">MINDSTORM</p>
+		</a>
+		<!--右边个人-->
+		<div class="personal">
+			<div class="message"></div>
+			<div class="head_nav cleafix">
+				<div class="head"></div>
+				<!-- <span class="user_name"></span> -->
+			</div>
+			<div class="spinner">
+				<div class="headName">
+					<div class="headBox">
+						<input type="file" title="更换头像" class="inPic">
+						<span class="changeH">更换</span>
+					</div>
+					<input type="text" readonly="true" class="nameBox"></input>
+					<div class="modifyN"></div>
+				</div>
+				<div class="mailbox">
+					<span>邮箱：</span>
+					<span class="email"></span>
+				</div>
+				<div class="signature">
+					<div>个性签名：</div>
+					<div class="modifyS"></div>
+					<input class="perSig" readonly="true" value="这个人很懒什么都没留下。。。">
+				</div>
+				<div class="setUp">
+					<div class="cPassword">修改密码</div>
+					<div class="logOut">退出登录</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!------------------- 主要内容------------- -->
+	<div class="mainBox cleafix">
+		<!-- 框框的盒子 -->
+		<div class="Box cleafix">
+			<!-- 创建 -->
+			<div class="establish ">
+				<!-- 新建链接 -->
+				<div class="smallBox change_est">
+					<div class="est_tips">新建项目</div>
+
+					<!-- 新建图标 -->
+					<div class="est_icon"></div>
+				</div>
+				<div class="est_bigBox">
+					<div class="est_til">新建项目</div>
+					<span class="importBut">导入</span>
+					<input type="file" value="导入" class="import">
+					<!-- <input type="button" οnclick="UpladFile()" value="导入"  class="importBut"> -->
+					<div class="project_name">
+						<span class="prjName">项目名称：</span>
+						<input type="text" maxlength="20" class="inputName">
+					</div>
+					<div class="introduction">
+						<span class="introduce">简&nbsp;&nbsp;介 ：</span>
+						<textarea class="introduce_input"></textarea>
+						<span class="sum">0/200</span>
+					</div>
+					<div class="choice">
+						<span class="open"><span>是否公开:</span>
+							<div class="onOffBorder">
+								<div class="onOffRod">x</div>
+							</div>
+						</span>
+
+						<span class="time"><span>项目时长:</span><i class="timeBut">
+								<select name="" id="projectTime">
+									<option value="">一天</option>
+									<option value="">三天</option>
+									<option value="">一周</option>
+									<option value="">一个月</option>
+									<option value="">三个月</option>
+									<option value="">半年</option>
+									<option value="">一年</option>
+								</select>
+							</i></span>
+
+						<span class="rank"><span>项目等级:</span><i class="rankBut">
+								<select name="" id="projectRank">
+
+									<option value="">1</option>
+									<option value="">2</option>
+									<option value="">3</option>
+									<option value="">4</option>
+									<option value="">5</option>
+								</select>
+							</i></span>
+
+					</div>
+					<div class="est_but">
+
+						<!-- <input type="submit" value="导入" class="click_import"> -->
+						<input type="submit" value="创建" class="click_est">
+					</div>
+					<div class="back"></div>
+				</div>
+			</div>
+			<!-- 加入 -->
+			<div class="join">
+				<!-- 加入链接 -->
+				<div class="smallBox change_join">
+					<div class="join_tips">加入项目</div>
+					<!-- 加入图标 -->
+					<div class="join_icon"></div>
+				</div>
+				<div class="join_bigBox">
+					<div class="join_til">加入项目</div>
+					<div class="input_nav">
+						<input type="text" class="inputID">
+						<div class="click_join"></div>
+					</div>
+					<div class="back"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!------------------------ 底部----------------------- -->
+	<div class="footer">
+		<!-- 图标容器 -->
+		<div class="foot_icon">
+			<a href="javascript:;" class="shortcutKey" title="快捷键"></a>
+			<a href="javascript:;" class="help" title="帮助"></a>
+		</div>
+		<div class="shortcut_nav">
+
+		</div>
+	</div>
+
+	<!-- <div class="undraw_tree"></div> -->
+
+
+	<script src="js/concise.js"></script>
+	<script src="js/toolFunction.js"></script>
+	<script src="js/toolClass.js"></script>
+	<script src="js/ajax.js"></script>
+	<script src="js/create.js"></script>
+</body>
+
+</html>
