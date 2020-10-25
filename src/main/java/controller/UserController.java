@@ -1,6 +1,8 @@
 package controller;
 
 import common.util.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Project;
 import pojo.User;
 import service.ProjectService;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @WebServlet("/user")
 public class UserController extends BaseController{
+    Logger logger = LoggerFactory.getLogger(UserController.class);
     User user = null;
 
     @Override
@@ -27,6 +30,14 @@ public class UserController extends BaseController{
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        if(user==null){
+            try {
+                System.out.println("首页跳转登录");
+                resp.sendRedirect( "login.html");
+            }catch (Exception e) {
+                logger.error("首页跳转登录失败");
+            }
+        }
     }
 
     /**
@@ -60,7 +71,7 @@ public class UserController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String str = request.getParameter("id");
-        System.out.println(str);
+        System.out.println("user"+user);
         ProjectService projectService = new ProjectServiceImpl();
         UserService userService = new UserServiceImpl();
         if(str==null){

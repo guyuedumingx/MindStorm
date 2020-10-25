@@ -150,7 +150,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
                 return 0;
             }
         }catch (SQLException e) {
-            e.printStackTrace();
+            return 0;
         }
         return bigInteger.intValue();
     }
