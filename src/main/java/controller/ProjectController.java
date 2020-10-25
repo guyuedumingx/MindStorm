@@ -55,10 +55,14 @@ public class ProjectController extends BaseController{
      * @throws IOException
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
         int id =Integer.valueOf(request.getParameter("id"));
         Project project = service.getProject(id);
-        WebUtil.renderJson(response,project);
+        if(project==null){
+            request.getRequestDispatcher("index.html").forward(request,response);
+        }else {
+            WebUtil.renderJson(response,project);
+        }
     }
 
     /**

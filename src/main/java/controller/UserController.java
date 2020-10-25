@@ -64,14 +64,9 @@ public class UserController extends BaseController{
         ProjectService projectService = new ProjectServiceImpl();
         UserService userService = new UserServiceImpl();
         if(str==null){
-//            List<Project> recentProjectList = projectService.getRecentProjectList(user.getId());
-//            user.setRecentProject(recentProjectList);
-//            WebUtil.renderJson(response,user);
-            User usr = userService.getUser(49);
-            List<Project> recentProjectList = projectService.getRecentProjectList(usr.getId());
-            usr.setRecentProject(recentProjectList);
-            WebUtil.renderJson(response,usr);
-
+            List<Project> recentProjectList = projectService.getRecentProjectList(user.getId());
+            user.setRecentProject(recentProjectList);
+            WebUtil.renderJson(response,user);
         }else {
             User operator = userService.getUser(Integer.valueOf(str));
             WebUtil.renderJson(response,operator);
