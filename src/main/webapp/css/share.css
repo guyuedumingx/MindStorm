@@ -448,6 +448,9 @@ body .header {
     border-radius: 5px;
     overflow: hidden;
 }
+.mainBox .projectBox ul{
+    position: absolute;
+}
 .mainBox .shareNav{
     display:none;
 }

@@ -44,16 +44,12 @@ var shareNav = getDom(".shareNav");
 var userProject;
 //我参加的项目
 var userProjectLength;
-
-var user;
 //请求获得数组对象-----------
 function userMess(head, headBox, emailBox, perSig) {
     ajax({
         type: 'get',
         url: 'http://192.168.43.247:8080/user',
-        data: {
-
-        },
+        data: {},
         header: {},
         success: function (res) {
 
@@ -71,12 +67,12 @@ function userMess(head, headBox, emailBox, perSig) {
             head.style.backgroundImage = "url(" + header + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
-            addLiBox(userProjectLength,userProject,personalNav)
+            addLiBox(userProjectLength, userProject, personalNav)
         },
         error: function () {}
     });
 
-    
+
 
 }
 
@@ -253,6 +249,7 @@ function projectSize(project) {
         liNav[i].style.height = projectHeight + "px";
     }
 }
+
 // 板块切换-----------
 // 开始样式
 function start() {
@@ -267,19 +264,20 @@ function start() {
 start();
 // 点击共享项目
 shareBox.addEventListener("click", function () {
-    // 点击按钮样式
-    shareBox.style.backgroundColor = "rgb(241, 240, 230)";
-    shareBox.style.color = "#071f3d";
-    personalBox.style.backgroundColor = "";
-    personalBox.style.color = "#fff";
-    // 板块显示
-    shareNav.style.display = "block";
-    personalNav.style.display = "none";
-    projectSize(shareNav);
-    window.addEventListener('resize', function () {
-        projectSize(shareNav);
-        projectSize(personalNav);
-    });
+    // // 点击按钮样式
+    // shareBox.style.backgroundColor = "rgb(241, 240, 230)";
+    // shareBox.style.color = "#071f3d";
+    // personalBox.style.backgroundColor = "";
+    // personalBox.style.color = "#fff";
+    // // 板块显示
+    // shareNav.style.display = "block";
+    // personalNav.style.display = "none";
+    // projectSize(shareNav);
+    // window.addEventListener('resize', function () {
+    //     projectSize(shareNav);
+    //     projectSize(personalNav);
+    // });
+    topAlert("暂未开发！");
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
@@ -306,17 +304,55 @@ function liStyle(liArr) {
         }
     }
 }
+//左右移动
+function move(y) {
+    //获取project显示框架
+    var projectWidth = personalNav.offsetWidth;
+    var rightBut = getDom(".rightBut", personalNav);
+    var leftBut = getDom(".leftBut", personalNav);
+    var projectLiA = getDom(".projectLi", personalNav);
+    var x = 1;
+    if (x == 1) {
+        leftBut.style.display = "none";
+    }
+    rightBut.addEventListener("click", function () {
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth/10);
+        x++;
+        leftBut.style.display = "block";
+        if (x == y) {
+            rightBut.style.display = "none";
+        }
+    })
+    leftBut.addEventListener("click", function () {
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth/10);
+        x--;
+        rightBut.style.display = "block";
+        if (x == 1) {
+            leftBut.style.display = "none";
+        }
+    })
+}
 //获取左右按钮-----------------
 //project 父元素
 //liArr 项目长度
-function butStyle(project, liArr) {
+function butStyle(project, liArr, x) {
     var leftBut = getDom(".leftBut", project);
     var rightBut = getDom(".rightBut", project);
     if (liArr.length < 7) {
         leftBut.style.display = "none";
         rightBut.style.display = "none";
+    } else {
+
+        //左右滑动
+        move(x);
+    window.addEventListener('resize', function () {
+        move(x);
+    });
+        
+
     }
 }
+
 //项目添加---------
 function addLi(li, name, introduce, author, number) {
     var divName = document.createElement("div");
@@ -357,9 +393,10 @@ function create(project, projectLength, liArr) {
     for (var i = 0; i < projectLength; i++) {
         var name = project[i].name;
         var introduce = project[i].introduction;
-        var author = project[i].author;
+        var author = project[i].creatorName;
+        var numbers = project[i].numbers;
         //将内容放进去
-        addLi(liArr[i], name, introduce, author, "number");
+        addLi(liArr[i], name, introduce, author, numbers);
     }
 }
 
@@ -367,7 +404,6 @@ function create(project, projectLength, liArr) {
 
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
-    	
     //项目板块数目
     var x = Math.ceil(projectLength / 6);
     //获取项目大框架
@@ -388,7 +424,7 @@ function addLiBox(projectLength, project, projectNav) {
     // var liArrB = getDomA("li", shareNav);
 
     //按钮
-    butStyle(projectNav, liArr);
+    butStyle(projectNav, liArr, x);
     // butStyle(shareNav, liArrB);
 
     // 将项目放进板块
@@ -398,6 +434,7 @@ function addLiBox(projectLength, project, projectNav) {
     //判断是否有内容
     liStyle(liArr);
     // liStyle(liArrB);
+
 }
 
 userMess(head, headBox, emailBox, perSig);

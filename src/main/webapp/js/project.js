@@ -117,7 +117,7 @@ function userMess(head, headBox, emailBox, perSig) {
     });
 
 }
-
+userMess(head, headBox, emailBox, perSig);
 
 //判断是否登录------------
 if (loginPd == null) {
@@ -191,7 +191,6 @@ function UpladFile() {
     }
 }
 var url = getCookie("user_avatar");
-console.log(url);
 headBox.style.backgroundImage = "url(" + url + ")";
 head.style.backgroundImage = "url(" + url + ")";
 inPic.addEventListener("change", UpladFile);
@@ -499,7 +498,7 @@ var lineDownColor = '#6AC1ED'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色
 var lineUpColor = textColor; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
-var nowNodeBoxShadowColor = '#b410e6'; // 当前选中节点盒子阴影颜色
+var nowNodeBoxShadowColor = '#fed71a'; // 当前选中节点盒子阴影颜色
 var constraintArr = new Array(); // 记录约束的数组
 var setLineArr = new Array(); // 记录要添加线条的数组
 var mx, my; // 鼠标上次的位置
