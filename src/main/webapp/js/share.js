@@ -71,12 +71,12 @@ function userMess(head, headBox, emailBox, perSig) {
             head.style.backgroundImage = "url(" + header + ")";
             emailBox.innerText = email;
             perSig.value = userIntroduce;
-            addLiBox(userProjectLength,userProject,personalNav)
+            addLiBox(userProjectLength, userProject, personalNav)
         },
         error: function () {}
     });
 
-    
+
 
 }
 
@@ -253,6 +253,7 @@ function projectSize(project) {
         liNav[i].style.height = projectHeight + "px";
     }
 }
+
 // 板块切换-----------
 // 开始样式
 function start() {
@@ -307,17 +308,50 @@ function liStyle(liArr) {
         }
     }
 }
+//左右移动
+function move(y) {
+    //获取project显示框架
+    var projectWidth = personalNav.offsetWidth;
+    var rightBut = getDom(".rightBut", personalNav);
+    var leftBut = getDom(".leftBut", personalNav);
+    var projectLiA = getDom(".projectLi", personalNav);
+    var x = 1;
+    if (x == 1) {
+        leftBut.style.display = "none";
+    }
+    rightBut.addEventListener("click", function () {
+        moveLeftRight(projectLiA, "left", (-projectWidth), 100);
+        x++;
+        leftBut.style.display = "block";
+        if (x == y) {
+            rightBut.style.display = "none";
+        }
+    })
+    leftBut.addEventListener("click", function () {
+        moveLeftRight(projectLiA, "left", (projectWidth), 100);
+        x--;
+        rightBut.style.display = "block";
+        if (x == 1) {
+            leftBut.style.display = "none";
+        }
+    })
+}
 //获取左右按钮-----------------
 //project 父元素
 //liArr 项目长度
-function butStyle(project, liArr) {
+function butStyle(project, liArr,x) {
     var leftBut = getDom(".leftBut", project);
     var rightBut = getDom(".rightBut", project);
     if (liArr.length < 7) {
         leftBut.style.display = "none";
         rightBut.style.display = "none";
+    } else {
+        
+    //左右滑动
+    move(x);
     }
 }
+
 //项目添加---------
 function addLi(li, name, introduce, author, number) {
     var divName = document.createElement("div");
@@ -369,7 +403,7 @@ function create(project, projectLength, liArr) {
 
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
-    	
+
     //项目板块数目
     var x = Math.ceil(projectLength / 6);
     //获取项目大框架
@@ -390,7 +424,7 @@ function addLiBox(projectLength, project, projectNav) {
     // var liArrB = getDomA("li", shareNav);
 
     //按钮
-    butStyle(projectNav, liArr);
+    butStyle(projectNav, liArr,x);
     // butStyle(shareNav, liArrB);
 
     // 将项目放进板块
@@ -400,6 +434,9 @@ function addLiBox(projectLength, project, projectNav) {
     //判断是否有内容
     liStyle(liArr);
     // liStyle(liArrB);
+
 }
 
 userMess(head, headBox, emailBox, perSig);
+
+

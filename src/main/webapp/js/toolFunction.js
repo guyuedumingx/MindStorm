@@ -1416,7 +1416,7 @@ Node.prototype.textVerticalCenter = function () {
  * 
  * @param {object} obj 对象
  * @param {*} attr 要执行动画的样式比如：left height
- * @param {*} target 目标位置 
+ * @param {*} target 目标位移 
  * @param {*} speed 速度
  * @param {*} callback 回调函数，动画执行完毕以后执行
  * @author tracy
@@ -1426,6 +1426,8 @@ function moveLeftRight(obj, attr, target, speed, callback) {
     clearInterval(obj.timer);
     //获取原来位置
     var current = parseInt(getStyle(obj, attr));
+    //目标位置等于当前位置加上位移
+    target = current + target;
     //判断速度正负值
     if (current > target) {
         //速度负值
@@ -1451,4 +1453,21 @@ function moveLeftRight(obj, attr, target, speed, callback) {
             callback && callback();
         }
     }, 30);
+}
+
+/**
+ * 
+ * @param {*} obj 元素
+ * @param {*} name 要获取的样式名
+ * @author tracy
+ */
+function getStyle(obj, name) {
+    if (window.getComputedStyle) {
+        //正常浏览器的方式，有此方法
+        return getComputedStyle(obj, null)[name];
+    } else {
+        //IE8方法
+        return obj.currentStyle[name];
+    }
+    // return window.getComputedStyle?getComputedStyle(obj,null)[name]:obj.currentStyle[name];
 }
