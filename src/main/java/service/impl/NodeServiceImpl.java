@@ -17,6 +17,7 @@ import pojo.auxiliary.Star;
 import service.NodeService;
 
 public class NodeServiceImpl implements NodeService {
+    Logger logger = LoggerFactory.getLogger(NodeServiceImpl.class);
     NodeDao nodeDao = DaoFactory.getNodeDao();
     ProjectDao projectDao = DaoFactory.getProjectDao();
     StarDaoImpl starDao = DaoFactory.getStarDao();
@@ -67,6 +68,7 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public Node getNode(int nodeId,int userId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
+        logger.debug("获取到的节点信息"+node.getContent()+" " + node.getTheme());
         Star star = starDao.selectOne(new Star(userId,nodeId));
         User lastEditUser = userDao.selectOne(new User(node.getLastEditId()));
         User author = userDao.selectOne(new User(node.getAuthor()));

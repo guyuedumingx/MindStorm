@@ -94,8 +94,9 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
      */
     @Override
     public T selectOne(T object) {
-        String base = "select * from {0} where {1} limit 1";
+        String base = "select * from {0} where {1} ";
         String realSql = MessageFormat.format(base, getTableName(),getQueryCondition(object));
+        logger.debug("readSql: "+realSql);
         return selectOne(object,realSql);
     }
 
