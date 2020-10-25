@@ -1,5 +1,9 @@
 package common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.impl.NodeServiceImpl;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +14,8 @@ import java.util.List;
  * @author yohoyes
  */
 public class IntListUtil {
+   static Logger logger = LoggerFactory.getLogger(NodeServiceImpl.class);
+
    public static <T> Integer[] getIntList(List<T> list, String pattern) {
       Iterator<T> iterator = list.iterator();
       List<Integer> res = new ArrayList<Integer>();
@@ -22,7 +28,7 @@ public class IntListUtil {
             res.add(f.getInt(next));
          }
       } catch (Exception e) {
-         e.printStackTrace();
+         logger.error(e.getMessage());
       }
       return res.toArray(new Integer[0]);
    }

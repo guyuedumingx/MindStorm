@@ -6,8 +6,11 @@ import common.util.WebUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.User;
 import service.UserService;
+import service.impl.NodeServiceImpl;
 import service.impl.UserServiceImpl;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +25,7 @@ import java.util.List;
 @WebServlet("/user/avatar")
 @MultipartConfig
 public class AvatarController extends BaseController {
+    Logger logger = LoggerFactory.getLogger(AvatarController.class);
     private static final long serialVersionUID = 1L;
     String resPath = "";
     UserService service = new UserServiceImpl();
@@ -72,7 +76,7 @@ public class AvatarController extends BaseController {
             result.setStatus_code(StatusCode.OK);
         }catch (Exception e) {
             result.setStatus_code(StatusCode.LOST);
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         String urlPath = "/img/avatar/"+filePath+"?ran="+Math.random();
         user.setUserAvatar(urlPath);

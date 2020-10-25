@@ -1,6 +1,9 @@
 package common.util;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -11,7 +14,7 @@ import java.util.Properties;
  * @author yohoyes
  */
 public class JdbcUtil {
-
+    static Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
     private static ThreadLocal<Connection> tol = new ThreadLocal<Connection>();
     private static DataSource ds;
 
@@ -22,7 +25,7 @@ public class JdbcUtil {
             pro.load(is);
             ds = DruidDataSourceFactory.createDataSource(pro);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -37,7 +40,7 @@ public class JdbcUtil {
             try {
                 conn = ds.getConnection();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
             tol.set(conn);
         }
@@ -56,7 +59,7 @@ public class JdbcUtil {
             // 开启事务
             conn.setAutoCommit(false);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -67,7 +70,7 @@ public class JdbcUtil {
                 conn.commit();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -79,7 +82,7 @@ public class JdbcUtil {
                 conn.rollback();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
     }

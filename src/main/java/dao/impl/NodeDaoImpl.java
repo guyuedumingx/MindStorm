@@ -5,6 +5,8 @@ import dao.BaseDaoImpl;
 import dao.NodeDao;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Node;
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -14,6 +16,7 @@ import java.util.List;
  * @author yohoyes
  */
 public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
+    Logger logger = LoggerFactory.getLogger(NodeDaoImpl.class);
 
     @Override
     public String getTableName() {
@@ -46,7 +49,7 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
         try {
             query = queryRunner.query(sql, new ArrayListHandler());
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         int[] res = new int[query.size()];
         Iterator<Object[]> iterator = query.iterator();

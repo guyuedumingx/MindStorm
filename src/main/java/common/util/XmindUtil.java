@@ -1,5 +1,7 @@
 package common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmind.core.*;
 import pojo.Node;
 import pojo.Project;
@@ -18,6 +20,7 @@ import java.util.Set;
  * @author yohoyes
  */
 public class XmindUtil {
+    static Logger logger = LoggerFactory.getLogger(XmindUtil.class);
     static NodeService nodeService = new NodeServiceImpl();
     static ProjectService projectService = new ProjectServiceImpl();
     static IWorkbookBuilder builder = null;
@@ -35,7 +38,7 @@ public class XmindUtil {
         try {
             workbook = builder.loadFromPath(path);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
@@ -53,7 +56,7 @@ public class XmindUtil {
         try {
             workbook = builder.loadFromStream(in);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
@@ -128,7 +131,7 @@ public class XmindUtil {
         try {
             workbook.save(resp.getOutputStream());
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -137,7 +140,7 @@ public class XmindUtil {
         try {
             workbook.save(path + project.getName() + ".xmind");
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 

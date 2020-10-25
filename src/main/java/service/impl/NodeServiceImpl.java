@@ -7,6 +7,8 @@ import dao.ProjectDao;
 import dao.UserDao;
 import dao.auxiliary.impl.ContributorDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Node;
 import pojo.Project;
 import pojo.User;

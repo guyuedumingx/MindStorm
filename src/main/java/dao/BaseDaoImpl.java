@@ -8,6 +8,8 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @author yohoyes
  */
 public abstract class BaseDaoImpl<T> implements BaseDao<T>{
+    Logger logger = LoggerFactory.getLogger(BaseDaoImpl.class);
 
     /**
      * 获取表名
@@ -51,7 +54,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
         try {
             update = queryRunner.update(sql, params.toArray());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return update;
     }
@@ -65,7 +68,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
         try {
             update = queryRunner.update(sql,new Object[]{id});
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return update;
     }
@@ -79,7 +82,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
         try {
             update = queryRunner.update(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return update;
     }
@@ -104,7 +107,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
             if(query==null) {return null;}
             object = MapUtil.ModelMapper(object, ReflectUtil.getAllFields(object), query);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return object;
     }
@@ -130,7 +133,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
             if (query == null) {return null;}
             res = MapUtil.ModelMapperForList(object, ReflectUtil.getAllFields(object), query);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return res;
     }
@@ -150,6 +153,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
                 return 0;
             }
         }catch (SQLException e) {
+            logger.error(e.getMessage());
             return 0;
         }
         return bigInteger.intValue();

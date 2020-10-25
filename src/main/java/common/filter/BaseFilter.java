@@ -27,7 +27,6 @@ public class BaseFilter implements Filter {
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Allow-Credentials","true");
-        System.out.println("过滤器被访问");
         filterChain.doFilter(servletRequest,servletResponse);
     }
 
