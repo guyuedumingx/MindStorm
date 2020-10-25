@@ -117,7 +117,6 @@ function userMess(head, headBox, emailBox, perSig) {
     });
 
 }
-userMess(head, headBox, emailBox, perSig);
 
 //判断是否登录------------
 if (loginPd == null) {
@@ -271,7 +270,7 @@ var participant = getDom('.mainBoxLeft .introduce .participant'); // 成员列�
 var participantUl = participant.getDom('ul'); // 成员列表表中的Ul
 var participantOff = participant.getDom('i'); // 成员列表盒子关闭按钮
 var operationProjectTitle = getDom('.operationProject .operationProjectTitle'); // 项目处理开关
-var operationProject = getDomA('.mainBoxLeft .operationProject div'); // 项目处理按钮
+var operationProject = [getDom('.mainBoxLeft .operationProject .exportProject'), getDom('.mainBoxLeft .operationProject .removeProject')]; // 项目处理按钮
 
 // 生成成员列表
 function generateParticipant(arr) {
