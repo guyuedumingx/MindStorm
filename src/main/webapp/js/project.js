@@ -1171,7 +1171,7 @@ tipsYes.addEventListener('click', function () {
             },
             success: function (res) {
                 if (res.status_code == '200') {
-                    window.location = 'share.html'
+                    window.location = 'index.html'
                 } else {
                     topAlert('删除失败');
                 }
