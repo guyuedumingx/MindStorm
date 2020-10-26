@@ -409,14 +409,13 @@ function create(project, projectLength, liArr) {
 }
 //显示暂无内容
 function noProject(projectNav) {
-    var div = document.createElement("div");
-    div.className = "none";
-    div.innerText = "暂无项目";
-    projectNav.appendChild(div);
+    var divN = document.createElement("div");
+    divN.className = "none";
+    divN.innerText = "暂无项目";
+    projectNav.appendChild(divN);
     var none = getDom(".none");
     textVerticalCenter(none);
 }
-noProject();
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
     if (projectLength == 0) {
