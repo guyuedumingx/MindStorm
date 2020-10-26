@@ -320,7 +320,7 @@ function move(y) {
         leftBut.style.display = "none";
     }
     rightBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth/10);
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10);
         x++;
         leftBut.style.display = "block";
         if (x == y) {
@@ -328,7 +328,7 @@ function move(y) {
         }
     })
     leftBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth/10);
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10);
         x--;
         rightBut.style.display = "block";
         if (x == 1) {
@@ -349,16 +349,16 @@ function butStyle(project, liArr, x) {
 
         //左右滑动
         move(x);
-    window.addEventListener('resize', function () {
-        move(x);
-    });
-        
+        window.addEventListener('resize', function () {
+            move(x);
+        });
+
 
     }
 }
 
 //项目添加---------
-function addLi(li, name, introduce, author, number) {
+function addLi(li, name, introduce, author, number, projectID) {
     var divName = document.createElement("div");
     divName.className = "projectName";
     divName.innerText = name;
@@ -391,6 +391,9 @@ function addLi(li, name, introduce, author, number) {
     divBot.appendChild(divMan);
     divMan.appendChild(iMan);
     divMan.appendChild(spanMan);
+    li.addEventListener("click", function () {
+        window.location = "project.html?project_id=" + projectID;
+    })
 }
 
 function create(project, projectLength, liArr) {
@@ -399,8 +402,9 @@ function create(project, projectLength, liArr) {
         var introduce = project[i].introduction;
         var author = project[i].creatorName;
         var numbers = project[i].numbers;
+        var projectID = project[i].id;
         //将内容放进去
-        addLi(liArr[i], name, introduce, author, numbers);
+        addLi(liArr[i], name, introduce, author, numbers, projectID);
     }
 }
 
