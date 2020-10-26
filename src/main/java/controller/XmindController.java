@@ -1,6 +1,5 @@
 package controller;
 
-import com.mysql.cj.exceptions.ClosedOnExpiredPasswordException;
 import common.dto.Result;
 import common.dto.StatusCode;
 import common.util.WebUtil;
@@ -33,7 +32,7 @@ public class XmindController extends BaseController {
         user = (User)session.getAttribute("user");
         try {
             if (user == null) {
-                req.getRequestDispatcher("login.html").forward(req, resp);
+                resp.sendRedirect("login.html");
             }
         }catch (Exception e){
             logger.error(e.getMessage());

@@ -53,6 +53,7 @@ public class NodeController extends BaseController{
         node.setAuthor(user.getId());
         node.setLastEditId(user.getId());
         node.setLastEditTime(System.currentTimeMillis()+"");
+        logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
         int nodeId = service.newNode(node);
         int statusCode = StatusCode.isZero(nodeId);
 
