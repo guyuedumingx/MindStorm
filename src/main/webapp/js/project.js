@@ -117,14 +117,14 @@ function userMess(head, headBox, emailBox, perSig) {
     });
 
 }
-
+userMess(head, headBox, emailBox, perSig);
 //判断是否登录------------
 if (loginPd == null) {
     personal.style.display = "none";
 } else {
     personal.style.display = "block";
     //调用获取用户信息
-    // userMess(headBox, emailBox, perSig);
+    
     nameU.innerText = userName;
     nameBox.value = userName;
 }
@@ -153,7 +153,6 @@ clickOpenBlankClose(headNav, spinner);
 
 //头像上传
 //导入
-var inPic = getDom(".inPic");
 
 function UpladFile() {
     var file = inPic.files[0];
@@ -204,7 +203,8 @@ modifyN.addEventListener("click", function () {
 });
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
-    nameBox.value = userName;
+    nameBox.value = nameBox.value;
+    nameU.innerText = nameBox.value;
     nameBox.readOnly = true;
     nameBox.style.borderBottom = "";
 });

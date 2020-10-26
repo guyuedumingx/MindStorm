@@ -72,7 +72,7 @@ function userMess(head, headBox, emailBox, perSig) {
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
-        error: function () { }
+        error: function () {}
     });
 
 }
@@ -113,7 +113,6 @@ clickOpenBlankClose(headNav, spinner);
 
 //头像上传
 //导入
-var inPic = getDom(".inPic");
 
 function UpladFile() {
     var file = inPic.files[0];
@@ -164,7 +163,7 @@ modifyN.addEventListener("click", function () {
 });
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
-    nameBox.value = userName;
+    nameBox.value = nameBox.value;
     nameBox.readOnly = true;
     nameBox.style.borderBottom = "";
 });
@@ -425,7 +424,7 @@ introduceInput.addEventListener("keyup", function () {
 //导入
 var importNav = getDom(".import");
 
-function UpladFile() {
+function UpladXmind() {
     var file = importNav.files[0];
     //创建formdata对象
     var formdata = new FormData();
@@ -446,4 +445,4 @@ function UpladFile() {
         }
     }, true);
 }
-importNav.addEventListener("change", UpladFile);
+importNav.addEventListener("change", UpladXmind);
