@@ -419,6 +419,11 @@ function noProject(projectNav) {
 }
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
+    // 获取li数组
+    var liArr = getDomA("li", projectNav);
+
+    // var liArrB = getDomA("li", shareNav);
+
     if (projectLength == 0) {
         noProject(projectNav);
         //按钮
@@ -438,10 +443,6 @@ function addLiBox(projectLength, project, projectNav) {
             }
         }
         projectSize(projectNav);
-        // 获取li数组
-        var liArr = getDomA("li", projectNav);
-
-        // var liArrB = getDomA("li", shareNav);
 
         //按钮
         butStyle(projectNav, liArr, x);
@@ -462,7 +463,7 @@ userMess(head, headBox, emailBox, perSig);
 //主题-----------------------
 function changeColor() {
     //页面底色
-    getDom("body").style.backgroundColor="";
+    getDom("body").style.backgroundColor = "";
     // 左边导航底色
     getDom(".navigationBar").style.backgroundColor = "#333333";
     //搜索框底色
