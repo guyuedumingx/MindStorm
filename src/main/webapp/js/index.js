@@ -165,7 +165,8 @@ modifyN.addEventListener("click", function () {
 });
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
-    nameBox.value = userName;
+    nameBox.value = nameBox.value;
+    nameU.innerText = nameBox.value;
     nameBox.readOnly = true;
     nameBox.style.borderBottom = "";
 });
