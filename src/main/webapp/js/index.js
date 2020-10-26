@@ -305,6 +305,7 @@ function liStyle(liArr) {
             liArr[i].className = "";
         } else {
             liArr[i].className = "boxS";
+            liArr[i].style.backgroundColor = "";
         }
     }
 }
@@ -420,6 +421,8 @@ function noProject(projectNav) {
 function addLiBox(projectLength, project, projectNav) {
     if (projectLength == 0) {
         noProject(projectNav);
+        //按钮
+        butStyle(projectNav, liArr, projectLength);
     } else {
         //项目板块数目
         var x = Math.ceil(projectLength / 6);
@@ -455,3 +458,21 @@ function addLiBox(projectLength, project, projectNav) {
 }
 
 userMess(head, headBox, emailBox, perSig);
+
+//主题-----------------------
+function changeColor() {
+    //页面底色
+    getDom("body").style.backgroundColor="";
+    // 左边导航底色
+    getDom(".navigationBar").style.backgroundColor = "#333333";
+    //搜索框底色
+    getDom(".searchBox").style.backgroundColor = "";
+    //搜索按钮颜色
+    getDom(".iconS").style.backgroundColor = "";
+    //新建加入按钮底色
+    getDom(".buildJoin").style.backgroundColor = "";
+    //新建加入按钮字颜色
+    getDom(".buildJoin").style.color = "";
+    //项目底色
+    getDomA("li").style.backgroundColor = "";
+}
