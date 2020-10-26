@@ -51,7 +51,7 @@ function userMess(head, headBox, emailBox, perSig) {
     }
     ajax({
         type: 'get',
-        url: 'http://192.168.43.247:8080/user',
+        url: '/user',
         data: {},
         header: {},
         success: function (res) {
@@ -135,7 +135,7 @@ function UpladFile() {
         } else {
             ajax({
                 type: 'post',
-                url: "http://192.168.43.247:8080/user/avatar",
+                url: "/user/avatar",
                 data: formdata,
                 success: function (res) {
                     if (res.status_code == '200') {
@@ -183,7 +183,7 @@ function search() {
     } else {
         ajax({
             type: 'put',
-            url: 'http://192.168.43.247:8080/project',
+            url: '/project',
             data: {
                 key: content
             },

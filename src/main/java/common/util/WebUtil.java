@@ -3,6 +3,10 @@ package common.util;
 import com.alibaba.fastjson.JSON;
 import common.dto.Result;
 import common.dto.StatusCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -14,6 +18,7 @@ import java.io.InputStreamReader;
  * @author yohoyes
  */
 public class WebUtil {
+    static Logger logger = LoggerFactory.getLogger(WebUtil.class);
     enum RenderType {
         //解析成json格式
         JSON,
@@ -32,7 +37,7 @@ public class WebUtil {
             String s = JSON.toJSONString(object);
             resp.getWriter().write(s);
         }catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -58,7 +63,7 @@ public class WebUtil {
         try{
             resp.getWriter().write(text);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 

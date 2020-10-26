@@ -7,6 +7,8 @@ import dao.ProjectDao;
 import dao.UserDao;
 import dao.auxiliary.impl.ContributorDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Node;
 import pojo.Project;
 import pojo.User;
@@ -15,6 +17,7 @@ import pojo.auxiliary.Star;
 import service.NodeService;
 
 public class NodeServiceImpl implements NodeService {
+    Logger logger = LoggerFactory.getLogger(NodeServiceImpl.class);
     NodeDao nodeDao = DaoFactory.getNodeDao();
     ProjectDao projectDao = DaoFactory.getProjectDao();
     StarDaoImpl starDao = DaoFactory.getStarDao();
@@ -25,9 +28,10 @@ public class NodeServiceImpl implements NodeService {
         //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
         Node parent =  nodeDao.selectOne(new Node(node.getParentId()));
-        if(parent.isEditable()) {
+        if (parent==null||parent.isEditable()) {
+            logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
             int nodeId = nodeDao.insertOne(node);
-            addUserAsContributors(nodeId,node.getAuthor());
+            addUserAsContributors(nodeId, node.getAuthor());
             return nodeId;
         }
         return 0;
@@ -65,6 +69,7 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public Node getNode(int nodeId,int userId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
+        logger.debug("获取到的节点信息"+node.getContent()+" " + node.getTheme());
         Star star = starDao.selectOne(new Star(userId,nodeId));
         User lastEditUser = userDao.selectOne(new User(node.getLastEditId()));
         User author = userDao.selectOne(new User(node.getAuthor()));

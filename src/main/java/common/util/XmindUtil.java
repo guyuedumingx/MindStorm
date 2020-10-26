@@ -1,5 +1,7 @@
 package common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmind.core.*;
 import pojo.Node;
 import pojo.Project;
@@ -10,14 +12,18 @@ import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 与xmind互转工具类
  * @author yohoyes
  */
 public class XmindUtil {
+    static Logger logger = LoggerFactory.getLogger(XmindUtil.class);
     static NodeService nodeService = new NodeServiceImpl();
     static ProjectService projectService = new ProjectServiceImpl();
     static IWorkbookBuilder builder = null;
@@ -35,7 +41,7 @@ public class XmindUtil {
         try {
             workbook = builder.loadFromPath(path);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
@@ -53,7 +59,7 @@ public class XmindUtil {
         try {
             workbook = builder.loadFromStream(in);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
@@ -93,8 +99,10 @@ public class XmindUtil {
         Iterator<String> iterator = labels.iterator();
         StringBuilder str = new StringBuilder();
         while (iterator.hasNext()){
-            str.append(iterator.next());
+            str.append(iterator.next()+"\n");
         }
+        INotes notes = topic.getNotes();
+        str.append(notes.toString());
         return str.toString();
     }
 
@@ -123,12 +131,24 @@ public class XmindUtil {
 
     public static void write(int projectId, HttpServletResponse resp){
         createXmind(projectId);
-        resp.setContentType("multipart/form-data");
-        resp.setHeader("Content-Disposition", "attachment;filename=" + project.getName() + ".xmind");
+        String fileName = project.getName();
+        Pattern pattern;
+        pattern = Pattern.compile("[\u4E00-\u9FA5|\\！|\\,|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]+");
+        Matcher matcher = pattern.matcher(fileName);
+        while (matcher.find()) {
+            String mStr = matcher.group();
+            try {
+                fileName = fileName.replaceFirst(mStr, URLEncoder.encode(mStr, "UTF-8"));
+            } catch (Exception e) {
+
+            }
+        }
+        resp.setContentType("multipart/form-data;charset=UTF-8;");
+        resp.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xmind");
         try {
             workbook.save(resp.getOutputStream());
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -137,19 +157,23 @@ public class XmindUtil {
         try {
             workbook.save(path + project.getName() + ".xmind");
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
     public static ITopic writeITopics(ITopic root, Node node){
         int[] children = node.getChildren();
         if(children==null){return root;}
-
         for (int n : children) {
             Node child = nodeService.getNode(n,userId);
             ITopic topic = workbook.createTopic();
             topic.setTitleText(child.getTheme());
-            topic.addLabel(child.getContent());
+
+            IPlainNotesContent plainContent = (IPlainNotesContent) workbook.createNotesContent(INotes.PLAIN);
+            plainContent.setTextContent(child.getContent());
+            INotes notes = topic.getNotes();
+            notes.setContent(INotes.PLAIN, plainContent);
+
             root.add(topic);
             writeITopics(topic,child);
         }

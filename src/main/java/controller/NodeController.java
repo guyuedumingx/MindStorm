@@ -6,6 +6,8 @@ import common.factory.DaoFactory;
 import common.util.WebUtil;
 import dao.NodeDao;
 import dao.auxiliary.impl.RecentProjectDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Node;
 import pojo.User;
 import pojo.auxiliary.RecentProject;
@@ -28,6 +30,7 @@ import java.util.Map;
  */
 @WebServlet("/node")
 public class NodeController extends BaseController{
+    Logger logger = LoggerFactory.getLogger(NodeController.class);
     User user = null;
     NodeService service = new NodeServiceImpl();
 
@@ -50,6 +53,7 @@ public class NodeController extends BaseController{
         node.setAuthor(user.getId());
         node.setLastEditId(user.getId());
         node.setLastEditTime(System.currentTimeMillis()+"");
+        logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
         int nodeId = service.newNode(node);
         int statusCode = StatusCode.isZero(nodeId);
 
@@ -110,6 +114,7 @@ public class NodeController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nodeId = request.getParameter("id");
+        logger.debug("请求的节点Id: "+nodeId);
         Node node = service.getNode(Integer.valueOf(nodeId),user.getId());
         WebUtil.renderJson(response,node);
     }

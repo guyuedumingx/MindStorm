@@ -1,7 +1,8 @@
 package common.util;
 
 import common.annontation.DbField;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.Map;
  * @author hoyoyes
  */
 public class MapUtil {
+    static Logger logger = LoggerFactory.getLogger(MapUtil.class);
 
     public static <T> T ModelMapper(T po,Field[] list, Map map) throws Exception{
          T o = (T)po.getClass().newInstance();
@@ -22,7 +24,7 @@ public class MapUtil {
                    f.setAccessible(true);
                    f.set(o,map.get(dbField.value()));
                } catch (Exception e) {
-                  e.printStackTrace();
+                   logger.error(e.getMessage());
                }
            }
        }

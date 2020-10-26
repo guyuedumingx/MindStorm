@@ -7,8 +7,9 @@ import common.util.XmindUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @WebServlet("/util/xmind")
 public class XmindController extends BaseController {
+    Logger logger = LoggerFactory.getLogger(XmindController.class);
     User user = null;
 
     @Override
@@ -28,6 +30,13 @@ public class XmindController extends BaseController {
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        try {
+            if (user == null) {
+                resp.sendRedirect("login.html");
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
     }
 
     /**
@@ -70,7 +79,7 @@ public class XmindController extends BaseController {
             result.put("project_id",projectId+"");
             WebUtil.renderJson(resp,result);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

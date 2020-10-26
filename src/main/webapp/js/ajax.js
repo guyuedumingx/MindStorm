@@ -27,7 +27,7 @@ function ajax(options, fileState) {
         url: '', // 请求地址
         data: {}, // 参数(对象形式)
         header: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded;'
         }, // 请求头
         success: function () { }, // 成功函数
         error: function () { } // 失败函数

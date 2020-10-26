@@ -1,6 +1,9 @@
 package common.util;
 
 import common.annontation.DbField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -8,6 +11,7 @@ import java.util.*;
  * @author yohoyes
  */
 public class ReflectUtil {
+    static Logger logger = LoggerFactory.getLogger(ReflectUtil.class);
 
     /**
      * 通过反射获取pojo类的含有注解的方法
@@ -61,7 +65,7 @@ public class ReflectUtil {
                 }
             }
         } catch (Exception e) {
-           e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return sb.toString();
     }
@@ -81,7 +85,7 @@ public class ReflectUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return sb.toString();
     }

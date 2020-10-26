@@ -1,5 +1,8 @@
 package common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -9,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5Util {
 
+    static Logger logger = LoggerFactory.getLogger(MD5Util.class);
     /**
      * 加密
      * @param in
@@ -27,7 +31,7 @@ public class MD5Util {
                 sb.append(chars[bb & 15]);
             }
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return sb.toString();
     }

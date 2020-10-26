@@ -3,6 +3,8 @@ package controller;
 import common.dto.Result;
 import common.dto.StatusCode;
 import common.util.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Project;
 import pojo.User;
 import service.ProjectService;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @WebServlet("/project")
 public class ProjectController extends BaseController{
+    Logger logger = LoggerFactory.getLogger(ProjectController.class);
     ProjectService service = new ProjectServiceImpl();
     User user = null;
 
@@ -57,7 +60,9 @@ public class ProjectController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
         int id =Integer.valueOf(request.getParameter("id"));
+        logger.debug("进入的项目id: "+id+"");
         Project project = service.getProject(id);
+        logger.debug("获取到的项目: "+project.toString()+"");
         if(project==null){
             request.getRequestDispatcher("index.html").forward(request,response);
         }else {
