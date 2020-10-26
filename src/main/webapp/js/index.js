@@ -114,7 +114,6 @@ clickOpenBlankClose(headNav, spinner);
 
 //头像上传
 //导入
-var inPic = getDom(".inPic");
 
 function UpladFile() {
     var file = inPic.files[0];
