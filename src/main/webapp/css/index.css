@@ -481,12 +481,12 @@ body .header {
 .mainBox .projectBox .projectLi li>div{
     padding: 10px 20px;
 }
+
 .mainBox .projectBox .projectLi .boxS:hover {
     box-shadow: 0 0 5px #214B5B;
 }
 /* 暂无项目 */
 .none{
-    border: solid;
     text-align: center;
     font-size: 60px;
     font-weight: bold;
