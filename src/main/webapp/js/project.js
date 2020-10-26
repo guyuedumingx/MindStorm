@@ -117,14 +117,14 @@ function userMess(head, headBox, emailBox, perSig) {
     });
 
 }
-
+userMess(head, headBox, emailBox, perSig);
 //判断是否登录------------
 if (loginPd == null) {
     personal.style.display = "none";
 } else {
     personal.style.display = "block";
     //调用获取用户信息
-    userMess(headBox, emailBox, perSig);
+    
     nameU.innerText = userName;
     nameBox.value = userName;
 }

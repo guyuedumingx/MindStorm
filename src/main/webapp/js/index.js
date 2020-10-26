@@ -51,7 +51,7 @@ function userMess(head, headBox, emailBox, perSig) {
     }
     ajax({
         type: 'get',
-        url: '/user',
+        url: 'http://192.168.43.247:8080/user',
         data: {},
         header: {},
         success: function (res) {
@@ -115,6 +115,7 @@ clickOpenBlankClose(headNav, spinner);
 //头像上传
 //导入
 
+
 function UpladFile() {
     var file = inPic.files[0];
     var formdata = new FormData();
@@ -135,7 +136,7 @@ function UpladFile() {
         } else {
             ajax({
                 type: 'post',
-                url: "/user/avatar",
+                url: "http://192.168.43.247:8080/user/avatar",
                 data: formdata,
                 success: function (res) {
                     if (res.status_code == '200') {
@@ -183,7 +184,7 @@ function search() {
     } else {
         ajax({
             type: 'put',
-            url: '/project',
+            url: 'http://192.168.43.247:8080/project',
             data: {
                 key: content
             },
