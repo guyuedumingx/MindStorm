@@ -419,7 +419,7 @@ function rotationChartFunction(rotationChart, len, v, time) {
             num = index; // 将获取到的值赋给num和circle
             circle = index;
             moveX(ul, -index * rotationChartWidth, v); // 将图滑动到对应位置
-        })
+        });
     }
 
     // 一开始给第一个添加current属性

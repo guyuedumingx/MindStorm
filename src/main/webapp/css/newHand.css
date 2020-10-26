@@ -100,6 +100,17 @@
     background-color: #f5f5f5;
 }
 
+.how .content .modular {
+    width: 80%;
+    margin: 0px auto 20px;
+    background-color: #eeeeee;
+}
+
+.how .content .modular .modularTitle {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
 .go {
     width: 200px;
     height: 72px;
