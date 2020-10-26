@@ -72,7 +72,7 @@ function userMess(head, headBox, emailBox, perSig) {
             emailBox.innerText = email;
             perSig.value = userIntroduce;
         },
-        error: function () { }
+        error: function () {}
     });
 
 }
@@ -164,7 +164,6 @@ modifyN.addEventListener("click", function () {
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
     nameBox.value = nameBox.value;
-    nameU.innerText = nameBox.value;
     nameBox.readOnly = true;
     nameBox.style.borderBottom = "";
 });
