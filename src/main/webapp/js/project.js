@@ -1315,7 +1315,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 projectId: projectId
             },
             header: {
-                'Content-Type': 'application/json;charset:utf-8;'
+                'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
@@ -1349,7 +1349,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 projectId: projectId
             },
             header: {
-                'Content-Type': 'application/json;charset:utf-8;',
+                'Content-Type': 'application/json',
                 "X-HTTP-Method-Override": "PUT"
             }, // 请求头
             success: function (res) {
@@ -1374,7 +1374,7 @@ operationNodeBoxStar.addEventListener('click', function () {
             nodeId: nowNode.id
         },
         header: {
-            'Content-Type': 'application/json;charset:utf-8;',
+            'Content-Type': 'application/json',
             "X-HTTP-Method-Override": "PUT"
         }, // 请求头
         success: function (res) {

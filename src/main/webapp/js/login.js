@@ -371,7 +371,7 @@ function setEmailJudge(node) {
                 email: node.value,
             },
             header: {
-                "Content-Type": "application/json;charset:utf-8;",
+                "Content-Type": "application/json",
             }, // 请求头
             success: function (res) {
                 if (res.exist_code == "200") {
@@ -519,7 +519,7 @@ registerSubmit.addEventListener("click", function () {
                 password: psd,
             },
             header: {
-                "Content-Type": "application/json;charset:utf-8;",
+                "Content-Type": "application/json",
             }, // 请求头
             success: function (res) {
                 if (res.status_code == "200") {
