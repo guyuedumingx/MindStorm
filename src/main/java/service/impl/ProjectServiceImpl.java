@@ -47,7 +47,7 @@ public class ProjectServiceImpl implements ProjectService {
                         Node node = new Node(project);
                         node.setLastEditTime(System.currentTimeMillis()+"");
                         node.setEditable(true);
-                        int headNodeId = DaoFactory.getNodeDao().insertOne(node);
+                        int headNodeId = new NodeServiceImpl().newNode(node);
                         project.setHeadNodeId(headNodeId);
                     }
                     projectDao.updateOne(project);

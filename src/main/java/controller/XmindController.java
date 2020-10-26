@@ -10,8 +10,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.User;
-import service.impl.NodeServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +30,13 @@ public class XmindController extends BaseController {
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        try {
+            if (user == null) {
+                resp.sendRedirect("login.html");
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
     }
 
     /**

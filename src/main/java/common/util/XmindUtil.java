@@ -12,8 +12,11 @@ import service.impl.NodeServiceImpl;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 与xmind互转工具类
@@ -96,8 +99,10 @@ public class XmindUtil {
         Iterator<String> iterator = labels.iterator();
         StringBuilder str = new StringBuilder();
         while (iterator.hasNext()){
-            str.append(iterator.next());
+            str.append(iterator.next()+"\n");
         }
+        INotes notes = topic.getNotes();
+        str.append(notes.toString());
         return str.toString();
     }
 
@@ -126,8 +131,20 @@ public class XmindUtil {
 
     public static void write(int projectId, HttpServletResponse resp){
         createXmind(projectId);
-        resp.setContentType("multipart/form-data");
-        resp.setHeader("Content-Disposition", "attachment;filename=" + project.getName() + ".xmind");
+        String fileName = project.getName();
+        Pattern pattern;
+        pattern = Pattern.compile("[\u4E00-\u9FA5|\\！|\\,|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]+");
+        Matcher matcher = pattern.matcher(fileName);
+        while (matcher.find()) {
+            String mStr = matcher.group();
+            try {
+                fileName = fileName.replaceFirst(mStr, URLEncoder.encode(mStr, "UTF-8"));
+            } catch (Exception e) {
+
+            }
+        }
+        resp.setContentType("multipart/form-data;charset=UTF-8;");
+        resp.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xmind");
         try {
             workbook.save(resp.getOutputStream());
         }catch (Exception e){
@@ -147,12 +164,16 @@ public class XmindUtil {
     public static ITopic writeITopics(ITopic root, Node node){
         int[] children = node.getChildren();
         if(children==null){return root;}
-
         for (int n : children) {
             Node child = nodeService.getNode(n,userId);
             ITopic topic = workbook.createTopic();
             topic.setTitleText(child.getTheme());
-            topic.addLabel(child.getContent());
+
+            IPlainNotesContent plainContent = (IPlainNotesContent) workbook.createNotesContent(INotes.PLAIN);
+            plainContent.setTextContent(child.getContent());
+            INotes notes = topic.getNotes();
+            notes.setContent(INotes.PLAIN, plainContent);
+
             root.add(topic);
             writeITopics(topic,child);
         }
