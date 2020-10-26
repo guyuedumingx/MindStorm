@@ -84,7 +84,7 @@ if (loginPd == null) {
 } else {
     personal.style.display = "block";
     //调用获取用户信息
-    // userMess(headBox, emailBox, perSig);
+    userMess(headBox, emailBox, perSig);
     // nameU.innerText = userName;
     nameBox.value = userName;
 }
