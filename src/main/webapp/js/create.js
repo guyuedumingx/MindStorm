@@ -163,7 +163,8 @@ modifyN.addEventListener("click", function () {
 });
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
-    nameBox.value = userName;
+    nameBox.value = nameBox.value;
+    nameU.innerText = nameBox.value;
     nameBox.readOnly = true;
     nameBox.style.borderBottom = "";
 });
@@ -424,7 +425,7 @@ introduceInput.addEventListener("keyup", function () {
 //导入
 var importNav = getDom(".import");
 
-function UpladFile() {
+function UpladXmind() {
     var file = importNav.files[0];
     //创建formdata对象
     var formdata = new FormData();
@@ -445,4 +446,4 @@ function UpladFile() {
         }
     }, true);
 }
-importNav.addEventListener("change", UpladFile);
+importNav.addEventListener("change", UpladXmind);
