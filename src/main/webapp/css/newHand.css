@@ -27,8 +27,13 @@
     line-height: 72px;
     text-align: center;
     color: #fff;
-    background-color: skyblue;
+    background-color: #87ceeb;
     cursor: pointer;
+    transition: background-color .3s;
+}
+
+.briefIntroduction .enter:hover {
+    background-color: #5ebbe0;
 }
 
 .w4 {
@@ -104,8 +109,13 @@
     line-height: 72px;
     text-align: center;
     color: #fff;
-    background-color: skyblue;
+    background-color: #87ceeb;
     cursor: pointer;
+    transition: background-color .3s;
+}
+
+.go:hover {
+    background-color: #5ebbe0;
 }
 
 .footer {
