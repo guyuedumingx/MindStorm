@@ -1507,7 +1507,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     nowNode.children[0].innerText = inpTheme;
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
-                    tipsCloseFunction();
+                    operationNodeBoxCloseFunction();
                 } else {
                     topAlert('淦');
                 }
