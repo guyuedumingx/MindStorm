@@ -9,50 +9,62 @@ tool.textProhibition();
 // var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
 // var progressColor = '#cccccc'; // 进度条颜色
 // var progressBoxColor = '#666666'; // 进度条盒子颜色
-var mainColor = '#1e1e1e'; // 主背景色
-var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
-var textColor = 'rgba(255, 255, 255, 0.8)'; // 文字颜色
-var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
-var progressColor = '#cccccc'; // 进度条颜色
-var progressBoxColor = '#666666'; // 进度条盒子颜色
-getDom('body').style.backgroundColor = mainColor;
-var mainBox = getDom('.mainBox');
-for (var i = 0; i < mainBox.children.length; i++) {
-    for (var j = 0; j < mainBox.children[i].children.length; j++) {
-        mainBox.children[i].children[j].style.backgroundColor = modularColor;
+var mainColor;
+var modularColor;
+var textColor = '#214b5b';
+var textLightColor;
+var progressColor;
+var progressBoxColor;
+
+// 配色函数
+function setColor() {
+    mainColor = '#1e1e1e'; // 主背景色
+    modularColor = 'rgb(51, 51, 51)'; // 模块背景色
+    textColor = 'rgba(255, 255, 255, 0.8)'; // 文字颜色
+    textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
+    progressColor = '#cccccc'; // 进度条颜色
+    progressBoxColor = '#666666'; // 进度条盒子颜色
+    getDom('body').style.backgroundColor = mainColor;
+    var mainBox = getDom('.mainBox');
+    for (var i = 0; i < mainBox.children.length; i++) {
+        for (var j = 0; j < mainBox.children[i].children.length; j++) {
+            mainBox.children[i].children[j].style.backgroundColor = modularColor;
+        }
+    }
+    getDom('.mainBoxLeft .creator h4').style.color = textColor;
+    getDom('.mainBoxLeft .introduce .introduceMain').style.backgroundColor = modularColor;
+    getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
+    getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
+    getDom('.mainBoxLeft .introduce p').style.color = textColor;
+    getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.background = 'linear-gradient(rgba(' + modularColor.split(')')[0].split('(')[1] + ', 0), rgba(' + modularColor.split(')')[0].split('(')[1] + ', 1))';
+    getDom('.mainBoxLeft .introduce a').style.color = textLightColor;
+    var setColorArr = getDomA('.onOffBox .onOff .onOffTips');
+    for (var i = 0; i < setColorArr.length; i++) {
+        setColorArr[i].style.color = textColor;
+    }
+    getDom('.mainBoxMiddle .treeBox').style.border = '20px solid ' + modularColor;
+    getDom('.mainBoxMiddle .treeBox .treeBoxMain').style.backgroundColor = mainColor;
+    getDom('.progressBar .projectName').style.color = textColor;
+    getDom('.progressBar .progressBarTop .creationDate').style.color = textColor;
+    getDom('.progressBar .progressBarTop .closingDate').style.color = textColor;
+    getDom('.progressBar .countDown').style.color = textColor;
+    getDom('.progressBar .progressBarTop .progressBox .progressContent').style.backgroundColor = progressColor;
+    getDom('.progressBar .progressBarTop .progressBox .wave').style.backgroundColor = progressColor;
+    getDom('.progressBar .progressBarTop .progressBox').style.backgroundColor = progressBoxColor;
+    getDom('.mainBoxRight .projectId h4').style.color = textColor;
+    getDom('.mainBoxRight .nowNode .nowNodeTheme').style.color = textColor;
+    getDom('.mainBoxRight .nowNode .nowNodeTitle').style.color = textColor;
+    setColorArr = getDomA('.displayControl .operationProject div .Before');
+    for (var i = 0; i < setColorArr.length; i++) {
+        setColorArr[i].style.backgroundColor = modularColor;
+    }
+    setColorArr = getDomA('.mainBoxRight .controller .btnBox .btn .Before');
+    for (var i = 0; i < setColorArr.length; i++) {
+        setColorArr[i].style.backgroundColor = modularColor;
     }
 }
-getDom('.mainBoxLeft .creator h4').style.color = textColor;
-getDom('.mainBoxLeft .introduce .introduceMain').style.backgroundColor = modularColor;
-getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
-getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
-getDom('.mainBoxLeft .introduce p').style.color = textColor;
-getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.background = 'linear-gradient(rgba(' + modularColor.split(')')[0].split('(')[1] + ', 0), rgba(' + modularColor.split(')')[0].split('(')[1] + ', 1))';
-getDom('.mainBoxLeft .introduce a').style.color = textLightColor;
-var setColor = getDomA('.onOffBox .onOff .onOffTips');
-for (var i = 0; i < setColor.length; i++) {
-    setColor[i].style.color = textColor;
-}
-getDom('.mainBoxMiddle .treeBox').style.border = '20px solid ' + modularColor;
-getDom('.mainBoxMiddle .treeBox .treeBoxMain').style.backgroundColor = mainColor;
-getDom('.progressBar .projectName').style.color = textColor;
-getDom('.progressBar .progressBarTop .creationDate').style.color = textColor;
-getDom('.progressBar .progressBarTop .closingDate').style.color = textColor;
-getDom('.progressBar .countDown').style.color = textColor;
-getDom('.progressBar .progressBarTop .progressBox .progressContent').style.backgroundColor = progressColor;
-getDom('.progressBar .progressBarTop .progressBox .wave').style.backgroundColor = progressColor;
-getDom('.progressBar .progressBarTop .progressBox').style.backgroundColor = progressBoxColor;
-getDom('.mainBoxRight .projectId h4').style.color = textColor;
-getDom('.mainBoxRight .nowNode .nowNodeTheme').style.color = textColor;
-getDom('.mainBoxRight .nowNode .nowNodeTitle').style.color = textColor;
-setColor = getDomA('.displayControl .operationProject div .Before');
-for (var i = 0; i < setColor.length; i++) {
-    setColor[i].style.backgroundColor = modularColor;
-}
-setColor = getDomA('.mainBoxRight .controller .btnBox .btn .Before');
-for (var i = 0; i < setColor.length; i++) {
-    setColor[i].style.backgroundColor = modularColor;
-}
+
+setColor();
 // header
 
 //-----------------------------------------------------
@@ -124,7 +136,7 @@ if (loginPd == null) {
 } else {
     personal.style.display = "block";
     //调用获取用户信息
-    
+
     nameU.innerText = userName;
     nameBox.value = userName;
 }
@@ -491,7 +503,7 @@ var nowNode; // 当前正在拖动的节点
 var nodeConstLen = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
 // var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 80; // 无关联节点之间的最小距离
-var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
+var bfb = 0.5; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
 var lineDownColor = '#6AC1ED'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色

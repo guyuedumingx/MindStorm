@@ -429,20 +429,68 @@ function UpladXmind() {
     //创建formdata对象
     var formdata = new FormData();
     formdata.append("file", file);
-
-    ajax({
-        type: 'post',
-        url: '/util/xmind',
-        data: formdata,
-        // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                // "test2.html?"+"txt="+encodeURI(s.value);
-            } else {
-                topAlert("导入失败");
+    //获取文件后缀
+    var format = file.name.slice(file.name.lastIndexOf('.') + 1);
+    var extName = "XMIND";
+    //首先对格式进行验证
+    if (extName.indexOf(format.toUpperCase()) == -1) {
+        topAlert("您只能导入xmind格式的文件");
+    } else {
+        ajax({
+            type: 'post',
+            url: '/util/xmind',
+            data: formdata,
+            // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                    // "test2.html?"+"txt="+encodeURI(s.value);
+                } else {
+                    topAlert("导入失败");
+                }
             }
-        }
-    }, true);
+        }, true);
+    }
+
 }
 importNav.addEventListener("change", UpladXmind);
+
+var mainColor = '#1e1e1e'; // 主背景色
+var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
+var textColor = 'rgba(255, 255, 255, 0.8)'; // 文字颜色
+var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
+var progressColor = '#cccccc'; // 进度条颜色
+var progressBoxColor = '#666666'; // 进度条盒子颜色
+//主题-----------------------
+function changeColor() {
+    //标题颜色
+    getDom(".mainTitle").style.color = textColor;
+    //页面底色
+    getDom("body").style.backgroundColor = mainColor;
+   //大盒子底色
+    getDom(".est_bigBox").style.backgroundColor = progressBoxColor;
+    getDom(".est_bigBox").style.color = textColor;
+    getDom(".join_bigBox").style.backgroundColor = progressBoxColor;
+
+    //提示颜色
+    getDom(".est_tips").style.color = textColor;
+    getDom(".join_tips").style.color = textColor;
+    //标题yans
+    getDom(".est_til").style.color = textColor;
+    getDom(".join_til").style.color = textColor;
+    //加入输入框颜色
+    getDom(".input_nav").style.borderColor = textColor;
+    getDom(".click_join").style.borderColor = textColor;
+    //加入输入文字颜色
+    // getDom(".inputID").style.color = textColor;
+    //新建按钮
+    getDom(".click_est").style.backgroundColor = progressColor;
+    getDom(".click_est").style.color = textColor;
+    //小盒子
+    var smallBox = getDomA(".smallBox");
+    for (var i = 0; i < smallBox.length; i++){
+        //背景色
+        smallBox[i].style.backgroundColor = progressBoxColor;
+    }
+}
+// changeColor();

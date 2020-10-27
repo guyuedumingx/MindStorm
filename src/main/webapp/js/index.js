@@ -1,6 +1,13 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
 
+var mainColor = '#1e1e1e'; // 主背景色
+var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
+var textColor = 'rgba(255, 255, 255, 0.8)'; // 文字颜色
+var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
+var progressColor = '#cccccc'; // 进度条颜色
+var progressBoxColor = '#666666'; // 进度条盒子颜色
+
 //获取用户id
 var loginPd = getCookie("user_id");
 //获取用户名
@@ -257,8 +264,8 @@ function projectSize(project) {
 // 板块切换-----------
 // 开始样式
 function start() {
-    personalBox.style.backgroundColor = "rgb(241, 240, 230)";
-    personalBox.style.color = "#071f3d";
+    personalBox.style.backgroundColor = progressBoxColor;
+    personalBox.style.color = textColor;
     projectSize(personalNav);
     window.addEventListener('resize', function () {
         projectSize(personalNav);
@@ -305,7 +312,7 @@ function liStyle(liArr) {
             liArr[i].className = "";
         } else {
             liArr[i].className = "boxS";
-            liArr[i].style.backgroundColor = "";
+            liArr[i].style.backgroundColor = progressBoxColor;
         }
     }
 }
@@ -419,6 +426,11 @@ function noProject(projectNav) {
 }
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
+    // 获取li数组
+    var liArr = getDomA("li", projectNav);
+
+    // var liArrB = getDomA("li", shareNav);
+
     if (projectLength == 0) {
         noProject(projectNav);
         //按钮
@@ -438,10 +450,6 @@ function addLiBox(projectLength, project, projectNav) {
             }
         }
         projectSize(projectNav);
-        // 获取li数组
-        var liArr = getDomA("li", projectNav);
-
-        // var liArrB = getDomA("li", shareNav);
 
         //按钮
         butStyle(projectNav, liArr, x);
@@ -457,22 +465,25 @@ function addLiBox(projectLength, project, projectNav) {
     }
 }
 
+//主题---------------li和start函数修改--------
+function changeColor() {
+    //标题颜色
+    getDom(".mainTitle").style.color = textColor;
+    //页面底色
+    getDom("body").style.backgroundColor = mainColor;
+    // 左边导航底色
+    getDom(".navigationBar").style.backgroundColor = modularColor;
+    //搜索框底色
+    getDom(".searchBox").style.backgroundColor = progressColor;
+    //搜索按钮颜色
+    getDom(".iconS").style.backgroundColor = progressBoxColor;
+    //新建加入按钮底色
+    getDom(".buildJoin").style.backgroundColor = progressBoxColor;
+    //新建加入按钮字颜色
+    getDom(".buildJoin").style.color = textColor;
+}
+changeColor();
+
+
 userMess(head, headBox, emailBox, perSig);
 
-//主题-----------------------
-function changeColor() {
-    //页面底色
-    getDom("body").style.backgroundColor="";
-    // 左边导航底色
-    getDom(".navigationBar").style.backgroundColor = "#333333";
-    //搜索框底色
-    getDom(".searchBox").style.backgroundColor = "";
-    //搜索按钮颜色
-    getDom(".iconS").style.backgroundColor = "";
-    //新建加入按钮底色
-    getDom(".buildJoin").style.backgroundColor = "";
-    //新建加入按钮字颜色
-    getDom(".buildJoin").style.color = "";
-    //项目底色
-    getDomA("li").style.backgroundColor = "";
-}
