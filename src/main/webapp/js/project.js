@@ -943,7 +943,7 @@ function createTree(node) {
                 theme.innerText = res.theme;
                 node.appendChild(theme);
                 node.content = res.content; // 主要内容
-                node.editable = res.editable; // 是否可被编辑
+                node.editable = res.banAppend; // 是否可被编辑
                 node.userName = res.userName; // 创建者
                 node.authorId = res.author; // 创建者Id
                 node.lastEditName = res.lastEditName; // 最后修改者
@@ -1052,44 +1052,58 @@ function ergodicTree(fun) {
 
 // #向页面中动态的增加一个节点（开发中）
 function treeAppendNode(father, nodeData) {
-    var node = document.createElement('div');
-    node.father = father;
-    node.style.backgroundColor = randomColor(100, 180);
-    node.addClass('node');
-    node.id = 100;
-    node.childArr = new Array();
-    node.style.display = 'none';
-    node.line = document.createElement('div');
-    node.lineColor = lineUpColor;
-    node.lineZIndex = 0;
-    treeBoxMain.appendChild(node);
-    node.childIdArr = [];
+    var appendNode = document.createElement('div');
+    appendNode.father = father;
+    father.childArr.push(appendNode);
+    appendNode.style.backgroundColor = randomColor(100, 180);
+    appendNode.addClass('node');
+    appendNode.id = nodeData.id;
+    appendNode.childArr = new Array();
+    appendNode.style.display = 'none';
+    appendNode.line = document.createElement('div');
+    appendNode.lineColor = lineUpColor;
+    appendNode.lineZIndex = 0;
+    treeBoxMain.appendChild(appendNode);
+    appendNode.childIdArr = [];
     var theme = document.createElement('div');
     theme.addClass('theme');
     theme.innerText = nodeData.theme;
-    node.appendChild(theme);
-    node.content = nodeData.content; // 主要内容
-    node.editable = nodeData.editable; // 是否可被编辑
-    node.userName = user.userName; // 创建者
-    node.authorId = user.userId; // 创建者Id
-    node.lastEditName = user.userName; // 最后修改者
-    node.lastEditTime = Date.now(); // 最后修改时间
-    node.star = 0; // 点赞数
-    node.style.display = 'block';
-    node.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
-    node.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
-    node.x = node.offsetLeft;
-    node.y = node.offsetTop;
-    // addTreeConstraint(node, father.layer + 1);
-    addConstraint(node, father, 1, nodeConstLen[node.layer]);
-    addConstraint(node, null, 3, null);
-    addSetLine(node, father);
+    appendNode.appendChild(theme);
+    appendNode.content = nodeData.content; // 主要内容
+    appendNode.editable = nodeData.editable; // 是否可被编辑
+    appendNode.userName = user.userName; // 创建者
+    appendNode.authorId = user.userId; // 创建者Id
+    appendNode.lastEditName = user.userName; // 最后修改者
+    appendNode.lastEditTime = Date.now(); // 最后修改时间
+    appendNode.star = 0; // 点赞数
+    appendNode.style.display = 'block';
+    appendNode.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
+    appendNode.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
+    appendNode.x = appendNode.offsetLeft;
+    appendNode.y = appendNode.offsetTop;
+    addTreeConstraint(appendNode, father.layer + 1);
+    addConstraint(appendNode, father, 1, nodeConstLen[father.layer]);
+    addSetLine(appendNode, father);
     for (var i = 0; i < nodeSet.length; i++) {
-        if (nodeSet[i] != father) {
-            addConstraint(node, nodeSet[i], 2, nodeMinLen);
+        if (nodeSet[i] != appendNode && nodeSet != father) {
+            addConstraint(appendNode, nodeSet[i], 2, nodeMinLen);
         }
     }
+    addConstraint(appendNode, null, 3, null);
 }
+
+
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Alt') {
+        e.preventDefault();
+        treeAppendNode(nowNode, {
+            id: 123,
+            theme: '动态添加节点测试',
+            content: '暂无',
+            editable: false
+        });
+    }
+});
 
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
@@ -1215,8 +1229,8 @@ function changeNodeEvent() {
 // 页面加载时先调用一次
 changeNodeEvent();
 
-// 关闭按钮的点击事件
-operationNodeBoxClose.addEventListener('click', function () {
+// 关闭操作节点框的函数
+function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBox.hide();
     transparentBaffle.hide();
@@ -1227,7 +1241,10 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxNodeCreator.hide();
     operationNodeBoxLastRevision.hide();
     operationNodeBoxSubmit.hide();
-});
+}
+
+// 关闭按钮的点击事件
+operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
 
 // 关闭提示框函数
 function tipsCloseFunction() {
@@ -1436,7 +1453,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             url: '/node',
             data: {
                 content: inpContent,
-                editable: operationNodeBoxJurisdiction.state,
+                banAppend: operationNodeBoxJurisdiction.state,
                 theme: inpTheme,
                 parentId: nowNode.id,
                 projectId: projectId
@@ -1446,7 +1463,13 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    location.reload();
+                    treeAppendNode(nowNode, {
+                        id: res.node_id,
+                        theme: inpTheme,
+                        content: inpContent,
+                        editable: operationNodeBoxJurisdiction.state,
+                    });
+                    operationNodeBoxCloseFunction();
                 } else {
                     topAlert('淦');
                 }
@@ -1472,7 +1495,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 id: nowNode.id,
                 theme: inpTheme,
                 content: inpContent,
-                editable: operationNodeBoxJurisdiction.state,
+                banAppend: operationNodeBoxJurisdiction.state,
                 projectId: projectId
             },
             header: {
@@ -1481,7 +1504,10 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    location.reload();
+                    nowNode.children[0].innerText = inpTheme;
+                    nowNode.content = inpContent;
+                    nowNode.editable = operationNodeBoxJurisdiction.state;
+                    tipsCloseFunction();
                 } else {
                     topAlert('淦');
                 }
