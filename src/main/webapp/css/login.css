@@ -59,7 +59,7 @@ body::after {
     box-shadow: 0px 2px 5px #999;
     box-sizing: border-box;
     background-color: #fff;
-    transition: transform 1s;
+    transition: transform .5s;
     transform-style: preserve-3d;
 }
 
@@ -280,8 +280,9 @@ body::after {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 64px;
+    width: 75px;
     height: 20px;
+    font-size: 15px;
     text-align-last: justify;
     color: #214B5B;
 }
@@ -304,7 +305,7 @@ body::after {
     border: 0px;
     border-bottom: 1.5px solid #3a6c65;
     margin-top: 25px;
-    margin-left: 84px;
+    margin-left: 88px;
     font-size: 14px;
     text-indent: 0.2em;
     color: #000;
@@ -333,20 +334,20 @@ body::after {
 
 .mainBox .register .VC {
     float: left;
-    width: 32%;
+    width: 34%;
     margin: 0px;
-    margin-left: 84px;
+    margin-left: 88px;
 }
 
 .mainBox .register .getVC {
     float: right;
-    width: 36%;
+    width: 32%;
     height: 40px;
     padding: 0px;
     border: 0px;
     border-radius: 4px;
     margin-top: -37px;
-    margin-right: -4px;
+    margin-right: -8px;
     font-size: 12px;
     color: #fff;
     background-color: #214b5b;
