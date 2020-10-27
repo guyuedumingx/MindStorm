@@ -429,20 +429,28 @@ function UpladXmind() {
     //创建formdata对象
     var formdata = new FormData();
     formdata.append("file", file);
-
-    ajax({
-        type: 'post',
-        url: '/util/xmind',
-        data: formdata,
-        // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
-        success: function (res) {
-            if (res.status_code == '200') {
-                window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
-                // "test2.html?"+"txt="+encodeURI(s.value);
-            } else {
-                topAlert("导入失败");
+    //获取文件后缀
+    var format = file.name.slice(file.name.lastIndexOf('.') + 1);
+    var extName = "XMIND";
+    //首先对格式进行验证
+    if (extName.indexOf(format.toUpperCase()) == -1) {
+        topAlert("您只能导入xmind格式的文件");
+    } else {
+        ajax({
+            type: 'post',
+            url: '/util/xmind',
+            data: formdata,
+            // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                    // "test2.html?"+"txt="+encodeURI(s.value);
+                } else {
+                    topAlert("导入失败");
+                }
             }
-        }
-    }, true);
+        }, true);
+    }
+
 }
 importNav.addEventListener("change", UpladXmind);
