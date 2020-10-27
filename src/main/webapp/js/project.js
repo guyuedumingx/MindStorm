@@ -597,7 +597,7 @@ var nowNode; // 当前正在拖动的节点
 var nodeConstLen = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
 // var nodeConstLen = [80, 75, 70, 65, 50]; // 父子节点之间的固定距离
 var nodeMinLen = 80; // 无关联节点之间的最小距离
-var bfb = 0.5; // 节点之间线的松紧，紧0 - 1松
+var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
 var lineDownColor = '#6AC1ED'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色
@@ -1395,6 +1395,13 @@ queryNode.addEventListener('click', function () {
 // 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
     location.reload();
+});
+
+// 操作节点框
+operationNodeBoxContent.addEventListener('focus', function () {
+    if (this.value == '暂无') {
+        this.value = '';
+    }
 });
 
 // 操作节点框中提交按钮点击事件
