@@ -578,6 +578,18 @@ treeFullScreenOnOff.addEventListener('click', function () {
     }
 });
 
+// 全屏快捷键(ctrl + F)
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'f' && e.ctrlKey) {
+        e.preventDefault();
+        if (!treeFullScreenState) {
+            domFullScreen(treeBox);
+            this.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+            treeFullScreenState = true;
+        }
+    }
+});
+
 //监听退出全屏事件
 function checkFull() {
     return document.webkitIsFullScreen;
