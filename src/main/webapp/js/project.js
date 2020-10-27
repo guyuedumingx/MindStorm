@@ -1229,8 +1229,8 @@ function changeNodeEvent() {
 // 页面加载时先调用一次
 changeNodeEvent();
 
-// 关闭按钮的点击事件
-operationNodeBoxClose.addEventListener('click', function () {
+// 关闭操作节点框的函数
+function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBox.hide();
     transparentBaffle.hide();
@@ -1241,7 +1241,10 @@ operationNodeBoxClose.addEventListener('click', function () {
     operationNodeBoxNodeCreator.hide();
     operationNodeBoxLastRevision.hide();
     operationNodeBoxSubmit.hide();
-});
+}
+
+// 关闭按钮的点击事件
+operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
 
 // 关闭提示框函数
 function tipsCloseFunction() {
@@ -1466,7 +1469,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                         content: inpContent,
                         editable: operationNodeBoxJurisdiction.state,
                     });
-                    tipsCloseFunction();
+                    operationNodeBoxCloseFunction();
                 } else {
                     topAlert('淦');
                 }
