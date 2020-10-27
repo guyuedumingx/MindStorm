@@ -17,6 +17,10 @@ public class RecentProjectDaoImpl extends BaseDaoImpl<RecentProject> implements 
 
     @Override
     public String getQueryCondition(RecentProject po) {
-        return  "user_id = " + po.getUserId();
+        if(po.getProjectId()==0) {
+            return "user_id = " + po.getUserId();
+        }else {
+            return "user_id = " + po.getUserId() + " and project_id = " + po.getProjectId();
+        }
     }
 }
