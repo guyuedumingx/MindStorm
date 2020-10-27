@@ -19,7 +19,7 @@ goLogin.addEventListener("click", function () {
 
 forgetPasswoed.addEventListener("click", function (e) {
     e.preventDefault();
-    topAlert("密码忘了活该");
+    topAlert("该功能还在开发中");
 });
 
 // 邮箱提示blur事件

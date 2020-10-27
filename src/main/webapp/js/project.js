@@ -1050,7 +1050,7 @@ function ergodicTree(fun) {
     }
 }
 
-// #向页面中动态的增加一个节点（开发中）
+// 向页面中动态的增加一个节点
 function treeAppendNode(father, nodeData) {
     var appendNode = document.createElement('div');
     appendNode.father = father;
@@ -1092,7 +1092,38 @@ function treeAppendNode(father, nodeData) {
     addConstraint(appendNode, null, 3, null);
 }
 
+// 动态删除页面中的节点
+function treeRemoveNode(node) {
+    if (node.childArr.length == 0) {
+        var arr = new Array();
+        for (var i = 0; i < nodeSet.length; i++) {
+            if (nodeSet[i] != node) {
+                arr.push(nodeSet[i]);
+            }
+        }
+        nodeSet = arr;
+        arr = new Array();
+        for (var i = 0; i < constraintArr.length; i++) {
+            if (!(constraintArr[i][0] == node || (constraintArr[i][2] == 2 && constraintArr[i][1] == node))) {
+                arr.push(constraintArr[i]);
+            }
+        }
+        constraintArr = arr;
+        arr = new Array();
+        for (var i = 0; i < setLineArr.length; i++) {
+            if (!(setLineArr[i][0] == node || setLineArr[i][1] == node)) {
+                arr.push(setLineArr[i]);
+            }
+        }
+        setLineArr = arr;
+        treeBoxMain.removeChild(node.line);
+        treeBoxMain.removeChild(node);
+    } else {
+        topAlert('删除失败');
+    }
+}
 
+// 测试用的
 document.addEventListener('keydown', function (e) {
     if (e.key == 'Alt') {
         e.preventDefault();
@@ -1102,6 +1133,9 @@ document.addEventListener('keydown', function (e) {
             content: '暂无',
             editable: false
         });
+    } else if (e.key == 'Delete') {
+        e.preventDefault();
+        treeRemoveNode(nowNode);
     }
 });
 
@@ -1291,9 +1325,9 @@ tipsYes.addEventListener('click', function () {
             },
             success: function (res) {
                 if (res.status_code == '200') {
-                    location.reload();
+                    treeRemoveNode(nowNode);
                 } else {
-                    topAlert('淦');
+                    topAlert('删除失败');
                 }
             }
         });
@@ -1471,7 +1505,8 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     });
                     operationNodeBoxCloseFunction();
                 } else {
-                    topAlert('淦');
+                    topAlert('创建失败');
+                    operationNodeBoxCloseFunction();
                 }
             }
         });
@@ -1509,12 +1544,14 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     nowNode.editable = operationNodeBoxJurisdiction.state;
                     operationNodeBoxCloseFunction();
                 } else {
-                    topAlert('淦');
+                    topAlert('修改失败');
+                    operationNodeBoxCloseFunction();
                 }
             }
         });
     } else {
-        topAlert('淦');
+        topAlert('出现未知错误');
+        operationNodeBoxCloseFunction();
     }
 });
 
