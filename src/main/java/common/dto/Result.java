@@ -3,7 +3,7 @@ package common.dto;
 import java.util.HashMap;
 
 /**
- * 返回
+ * 返回给前端的对象
  * @author yohoyes
  */
 public class Result extends HashMap<String,String>{
