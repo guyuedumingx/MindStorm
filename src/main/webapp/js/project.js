@@ -943,7 +943,7 @@ function createTree(node) {
                 theme.innerText = res.theme;
                 node.appendChild(theme);
                 node.content = res.content; // 主要内容
-                node.editable = res.editable; // 是否可被编辑
+                node.editable = res.banAppend; // 是否可被编辑
                 node.userName = res.userName; // 创建者
                 node.authorId = res.author; // 创建者Id
                 node.lastEditName = res.lastEditName; // 最后修改者
@@ -1450,7 +1450,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             url: '/node',
             data: {
                 content: inpContent,
-                editable: operationNodeBoxJurisdiction.state,
+                banAppend: operationNodeBoxJurisdiction.state,
                 theme: inpTheme,
                 parentId: nowNode.id,
                 projectId: projectId
@@ -1460,12 +1460,13 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    treeAppendNode(father, {
+                    treeAppendNode(nowNode, {
                         id: res.node_id,
                         theme: inpTheme,
                         content: inpContent,
                         editable: operationNodeBoxJurisdiction.state,
                     });
+                    tipsCloseFunction();
                 } else {
                     topAlert('淦');
                 }
@@ -1491,7 +1492,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 id: nowNode.id,
                 theme: inpTheme,
                 content: inpContent,
-                editable: operationNodeBoxJurisdiction.state,
+                banAppend: operationNodeBoxJurisdiction.state,
                 projectId: projectId
             },
             header: {
@@ -1503,6 +1504,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     nowNode.children[0].innerText = inpTheme;
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
+                    tipsCloseFunction();
                 } else {
                     topAlert('淦');
                 }
