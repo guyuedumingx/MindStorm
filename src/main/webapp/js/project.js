@@ -1090,7 +1090,6 @@ function treeAppendNode(father, nodeData) {
         }
     }
     addConstraint(appendNode, null, 3, null);
-    // appendNode.line.style.backgroundColor = lineDownColor;
 }
 
 
@@ -1461,7 +1460,12 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    location.reload();
+                    treeAppendNode(father, {
+                        id: res.node_id,
+                        theme: inpTheme,
+                        content: inpContent,
+                        editable: operationNodeBoxJurisdiction.state,
+                    });
                 } else {
                     topAlert('淦');
                 }
@@ -1496,7 +1500,9 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    location.reload();
+                    nowNode.children[0].innerText = inpTheme;
+                    nowNode.content = inpContent;
+                    nowNode.editable = operationNodeBoxJurisdiction.state;
                 } else {
                     topAlert('淦');
                 }
