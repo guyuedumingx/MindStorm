@@ -11,7 +11,7 @@ tool.textProhibition();
 // var progressBoxColor = '#666666'; // 进度条盒子颜色
 var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', '#214b5b', 'rgba(255, 167, 15)', '#214b5b', '#ffffff'],
 ['#1e1e1e', 'rgb(51, 51, 51)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 167, 15)', '#cccccc', '#666666']];
-var colorState = 1;
+var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
 var textColor = '#214b5b'; // 文字颜色
@@ -28,49 +28,77 @@ function setColor() {
     progressColor = colorSet[colorState][4];
     progressBoxColor = colorSet[colorState][5];
     getDom('body').style.backgroundColor = mainColor;
+    getDom('body').style.transition = 'background-color .5s';
     var mainBox = getDom('.mainBox');
     for (var i = 0; i < mainBox.children.length; i++) {
         for (var j = 0; j < mainBox.children[i].children.length; j++) {
             mainBox.children[i].children[j].style.backgroundColor = modularColor;
+            mainBox.children[i].children[j].style.transition = 'background-color .5s';
         }
     }
     getDom('.mainBoxLeft .creator h4').style.color = textColor;
+    getDom('.mainBoxLeft .creator h4').style.transition = 'color .5s';
     getDom('.mainBoxLeft .introduce .introduceMain').style.backgroundColor = modularColor;
+    getDom('.mainBoxLeft .introduce .introduceMain').style.transition = 'background-color .5s';
     getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
+    getDomA('.mainBoxLeft .introduce h4')[0].style.transition = 'color .5s';
     getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
+    getDomA('.mainBoxLeft .introduce h4')[1].style.transition = 'color .5s';
     getDom('.mainBoxLeft .introduce p').style.color = textColor;
+    getDom('.mainBoxLeft .introduce p').style.transition = 'color .5s';
     getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.background = 'linear-gradient(rgba(' + modularColor.split(')')[0].split('(')[1] + ', 0), rgba(' + modularColor.split(')')[0].split('(')[1] + ', 1))';
     getDom('.mainBoxLeft .introduce a').style.color = textLightColor;
+    getDom('.mainBoxLeft .introduce a').style.transition = 'color .5s';
     var setColorArr = getDomA('.onOffBox .onOff .onOffTips');
     for (var i = 0; i < setColorArr.length; i++) {
         setColorArr[i].style.color = textColor;
+        setColorArr[i].style.transition = 'color .5s';
     }
     getDom('.mainBoxMiddle .treeBox').style.border = '20px solid ' + modularColor;
+    getDom('.mainBoxMiddle .treeBox').style.transition = 'border .5s';
     getDom('.mainBoxMiddle .treeBox .treeBoxMain').style.backgroundColor = mainColor;
+    getDom('.mainBoxMiddle .treeBox .treeBoxMain').style.transition = 'background-color .5s';
     getDom('.progressBar .projectName').style.color = textColor;
+    getDom('.progressBar .projectName').style.transition = 'color .5s';
     getDom('.progressBar .progressBarTop .creationDate').style.color = textColor;
+    getDom('.progressBar .progressBarTop .creationDate').style.transition = 'color .5s';
     getDom('.progressBar .progressBarTop .closingDate').style.color = textColor;
+    getDom('.progressBar .progressBarTop .closingDate').style.transition = 'color .5s'; textColor;
     getDom('.progressBar .countDown').style.color = textColor;
+    getDom('.progressBar .countDown').style.transition = 'color .5s';
     getDom('.progressBar .progressBarTop .progressBox .progressContent').style.backgroundColor = progressColor;
+    getDom('.progressBar .progressBarTop .progressBox .progressContent').style.transition = 'background-color .5s';
     getDom('.progressBar .progressBarTop .progressBox .wave').style.backgroundColor = progressColor;
+    getDom('.progressBar .progressBarTop .progressBox .wave').style.transition = 'background-color .5s';
     getDom('.progressBar .progressBarTop .progressBox').style.backgroundColor = progressBoxColor;
+    getDom('.progressBar .progressBarTop .progressBox').style.transition = 'background-color .5s';
     getDom('.mainBoxRight .projectId h4').style.color = textColor;
+    getDom('.mainBoxRight .projectId h4').style.transition = 'color .5s';
     getDom('.mainBoxRight .nowNode .nowNodeTheme').style.color = textColor;
+    getDom('.mainBoxRight .nowNode .nowNodeTheme').style.transition = 'color .5s';
     getDom('.mainBoxRight .nowNode .nowNodeTitle').style.color = textColor;
+    getDom('.mainBoxRight .nowNode .nowNodeTitle').style.transition = 'color .5s';
     setColorArr = getDomA('.displayControl .operationProject div .Before');
     for (var i = 0; i < setColorArr.length; i++) {
         setColorArr[i].style.backgroundColor = modularColor;
+        setColorArr[i].style.transition = 'background-color .5s';
     }
     setColorArr = getDomA('.mainBoxRight .controller .btnBox .btn .Before');
     for (var i = 0; i < setColorArr.length; i++) {
         setColorArr[i].style.backgroundColor = modularColor;
+        setColorArr[i].style.transition = 'background-color .5s';
     }
 }
 
 setColor();
 
-function changeColor() {
-
+function changeColor(state) {
+    mainColor = colorSet[state][0];
+    modularColor = colorSet[state][1];
+    textColor = colorSet[state][2];
+    textLightColor = colorSet[state][3];
+    progressColor = colorSet[state][4];
+    progressBoxColor = colorSet[state][5];
     getDom('body').style.backgroundColor = mainColor;
     var mainBox = getDom('.mainBox');
     for (var i = 0; i < mainBox.children.length; i++) {
@@ -83,7 +111,7 @@ function changeColor() {
     getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
     getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
     getDom('.mainBoxLeft .introduce p').style.color = textColor;
-    getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.background = 'linear-gradient(rgba(' + modularColor.split(')')[0].split('(')[1] + ', 0), rgba(' + modularColor.split(')')[0].split('(')[1] + ', 1))';
+    getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.opacity = '0';
     getDom('.mainBoxLeft .introduce a').style.color = textLightColor;
     var setColorArr = getDomA('.onOffBox .onOff .onOffTips');
     for (var i = 0; i < setColorArr.length; i++) {
@@ -101,6 +129,12 @@ function changeColor() {
     getDom('.mainBoxRight .projectId h4').style.color = textColor;
     getDom('.mainBoxRight .nowNode .nowNodeTheme').style.color = textColor;
     getDom('.mainBoxRight .nowNode .nowNodeTitle').style.color = textColor;
+    getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.transition = 'opacity 0s';
+    setTimeout(function () {
+        getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.transition = 'opacity 1s';
+        getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.background = 'linear-gradient(rgba(' + modularColor.split(')')[0].split('(')[1] + ', 0), rgba(' + modularColor.split(')')[0].split('(')[1] + ', 1))';
+        getDom('.mainBoxLeft .introduce .introduceMain .introduceMainAfter').style.opacity = '1';
+    }, 250);
     setColorArr = getDomA('.displayControl .operationProject div .Before');
     for (var i = 0; i < setColorArr.length; i++) {
         setColorArr[i].style.backgroundColor = modularColor;
@@ -109,9 +143,24 @@ function changeColor() {
     for (var i = 0; i < setColorArr.length; i++) {
         setColorArr[i].style.backgroundColor = modularColor;
     }
+    ergodicTree(function (node) {
+        node.getDom('.theme').style.color = textColor;
+    });
+    lineUpColor = textColor;
+    hideLineClick();
 }
-// header
 
+// 夜间模式(ctrl + E)
+var naghtState = 1; // 当前状态
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'e' && e.ctrlKey) {
+        e.preventDefault();
+        changeColor(naghtState);
+        naghtState = 1 - naghtState;
+    }
+});
+
+// header
 //-----------------------------------------------------
 
 //获取用户id
@@ -1490,8 +1539,8 @@ function setOnOffEvent(onOff, fun) {
     }
 }
 
-// 隐藏节点间线条
-setOnOffEvent(hideLine, function () {
+// 隐藏无关节点间线条函数
+function hideLineClick() {
     if (hideLine.state) {
         lineUpColor = mainColor;
         ergodicTree(function (node) {
@@ -1523,7 +1572,10 @@ setOnOffEvent(hideLine, function () {
             });
         }
     }
-});
+}
+
+// 隐藏节点间线条
+setOnOffEvent(hideLine, hideLineClick);
 
 // 锁定所有节点
 setOnOffEvent(lockingNode);
