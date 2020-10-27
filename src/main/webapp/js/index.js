@@ -294,10 +294,10 @@ shareBox.addEventListener("click", function () {
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
-    personalBox.style.backgroundColor = "#E6EEF1";
+    personalBox.style.backgroundColor = "#D1DADA";
     personalBox.style.color = "#214B5B";
     shareBox.style.backgroundColor = "";
-    shareBox.style.color = "#fff";
+    shareBox.style.color = "#214B5B";
     personalNav.style.display = "block";
     shareNav.style.display = "none";
     projectSize(personalNav);

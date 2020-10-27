@@ -490,7 +490,7 @@ body .mainBox {
     padding-left: 10px;
     font-size: 18px;
     height: 40px;
-    width: 400px;
+    width: 405px;
     border: solid #999;
     border-radius: 10px;
     vertical-align: middle;
@@ -499,6 +499,10 @@ body .mainBox {
 
 .mainBox .Box .est_bigBox .project_name span {
     /* float: left; */
+    display: inline-block;
+    width: 100px;
+    margin-right: 5px;
+    text-align-last: justify;
     vertical-align: middle;
 }
 
@@ -532,8 +536,9 @@ body .mainBox {
 
 .mainBox .Box .est_bigBox .introduce {
     float: left;
-    letter-spacing: 4px;
-    padding-left: 3px;
+    width: 100px;
+    margin-right: 5px;
+    text-align-last: justify;
 }
 
 /* 选择 */
