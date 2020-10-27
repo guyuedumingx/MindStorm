@@ -425,42 +425,40 @@ function noProject(projectNav) {
 }
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
+
+    //项目板块数目
+    var x = Math.ceil(projectLength / 6);
+    //获取项目大框架
+    var projectLi = getDom(".projectLi", projectNav);
+    for (var i = 0; i < x; i++) {
+        var div = document.createElement("div");
+        div.className = "liNav";
+        projectLi.appendChild(div);
+        for (var j = 0; j < 6; j++) {
+            var li = document.createElement("li");
+            div.appendChild(li);
+        }
+    }
+    projectSize(projectNav);
     // 获取li数组
     var liArr = getDomA("li", projectNav);
 
     // var liArrB = getDomA("li", shareNav);
 
+    //按钮
+    butStyle(projectNav, liArr, x);
+    // butStyle(shareNav, liArrB);
+
+    // 将项目放进板块
+    create(project, projectLength, liArr);
+    // create(shareProject, shareProjectLength, liArrB);
+
+    //判断是否有内容
+    liStyle(liArr);
+    // liStyle(liArrB);
+
     if (projectLength == 0) {
         noProject(projectNav);
-        //按钮
-        butStyle(projectNav, liArr, projectLength);
-    } else {
-        //项目板块数目
-        var x = Math.ceil(projectLength / 6);
-        //获取项目大框架
-        var projectLi = getDom(".projectLi", projectNav);
-        for (var i = 0; i < x; i++) {
-            var div = document.createElement("div");
-            div.className = "liNav";
-            projectLi.appendChild(div);
-            for (var j = 0; j < 6; j++) {
-                var li = document.createElement("li");
-                div.appendChild(li);
-            }
-        }
-        projectSize(projectNav);
-
-        //按钮
-        butStyle(projectNav, liArr, x);
-        // butStyle(shareNav, liArrB);
-
-        // 将项目放进板块
-        create(project, projectLength, liArr);
-        // create(shareProject, shareProjectLength, liArrB);
-
-        //判断是否有内容
-        liStyle(liArr);
-        // liStyle(liArrB);
     }
 }
 
@@ -485,4 +483,3 @@ function changeColor() {
 
 
 userMess(head, headBox, emailBox, perSig);
-
