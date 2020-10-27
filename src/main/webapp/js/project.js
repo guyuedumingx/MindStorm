@@ -927,6 +927,7 @@ function createTree(node) {
                 var theme = document.createElement('div');
                 theme.addClass('theme');
                 theme.style.color = textColor;
+                theme.style.transition = 'color .5s';
                 theme.innerText = res.theme;
                 node.appendChild(theme);
                 node.content = res.content; // 主要内容
