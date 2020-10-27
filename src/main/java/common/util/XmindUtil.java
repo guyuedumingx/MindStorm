@@ -113,6 +113,7 @@ public class XmindUtil {
         project.setName(sheet.getRootTopic().getTitleText());
         project.setPublic(false);
         project.setRank(1);
+        project.setIntroduction("该项目还没有简介哦,快来加上吧!");
         project.setIntroduction(sheet.getRootTopic().getNotes().toString());
         project.setDeadline(System.currentTimeMillis()+"");
         return projectService.newProject(project,false,userId);
