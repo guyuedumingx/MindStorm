@@ -1460,12 +1460,13 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    treeAppendNode(father, {
+                    treeAppendNode(nowNode, {
                         id: res.node_id,
                         theme: inpTheme,
                         content: inpContent,
                         editable: operationNodeBoxJurisdiction.state,
                     });
+                    tipsCloseFunction();
                 } else {
                     topAlert('淦');
                 }
@@ -1503,6 +1504,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     nowNode.children[0].innerText = inpTheme;
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
+                    tipsCloseFunction();
                 } else {
                     topAlert('淦');
                 }
