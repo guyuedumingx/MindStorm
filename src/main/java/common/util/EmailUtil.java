@@ -3,6 +3,7 @@ package common.util;
 import common.dto.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pojo.Project;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
@@ -93,9 +94,9 @@ public class EmailUtil {
                 "\n" +
                 "<body>\n" +
                 "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden;\">\n" +
-                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://8.129.110.151/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
                 "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
-                "                src=\"http://120.24.111.0/img/logo.png\">\n" +
+                "                src=\"http://8.129.110.151/img/logo.png\">\n" +
                 "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
                 "        </div>\n" +
                 "        <h4 style=\"padding: 5px 20px;font-size: 32px;color: #057082;\">验证您的邮箱注册地址</h4>\n" +
@@ -118,9 +119,9 @@ public class EmailUtil {
                 "\n" +
                 "<body>\n" +
                 "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden\">\n" +
-                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://120.24.111.0/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://8.129.110.151/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
                 "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
-                "                src=\"http://120.24.111.0/img/logo.png\">\n" +
+                "                src=\"http://8.129.110.151/img/logo.png\">\n" +
                 "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
                 "        </div>\n" +
                 "        <h4 style=\"padding: 5px 20px;font-size: 22px;color: #057082;\">您正在修改 思维风暴 的密码</h4>\n" +
@@ -131,5 +132,29 @@ public class EmailUtil {
                 "        <h6 style=\"padding: 5px 20px;margin-bottom: 30px;font-size: 8px;font-weight: 400;text-align: center;color: #999;\">广东金融学院————绝不互相甩锅队</h6>\n" +
                 "    </div>";
         return sendEmail(to, "修改密码",content);
+    }
+
+    public static int sendEmailForDeadline(String to, Project project){
+        String content = "<style type=\"text/css\">\n" +
+                "* {\n" +
+                "margin: 0;\n" +
+                "}\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body>\n" +
+                "    <div style=\"position: relative;max-width: 400px;margin: 20px auto;border: 1.5px solid #e0f3f0;padding: 5px;overflow:hidden\">\n" +
+                "        <div style=\"position: absolute;top: 0px;left: 0px;width: 100%;height: 120%;background-image: url(http://8.129.110.151/img/logo.png);background-size: 80%;background-repeat: no-repeat;background-position: center 12px;opacity: 0.1;pointer-events: none;\"></div>\n" +
+                "        <div style=\"padding: 5px 20px;background-color: #f3f7f5;\"><img style=\"display: inline-block;width: 22px;vertical-align: middle;\"\n" +
+                "                src=\"http://8.129.110.151/img/logo.png\">\n" +
+                "            <b style=\"display: inline-block;margin-left: -5px;font-size: 12px;color: #057082;vertical-align: middle;\">思维风暴</b>\n" +
+                "        </div>\n" +
+                "        <h5 style=\"font-size: 22px;color: #057082;\">您的项目: </h5>" +
+                "        <h4 style=\"font-size: 22px;color: #057082;\">"+project.getName()+"</h4>" +
+                "        <p style=\"padding: 3px 20px;margin-bottom: 12px;font-size: 12px;\">即将在 "+project.getDeadline()+" 时到期,请您注意过期时间!</p>\n" +
+                "        <p style=\"padding: 3px 20px;margin-bottom: 12px;font-size: 12px;\">这一封邮件包括一些您的私密的 思维风暴 账号信息，请不要回复或转发它，以免带来不必要的信息泄露风险。</p>\n" +
+                "        <h6 style=\"padding: 5px 20px;margin-bottom: 30px;font-size: 8px;font-weight: 400;text-align: center;color: #999;\">广东金融学院————绝不互相甩锅队</h6>\n" +
+                "    </div>";
+        return sendEmail(to, "项目即将到期",content);
     }
 }

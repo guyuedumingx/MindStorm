@@ -2,6 +2,7 @@ package service.impl;
 
 import common.factory.DaoFactory;
 import common.util.IntListUtil;
+import common.util.MD5Util;
 import dao.UserDao;
 import dao.auxiliary.impl.FollowDaoImpl;
 import pojo.User;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String email, String pwd) {
         User u = new User();
+        pwd = MD5Util.getResult(pwd);
         u.setEmail("'"+email+"'");
         u.setPassword("'"+pwd+"'");
         return userDao.selectOne(u);
@@ -46,6 +48,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
         user.setExp(0);
+        String password = MD5Util.getResult(user.getPassword());
+        user.setPassword(password);
         user.setUserAvatar("/img/avatar/default"+(int)(Math.random()*3)+".png");
         user.setUserSignature("这家伙很懒,什么也没留下!");
         int i = userDao.insertOne(user);
