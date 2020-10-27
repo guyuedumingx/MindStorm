@@ -326,7 +326,7 @@ body .header {
     position: relative;
     flex: 1;
     height: 100%;
-    background-color: #132C33;
+    background-color: #F8FCFA;
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
@@ -341,7 +341,8 @@ body .header {
     width: 90%;
     height: 6%;
     margin: 12% 0;
-    background-color: #E6EEF1;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 2px #000;
     border-radius: 50px;
 }
 
@@ -351,7 +352,7 @@ body .header {
     width: 20%;
     height: 100%;
     border-radius: 50px;
-    background-color: rgb(176, 200, 211);
+    background-color:#E6EEF1;
     background-image: url(../img/search.png);
     background-size: 50%;
     background-repeat: no-repeat;
@@ -376,7 +377,7 @@ body .header {
 .mainBox .navigationBar .personalBox {
     width: 100%;
     height: 7%;
-    color: #E6EEF1;
+    color: #214B5B;
     cursor: pointer;
 }
 
@@ -400,16 +401,15 @@ body .header {
     font-size: 20px;
     color: #071f3d;
     border-radius: 5px;
-    background: rgb(241, 240, 230);
+    background: #E6EEF1;
     cursor: pointer;
     transition: color 0.5s ease;
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 4px 4px 5px 0px rgba(0, 0, 0, .1);
+    /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 4px 4px 5px 0px rgba(0, 0, 0, .1); */
 }
 
 .mainBox .navigationBar .buildJoin:hover {
     color: #E6EEF1;
     background: transparent;
-    box-shadow: none;
 }
 
 .buildJoin:before,
@@ -475,7 +475,7 @@ body .header {
     width: 28%;
     height: 40%;
     border-radius: 5px;
-    background-color: rgb(255, 255, 255);
+    background-color:#F8FCFA;
     cursor: pointer;
 }
 .mainBox .projectBox .projectLi li>div{
@@ -556,7 +556,7 @@ body .header {
     top: 50%;
     height:7%;
     width: 5%;
-    background-image: url(../img/share_left_s.png);
+    background-image: url(../img/share_left_q.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -565,10 +565,13 @@ body .header {
 }
 .rightBut{
   left: 92%;
-  background-image: url(../img/share_right_s.png);
+  background-image: url(../img/share_right_q.png);
 }
-.leftBut:hover,.rightBut:hover{
-    box-shadow: inset 0 0 5px #214B5B;
+.leftBut:hover{
+    background-image: url(../img/share_left_s.png);
+}
+.rightBut:hover{
+    background-image: url(../img/share_right_s.png);
 }
 /*#endregion*/
 body {

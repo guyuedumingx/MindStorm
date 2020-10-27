@@ -264,8 +264,8 @@ function projectSize(project) {
 // 板块切换-----------
 // 开始样式
 function start() {
-    personalBox.style.backgroundColor = progressBoxColor;
-    personalBox.style.color = textColor;
+    personalBox.style.backgroundColor = "rgb(240, 248, 251)";
+    personalBox.style.color = "#214B5B";
     projectSize(personalNav);
     window.addEventListener('resize', function () {
         projectSize(personalNav);
@@ -292,8 +292,8 @@ shareBox.addEventListener("click", function () {
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
-    personalBox.style.backgroundColor = "rgb(241, 240, 230)";
-    personalBox.style.color = "#071f3d";
+    personalBox.style.backgroundColor = "#E6EEF1";
+    personalBox.style.color = "#214B5B";
     shareBox.style.backgroundColor = "";
     shareBox.style.color = "#fff";
     personalNav.style.display = "block";
@@ -312,7 +312,6 @@ function liStyle(liArr) {
             liArr[i].className = "";
         } else {
             liArr[i].className = "boxS";
-            liArr[i].style.backgroundColor = progressBoxColor;
         }
     }
 }
