@@ -333,14 +333,14 @@ body::after {
 
 .mainBox .register .VC {
     float: left;
-    width: 34%;
+    width: 32%;
     margin: 0px;
     margin-left: 84px;
 }
 
 .mainBox .register .getVC {
     float: right;
-    width: 32%;
+    width: 36%;
     height: 40px;
     padding: 0px;
     border: 0px;
