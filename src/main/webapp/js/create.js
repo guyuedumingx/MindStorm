@@ -6,15 +6,15 @@ var tool = new Tool(document, window);
 tool.textProhibition();
 
 //-----------------------------------------------------
-// 获取快捷键按钮
-var shortcut = getDom(".shortcutKey");
-// 获取帮助按钮
-var help = getDom('.help');
-// 获取快捷键框
-var shotcutNav = getDom(".shortcut_nav");
+// // 获取快捷键按钮
+// var shortcut = getDom(".shortcutKey");
+// // 获取帮助按钮
+// var help = getDom('.help');
+// // 获取快捷键框
+// var shotcutNav = getDom(".shortcut_nav");
 
-//快捷键显示
-clickOpenBlankClose(shortcut, shotcutNav);
+// //快捷键显示
+// clickOpenBlankClose(shortcut, shotcutNav);
 
 //获取用户id
 var loginPd = getCookie("user_id");
