@@ -71,7 +71,6 @@ public class UserController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String str = request.getParameter("id");
-        System.out.println("user"+user);
         ProjectService projectService = new ProjectServiceImpl();
         UserService userService = new UserServiceImpl();
         if(str==null){

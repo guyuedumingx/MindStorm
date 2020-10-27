@@ -295,7 +295,7 @@ body .mainBox {
 /* 点击的框框 */
 .mainBox .Box>div {
     display: inline-block;
-
+   
 }
 
 /* 隐藏 */
@@ -406,6 +406,7 @@ body .mainBox {
     font-size: 24px;
     border: none;
     border-radius: 5px;
+    background-color: transparent;
 }
 
 .idTips {
@@ -493,6 +494,7 @@ body .mainBox {
     border: solid #999;
     border-radius: 10px;
     vertical-align: middle;
+    background-color: transparent;
 }
 
 .mainBox .Box .est_bigBox .project_name span {
@@ -509,6 +511,7 @@ body .mainBox {
     font-size: 15px;
     border: solid #999;
     border-radius: 10px;
+    background-color: transparent;
     outline: none;
     resize: none;
     /*不可调节*/

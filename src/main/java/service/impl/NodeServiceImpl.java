@@ -6,6 +6,7 @@ import dao.NodeDao;
 import dao.ProjectDao;
 import dao.UserDao;
 import dao.auxiliary.impl.ContributorDaoImpl;
+import dao.auxiliary.impl.RecentProjectDaoImpl;
 import dao.auxiliary.impl.StarDaoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import pojo.Node;
 import pojo.Project;
 import pojo.User;
 import pojo.auxiliary.Contributor;
+import pojo.auxiliary.RecentProject;
 import pojo.auxiliary.Star;
 import service.NodeService;
 
@@ -22,6 +24,7 @@ public class NodeServiceImpl implements NodeService {
     ProjectDao projectDao = DaoFactory.getProjectDao();
     StarDaoImpl starDao = DaoFactory.getStarDao();
     UserDao userDao = DaoFactory.getUserDao();
+    RecentProjectDaoImpl recentProjectDao = new RecentProjectDaoImpl();
 
     @Override
     public int newNode(Node node) {
@@ -69,7 +72,6 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public Node getNode(int nodeId,int userId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
-        logger.debug("获取到的节点信息"+node.getContent()+" " + node.getTheme());
         Star star = starDao.selectOne(new Star(userId,nodeId));
         User lastEditUser = userDao.selectOne(new User(node.getLastEditId()));
         User author = userDao.selectOne(new User(node.getAuthor()));
@@ -99,6 +101,7 @@ public class NodeServiceImpl implements NodeService {
             public void run() {
                 Node node = nodeDao.selectOne(new Node(nodeId));
                 new ContributorDaoImpl().insertOne(new Contributor(node.getProjectId(),userId));
+                recentProjectDao.insertOne(new RecentProject(userId,node.getProjectId()));
             }
         }).start();
     }
