@@ -35,7 +35,7 @@ body .header {
     font-weight: 700;
     font-size: 56px;
     color: #214B5B;
-    cursor: default;
+    cursor: pointer;
 }
 
 /* 个人头像等容器 */
@@ -295,7 +295,7 @@ body .mainBox {
 /* 点击的框框 */
 .mainBox .Box>div {
     display: inline-block;
-   
+
 }
 
 /* 隐藏 */

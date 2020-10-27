@@ -482,7 +482,7 @@ function changeColor() {
     //新建加入按钮字颜色
     getDom(".buildJoin").style.color = textColor;
 }
-changeColor();
+// changeColor();
 
 
 userMess(head, headBox, emailBox, perSig);
