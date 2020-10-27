@@ -31,7 +31,7 @@ public class NodeServiceImpl implements NodeService {
         //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
         Node parent =  nodeDao.selectOne(new Node(node.getParentId()));
-        if (parent==null||parent.isEditable()) {
+        if (parent==null||!parent.isBanAppend()) {
             logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
             int nodeId = nodeDao.insertOne(node);
             addUserAsContributors(nodeId, node.getAuthor());

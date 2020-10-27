@@ -21,8 +21,8 @@ public class Node extends BaseModel{
    private int[] children;
    @DbField(value = "parent_id",update = false)
    private int parentId;
-   @DbField(value = "editable")
-   private boolean editable = true;
+   @DbField(value = "banAppend")
+   private boolean banAppend = false;
    @DbField(value = "nameless",update = false)
    private boolean nameless;
    @DbField(value = "theme")
@@ -35,7 +35,7 @@ public class Node extends BaseModel{
    public Node(Project project){
       this.author = project.getAuthor();
       this.lastEditId = author;
-      this.editable = false;
+      this.banAppend = false;
       this.nameless = false;
       this.projectId = project.getId();
       this.theme = project.getName();
@@ -48,11 +48,11 @@ public class Node extends BaseModel{
       this.id = id;
    }
 
-   public Node(int author, int lastEditId, int parentId, boolean editable, boolean nameless, String theme, String content) {
+   public Node(int author, int lastEditId, int parentId, boolean banAppend, boolean nameless, String theme, String content) {
       this.author = author;
       this.lastEditId = lastEditId;
       this.parentId = parentId;
-      this.editable = editable;
+      this.banAppend = banAppend;
       this.nameless = nameless;
       this.theme = theme;
       this.content = content;
@@ -90,12 +90,12 @@ public class Node extends BaseModel{
       this.children = children;
    }
 
-   public boolean isEditable() {
-      return editable;
+   public boolean isBanAppend() {
+      return banAppend;
    }
 
-   public void setEditable(boolean editable) {
-      this.editable = editable;
+   public void setBanAppend(boolean banAppend) {
+      this.banAppend = banAppend;
    }
 
    public boolean isNameless() {

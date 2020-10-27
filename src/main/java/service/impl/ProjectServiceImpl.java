@@ -46,7 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
                     if(hasRootNode) {
                         Node node = new Node(project);
                         node.setLastEditTime(System.currentTimeMillis()+"");
-                        node.setEditable(true);
+                        node.setBanAppend(false);
                         int headNodeId = new NodeServiceImpl().newNode(node);
                         project.setHeadNodeId(headNodeId);
                     }

@@ -2,15 +2,11 @@ package controller;
 
 import common.dto.Result;
 import common.dto.StatusCode;
-import common.factory.DaoFactory;
 import common.util.WebUtil;
-import dao.NodeDao;
-import dao.auxiliary.impl.RecentProjectDaoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.Node;
 import pojo.User;
-import pojo.auxiliary.RecentProject;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 
@@ -20,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * 负责处理有关于节点的请求
@@ -42,7 +35,7 @@ public class NodeController extends BaseController{
     }
 
     /**
-     * 新建节点
+     * 添加节点
      * @param req
      * @param resp
      * @throws IOException
@@ -99,7 +92,7 @@ public class NodeController extends BaseController{
         node.setId(id);
         node.setTheme(theme);
         node.setContent(content);
-        node.setEditable(editable);
+        node.setBanAppend(editable);
         node.setProjectId(projectId);
         node.setLastEditId(user.getId());
         return node;

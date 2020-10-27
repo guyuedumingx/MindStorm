@@ -85,7 +85,7 @@ public class XmindUtil {
         node.setTheme(topic.getTitleText());
         node.setAuthor(userId);
         node.setLastEditTime(System.currentTimeMillis()+"");
-        node.setEditable(true);
+        node.setBanAppend(true);
         node.setProjectId(projectId);
         node.setParentId(parendId);
         node.setNameless(false);
