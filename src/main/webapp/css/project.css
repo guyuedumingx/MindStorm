@@ -737,7 +737,7 @@ body .header {
     padding: 15px 0px;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #ddd;
+    background-color: #dedada;
     transition: left .5s;
 }
 
@@ -779,7 +779,7 @@ body .header {
     z-index: 4;
     font-size: 16px;
     color: #214B5B;
-    background-color: #ddd;
+    background-color: #dedada;
     overflow: auto;
 }
 
