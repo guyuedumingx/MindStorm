@@ -401,14 +401,14 @@ body .header {
     font-size: 20px;
     color: #071f3d;
     border-radius: 5px;
-    background: #E6EEF1;
+    background: #D1DADA;
     cursor: pointer;
     transition: color 0.5s ease;
     /* box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 4px 4px 5px 0px rgba(0, 0, 0, .1); */
 }
 
 .mainBox .navigationBar .buildJoin:hover {
-    color: #E6EEF1;
+    color: #214B5B;
     background: transparent;
 }
 
@@ -420,7 +420,7 @@ body .header {
     right: 0;
     height: 2px;
     width: 0;
-    background: #d4c78c;
+    background: #132C33;
     box-shadow:
         -1px -1px 5px 0px #fff,
         7px 7px 20px 0px #0003,
@@ -496,10 +496,11 @@ body .header {
 }
 /* 项目名称 */
 .mainBox .projectBox .projectLi li .projectName {
-    height: 20%;
+    height: 25%;
     text-align: center;
-    font-size: 38px;
+    font-size: 36px;
     font-weight: bold;
+    box-sizing: border-box;
 }
 /* 简介盒子 */
 .mainBox .projectBox .projectLi li .introduce {
@@ -519,19 +520,32 @@ body .header {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+.mainBox .projectBox .projectLi .bot{
+    position: relative;
+    height: 25%;
+    color: #071f3d;
+    background-color: rgba(139, 158, 161, 0.363);
+    border-radius:  0 0 5px 5px;
+    box-sizing: border-box;
+}
 /* 创建人 */
 .mainBox .projectBox .projectLi li .author{
-    float: left;
+    position: absolute;
+    top: 50%;
     width: 50%;
     vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transform: translateY(-50%);
 }
 .mainBox .projectBox .projectLi li .people{
-    float:right;
+    position: absolute;
+    top: 50%;
+    right: 5%;
     margin-right: 5px;
     vertical-align: middle;
+    transform: translateY(-50%);
 }
 .mainBox .projectBox .projectLi li .people span{
     font-size: 14px;

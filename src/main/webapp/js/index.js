@@ -237,6 +237,8 @@ var personalBox = getDom(".personalBox");
 
 //获取新建加入按钮
 var buildJoin = getDom(".buildJoin");
+
+
 // 文字垂直居中
 textVerticalCenter(buildJoin);
 
@@ -264,7 +266,7 @@ function projectSize(project) {
 // 板块切换-----------
 // 开始样式
 function start() {
-    personalBox.style.backgroundColor = "rgb(240, 248, 251)";
+    personalBox.style.backgroundColor = "#D1DADA";
     personalBox.style.color = "#214B5B";
     projectSize(personalNav);
     window.addEventListener('resize', function () {
