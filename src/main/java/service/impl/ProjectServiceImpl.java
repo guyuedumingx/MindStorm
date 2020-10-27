@@ -71,8 +71,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     private void doDelete(int projectId, int operatorId){
         projectDao.deleteOne(projectId);
-        contributorDao.deleteOne(projectId);
-        recentProjectDao.insertOne(new RecentProject(operatorId,projectId));
+        contributorDao.deleteOne(new Contributor(projectId));
+        recentProjectDao.deleteOne(new RecentProject(operatorId,projectId));
     }
 
     @Override
@@ -84,6 +84,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(int projectId) {
         Project project = projectDao.selectOne(new Project(projectId));
+        if(project==null){
+            return null;
+        }
         List<Contributor> contributors = contributorDao.selectObjectList(new Contributor(projectId));
         Iterator<Contributor> iterator = contributors.iterator();
         User author = userDao.selectOne(new User(project.getAuthor()));

@@ -3,8 +3,6 @@ package dao.impl;
 import dao.BaseDaoImpl;
 import dao.ProjectDao;
 import pojo.Project;
-
-import java.text.MessageFormat;
 import java.util.List;
 
 /**
