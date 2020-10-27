@@ -408,7 +408,7 @@ function generateParticipant(arr) {
 participantOn.addEventListener('click', function () {
     if (participant.getCSS('left') == '100%') {
         participant.style.left = '0%';
-        participant.style.borderRadius = '5px 5px 5px 5px';
+        participant.style.borderRadius = '7px 7px 7px 7px';
     } else {
         participant.style.left = '100%';
         participant.style.borderRadius = '0px 5px 5px 0px';
@@ -416,7 +416,7 @@ participantOn.addEventListener('click', function () {
 });
 participantOff.addEventListener('click', function () {
     participant.style.left = '0%';
-    participant.style.borderRadius = '5px 5px 5px 5px';
+    participant.style.borderRadius = '7px 7px 7px 7px';
 });
 
 // 随机颜色
