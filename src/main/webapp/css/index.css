@@ -382,7 +382,7 @@ body .header {
 
 .mainBox .navigationBar .personalBox:hover,.mainBox .navigationBar .shareBox:hover {
     color: #071f3d;
-    background-color: rgb(134, 134, 125);
+    background-color: rgb(255, 255, 255);
 }
 /* .mainBox .navigationBar .personalBox{
     color: #071f3d;
