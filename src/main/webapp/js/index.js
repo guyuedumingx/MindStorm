@@ -201,7 +201,7 @@ function search() {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res) {
+                if (res.status_code == '200') {
                     searchNav.style.display = "block";
                     projectSize(searchNav);
                     //项目数组--
@@ -214,7 +214,7 @@ function search() {
                     personalBox.style.color = "#214B5B";
                     personalNav.style.display = "none";
                 } else {
-
+                    topAlert("搜索失败");
                 }
             }
         });
