@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () { }
+        error: function () {}
     });
 
 
@@ -186,50 +186,54 @@ var searchCont = getDom(".searchCont");
 var searchBut = getDom(".iconS");
 
 function search() {
-    var content = searchCont.value;
-    console.log(content);
-    if (!content) {
-        topAlert("请输入内容！");
-    } else {
-        ajax({
-            type: 'put',
-            url: '/project',
-            data: {
-                key: content
-            },
-            header: {
-                'Content-Type': 'application/json'
-            }, // 请求头
-            success: function (res) {
-                if (res.status_code == '200') {
-                    if (getDom(".none")) {
-                        getDom(".none").style.display = "none";
+    if (searchBut.state) {
+        searchBut.state = false;
+        setTimeout(function () {
+            searchBut.state = true;
+        }, 2000);
+        var content = searchCont.value;
+        console.log(content);
+        if (!content) {
+            topAlert("请输入内容！");
+        } else {
+            ajax({
+                type: 'put',
+                url: '/project',
+                data: {
+                    key: content
+                },
+                header: {
+                    'Content-Type': 'application/json'
+                }, // 请求头
+                success: function (res) {
+                    if (res.status_code == '200') {
+                        if (getDom(".noneP")) {
+                            getDom(".noneP").parentNode.removeChild(getDom(".noneP"));
+                        }
+                        // <<<<<<< 原来
+                        // projectSize(searchNav);
+                        // searchNav.style.display = "block";
+                        // =======
+                        personalNav.hide();
+                        searchNav.show();
+                        projectSize(searchNav);
+                        // >>>>>>> 传入的更改
+
+                        removeLi();
+                        //项目数组--
+                        searchProject = res.result;
+                        // 长度
+                        searchProjectLength = searchProject.length;
+
+                        addLiBox(searchProjectLength, searchProject, searchNav)
+                        personalBox.style.backgroundColor = "";
+                        personalBox.style.color = "#214B5B";
+                    } else {
+                        topAlert("搜索失败");
                     }
-
-                    // <<<<<<< 原来
-                    // projectSize(searchNav);
-                    // searchNav.style.display = "block";
-                    // =======
-                    personalNav.hide();
-                    searchNav.show();
-                    projectSize(searchNav);
-                    // >>>>>>> 传入的更改
-
-                    removeLi();
-                    //项目数组--
-                    searchProject = res.result;
-                    // 长度
-                    searchProjectLength = searchProject.length;
-
-                    addLiBox(searchProjectLength, searchProject, searchNav)
-                    personalBox.style.backgroundColor = "";
-                    personalBox.style.color = "#214B5B";
-                    personalNav.style.display = "none";
-                } else {
-                    topAlert("搜索失败");
                 }
-            }
-        });
+            });
+        }
     }
 
 }
@@ -451,11 +455,14 @@ function create(project, projectLength, liArr) {
 //显示暂无内容
 function noProject(projectNav) {
     var divN = document.createElement("div");
-    divN.className = "none";
+    divN.className = "noneP";
     divN.innerText = "暂无项目";
+    if (projectNav == searchNav) {
+        divN.innerText = "抱歉，暂无内容";
+    }
     projectNav.appendChild(divN);
-    var none = getDom(".none");
-    textVerticalCenter(none);
+    var noneP = getDom(".noneP");
+    textVerticalCenter(noneP);
 }
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
@@ -519,6 +526,7 @@ function changeColor() {
 userMess(head, headBox, emailBox, perSig);
 
 // 搜索提交
+searchBut.state = true;
 searchBut.addEventListener("click", search);
 //回车
 inputEnterEvent(searchCont, search);
