@@ -204,6 +204,7 @@ function search() {
                 if (res.status_code == '200') {
                     searchNav.style.display = "block";
                     projectSize(searchNav);
+                    removeLi();
                     //项目数组--
                     searchProject = res.result;
                     // 长度
@@ -413,6 +414,15 @@ function addLi(li, name, introduce, author, number, projectID) {
     li.addEventListener("click", function () {
         window.location = "project.html?project_id=" + projectID;
     })
+}
+//删除内容
+function removeLi() {
+    var searchNav = getDom(".searchNav");
+    var projectLi = getDom(".projectLi", searchNav);
+    var liArr = getDomA("li",projectLi);
+    for (var i = 0; i < liArr.length; i++){
+        projectLi.removeChild(liArr[i]);
+    }
 }
 
 function create(project, projectLength, liArr) {
