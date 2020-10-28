@@ -1,0 +1,249 @@
+-- MariaDB dump 10.17  Distrib 10.5.5-MariaDB, for Linux (x86_64)
+--
+-- Host: localhost    Database: ms
+-- ------------------------------------------------------
+-- Server version	10.5.5-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `ms`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `ms` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `ms`;
+
+--
+-- Table structure for table `t_contributor`
+--
+
+DROP TABLE IF EXISTS `t_contributor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_contributor` (
+  `project_id` int(11) NOT NULL,
+  `contributor_id` int(11) NOT NULL,
+  UNIQUE KEY `project_id` (`project_id`,`contributor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_contributor`
+--
+
+LOCK TABLES `t_contributor` WRITE;
+/*!40000 ALTER TABLE `t_contributor` DISABLE KEYS */;
+INSERT INTO `t_contributor` VALUES (100122,70),(100122,96),(100123,70),(100123,73),(100124,73),(100125,96),(100126,73);
+/*!40000 ALTER TABLE `t_contributor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_edit`
+--
+
+DROP TABLE IF EXISTS `t_edit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_edit` (
+  `user_id` int(11) NOT NULL,
+  `node_id` int(11) NOT NULL,
+  `edit_type` varchar(16) NOT NULL,
+  `edit_time` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_edit`
+--
+
+LOCK TABLES `t_edit` WRITE;
+/*!40000 ALTER TABLE `t_edit` DISABLE KEYS */;
+INSERT INTO `t_edit` VALUES (1,1,'insert','Mon Oct 12 21:06:50 CST 2020'),(1,1,'insert','Mon Oct 12 21:19:50 CST 2020'),(1,1,'insert','Mon Oct 12 21:20:02 CST 2020'),(1,1,'insert','Tue Oct 13 15:54:51 CST 2020'),(1,1,'insert','Tue Oct 13 18:07:20 CST 2020'),(1,1,'insert','Tue Oct 13 19:38:05 CST 2020'),(1,1,'insert','Tue Oct 13 20:15:16 CST 2020'),(1,1,'insert','Tue Oct 13 20:25:09 CST 2020'),(1,1,'insert','Tue Oct 13 20:33:51 CST 2020'),(1,1,'insert','Tue Oct 13 22:19:18 CST 2020'),(1,1,'insert','Fri Oct 16 08:40:31 CST 2020'),(1,1,'insert','Fri Oct 16 08:45:43 CST 2020'),(1,1,'insert','Fri Oct 16 22:39:29 CST 2020'),(1,1,'insert','Sat Oct 17 17:31:15 CST 2020'),(1,1,'insert','Sun Oct 18 18:43:15 CST 2020'),(1,1,'insert','Sun Oct 18 18:49:15 CST 2020'),(1,1,'insert','Sun Oct 18 18:50:13 CST 2020'),(1,1,'insert','Mon Oct 19 18:34:58 CST 2020'),(1,1,'insert','Thu Oct 22 19:46:06 CST 2020'),(1,1,'insert','Sat Oct 24 11:17:24 CST 2020'),(1,1,'insert','Sat Oct 24 11:18:02 CST 2020'),(1,1,'insert','Sat Oct 24 11:18:31 CST 2020'),(1,1,'insert','Sat Oct 24 11:19:33 CST 2020'),(1,1,'insert','Sat Oct 24 21:19:26 CST 2020');
+/*!40000 ALTER TABLE `t_edit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_follow`
+--
+
+DROP TABLE IF EXISTS `t_follow`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_follow` (
+  `follower_id` int(11) NOT NULL,
+  `following_id` int(11) NOT NULL,
+  UNIQUE KEY `follower_id` (`follower_id`,`following_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_follow`
+--
+
+LOCK TABLES `t_follow` WRITE;
+/*!40000 ALTER TABLE `t_follow` DISABLE KEYS */;
+INSERT INTO `t_follow` VALUES (1,2),(1,3),(1,4),(2,1),(3,1),(10,1);
+/*!40000 ALTER TABLE `t_follow` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_node`
+--
+
+DROP TABLE IF EXISTS `t_node`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_node` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `theme` varchar(64) NOT NULL,
+  `content` mediumtext NOT NULL,
+  `banAppend` tinyint(1) NOT NULL,
+  `nameless` tinyint(1) NOT NULL,
+  `last_edit_id` int(11) NOT NULL,
+  `last_edit_time` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_node`
+--
+
+LOCK TABLES `t_node` WRITE;
+/*!40000 ALTER TABLE `t_node` DISABLE KEYS */;
+INSERT INTO `t_node` VALUES (22,70,100121,0,'asd','暂无',0,0,70,'1603798405989'),(23,88,100121,22,'asdf','asdf',0,0,88,'1603798821807'),(24,88,100121,22,'asdfasf','asfda',0,0,88,'1603798826853'),(25,70,100122,0,'asdfj','as;dfj',0,0,70,'1603802430639'),(26,70,100123,0,'123','123',0,0,70,'1603853038913'),(27,73,100124,0,'test','暂无',0,0,73,'1603853060194'),(29,73,100123,26,'f dg','暂无',0,0,73,'1603855394078'),(30,73,100123,26,'sc','暂无',0,0,73,'1603855399762'),(32,73,100123,29,'hh','暂无',0,0,73,'1603855411845'),(35,96,100122,25,'asd','fasdfafasdfasdf',0,0,96,'1603875698032'),(38,96,100122,25,'asd','fasdfasdf',0,0,96,'1603875707813'),(40,96,100125,0,'tet','fasdf',0,0,96,'1603876795641'),(41,96,100125,40,'asd','暂无',0,0,96,'1603893746669'),(42,73,100126,0,'nnnnn','bbbb',0,0,73,'1603894131464');
+/*!40000 ALTER TABLE `t_node` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_project`
+--
+
+DROP TABLE IF EXISTS `t_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_name` varchar(64) NOT NULL,
+  `public` tinyint(1) NOT NULL,
+  `project_rank` int(11) NOT NULL DEFAULT 0,
+  `author_id` int(11) NOT NULL,
+  `introduction` mediumtext DEFAULT NULL,
+  `head_id` int(11) NOT NULL,
+  `create_time` varchar(64) DEFAULT NULL,
+  `deadline` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100127 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_project`
+--
+
+LOCK TABLES `t_project` WRITE;
+/*!40000 ALTER TABLE `t_project` DISABLE KEYS */;
+INSERT INTO `t_project` VALUES (100122,'asdfj',0,1,70,'as;dfj',25,'1603802430563','1603888830563'),(100123,'123',0,1,70,'123',26,'1603853039363','1603939439363'),(100124,'test',0,1,73,'暂无',27,'1603853060886','1603939460886'),(100125,'tet',0,1,96,'fasdf',40,'1603876795586','1603963195586'),(100126,'nnnnn',0,1,73,'bbbb',42,'1603894131321','1603980531321');
+/*!40000 ALTER TABLE `t_project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_recent_project`
+--
+
+DROP TABLE IF EXISTS `t_recent_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_recent_project` (
+  `user_id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
+  UNIQUE KEY `user_id` (`user_id`,`project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_recent_project`
+--
+
+LOCK TABLES `t_recent_project` WRITE;
+/*!40000 ALTER TABLE `t_recent_project` DISABLE KEYS */;
+INSERT INTO `t_recent_project` VALUES (70,100122),(70,100123),(73,100123),(73,100124),(73,100126),(96,100122),(96,100125);
+/*!40000 ALTER TABLE `t_recent_project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_star`
+--
+
+DROP TABLE IF EXISTS `t_star`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_star` (
+  `user_id` int(11) NOT NULL,
+  `node_id` int(11) NOT NULL,
+  UNIQUE KEY `user_id` (`user_id`,`node_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_star`
+--
+
+LOCK TABLES `t_star` WRITE;
+/*!40000 ALTER TABLE `t_star` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_star` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_user`
+--
+
+DROP TABLE IF EXISTS `t_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(20) NOT NULL,
+  `user_email` varchar(64) NOT NULL,
+  `password` mediumtext NOT NULL,
+  `user_avatar` mediumtext DEFAULT NULL,
+  `user_signature` varchar(32) DEFAULT '这家伙很懒,什么也没留下!',
+  `exp` int(11) DEFAULT 0,
+  `token` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_email` (`user_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_user`
+--
+
+LOCK TABLES `t_user` WRITE;
+/*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
+INSERT INTO `t_user` VALUES (70,'测试号1001','1001@qq.com','9AE0147D65724F72F74804AF4AAC6F13','/img/avatar/70.jpg?ran=0.6009074432125482','这家伙很懒,什么也没留下!',0,NULL),(73,'TKRJ','1030970578@qq.com','B16A12CA3C0006198575C7288D5D64E4','/img/avatar/73.jpg?ran=0.7251056963550496','这家伙很懒,什么也没留下!',0,NULL),(88,'heihei','11@qq.com','3ADE3FD6E8EEF84F2EA91F6474BE10D9','/img/avatar/default0.png','这家伙很懒,什么也没留下!',0,NULL),(96,'zhaoliu','111@qq.com','698D51A19D8A121CE581499D7B701668','/img/avatar/96.png?ran=0.5559884274032767','这家伙很懒,什么也没留下!',0,NULL);
+/*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-10-28 22:50:47
