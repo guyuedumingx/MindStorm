@@ -157,12 +157,12 @@ function changeColor(state) {
 }
 
 // 夜间模式(ctrl + E)
-var naghtState = 1; // 当前状态
+var nightState = 1; // 当前状态
 document.addEventListener('keydown', function (e) {
     if (e.key == 'e' && e.ctrlKey) {
         e.preventDefault();
-        changeColor(naghtState);
-        naghtState = 1 - naghtState;
+        changeColor(nightState);
+        nightState = 1 - nightState;
     }
 });
 
@@ -1679,6 +1679,17 @@ operationNodeBoxStar.addEventListener('click', function () {
 
 // 循环按钮精灵图
 cycleSprite(btnArr, 0, 0, 40);
+var nightBtn = btnArr[btnArr.length - 1];
+nightBtn.innerText = '夜';
+nightBtn.addEventListener('click', function () {
+    if (nightState) {
+        nightBtn.innerText = '日';
+    } else {
+        nightBtn.innerText = '夜';
+    }
+    changeColor(nightState);
+    nightState = 1 - nightState;
+});
 
 // 开关切换函数
 function onOffChange(onOff) {
