@@ -202,8 +202,9 @@ function search() {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    searchNav.style.display = "block";
+                    getDom(".none").style.display = "none";
                     projectSize(searchNav);
+                    searchNav.style.display = "block";
                     removeLi();
                     //项目数组--
                     searchProject = res.result;
@@ -312,6 +313,7 @@ personalBox.addEventListener("click", function () {
     shareNav.style.display = "none";
     searchNav.style.display = "none";
     projectSize(personalNav);
+    projectSize(searchNav);
 });
 
 // 项目板块----------------
@@ -441,9 +443,6 @@ function noProject(projectNav) {
     var divN = document.createElement("div");
     divN.className = "none";
     divN.innerText = "暂无项目";
-    if (projectNav == "searchNav") {
-        divN.innerText = "无相关项目";
-    }
     projectNav.appendChild(divN);
     var none = getDom(".none");
     textVerticalCenter(none);
