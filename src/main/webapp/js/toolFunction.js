@@ -1102,12 +1102,20 @@ function randomColor(l, r) {
  * 函数功能：在屏幕顶部显示一段慢慢消失的文字(需要搭配topAlert样式使用)
  * 
  * @param {string} str 要显示的文字
+ * @param {number} v 速度(默认值为100)，数值越大越慢
  * @author 60rzvvbj
  */
-function topAlert(str) {
+function topAlert(str, v) {
+
     // 创建一个div节点
     var div = document.createElement('div');
+
+    // 获取html元素
     var html = getHtml();
+
+    // 初始化速度
+    v = v ? v : 100;
+
     // 设置文本和属性
     div.innerHTML = str;
     div.style.color = randomColor(100, 180);
@@ -1115,15 +1123,15 @@ function topAlert(str) {
     html.appendChild(div);
     var i = 0;
     div.timer = setInterval(function () {
-        if (i == 30) {
+        if (i == v) {
             clearInterval(div.timer);
             html.removeChild(div);
         } else {
             i++;
-            div.style.opacity = 1 / 30 * (30 - i) + '';
-            div.style.top = 15 - 10 / 30 * i + 'vh';
+            div.style.opacity = 1 / v * (v - i) + '';
+            div.style.top = 15 - 10 / v * i + 'vh';
         }
-    }, 25);
+    }, 20);
 }
 
 /**
