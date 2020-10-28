@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () {}
+        error: function () { }
     });
 
 
@@ -205,8 +205,16 @@ function search() {
                     if (getDom(".none")) {
                         getDom(".none").style.display = "none";
                     }
+
+                    // <<<<<<< 原来
+                    // projectSize(searchNav);
+                    // searchNav.style.display = "block";
+                    // =======
+                    personalNav.hide();
+                    searchNav.show();
                     projectSize(searchNav);
-                    searchNav.style.display = "block";
+                    // >>>>>>> 传入的更改
+
                     removeLi();
                     //项目数组--
                     searchProject = res.result;
