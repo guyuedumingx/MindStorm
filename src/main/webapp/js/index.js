@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () { }
+        error: function () {}
     });
 
 
@@ -202,10 +202,9 @@ function search() {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    if (getDom(".none")) {
-                        getDom(".none").style.display = "none";
+                    if (getDom(".noneP")) {
+                        getDom(".noneP").parentNode.removeChild(getDom(".noneP"));
                     }
-
                     // <<<<<<< 原来
                     // projectSize(searchNav);
                     // searchNav.style.display = "block";
@@ -224,7 +223,6 @@ function search() {
                     addLiBox(searchProjectLength, searchProject, searchNav)
                     personalBox.style.backgroundColor = "";
                     personalBox.style.color = "#214B5B";
-                    personalNav.style.display = "none";
                 } else {
                     topAlert("搜索失败");
                 }
@@ -451,11 +449,14 @@ function create(project, projectLength, liArr) {
 //显示暂无内容
 function noProject(projectNav) {
     var divN = document.createElement("div");
-    divN.className = "none";
+    divN.className = "noneP";
     divN.innerText = "暂无项目";
+    if (projectNav == searchNav) {
+        divN.innerText = "抱歉，暂无内容";
+    }
     projectNav.appendChild(divN);
-    var none = getDom(".none");
-    textVerticalCenter(none);
+    var noneP = getDom(".noneP");
+    textVerticalCenter(noneP);
 }
 //项目板块添加
 function addLiBox(projectLength, project, projectNav) {
