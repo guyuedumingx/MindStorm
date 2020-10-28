@@ -1679,13 +1679,15 @@ operationNodeBoxStar.addEventListener('click', function () {
 
 // 循环按钮精灵图
 cycleSprite(btnArr, 0, 0, 40);
+
+// 夜间模式按钮点击事件
 var nightBtn = btnArr[btnArr.length - 1];
-nightBtn.innerText = '夜';
+nightBtn.style.backgroundColor = '#000';
 nightBtn.addEventListener('click', function () {
     if (nightState) {
-        nightBtn.innerText = '日';
+        nightBtn.style.backgroundColor = '#fff';
     } else {
-        nightBtn.innerText = '夜';
+        nightBtn.style.backgroundColor = '#000';
     }
     changeColor(nightState);
     nightState = 1 - nightState;
