@@ -201,20 +201,20 @@ function search() {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res) {
+                if (res.status_code == '200') {
                     searchNav.style.display = "block";
                     projectSize(searchNav);
                     //项目数组--
-                    userProject = res.recentProject;
+                    searchProject = res.result;
                     // 长度
-                    userProjectLength = userProject.length;
+                    searchProjectLength = userProject.length;
 
-                    addLiBox(userProjectLength, userProject, searchNav)
+                    addLiBox(searchProjectLength, searchProject, searchNav)
                     personalBox.style.backgroundColor = "";
                     personalBox.style.color = "#214B5B";
                     personalNav.style.display = "none";
                 } else {
-
+                    topAlert("搜索失败");
                 }
             }
         });
@@ -501,3 +501,5 @@ userMess(head, headBox, emailBox, perSig);
 
 // 搜索提交
 searchBut.addEventListener("click", search);
+//回车
+inputEnterEvent(searchCont, search);

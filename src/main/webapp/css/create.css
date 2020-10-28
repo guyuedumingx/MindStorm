@@ -501,7 +501,7 @@ body .mainBox {
     /* float: left; */
     display: inline-block;
     width: 100px;
-    margin-right: 5px;
+    margin-right: 10px;
     text-align-last: justify;
     vertical-align: middle;
 }
@@ -513,6 +513,7 @@ body .mainBox {
     padding: 10px;
     line-height: 22px;
     font-size: 15px;
+    font-weight: bold;
     border: solid #999;
     border-radius: 10px;
     background-color: transparent;
@@ -537,7 +538,7 @@ body .mainBox {
 .mainBox .Box .est_bigBox .introduce {
     float: left;
     width: 100px;
-    margin-right: 5px;
+    margin-right: 10px;
     text-align-last: justify;
 }
 
