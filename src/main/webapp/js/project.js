@@ -335,6 +335,8 @@ user.userName = getCookie('user_name');
 var projectId = getLocation('project_id');
 var ctrlState = false;
 
+// 根节点id
+var projectHeadNodeId;
 // 键盘按下事件
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
@@ -1137,6 +1139,71 @@ function treeRemoveNode(node) {
     }
 }
 
+// 刷新树盒子
+function treeReload() {
+    nowNode = null;
+    changeNodeEvent();
+    for (var i = 0; i < nodeSet.length; i++) {
+        try {
+            treeBoxMain.removeChild(nodeSet[i].line);
+        } catch (e) {
+        }
+        treeBoxMain.removeChild(nodeSet[i]);
+    }
+    nodeSet = new Array();
+    constraintArr = new Array();
+    setLineArr = new Array();
+    // 重置根节点
+    root = document.createElement('div');
+    addClass(root, 'root');
+    root.style.backgroundColor = randomColor(120, 180);
+    createRoot(projectHeadNodeId);
+    nodeRequest = 1;
+    nodeRequetTimer = setInterval(function () {
+        if (nodeRequest == 0) {
+            addTreeConstraint(root, 0);
+
+            // 求出最大的点赞数
+            var maxStar = 0;
+            for (var i = 0; i < nodeSet.length; i++) {
+                maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
+            }
+
+            // 初始化所有节点
+            for (var i = 0; i < nodeSet.length; i++) {
+
+                // 给所有节点设置宽高圆角和随机位置
+                nodeSet[i].style.width = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
+                nodeSet[i].style.height = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
+                nodeSet[i].style.borderRadius = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) / 2 + 'px';
+                nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
+                nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+                nodeSet[i].style.display = 'block';
+                nodeSet[i].x = nodeSet[i].offsetLeft;
+                nodeSet[i].y = nodeSet[i].offsetTop;
+
+                // 添加边界约束
+                addConstraint(nodeSet[i], null, 3, null);
+
+                // 给没有直接父子关系的节点间添加最小距离约束
+                for (var j = i + 1; j < nodeSet.length; j++) {
+                    if ((nodeSet[i].father != nodeSet[j]) && (nodeSet[j].father != nodeSet[i])) {
+                        addConstraint(nodeSet[i], nodeSet[j], 2, nodeMinLen);
+                    }
+                }
+            }
+
+            // 根节点最大
+            root.style.width = '54px';
+            root.style.height = '54px';
+            root.style.borderRadius = '27px';
+
+            // 清除定时器
+            clearInterval(nodeRequetTimer);
+        }
+    }, 5);
+}
+
 // 测试用的
 document.addEventListener('keydown', function (e) {
     if (e.key == 'Alt') {
@@ -1480,7 +1547,7 @@ queryNode.addEventListener('click', function () {
 
 // 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
-    location.reload();
+    treeReload();
 });
 
 // 操作节点框
@@ -1746,6 +1813,7 @@ window.onload = function () {
             id: projectId
         },
         success: function (res) {
+            projectHeadNodeId = res.headNodeId;
             introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
