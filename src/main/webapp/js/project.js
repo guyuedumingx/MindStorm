@@ -1100,8 +1100,16 @@ function treeAppendNode(father, nodeData) {
 
 // 动态删除页面中的节点
 function treeRemoveNode(node) {
-    if (node.childArr.length == 0) {
+    if (node.childArr.length == 0 && node.father) {
+        var father = node.father;
         var arr = new Array();
+        for (var i = 0; i < father.childArr.length; i++) {
+            if (father.childArr[i] != node) {
+                arr.push(father.childArr[i]);
+            }
+        }
+        father.childArr = arr;
+        arr = new Array();
         for (var i = 0; i < nodeSet.length; i++) {
             if (nodeSet[i] != node) {
                 arr.push(nodeSet[i]);
