@@ -418,9 +418,10 @@ function addLi(li, name, introduce, author, number, projectID) {
 //删除内容
 function removeLi() {
     var searchNav = getDom(".searchNav");
-    var liArr = getDomA("li",searchNav);
-    for (var i = 0; i < liArr.length; i++){
-        searchNav.removeChild(liArr[i]);
+    var liNav = getDom(".liNav", searchNav);
+    var liArr = getDomA("li", liNav);
+    for (var i = 0; i < liArr.length; i++) {
+        liNav.removeChild(liArr[i]);
     }
 }
 
