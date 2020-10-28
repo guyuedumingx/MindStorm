@@ -29,6 +29,10 @@ function setColor() {
     progressBoxColor = colorSet[colorState][5];
     getDom('body').style.backgroundColor = mainColor;
     getDom('body').style.transition = 'background-color .5s';
+    getDom('.header .logoBox span').style.color = textColor;
+    getDom('.header .logoBox span').style.transition = 'color .5s';
+    getDom('.header .personal .head_nav .user_name').style.color = textColor;
+    getDom('.header .personal .head_nav .user_name').style.transition = 'color .5s';
     var mainBox = getDom('.mainBox');
     for (var i = 0; i < mainBox.children.length; i++) {
         for (var j = 0; j < mainBox.children[i].children.length; j++) {
@@ -100,6 +104,8 @@ function changeColor(state) {
     progressColor = colorSet[state][4];
     progressBoxColor = colorSet[state][5];
     getDom('body').style.backgroundColor = mainColor;
+    getDom('.header .logoBox span').style.color = textColor;
+    getDom('.header .personal .head_nav .user_name').style.color = textColor;
     var mainBox = getDom('.mainBox');
     for (var i = 0; i < mainBox.children.length; i++) {
         for (var j = 0; j < mainBox.children[i].children.length; j++) {
@@ -1050,7 +1056,7 @@ function ergodicTree(fun) {
     }
 }
 
-// #向页面中动态的增加一个节点（开发中）
+// 向页面中动态的增加一个节点
 function treeAppendNode(father, nodeData) {
     var appendNode = document.createElement('div');
     appendNode.father = father;
@@ -1092,7 +1098,46 @@ function treeAppendNode(father, nodeData) {
     addConstraint(appendNode, null, 3, null);
 }
 
+// 动态删除页面中的节点
+function treeRemoveNode(node) {
+    if (node.childArr.length == 0 && node.father) {
+        var father = node.father;
+        var arr = new Array();
+        for (var i = 0; i < father.childArr.length; i++) {
+            if (father.childArr[i] != node) {
+                arr.push(father.childArr[i]);
+            }
+        }
+        father.childArr = arr;
+        arr = new Array();
+        for (var i = 0; i < nodeSet.length; i++) {
+            if (nodeSet[i] != node) {
+                arr.push(nodeSet[i]);
+            }
+        }
+        nodeSet = arr;
+        arr = new Array();
+        for (var i = 0; i < constraintArr.length; i++) {
+            if (!(constraintArr[i][0] == node || (constraintArr[i][2] == 2 && constraintArr[i][1] == node))) {
+                arr.push(constraintArr[i]);
+            }
+        }
+        constraintArr = arr;
+        arr = new Array();
+        for (var i = 0; i < setLineArr.length; i++) {
+            if (!(setLineArr[i][0] == node || setLineArr[i][1] == node)) {
+                arr.push(setLineArr[i]);
+            }
+        }
+        setLineArr = arr;
+        treeBoxMain.removeChild(node.line);
+        treeBoxMain.removeChild(node);
+    } else {
+        topAlert('删除失败');
+    }
+}
 
+// 测试用的
 document.addEventListener('keydown', function (e) {
     if (e.key == 'Alt') {
         e.preventDefault();
@@ -1102,12 +1147,15 @@ document.addEventListener('keydown', function (e) {
             content: '暂无',
             editable: false
         });
+    } else if (e.key == 'Delete') {
+        e.preventDefault();
+        treeRemoveNode(nowNode);
     }
 });
 
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
-var projectCopyId = getDom('.mainBoxRight .projectId h4 .copyId'); // 复制ID
+var projectCopyId = getDom('.mainBoxRight .projectId .copyId'); // 复制ID
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
 var addNode = btnArr[0]; // 创建节点
@@ -1166,9 +1214,18 @@ for (var i = 0; i < btnArr.length; i++) {
 // 初始化ID
 projectIdBox.innerText = projectId;
 
-// 添加点击复制ID事件
+// 添加点击复制ID相关事件
+projectCopyId.addEventListener('mouseover', function () {
+    this.innerText = '复制';
+});
+
+projectCopyId.addEventListener('mouseout', function () {
+    this.innerText = '复制';
+});
+
 projectCopyId.addEventListener('click', function () {
     setShearPlateData(projectId);
+    this.innerText = '复制成功';
 });
 
 // 按钮禁用
@@ -1291,9 +1348,9 @@ tipsYes.addEventListener('click', function () {
             },
             success: function (res) {
                 if (res.status_code == '200') {
-                    location.reload();
+                    treeRemoveNode(nowNode);
                 } else {
-                    topAlert('淦');
+                    topAlert('删除失败');
                 }
             }
         });
@@ -1471,7 +1528,8 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     });
                     operationNodeBoxCloseFunction();
                 } else {
-                    topAlert('淦');
+                    topAlert('创建失败');
+                    operationNodeBoxCloseFunction();
                 }
             }
         });
@@ -1509,12 +1567,14 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     nowNode.editable = operationNodeBoxJurisdiction.state;
                     operationNodeBoxCloseFunction();
                 } else {
-                    topAlert('淦');
+                    topAlert('修改失败');
+                    operationNodeBoxCloseFunction();
                 }
             }
         });
     } else {
-        topAlert('淦');
+        topAlert('出现未知错误');
+        operationNodeBoxCloseFunction();
     }
 });
 

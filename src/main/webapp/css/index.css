@@ -451,7 +451,7 @@ body .header {
 .mainBox .projectBox ul{
     position: absolute;
 }
-.mainBox .shareNav{
+.mainBox .shareNav,.mainBox .searchNav{
     display:none;
 }
 /* 项目容器 */

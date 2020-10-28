@@ -46,6 +46,7 @@ headBox.addEventListener("mouseout", function () {
 //获取项目盒子
 var personalNav = getDom(".personalNav");
 var shareNav = getDom(".shareNav");
+var searchNav = getDom(".searchNav");
 
 //保存返回项目
 var userProject;
@@ -200,19 +201,27 @@ function search() {
                 'Content-Type': 'application/json'
             }, // 请求头
             success: function (res) {
-                if (res) {
-                    console.log(res);
-                } else {
+                if (res.status_code == '200') {
+                    searchNav.style.display = "block";
+                    projectSize(searchNav);
+                    //项目数组--
+                    searchProject = res.result;
+                    // 长度
+                    searchProjectLength = userProject.length;
 
+                    addLiBox(searchProjectLength, searchProject, searchNav)
+                    personalBox.style.backgroundColor = "";
+                    personalBox.style.color = "#214B5B";
+                    personalNav.style.display = "none";
+                } else {
+                    topAlert("搜索失败");
                 }
             }
         });
     }
 
 }
-// 搜索提交
-searchBut.addEventListener("click", search);
-// window.addEventListener('resize', search);
+
 
 
 //高度自适应--------------------
@@ -267,11 +276,12 @@ function projectSize(project) {
 // 开始样式
 function start() {
     personalBox.style.backgroundColor = "#D1DADA";
-    personalBox.style.color = "#214B5B";
+    personalBox.style.color = "#071F3D";
     projectSize(personalNav);
     window.addEventListener('resize', function () {
         projectSize(personalNav);
         projectSize(shareNav);
+        projectSize(searchNav);
     });
 }
 start();
@@ -288,18 +298,18 @@ shareBox.addEventListener("click", function () {
     // projectSize(shareNav);
     // window.addEventListener('resize', function () {
     //     projectSize(shareNav);
-    //     projectSize(personalNav);
     // });
     topAlert("暂未开发！");
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
-    personalBox.style.backgroundColor = "#E6EEF1";
-    personalBox.style.color = "#214B5B";
-    shareBox.style.backgroundColor = "";
-    shareBox.style.color = "#fff";
+    personalBox.style.backgroundColor = "#D1DADA";
+    personalBox.style.color = "#071F3D";
     personalNav.style.display = "block";
+    shareBox.style.backgroundColor = "";
+    shareBox.style.color = "#214B5B";
     shareNav.style.display = "none";
+    searchNav.style.display = "none";
     projectSize(personalNav);
 });
 
@@ -421,6 +431,9 @@ function noProject(projectNav) {
     var divN = document.createElement("div");
     divN.className = "none";
     divN.innerText = "暂无项目";
+    if (projectNav == "searchNav") {
+        divN.innerText = "无相关项目";
+    }
     projectNav.appendChild(divN);
     var none = getDom(".none");
     textVerticalCenter(none);
@@ -483,5 +496,10 @@ function changeColor() {
 }
 // changeColor();
 
-
+//获取个人信息显示
 userMess(head, headBox, emailBox, perSig);
+
+// 搜索提交
+searchBut.addEventListener("click", search);
+//回车
+inputEnterEvent(searchCont, search);
