@@ -53,6 +53,7 @@ public class LoginController extends BaseController {
             response.addCookie(userAvatar);
         }
         WebUtil.renderMap(response,"status_code",isSuccess+"");
+        response.sendRedirect( "login.html");
     }
 
     @Override

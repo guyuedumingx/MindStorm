@@ -119,6 +119,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> search(String key) {
-       return projectDao.searchProjects(key);
+        List<Project> back = new ArrayList<>();
+        List<Project> projects = projectDao.searchProjects(key);
+        Iterator<Project> iterator = projects.iterator();
+        while (iterator.hasNext()){
+            Project in = iterator.next();
+            Project project = getProject(in.getId());
+            back.add(project);
+        }
+       return back;
     }
 }
