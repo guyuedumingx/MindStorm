@@ -1408,16 +1408,14 @@ Node.prototype.inputSelectAllText = function () {
  * @author tracy
  */
 function textVerticalCenter(node) {
-    var height = width1 = window.getComputedStyle ? window.getComputedStyle(node).height : 'nothing!';
-    node.style.lineHeight = height;
+    node.style.lineHeight = node.offsetHeight;
     window.addEventListener('resize', function () {
-        node.style.lineHeight = height;
+        node.style.lineHeight = node.offsetHeight;
     });
 }
 Node.prototype.textVerticalCenter = function () {
     textVerticalCenter(this);
 }
-
 
 /**
  * 左右滑动
