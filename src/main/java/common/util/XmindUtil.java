@@ -36,6 +36,12 @@ public class XmindUtil {
         builder = Core.getWorkbookBuilder();
     }
 
+    /**
+     * 读取本地文件,并转为project
+     * @param path 文件路径
+     * @param id 用户id
+     * @return
+     */
     public static int getWorkBook(String path, int id){
        userId = id;
         try {
@@ -49,28 +55,45 @@ public class XmindUtil {
         int rootId = createNodes(rootTopic, 0);
         project = projectService.getProject(projectId);
         project.setHeadNodeId(rootId);
-        projectService.chProject(project);
+        projectService.updateProject(project);
         return projectId;
     }
 
+    /**
+     * 从输入流中读取输入并转化为project
+     * @param in 输入流
+     * @param user 操作者
+     * @return
+     */
     public static int getWorkBook(InputStream in, User user) {
-        //userId = Integer.valueOf(req.getParameter("user_id"));
         userId = user.getId();
         try {
             workbook = builder.loadFromStream(in);
         }catch (Exception e) {
             logger.error(e.getMessage());
         }
+        //操作的xmind画布
         ISheet primarySheet = workbook.getPrimarySheet();
         projectId = addProject(primarySheet);
+        //从画布中获取的根节点
         ITopic rootTopic = primarySheet.getRootTopic();
+        //创建根节点,所有项目的根节点的父节点id均为0
         int rootId = createNodes(rootTopic, 0);
         project = projectService.getProject(projectId);
+        //把该节点设置成project的根节点
         project.setHeadNodeId(rootId);
-        projectService.chProject(project);
+        //更新project
+        projectService.updateProject(project);
         return projectId;
     }
 
+    /**
+     * 传入画布中的根节点
+     * 遍历根节点的字节点并递归创建节点
+     * @param topic 传入的xmind节点
+     * @param parentId node的父节点
+     * @return
+     */
     private static int createNodes(ITopic topic, int parentId){
         int nodeId = addNode(topic, parentId);
         Iterator<ITopic> iterator = topic.getAllChildrenIterator();
@@ -80,12 +103,22 @@ public class XmindUtil {
         return nodeId;
     }
 
+    /**
+     * 初始化节点并创建
+     * 默认从xmind中导入的节点,topic的主题对应者node的主题
+     * topic的notes和labels将被合并成node的content
+     * 默认创建的node节点不禁止添加子节点
+     * 默认创建的node节点不匿名
+     * @param topic 传入的xmind节点
+     * @param parendId node节点的父节点Id
+     * @return
+     */
     private static int addNode(ITopic topic, int parendId) {
         Node node = new Node();
         node.setTheme(topic.getTitleText());
         node.setAuthor(userId);
         node.setLastEditTime(System.currentTimeMillis()+"");
-        node.setEditable(true);
+        node.setBanAppend(false);
         node.setProjectId(projectId);
         node.setParentId(parendId);
         node.setNameless(false);
@@ -94,6 +127,11 @@ public class XmindUtil {
         return nodeService.newNode(node);
     }
 
+    /**
+     * 将xmind节点中的所有lables合并成String
+     * @param topic
+     * @return
+     */
     private static String lablesToString(ITopic topic){
         Set<String> labels = topic.getLabels();
         Iterator<String> iterator = labels.iterator();
@@ -106,6 +144,11 @@ public class XmindUtil {
         return str.toString();
     }
 
+    /**
+     * 把xmind中的项目转化成project
+     * @param sheet
+     * @return
+     */
     private static int addProject(ISheet sheet){
         project = new Project();
         project.setAuthor(userId);

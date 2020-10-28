@@ -1,7 +1,7 @@
 package common.util;
 
 /**
- * 生成验证码
+ * 生成6位数字验证码
  */
 public class AuthCodeUtil {
 

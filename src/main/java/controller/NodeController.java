@@ -2,15 +2,11 @@ package controller;
 
 import common.dto.Result;
 import common.dto.StatusCode;
-import common.factory.DaoFactory;
 import common.util.WebUtil;
-import dao.NodeDao;
-import dao.auxiliary.impl.RecentProjectDaoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.Node;
 import pojo.User;
-import pojo.auxiliary.RecentProject;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 
@@ -20,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * 负责处理有关于节点的请求
@@ -42,24 +35,28 @@ public class NodeController extends BaseController{
     }
 
     /**
-     * 新建节点
+     * 添加节点
      * @param req
      * @param resp
      * @throws IOException
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Node node = WebUtil.getJson(req, Node.class);
-        node.setAuthor(user.getId());
-        node.setLastEditId(user.getId());
-        node.setLastEditTime(System.currentTimeMillis()+"");
-        logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
-        int nodeId = service.newNode(node);
-        int statusCode = StatusCode.isZero(nodeId);
-
         Result result = new Result();
-        result.put("node_id",nodeId);
-        result.setStatus_code(statusCode);
+        Node node = WebUtil.getJson(req, Node.class);
+        if(node!=null){
+            node.setAuthor(user.getId());
+            node.setLastEditId(user.getId());
+            node.setLastEditTime(System.currentTimeMillis()+"");
+            logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
+            int nodeId = service.newNode(node);
+            int statusCode = StatusCode.isZero(nodeId);
+            result.put("node_id",nodeId);
+            result.setStatus_code(statusCode);
+        }else {
+            result.setStatus_code(StatusCode.LOST);
+        }
+
         WebUtil.renderJson(resp,result);
     }
 
@@ -99,7 +96,7 @@ public class NodeController extends BaseController{
         node.setId(id);
         node.setTheme(theme);
         node.setContent(content);
-        node.setEditable(editable);
+        node.setBanAppend(editable);
         node.setProjectId(projectId);
         node.setLastEditId(user.getId());
         return node;

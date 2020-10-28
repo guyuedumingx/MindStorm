@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
+ * 反射工具类
  * @author yohoyes
  */
 public class ReflectUtil {
@@ -26,6 +27,13 @@ public class ReflectUtil {
         return getFieldsMapForInsert(po, clazz, map);
     }
 
+    /**
+     * 通过反射获取pojo类的含有注解的方法
+     * 包含父类
+     * @param object
+     * @param <T>
+     * @return
+     */
     public static <T> Field[] getAllFields(T object){
         Class clazz = object.getClass();
         List<Field> fieldList = new ArrayList<Field>();
@@ -38,12 +46,26 @@ public class ReflectUtil {
         return fields;
     }
 
+    /**
+     * 获取插入时需要的简直对列表
+     * @param po
+     * @param <T>
+     * @return
+     * @throws IllegalAccessException
+     */
     public static <T> Map<String,Object> getParaForInsert(T po) throws IllegalAccessException {
         Class clazz = po.getClass();
         Map<String, Object> map = new HashMap<String, Object>(16);
         return getFieldsMapForInsert(po, clazz, map);
     }
 
+    /**
+     * 获取更新时需要的简直对列表
+     * @param po
+     * @param <T>
+     * @return
+     * @throws IllegalAccessException
+     */
     public static <T> Map<String,Object> getParaForUpdate(T po) throws IllegalAccessException {
         Class clazz = po.getClass();
         Map<String, Object> map = new HashMap<String, Object>(16);
@@ -51,6 +73,13 @@ public class ReflectUtil {
     }
 
 
+    /**
+     *拼接修改时的sql
+     * @param po
+     * @param list
+     * @param <T>
+     * @return
+     */
     public static <T> String getSqlFragment(T po,List<Object> list) {
         StringBuilder sb = new StringBuilder(" set ");
         try {
@@ -70,6 +99,13 @@ public class ReflectUtil {
         return sb.toString();
     }
 
+    /**
+     * 拼接插入时的sql
+     * @param po
+     * @param list
+     * @param <T>
+     * @return
+     */
     public static <T> String getSqlForInsert(T po, List<Object> list) {
         StringBuilder sb = new StringBuilder();
         try {

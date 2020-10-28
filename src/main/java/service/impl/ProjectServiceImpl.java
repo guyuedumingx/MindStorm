@@ -46,7 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
                     if(hasRootNode) {
                         Node node = new Node(project);
                         node.setLastEditTime(System.currentTimeMillis()+"");
-                        node.setEditable(true);
+                        node.setBanAppend(false);
                         int headNodeId = new NodeServiceImpl().newNode(node);
                         project.setHeadNodeId(headNodeId);
                     }
@@ -63,20 +63,20 @@ public class ProjectServiceImpl implements ProjectService {
     public int delProject(int projectId, int operatorId) {
         Project project = projectDao.selectOne(new Project(projectId));
         if(project.getAuthor()==operatorId) {
-            doDelete(projectId, operatorId);
+            doDelete(projectId);
             return StatusCode.OK;
         }
         return StatusCode.ERROR;
     }
 
-    private void doDelete(int projectId, int operatorId){
+    private void doDelete(int projectId){
         projectDao.deleteOne(projectId);
         contributorDao.deleteOne(new Contributor(projectId));
-        recentProjectDao.deleteOne(new RecentProject(operatorId,projectId));
+        recentProjectDao.deleteOne(projectId);
     }
 
     @Override
-    public int chProject(Project project) {
+    public int updateProject(Project project) {
         int i = projectDao.updateOne(project);
         return i==0 ? StatusCode.ERROR : StatusCode.OK;
     }
@@ -119,6 +119,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> search(String key) {
-       return projectDao.searchProjects(key);
+        List<Project> back = new ArrayList<>();
+        List<Project> projects = projectDao.searchProjects(key);
+        Iterator<Project> iterator = projects.iterator();
+        while (iterator.hasNext()){
+            Project in = iterator.next();
+            Project project = getProject(in.getId());
+            back.add(project);
+        }
+       return back;
     }
 }

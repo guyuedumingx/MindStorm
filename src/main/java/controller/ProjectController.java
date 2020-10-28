@@ -1,6 +1,7 @@
 package controller;
 
 import common.dto.Result;
+import common.dto.SearchBack;
 import common.dto.StatusCode;
 import common.util.WebUtil;
 import org.slf4j.Logger;
@@ -92,8 +93,16 @@ public class ProjectController extends BaseController{
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SearchBack result = new SearchBack();
         String key = req.getParameter("key");
         List<Project> search = service.search(key);
-        WebUtil.renderJson(resp,search);
+        if(search==null){
+            result.setStatus_code(StatusCode.ERROR);
+        }else {
+            result.setStatus_code(StatusCode.OK);
+            result.setResult(search);
+        }
+        WebUtil.renderJson(resp,result);
     }
 }
+

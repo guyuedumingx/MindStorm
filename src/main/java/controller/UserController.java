@@ -32,7 +32,6 @@ public class UserController extends BaseController{
         user = (User)session.getAttribute("user");
         if(user==null){
             try {
-                System.out.println("首页跳转登录");
                 resp.sendRedirect( "login.html");
             }catch (Exception e) {
                 logger.error("首页跳转登录失败");
