@@ -39,7 +39,7 @@ import java.util.List;
      * @param project
      * @return
      */
-     int chProject(Project project);
+     int updateProject(Project project);
 
     /**
      * 获取项目

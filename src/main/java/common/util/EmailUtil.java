@@ -14,7 +14,13 @@ import java.util.Properties;
  * @author yohoyes
  */
 public class EmailUtil {
+    /**
+     * 发送者邮箱
+     */
     static String from = "";
+    /**
+     * 发送者的密钥
+     */
     static String password = "";
     static Logger logger = LoggerFactory.getLogger(EmailUtil.class);
 
@@ -30,6 +36,15 @@ public class EmailUtil {
         }
     }
 
+    /**
+     * 对外暴露的发送接口，负责根据sendFor参数分发不同的邮件发送请求
+     * register是注册时的验证码请求
+     * chpwd是修改密码时的验证码请求
+     * @param sendFor 邮件请求类型
+     * @param to 接受者邮箱地址
+     * @param code 验证码
+     * @return
+     */
     public static int send(String sendFor, String to, String code){
         if("register".equals(sendFor)){
             return sendRegisterEmail(to,code);
@@ -39,7 +54,17 @@ public class EmailUtil {
         return StatusCode.LOST;
     }
 
-    public static int sendEmail(String to,String head,String content) {
+    /**
+     *负责发送邮件
+     * 考虑到阿里云服务器禁止25号邮箱默认的发送端口,本方法改用465号端口发送邮件
+     * 使用ssl加密
+     * 邮件的内容content 支持HTML
+     * @param to 接收者邮箱地址
+     * @param head 邮件标题
+     * @param content 邮件内容
+     * @return
+     */
+    private static int sendEmail(String to,String head,String content) {
         Properties props = new Properties();
 
         //网易的smtp服务器地址
@@ -84,6 +109,12 @@ public class EmailUtil {
         }
     }
 
+    /**
+     * 注册时发送验证码
+     * @param to
+     * @param code
+     * @return
+     */
     public static int sendRegisterEmail(String to, String code){
         String content = "<style type=\"text/css\">\n" +
                 "* {\n" +
@@ -109,6 +140,12 @@ public class EmailUtil {
         return sendEmail(to, "欢迎使用思维风暴,更多新技能等你探索",content);
     }
 
+    /**
+     * 修改密码时发送验证码
+     * @param to
+     * @param code
+     * @return
+     */
     public static int sendChPasswordEmail(String to, String code) {
         String content = "<style type=\"text/css\">\n" +
                 "* {\n" +
@@ -134,6 +171,12 @@ public class EmailUtil {
         return sendEmail(to, "修改密码",content);
     }
 
+    /**
+     * 项目到期时发送提醒邮箱
+     * @param to
+     * @param project
+     * @return
+     */
     public static int sendEmailForDeadline(String to, Project project){
         String content = "<style type=\"text/css\">\n" +
                 "* {\n" +

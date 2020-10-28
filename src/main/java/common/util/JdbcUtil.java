@@ -11,15 +11,20 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
+ * 数据库工具类
  * @author yohoyes
  */
 public class JdbcUtil {
-    static Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
+    /**
+     * 把connection对象与线程绑定
+     */
     private static ThreadLocal<Connection> tol = new ThreadLocal<Connection>();
+    static Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
     private static DataSource ds;
 
     static {
         try {
+            //读取配置文件
             Properties pro = new Properties();
             InputStream is = JdbcUtil.class.getClassLoader().getResourceAsStream("druid.properties");
             pro.load(is);
@@ -63,6 +68,9 @@ public class JdbcUtil {
         }
     }
 
+    /**
+     * 提交
+     */
     public static void commit() {
         try {
             Connection conn = tol.get();
@@ -74,6 +82,9 @@ public class JdbcUtil {
         }
     }
 
+    /**
+     * 回滚
+     */
     public static void rollback() {
         try {
             // 从集合tol中得到一个连接

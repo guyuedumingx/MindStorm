@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * http跨域
- * response编码
+ * http跨域过滤器
+ * response编码过滤器
  * @author yohoyes
  */
 @WebFilter("/*")

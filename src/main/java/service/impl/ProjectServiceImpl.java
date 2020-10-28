@@ -63,20 +63,20 @@ public class ProjectServiceImpl implements ProjectService {
     public int delProject(int projectId, int operatorId) {
         Project project = projectDao.selectOne(new Project(projectId));
         if(project.getAuthor()==operatorId) {
-            doDelete(projectId, operatorId);
+            doDelete(projectId);
             return StatusCode.OK;
         }
         return StatusCode.ERROR;
     }
 
-    private void doDelete(int projectId, int operatorId){
+    private void doDelete(int projectId){
         projectDao.deleteOne(projectId);
         contributorDao.deleteOne(new Contributor(projectId));
-        recentProjectDao.deleteOne(new RecentProject(operatorId,projectId));
+        recentProjectDao.deleteOne(projectId);
     }
 
     @Override
-    public int chProject(Project project) {
+    public int updateProject(Project project) {
         int i = projectDao.updateOne(project);
         return i==0 ? StatusCode.ERROR : StatusCode.OK;
     }

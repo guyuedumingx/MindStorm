@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * 考虑到从数据库中查询到的数据可能是List,本类可以将pojo类的某个标有
+ * annontation的成员变量根据传入的List返回int[]
  * 把对象的某个字段转成int[]
  * @author yohoyes
  */

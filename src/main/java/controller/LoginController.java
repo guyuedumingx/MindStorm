@@ -28,7 +28,6 @@ public class LoginController extends BaseController {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("begin");
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -59,6 +58,13 @@ public class LoginController extends BaseController {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);
+    }
+
+    private boolean isNullOrEmpty(String object){
+        if(object==null||"".equals(object)){
+            return false;
+        }
+        return true;
     }
 
 }
