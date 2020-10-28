@@ -202,7 +202,9 @@ function search() {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    getDom(".none").style.display = "none";
+                    if (getDom(".none")) {
+                        getDom(".none").style.display = "none";
+                    }
                     projectSize(searchNav);
                     searchNav.style.display = "block";
                     removeLi();
