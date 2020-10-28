@@ -208,7 +208,7 @@ function search() {
                     //项目数组--
                     searchProject = res.result;
                     // 长度
-                    searchProjectLength = userProject.length;
+                    searchProjectLength = searchProject.length;
 
                     addLiBox(searchProjectLength, searchProject, searchNav)
                     personalBox.style.backgroundColor = "";
