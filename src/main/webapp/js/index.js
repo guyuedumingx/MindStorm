@@ -192,7 +192,6 @@ function search() {
             searchBut.state = true;
         }, 2000);
         var content = searchCont.value;
-        console.log(content);
         if (!content) {
             topAlert("请输入内容！");
         } else {
