@@ -1289,6 +1289,7 @@ body .header {
 }
 
 .mainBoxRight .projectId {
+    position: relative;
     height: 40px;
     border-radius: 5px;
     background-color: #f8fcfa;
@@ -1311,31 +1312,42 @@ body .header {
     font-size: 14px;
 }
 
-.mainBoxRight .projectId h4 .copyId {
+@keyframes toBigChange {
+    0% {
+        transform: translate(-50%, 0) scale(0.5, 0.5);
+    }
+
+    100% {
+        transform: translate(-50%, 0) scale(1, 1);
+    }
+}
+
+.mainBoxRight .projectId .copyId {
     display: none;
     position: absolute;
-    bottom: 3%;
+    bottom: -20%;
     left: 50%;
-    width: 36px;
     height: 20px;
+    padding: 0px 8px;
     border-radius: 5px;
-    margin-left: -18px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
     color: #214B5B;
     background-color: #fff;
     cursor: pointer;
-    animation-name: toBig;
+    transform: translate(-50%, 0);
+    animation-name: toBigChange;
     animation-duration: .2s;
 }
 
-.mainBoxRight .projectId h4 .copyId:hover {
+.mainBoxRight .projectId .copyId:hover {
     background-color: #f5f5f5;
 }
 
-.mainBoxRight .projectId h4:hover .copyId {
+.mainBoxRight .projectId:hover .copyId {
     display: block;
 }
 

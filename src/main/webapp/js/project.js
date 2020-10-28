@@ -1141,7 +1141,7 @@ document.addEventListener('keydown', function (e) {
 
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
-var projectCopyId = getDom('.mainBoxRight .projectId h4 .copyId'); // 复制ID
+var projectCopyId = getDom('.mainBoxRight .projectId .copyId'); // 复制ID
 var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
 var addNode = btnArr[0]; // 创建节点
@@ -1200,9 +1200,18 @@ for (var i = 0; i < btnArr.length; i++) {
 // 初始化ID
 projectIdBox.innerText = projectId;
 
-// 添加点击复制ID事件
+// 添加点击复制ID相关事件
+projectCopyId.addEventListener('mouseover', function () {
+    this.innerText = '复制';
+});
+
+projectCopyId.addEventListener('mouseout', function () {
+    this.innerText = '复制';
+});
+
 projectCopyId.addEventListener('click', function () {
     setShearPlateData(projectId);
+    this.innerText = '复制成功';
 });
 
 // 按钮禁用
