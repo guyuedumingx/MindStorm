@@ -29,6 +29,10 @@ function setColor() {
     progressBoxColor = colorSet[colorState][5];
     getDom('body').style.backgroundColor = mainColor;
     getDom('body').style.transition = 'background-color .5s';
+    getDom('.header .logoBox span').style.color = textColor;
+    getDom('.header .logoBox span').style.transition = 'color .5s';
+    getDom('.header .personal .head_nav .user_name').style.color = textColor;
+    getDom('.header .personal .head_nav .user_name').style.transition = 'color .5s';
     var mainBox = getDom('.mainBox');
     for (var i = 0; i < mainBox.children.length; i++) {
         for (var j = 0; j < mainBox.children[i].children.length; j++) {
@@ -100,6 +104,8 @@ function changeColor(state) {
     progressColor = colorSet[state][4];
     progressBoxColor = colorSet[state][5];
     getDom('body').style.backgroundColor = mainColor;
+    getDom('.header .logoBox span').style.color = textColor;
+    getDom('.header .personal .head_nav .user_name').style.color = textColor;
     var mainBox = getDom('.mainBox');
     for (var i = 0; i < mainBox.children.length; i++) {
         for (var j = 0; j < mainBox.children[i].children.length; j++) {
