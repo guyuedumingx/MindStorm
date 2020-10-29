@@ -9,8 +9,8 @@ tool.textProhibition();
 // var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
 // var progressColor = '#cccccc'; // 进度条颜色
 // var progressBoxColor = '#666666'; // 进度条盒子颜色
-var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', '#214b5b', 'rgba(255, 167, 15)', '#214b5b', '#ffffff'],
-['#1e1e1e', 'rgb(51, 51, 51)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 167, 15)', '#cccccc', '#666666']];
+var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', '#214b5b', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
+['#1e1e1e', 'rgb(51, 51, 51)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
 var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
@@ -18,6 +18,7 @@ var textColor = '#214b5b'; // 文字颜色
 var textLightColor; // 文本高亮色
 var progressColor; // 进度条颜色
 var progressBoxColor; // 进度条盒子颜色
+var logoBGI; // logo的url
 
 // 配色函数
 function setColor() {
@@ -27,8 +28,10 @@ function setColor() {
     textLightColor = colorSet[colorState][3];
     progressColor = colorSet[colorState][4];
     progressBoxColor = colorSet[colorState][5];
+    logoBGI = colorSet[colorState][6];
     getDom('body').style.backgroundColor = mainColor;
     getDom('body').style.transition = 'background-color .5s';
+    getDom('.header .logo').style.backgroundImage = logoBGI;
     getDom('.header .logoBox span').style.color = textColor;
     getDom('.header .logoBox span').style.transition = 'color .5s';
     getDom('.header .personal .head_nav .user_name').style.color = textColor;
@@ -103,7 +106,9 @@ function changeColor(state) {
     textLightColor = colorSet[state][3];
     progressColor = colorSet[state][4];
     progressBoxColor = colorSet[state][5];
+    logoBGI = colorSet[state][6];
     getDom('body').style.backgroundColor = mainColor;
+    getDom('.header .logo').style.backgroundImage = logoBGI;
     getDom('.header .logoBox span').style.color = textColor;
     getDom('.header .personal .head_nav .user_name').style.color = textColor;
     var mainBox = getDom('.mainBox');
