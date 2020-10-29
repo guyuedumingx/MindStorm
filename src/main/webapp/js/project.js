@@ -170,7 +170,8 @@ function changeColor(state) {
     hideLineClick();
     setTimeout(function () {
         changeColorState = false;
-    }, 500);
+        nightState = 1 - nightState;
+    }, 1000);
 }
 
 // header
@@ -1769,14 +1770,12 @@ nightBtn.style.backgroundSize = '60%';
 nightBtn.style.backgroundPosition = 'center';
 nightBtn.addEventListener('click', function () {
     changeColor(nightState);
-    nightState = 1 - nightState;
 });
 var nightState = 1; // 当前状态
 document.addEventListener('keydown', function (e) {
     if (e.key == 'e' && e.ctrlKey) {
         e.preventDefault();
         changeColor(nightState);
-        nightState = 1 - nightState;
     }
 });
 // 开关切换函数
