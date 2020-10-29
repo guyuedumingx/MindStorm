@@ -249,7 +249,9 @@ app.put('/node', function (req, res) {
 });
 app.get('/node', function (req, res) {
     var id = req.query.id;
-    res.send(getNode(id));
+    setTimeout(function () {
+        res.send(getNode(id));
+    }, 200);
 });
 app.get('/', function (req, res) {
     fs.readFile('test.html', 'utf8', function (err, doc) {

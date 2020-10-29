@@ -1140,7 +1140,13 @@ function treeRemoveNode(node) {
 }
 
 // 刷新树盒子
+var treeReloadFlag = false;
+
 function treeReload() {
+    if (treeReloadFlag) {
+        return;
+    }
+    treeReloadFlag = true;
     nowNode = null;
     changeNodeEvent();
     for (var i = 0; i < nodeSet.length; i++) {
@@ -1200,6 +1206,7 @@ function treeReload() {
 
             // 清除定时器
             clearInterval(nodeRequetTimer);
+            treeReloadFlag = false;
         }
     }, 5);
 }
