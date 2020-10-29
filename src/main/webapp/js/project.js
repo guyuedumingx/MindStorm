@@ -1472,7 +1472,7 @@ function addNodeFunction() {
 
 addNode.addEventListener('click', addNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == 'Tab' && nowNode) {
+    if (e.key == 'Tab' && nowNode && nowOperation == 'null') {
         e.preventDefault();
         addNodeFunction();
     }
@@ -1491,7 +1491,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == 'Delete' && nowNode) {
+    if (e.key == 'Delete' && nowNode && nowOperation == 'null') {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -1528,7 +1528,7 @@ function changeNodeFunction() {
 
 changeNode.addEventListener('click', changeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId) {
+    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId && nowOperation == 'null') {
         e.preventDefault();
         changeNodeFunction();
     }
@@ -1570,7 +1570,7 @@ function queryNodeFunction() {
 
 queryNode.addEventListener('click', queryNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId) {
+    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId && nowOperation == 'null') {
         e.preventDefault();
         queryNodeFunction();
     }
@@ -1582,6 +1582,7 @@ refreshTree.addEventListener('click', function () {
 });
 document.addEventListener('keydown', function (e) {
     if (e.key == 'r' && e.ctrlKey) {
+        e.preventDefault();
         treeReload();
     }
 });
