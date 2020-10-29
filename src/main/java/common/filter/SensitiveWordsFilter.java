@@ -1,5 +1,7 @@
 package common.filter;
 
+import common.util.SensitiveWordUtil;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
@@ -21,8 +23,11 @@ public class SensitiveWordsFilter implements Filter {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 if(method.getName().equals("getParameter")){
                     String value = (String) method.invoke(servletRequest, args);
+                    SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
+                    value = filter.replaceSensitiveWord(value, 1, "*");
+                    return value;
                 }
-                return null;
+                return method.invoke(servletRequest,args);
             }
         });
         filterChain.doFilter(request,servletResponse);
@@ -30,9 +35,6 @@ public class SensitiveWordsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        ServletContext servletContext = filterConfig.getServletContext();
-        String realPath = servletContext.getRealPath("/WEB-INF/classes/");
-        Scanner scanner = new Scanner(realPath);
     }
 
     @Override

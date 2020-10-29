@@ -33,13 +33,13 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         Object user = request.getSession().getAttribute("user");
         String uri = request.getRequestURI();
-        if(uri.contains("/newHand")||uri.contains("/login")){
+        if(uri.contains("newHand")||uri.contains("login")){
             filterChain.doFilter(servletRequest,servletResponse);
         }else {
             if(user!=null) {
                 filterChain.doFilter(servletRequest, servletResponse);
             }else {
-                request.getRequestDispatcher("/login.html").forward(servletRequest, servletResponse);
+                request.getRequestDispatcher("login.html").forward(servletRequest, servletResponse);
             }
         }
     }
