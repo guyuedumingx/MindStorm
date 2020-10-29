@@ -1424,6 +1424,7 @@ function tipsYesFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     treeRemoveNode(nowNode);
+                    nowNode = null;
                 } else {
                     topAlert('删除失败');
                 }
