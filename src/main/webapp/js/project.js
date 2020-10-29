@@ -1755,12 +1755,14 @@ cycleSprite(btnArr, 0, 0, 40);
 
 // 夜间模式按钮点击事件
 var nightBtn = btnArr[btnArr.length - 1];
-nightBtn.style.backgroundColor = '#000';
+nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
+nightBtn.style.backgroundSize = '60%';
+nightBtn.style.backgroundPosition = 'center';
 nightBtn.addEventListener('click', function () {
     if (nightState) {
-        nightBtn.style.backgroundColor = '#fff';
+        nightBtn.style.backgroundImage = 'url(img/project_sun.png)';
     } else {
-        nightBtn.style.backgroundColor = '#000';
+        nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
     }
     changeColor(nightState);
     nightState = 1 - nightState;
