@@ -2,6 +2,7 @@ package controller;
 
 import common.dto.Result;
 import common.dto.StatusCode;
+import common.util.SensitiveWordUtil;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ public class NodeController extends BaseController{
     Logger logger = LoggerFactory.getLogger(NodeController.class);
     User user = null;
     NodeService service = new NodeServiceImpl();
+    SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
 
     @Override
     protected void before(HttpServletRequest req, HttpServletResponse resp) {
@@ -44,11 +46,13 @@ public class NodeController extends BaseController{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Result result = new Result();
         Node node = WebUtil.getJson(req, Node.class);
+        //敏感词过滤
+        node.setTheme(filter.replaceSensitiveWord(node.getTheme(), 1, "*"));
+        node.setContent(filter.replaceSensitiveWord(node.getContent(), 1, "*"));
         if(node!=null){
             node.setAuthor(user.getId());
             node.setLastEditId(user.getId());
             node.setLastEditTime(System.currentTimeMillis()+"");
-            logger.debug("插入的节点主题: "+node.getTheme()+" 插入的节点信息: "+node.getContent());
             int nodeId = service.newNode(node);
             int statusCode = StatusCode.isZero(nodeId);
             result.put("node_id",nodeId);
@@ -90,6 +94,9 @@ public class NodeController extends BaseController{
         int id = Integer.valueOf(request.getParameter("id"));
         String theme = request.getParameter("theme");
         String content = request.getParameter("content");
+        //敏感词过滤
+        theme = filter.replaceSensitiveWord(theme,1,"*");
+        content = filter.replaceSensitiveWord(content,1,"*");
         boolean editable = Boolean.valueOf(request.getParameter("editable"));
         int projectId = Integer.valueOf(request.getParameter("projectId"));
         Node node = new Node();
@@ -125,5 +132,4 @@ public class NodeController extends BaseController{
     public void star(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
-
 }
