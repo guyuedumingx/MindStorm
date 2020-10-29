@@ -1414,6 +1414,7 @@ function textVerticalCenter(node) {
         var height = window.getComputedStyle ? window.getComputedStyle(node).height : 'nothing!';
         node.style.lineHeight = height;
     });
+    // debugger
     // node.style.lineHeight = node.offsetHeight;
     // window.addEventListener('resize', function () {
     //     node.style.lineHeight = node.offsetHeight;
@@ -1482,4 +1483,46 @@ function getStyle(obj, name) {
         return obj.currentStyle[name];
     }
     // return window.getComputedStyle?getComputedStyle(obj,null)[name]:obj.currentStyle[name];
+}
+
+/**
+ * 
+ * 函数功能：节流
+ * 
+ * @param {Function} fn 函数
+ * @param {number} delay 时间
+ * @author 60rzvvbj
+ */
+function throttle(fn, delay) {
+    let timer = null;
+    return function () {
+        if (timer) {
+            return;
+        }
+        fn.apply(this, arguments);
+        timer = setTimeout(() => {
+            timer = null;
+        }, delay);
+    }
+}
+
+/**
+ * 
+ * 函数功能：防抖
+ * 
+ * @param {Function} fn 函数
+ * @param {number} delay 时间
+ * @author 60rzvvbj
+ */
+function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            fn.apply(this, arguments);
+            timer = null;
+        }, delay);
+    }
 }
