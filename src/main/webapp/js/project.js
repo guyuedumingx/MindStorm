@@ -1404,9 +1404,17 @@ operationProject[1].addEventListener('click', function () {
     }
 });
 
+// 初始化节流阀
+removeNodeState = false;
+deleteProject = false;
+
 // 提示框中确定相关事件
 function tipsYesFunction() {
     if (tipsState == 'deleteNode') {
+        if (removeNodeState) {
+            return;
+        }
+        removeNodeState = true;
         ajax({
             type: 'delete',
             url: '/node',
@@ -1419,11 +1427,16 @@ function tipsYesFunction() {
                 } else {
                     topAlert('删除失败');
                 }
+                removeNodeState = false;
             }
         });
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
     } else if (tipsState == 'deleteProject') {
+        if (deleteProject) {
+            return;
+        }
+        deleteProject = true;
         ajax({
             type: 'delete',
             url: '/project',
@@ -1436,6 +1449,7 @@ function tipsYesFunction() {
                 } else {
                     topAlert('删除失败');
                 }
+                deleteProject = false;
             }
         });
     }
@@ -1601,6 +1615,10 @@ operationNodeBoxContent.addEventListener('focus', function () {
     }
 });
 
+// 初始化节流阀
+addNodeState = false;
+changeNodeState = false;
+
 // 操作节点框中提交按钮点击事件
 operationNodeBoxSubmit.addEventListener('click', function () {
     if (nowOperation == 'add') {
@@ -1616,6 +1634,10 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        if (addNodeState) {
+            return;
+        }
+        addNodeState = true;
         ajax({
             type: 'post',
             url: '/node',
@@ -1642,6 +1664,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('创建失败');
                     operationNodeBoxCloseFunction();
                 }
+                addNodeState = false;
             }
         });
     } else if (nowOperation == 'change') {
@@ -1657,6 +1680,10 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        if (changeNodeState) {
+            return;
+        }
+        changeNodeState = true;
         ajax({
             type: 'put',
             url: '/node',
@@ -1681,6 +1708,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('修改失败');
                     operationNodeBoxCloseFunction();
                 }
+                changeNodeState = false;
             }
         });
     } else {
