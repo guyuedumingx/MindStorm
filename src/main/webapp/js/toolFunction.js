@@ -1499,8 +1499,8 @@ function throttle(fn, delay) {
         if (timer) {
             return;
         }
+        fn.apply(this, arguments);
         timer = setTimeout(() => {
-            fn.apply(this, arguments);
             timer = null;
         }, delay);
     }

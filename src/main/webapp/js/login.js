@@ -198,8 +198,13 @@ emailTips(loginEmail);
 loginEmail.inputSelectAllText();
 loginPassword.inputSelectAllText();
 
+var runLoginTimer = null;
+
 // 发送登录请求
 function runLogin() {
+    if (runLoginTimer) {
+        return;
+    }
     var em = loginEmail.value;
     var pa = loginPassword.value;
     ajax({
@@ -217,6 +222,9 @@ function runLogin() {
             }
         },
     });
+    runLoginTimer = setTimeout(function () {
+        runLoginTimer = null;
+    }, 1000);
 }
 
 // 添加提交按钮点击事件
