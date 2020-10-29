@@ -396,7 +396,8 @@ function butStyle(project, liArr, x) {
 function addLi(li, name, introduce, author, number, projectID) {
     var divName = document.createElement("div");
     divName.className = "projectName";
-    divName.innerText = name;
+    divName.innerText = name; 
+    divName.title = name;
     var divIn = document.createElement("div");
     divIn.className = "introduce";
     divIn.innerText = "内容：";
