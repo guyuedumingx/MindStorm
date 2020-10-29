@@ -100,6 +100,15 @@ function setColor() {
 setColor();
 
 function changeColor(state) {
+    if (changeColorState) {
+        return;
+    }
+    changeColorState = true;
+    if (state) {
+        nightBtn.style.backgroundImage = 'url(img/project_sun.png)';
+    } else {
+        nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
+    }
     mainColor = colorSet[state][0];
     modularColor = colorSet[state][1];
     textColor = colorSet[state][2];
@@ -159,17 +168,10 @@ function changeColor(state) {
     });
     lineUpColor = textColor;
     hideLineClick();
+    setTimeout(function () {
+        changeColorState = false;
+    }, 500);
 }
-
-// 夜间模式(ctrl + E)
-var nightState = 1; // 当前状态
-document.addEventListener('keydown', function (e) {
-    if (e.key == 'e' && e.ctrlKey) {
-        e.preventDefault();
-        changeColor(nightState);
-        nightState = 1 - nightState;
-    }
-});
 
 // header
 //-----------------------------------------------------
@@ -1758,21 +1760,25 @@ operationNodeBoxStar.addEventListener('click', function () {
 // 循环按钮精灵图
 cycleSprite(btnArr, 0, 0, 40);
 
-// 夜间模式按钮点击事件
+// 夜间模式相关事件
+
+var changeColorState = false; // 节流阀
 var nightBtn = btnArr[btnArr.length - 1];
 nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
 nightBtn.style.backgroundSize = '60%';
 nightBtn.style.backgroundPosition = 'center';
 nightBtn.addEventListener('click', function () {
-    if (nightState) {
-        nightBtn.style.backgroundImage = 'url(img/project_sun.png)';
-    } else {
-        nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
-    }
     changeColor(nightState);
     nightState = 1 - nightState;
 });
-
+var nightState = 1; // 当前状态
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'e' && e.ctrlKey) {
+        e.preventDefault();
+        changeColor(nightState);
+        nightState = 1 - nightState;
+    }
+});
 // 开关切换函数
 function onOffChange(onOff) {
     if (onOff.state) {
