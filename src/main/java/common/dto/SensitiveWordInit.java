@@ -28,7 +28,7 @@ public class SensitiveWordInit {
     private Set<String> readSensitiveWordFile() {
     Set<String> wordSet = null;
         //敏感词库
-        InputStream is = SensitiveWordInit.class.getClassLoader().getResourceAsStream("BadWord.txt");
+        InputStream is = SensitiveWordInit.class.getClassLoader().getResourceAsStream("keywords");
         try {
 
             // 读取文件输入流
