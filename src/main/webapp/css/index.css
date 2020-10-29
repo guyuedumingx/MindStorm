@@ -501,6 +501,9 @@ body .header {
     font-size: 36px;
     font-weight: bold;
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 /* 简介盒子 */
 .mainBox .projectBox .projectLi li .introduce {
