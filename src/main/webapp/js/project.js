@@ -1204,22 +1204,6 @@ function treeReload() {
     }, 5);
 }
 
-// 测试用的
-document.addEventListener('keydown', function (e) {
-    if (e.key == 'Alt') {
-        e.preventDefault();
-        treeAppendNode(nowNode, {
-            id: 123,
-            theme: '动态添加节点测试',
-            content: '暂无',
-            editable: false
-        });
-    } else if (e.key == 'Delete') {
-        e.preventDefault();
-        treeRemoveNode(nowNode);
-    }
-});
-
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
 var projectCopyId = getDom('.mainBoxRight .projectId .copyId'); // 复制ID
@@ -1353,7 +1337,7 @@ function changeNodeEvent() {
 // 页面加载时先调用一次
 changeNodeEvent();
 
-// 关闭操作节点框的函数
+// 关闭按钮相关事件
 function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBox.hide();
@@ -1367,10 +1351,14 @@ function operationNodeBoxCloseFunction() {
     operationNodeBoxSubmit.hide();
 }
 
-// 关闭按钮的点击事件
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape' && nowOperation != 'null') {
+        operationNodeBoxCloseFunction();
+    }
+});
 
-// 关闭提示框函数
+// 关闭提示框相关事件
 function tipsCloseFunction() {
     tipsState = 'null';
     tipsTitle.innerText = '？';
@@ -1379,8 +1367,13 @@ function tipsCloseFunction() {
     transparentBaffle.hide();
 }
 
-// 提示框中关闭按钮点击事件
 tipsClose.addEventListener('click', tipsCloseFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape' && tipsState != 'null') {
+        e.preventDefault();
+        tipsCloseFunction();
+    }
+});
 
 // 导出按钮点击事件
 operationProject[0].addEventListener('click', function () {
@@ -1404,8 +1397,8 @@ operationProject[1].addEventListener('click', function () {
     }
 });
 
-// 提示框中确定按钮点击事件
-tipsYes.addEventListener('click', function () {
+// 提示框中确定相关事件
+function tipsYesFunction() {
     if (tipsState == 'deleteNode') {
         ajax({
             type: 'delete',
@@ -1440,14 +1433,20 @@ tipsYes.addEventListener('click', function () {
         });
     }
     tipsCloseFunction();
+}
+tipsYes.addEventListener('click', tipsYesFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && tipsState != 'null') {
+        tipsYesFunction();
+    }
 });
 
 // 提示框中取消按钮点击事件
 tipsNo.addEventListener('click', tipsCloseFunction);
 
-// 创建节点按钮的点击事件
-addNode.addEventListener('click', function () {
-    if (this.jurisdiction) {
+// 创建节点相关事件
+function addNodeFunction() {
+    if (addNode.jurisdiction) {
         nowOperation = 'add';
         operationNodeBox.show();
         transparentBaffle.show();
@@ -1469,22 +1468,38 @@ addNode.addEventListener('click', function () {
         operationNodeBoxSubmit.show();
         operationNodeBoxStarBox.hide();
     }
+}
+
+addNode.addEventListener('click', addNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Tab' && nowNode) {
+        e.preventDefault();
+        addNodeFunction();
+    }
 });
 
-// 删除节点按钮的点击事件
-removeNode.addEventListener('click', function () {
-    if (this.jurisdiction) {
+// 删除节点相关事件
+function removeNodeFunction() {
+    if (removeNode.jurisdiction) {
         tipsState = 'deleteNode';
         tipsTitle.innerText = '删除节点';
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
         transparentBaffle.show();
     }
+}
+
+removeNode.addEventListener('click', removeNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Delete' && nowNode) {
+        e.preventDefault();
+        removeNodeFunction();
+    }
 });
 
-// 修改节点按钮的点击事件
-changeNode.addEventListener('click', function () {
-    if (this.jurisdiction) {
+// 修改节点相关事件
+function changeNodeFunction() {
+    if (changeNode.jurisdiction) {
         nowOperation = 'change';
         operationNodeBox.show();
         transparentBaffle.show();
@@ -1509,11 +1524,19 @@ changeNode.addEventListener('click', function () {
         operationNodeBoxSubmit.show();
         operationNodeBoxStarBox.hide();
     }
+}
+
+changeNode.addEventListener('click', changeNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId) {
+        e.preventDefault();
+        changeNodeFunction();
+    }
 });
 
-// 查看节点按钮的点击事件
-queryNode.addEventListener('click', function () {
-    if (this.jurisdiction) {
+// 查看节点相关事件
+function queryNodeFunction() {
+    if (queryNode.jurisdiction) {
         nowOperation = 'query';
         operationNodeBox.show();
         transparentBaffle.show();
@@ -1543,11 +1566,24 @@ queryNode.addEventListener('click', function () {
         operationNodeBoxStarNumber.innerText = nowNode.star;
         operationNodeBoxStarBox.show();
     }
+}
+
+queryNode.addEventListener('click', queryNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId) {
+        e.preventDefault();
+        queryNodeFunction();
+    }
 });
 
 // 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
     treeReload();
+});
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'r' && e.ctrlKey) {
+        treeReload();
+    }
 });
 
 // 操作节点框

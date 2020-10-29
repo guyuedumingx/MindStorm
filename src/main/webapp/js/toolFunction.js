@@ -1414,6 +1414,10 @@ function textVerticalCenter(node) {
         var height = window.getComputedStyle ? window.getComputedStyle(node).height : 'nothing!';
         node.style.lineHeight = height;
     });
+    // node.style.lineHeight = node.offsetHeight;
+    // window.addEventListener('resize', function () {
+    //     node.style.lineHeight = node.offsetHeight;
+    // });
 }
 Node.prototype.textVerticalCenter = function () {
     textVerticalCenter(this);
