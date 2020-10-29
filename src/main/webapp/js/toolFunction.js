@@ -1484,3 +1484,45 @@ function getStyle(obj, name) {
     }
     // return window.getComputedStyle?getComputedStyle(obj,null)[name]:obj.currentStyle[name];
 }
+
+/**
+ * 
+ * 函数功能：节流
+ * 
+ * @param {Function} fn 函数
+ * @param {number} delay 时间
+ * @author 60rzvvbj
+ */
+function throttle(fn, delay) {
+    let timer = null;
+    return function () {
+        if (timer) {
+            return;
+        }
+        timer = setTimeout(() => {
+            fn.apply(this, arguments);
+            timer = null;
+        }, delay);
+    }
+}
+
+/**
+ * 
+ * 函数功能：防抖
+ * 
+ * @param {Function} fn 函数
+ * @param {number} delay 时间
+ * @author 60rzvvbj
+ */
+function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            fn.apply(this, arguments);
+            timer = null;
+        }, delay);
+    }
+}
