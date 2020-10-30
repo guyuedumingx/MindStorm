@@ -9,8 +9,8 @@ tool.textProhibition();
 // var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
 // var progressColor = '#cccccc'; // 进度条颜色
 // var progressBoxColor = '#666666'; // 进度条盒子颜色
-var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', '#214b5b', 'rgba(255, 167, 15)', '#214b5b', '#ffffff'],
-['#1e1e1e', 'rgb(51, 51, 51)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 167, 15)', '#cccccc', '#666666']];
+var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', '#214b5b', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
+['#1e1e1e', 'rgb(51, 51, 51)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
 var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
@@ -18,6 +18,7 @@ var textColor = '#214b5b'; // 文字颜色
 var textLightColor; // 文本高亮色
 var progressColor; // 进度条颜色
 var progressBoxColor; // 进度条盒子颜色
+var logoBGI; // logo的url
 
 // 配色函数
 function setColor() {
@@ -27,8 +28,10 @@ function setColor() {
     textLightColor = colorSet[colorState][3];
     progressColor = colorSet[colorState][4];
     progressBoxColor = colorSet[colorState][5];
+    logoBGI = colorSet[colorState][6];
     getDom('body').style.backgroundColor = mainColor;
     getDom('body').style.transition = 'background-color .5s';
+    getDom('.header .logo').style.backgroundImage = logoBGI;
     getDom('.header .logoBox span').style.color = textColor;
     getDom('.header .logoBox span').style.transition = 'color .5s';
     getDom('.header .personal .head_nav .user_name').style.color = textColor;
@@ -43,7 +46,7 @@ function setColor() {
     getDom('.mainBoxLeft .creator h4').style.color = textColor;
     getDom('.mainBoxLeft .creator h4').style.transition = 'color .5s';
     getDom('.mainBoxLeft .introduce .introduceMain').style.backgroundColor = modularColor;
-    getDom('.mainBoxLeft .introduce .introduceMain').style.transition = 'background-color .5s';
+    getDom('.mainBoxLeft .introduce .introduceMain').style.transition = 'all .5s';
     getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
     getDomA('.mainBoxLeft .introduce h4')[0].style.transition = 'color .5s';
     getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
@@ -97,13 +100,24 @@ function setColor() {
 setColor();
 
 function changeColor(state) {
+    if (changeColorState) {
+        return;
+    }
+    changeColorState = true;
+    if (state) {
+        nightBtn.style.backgroundImage = 'url(img/project_sun.png)';
+    } else {
+        nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
+    }
     mainColor = colorSet[state][0];
     modularColor = colorSet[state][1];
     textColor = colorSet[state][2];
     textLightColor = colorSet[state][3];
     progressColor = colorSet[state][4];
     progressBoxColor = colorSet[state][5];
+    logoBGI = colorSet[state][6];
     getDom('body').style.backgroundColor = mainColor;
+    getDom('.header .logo').style.backgroundImage = logoBGI;
     getDom('.header .logoBox span').style.color = textColor;
     getDom('.header .personal .head_nav .user_name').style.color = textColor;
     var mainBox = getDom('.mainBox');
@@ -154,17 +168,11 @@ function changeColor(state) {
     });
     lineUpColor = textColor;
     hideLineClick();
-}
-
-// 夜间模式(ctrl + E)
-var nightState = 1; // 当前状态
-document.addEventListener('keydown', function (e) {
-    if (e.key == 'e' && e.ctrlKey) {
-        e.preventDefault();
-        changeColor(nightState);
+    setTimeout(function () {
+        changeColorState = false;
         nightState = 1 - nightState;
-    }
-});
+    }, 1000);
+}
 
 // header
 //-----------------------------------------------------
@@ -473,7 +481,7 @@ window.addEventListener('resize', function () {
         introduce.style.transition = 'none';
         introduce.style.height = mainBoxLeft.offsetHeight - 50 + 'px';
         setTimeout(function () {
-            introduce.style.transition = 'height .5s';
+            introduce.style.transition = 'all .5s';
         }, 1);
     }
 });
@@ -1140,7 +1148,13 @@ function treeRemoveNode(node) {
 }
 
 // 刷新树盒子
+var treeReloadFlag = false;
+
 function treeReload() {
+    if (treeReloadFlag) {
+        return;
+    }
+    treeReloadFlag = true;
     nowNode = null;
     changeNodeEvent();
     for (var i = 0; i < nodeSet.length; i++) {
@@ -1200,6 +1214,7 @@ function treeReload() {
 
             // 清除定时器
             clearInterval(nodeRequetTimer);
+            treeReloadFlag = false;
         }
     }, 5);
 }
@@ -1397,9 +1412,17 @@ operationProject[1].addEventListener('click', function () {
     }
 });
 
+// 初始化节流阀
+removeNodeState = false;
+deleteProject = false;
+
 // 提示框中确定相关事件
 function tipsYesFunction() {
     if (tipsState == 'deleteNode') {
+        if (removeNodeState) {
+            return;
+        }
+        removeNodeState = true;
         ajax({
             type: 'delete',
             url: '/node',
@@ -1409,14 +1432,20 @@ function tipsYesFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     treeRemoveNode(nowNode);
+                    nowNode = null;
                 } else {
                     topAlert('删除失败');
                 }
+                removeNodeState = false;
             }
         });
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
     } else if (tipsState == 'deleteProject') {
+        if (deleteProject) {
+            return;
+        }
+        deleteProject = true;
         ajax({
             type: 'delete',
             url: '/project',
@@ -1429,6 +1458,7 @@ function tipsYesFunction() {
                 } else {
                     topAlert('删除失败');
                 }
+                deleteProject = false;
             }
         });
     }
@@ -1472,7 +1502,7 @@ function addNodeFunction() {
 
 addNode.addEventListener('click', addNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == 'Tab' && nowNode) {
+    if (e.key == 'Tab' && nowNode && nowOperation == 'null') {
         e.preventDefault();
         addNodeFunction();
     }
@@ -1491,7 +1521,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == 'Delete' && nowNode) {
+    if (e.key == 'Delete' && nowNode && nowOperation == 'null') {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -1528,7 +1558,7 @@ function changeNodeFunction() {
 
 changeNode.addEventListener('click', changeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId) {
+    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId && nowOperation == 'null') {
         e.preventDefault();
         changeNodeFunction();
     }
@@ -1570,7 +1600,7 @@ function queryNodeFunction() {
 
 queryNode.addEventListener('click', queryNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId) {
+    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId && nowOperation == 'null') {
         e.preventDefault();
         queryNodeFunction();
     }
@@ -1582,6 +1612,7 @@ refreshTree.addEventListener('click', function () {
 });
 document.addEventListener('keydown', function (e) {
     if (e.key == 'r' && e.ctrlKey) {
+        e.preventDefault();
         treeReload();
     }
 });
@@ -1592,6 +1623,10 @@ operationNodeBoxContent.addEventListener('focus', function () {
         this.value = '';
     }
 });
+
+// 初始化节流阀
+addNodeState = false;
+changeNodeState = false;
 
 // 操作节点框中提交按钮点击事件
 operationNodeBoxSubmit.addEventListener('click', function () {
@@ -1608,6 +1643,10 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        if (addNodeState) {
+            return;
+        }
+        addNodeState = true;
         ajax({
             type: 'post',
             url: '/node',
@@ -1634,6 +1673,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('创建失败');
                     operationNodeBoxCloseFunction();
                 }
+                addNodeState = false;
             }
         });
     } else if (nowOperation == 'change') {
@@ -1649,6 +1689,10 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         if (inpContent.length == 0) {
             inpContent = '暂无';
         }
+        if (changeNodeState) {
+            return;
+        }
+        changeNodeState = true;
         ajax({
             type: 'put',
             url: '/node',
@@ -1673,6 +1717,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('修改失败');
                     operationNodeBoxCloseFunction();
                 }
+                changeNodeState = false;
             }
         });
     } else {
@@ -1716,19 +1761,23 @@ operationNodeBoxStar.addEventListener('click', function () {
 // 循环按钮精灵图
 cycleSprite(btnArr, 0, 0, 40);
 
-// 夜间模式按钮点击事件
-var nightBtn = btnArr[btnArr.length - 1];
-nightBtn.style.backgroundColor = '#000';
-nightBtn.addEventListener('click', function () {
-    if (nightState) {
-        nightBtn.style.backgroundColor = '#fff';
-    } else {
-        nightBtn.style.backgroundColor = '#000';
-    }
-    changeColor(nightState);
-    nightState = 1 - nightState;
-});
+// 夜间模式相关事件
 
+var changeColorState = false; // 节流阀
+var nightBtn = btnArr[btnArr.length - 1];
+nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
+nightBtn.style.backgroundSize = '60%';
+nightBtn.style.backgroundPosition = 'center';
+nightBtn.addEventListener('click', function () {
+    changeColor(nightState);
+});
+var nightState = 1; // 当前状态
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'e' && e.ctrlKey) {
+        e.preventDefault();
+        changeColor(nightState);
+    }
+});
 // 开关切换函数
 function onOffChange(onOff) {
     if (onOff.state) {

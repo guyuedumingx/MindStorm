@@ -3,6 +3,7 @@ package controller;
 import common.dto.Result;
 import common.dto.SearchBack;
 import common.dto.StatusCode;
+import common.util.SensitiveWordUtil;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import java.util.List;
 public class ProjectController extends BaseController{
     Logger logger = LoggerFactory.getLogger(ProjectController.class);
     ProjectService service = new ProjectServiceImpl();
+    SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
     User user = null;
 
     @Override
@@ -44,6 +46,10 @@ public class ProjectController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Project project = WebUtil.getJson(request, Project.class);
+        //敏感词过滤
+        project.setName(filter.replaceSensitiveWord(project.getName(),1,"*"));
+        project.setIntroduction(filter.replaceSensitiveWord(project.getIntroduction(),1,"*"));
+
         project.setAuthor(user.getId());
         int id = service.newProject(project,user.getId());
         Result result = new Result();
