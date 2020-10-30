@@ -46,7 +46,7 @@ function setColor() {
     getDom('.mainBoxLeft .creator h4').style.color = textColor;
     getDom('.mainBoxLeft .creator h4').style.transition = 'color .5s';
     getDom('.mainBoxLeft .introduce .introduceMain').style.backgroundColor = modularColor;
-    getDom('.mainBoxLeft .introduce .introduceMain').style.transition = 'background-color .5s';
+    getDom('.mainBoxLeft .introduce .introduceMain').style.transition = 'all .5s';
     getDomA('.mainBoxLeft .introduce h4')[0].style.color = textColor;
     getDomA('.mainBoxLeft .introduce h4')[0].style.transition = 'color .5s';
     getDomA('.mainBoxLeft .introduce h4')[1].style.color = textColor;
@@ -481,7 +481,7 @@ window.addEventListener('resize', function () {
         introduce.style.transition = 'none';
         introduce.style.height = mainBoxLeft.offsetHeight - 50 + 'px';
         setTimeout(function () {
-            introduce.style.transition = 'height .5s';
+            introduce.style.transition = 'all .5s';
         }, 1);
     }
 });
