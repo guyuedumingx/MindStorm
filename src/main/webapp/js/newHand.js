@@ -65,3 +65,20 @@ for (var i = 0; i < w4.length; i++) {
         // w4[i].getDom('.tag').style.textAlign = 'right';
     }
 }
+
+// —————————How——————————
+var videoArr = getDom('.how .content .first').children;
+var bigDemonstration = videoArr[videoArr.length - 1];
+bigDemonstration.hide();
+for (var i = 0; i < videoArr.length - 1; i++) {
+    videoArr[i].getDom('.demonstration video').index = i;
+    videoArr[i].getDom('.demonstration video').addEventListener('mouseover', function () {
+        bigDemonstration.children[0].src = this.src;
+        bigDemonstration.show();
+        this.pause();
+    });
+    videoArr[i].getDom('.demonstration video').addEventListener('mouseout', function () {
+        bigDemonstration.hide();
+        this.play();
+    });
+}
