@@ -1595,7 +1595,7 @@ function queryNodeFunction() {
         operationNodeBoxLastRevision.show();
         var date = new Date(nowNode.lastEditTime - 0);
         var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-        operationNodeBoxLastRevision.children[0].innerText = nowNode.lastEditName + ' ' + str;
+        operationNodeBoxLastRevision.children[0].innerText = str;
         operationNodeBoxSubmit.hide();
         // operationNodeBoxStar.innerText = nowNode.star;
         if (nowNode.stared) {
