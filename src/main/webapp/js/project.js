@@ -1479,7 +1479,6 @@ tipsNo.addEventListener('click', tipsCloseFunction);
 function addNodeFunction() {
     if (addNode.jurisdiction) {
         nowOperation = 'add';
-        operationNodeBox.show();
         transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
@@ -1498,6 +1497,8 @@ function addNodeFunction() {
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
         operationNodeBoxStarBox.hide();
+        operationNodeBox.show();
+        operationNodeBoxTheme.focus();
     }
 }
 
@@ -1532,7 +1533,6 @@ document.addEventListener('keydown', function (e) {
 function changeNodeFunction() {
     if (changeNode.jurisdiction) {
         nowOperation = 'change';
-        operationNodeBox.show();
         transparentBaffle.show();
         operationNodeBoxClose.show();
         operationNodeBoxTheme.show();
@@ -1554,6 +1554,8 @@ function changeNodeFunction() {
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
         operationNodeBoxStarBox.hide();
+        operationNodeBox.show();
+        operationNodeBoxTheme.focus();
     }
 }
 
