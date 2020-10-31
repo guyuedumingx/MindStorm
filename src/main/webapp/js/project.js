@@ -9,12 +9,12 @@ tool.textProhibition();
 // var textLightColor = 'rgba(255, 167, 15)'; // 文本高亮色
 // var progressColor = '#cccccc'; // 进度条颜色
 // var progressBoxColor = '#666666'; // 进度条盒子颜色
-var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', '#214b5b', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
-['#1e1e1e', 'rgb(51, 51, 51)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
+var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
+['#1e1e1e', 'rgb(51, 51, 51)', 'rgb(255, 255, 255)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
 var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
-var textColor = '#214b5b'; // 文字颜色
+var textColor = 'rgb(33, 75, 91)'; // 文字颜色
 var textLightColor; // 文本高亮色
 var progressColor; // 进度条颜色
 var progressBoxColor; // 进度条盒子颜色
@@ -166,7 +166,7 @@ function changeColor(state) {
     ergodicTree(function (node) {
         node.getDom('.theme').style.color = textColor;
     });
-    lineUpColor = textColor;
+    lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)';
     hideLineClick();
     setTimeout(function () {
         changeColorState = false;
@@ -627,9 +627,10 @@ var nodeConstLen = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
 var nodeMinLen = 80; // 无关联节点之间的最小距离
 var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = 'rgb(246, 255, 80)'; // 高亮时的颜色
-var lineDownColor = '#6AC1ED'; // 高亮时的颜色
+// var lineDownColor = '#6AC1ED'; // 高亮时的颜色
+var lineDownColor = 'rgb(106, 193, 237)'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色
-var lineUpColor = textColor; // 非高亮时的颜色
+var lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)'; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
 var nowNodeBoxShadowColor = '#fed71a'; // 当前选中节点盒子阴影颜色
 var constraintArr = new Array(); // 记录约束的数组
@@ -682,14 +683,14 @@ window.addEventListener('resize', maintainTreeBox);
 
 // 给节点添加高亮
 function addHeightLight(node) {
-    node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
     node.lineColor = lineDownColor;
     node.line.lineZIndex = 19;
 }
 
 // 给节点删除高亮
 function removeHeightLight(node) {
-    node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
     node.style.boxShadow = 'none';
     node.lineColor = lineUpColor;
     node.line.lineZIndex = 1;
@@ -729,7 +730,10 @@ function setline(node1, node2) {
     node1.line.style.transform = 'rotate(' + jd + 'deg)';
     node1.line.style.backgroundColor = node1.lineColor;
     node1.line.style.zIndex = node1.lineZIndex;
-    node1.line.style.boxShadow = '0px 0px 8px ' + node1.lineColor;
+    // node1.line.style.boxShadow = '0px 0px 8px ' + node1.lineColor;
+    if (node1.lineColor == 'rgb(106, 193, 237)') {
+        node1.line.style.boxShadow = '0px 0px 8px ' + node1.lineColor;
+    }
     treeBoxMain.appendChild(node1.line);
 }
 
@@ -1840,9 +1844,10 @@ function hideLineClick() {
             });
         }
     } else {
-        lineUpColor = textColor;
+        lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)';
         ergodicTree(function (node) {
-            node.lineColor = textColor;
+            // node.lineColor = textColor;
+            node.lineColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)';
         });
         if (nowNode) {
             var t = nowNode;
