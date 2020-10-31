@@ -323,5 +323,10 @@ app.get('/project', function (req, res) {
         deadline: new Date('2020-10-28 8:8:8').valueOf()
     });
 });
+app.put('/util', function (req, res) {
+    res.send({
+        status_code: '200'
+    });
+});
 app.listen(8848);
 console.log('服务器已启动 端口号8848');

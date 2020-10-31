@@ -1729,8 +1729,14 @@ operationNodeBoxSubmit.addEventListener('click', function () {
     }
 });
 
-// 点赞按钮点击事件
+// 点赞相关事件
+
+operationNodeBoxStarState = false;
 operationNodeBoxStar.addEventListener('click', function () {
+    if (operationNodeBoxStarState) {
+        return;
+    }
+    operationNodeBoxStarState = true;
     ajax({
         type: 'put',
         url: '/util',
@@ -1757,6 +1763,9 @@ operationNodeBoxStar.addEventListener('click', function () {
             } else {
                 topAlert('操作失败');
             }
+            setTimeout(function () {
+                operationNodeBoxStarState = false;
+            }, 1000);
         }
     });
 });
