@@ -2,6 +2,9 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
 
+var userPerformance = 5; // 性能参数
+
+
 // 设置主题色
 // var mainColor = '#1e1e1e'; // 主背景色
 // var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
@@ -10,7 +13,7 @@ tool.textProhibition();
 // var progressColor = '#cccccc'; // 进度条颜色
 // var progressBoxColor = '#666666'; // 进度条盒子颜色
 var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
-['#1e1e1e', 'rgb(51, 51, 51)', 'rgb(255, 255, 255)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
+['#1e1e1e', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
 var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
@@ -166,7 +169,7 @@ function changeColor(state) {
     ergodicTree(function (node) {
         node.getDom('.theme').style.color = textColor;
     });
-    lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)';
+    lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
     hideLineClick();
     setTimeout(function () {
         changeColorState = false;
@@ -630,7 +633,7 @@ var bfb = 0.7; // 节点之间线的松紧，紧0 - 1松
 // var lineDownColor = '#6AC1ED'; // 高亮时的颜色
 var lineDownColor = 'rgb(106, 193, 237)'; // 高亮时的颜色
 // var lineDownColor = '#aaa'; // 高亮时的颜色
-var lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)'; // 非高亮时的颜色
+var lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)'; // 非高亮时的颜色
 var lineColor = lineUpColor; // 当前线颜色
 var nowNodeBoxShadowColor = '#fed71a'; // 当前选中节点盒子阴影颜色
 var constraintArr = new Array(); // 记录约束的数组
@@ -986,7 +989,7 @@ function createTree(node) {
                 nodeRequest--;
             }
         }
-    })
+    });
 }
 
 // 创建根节点
@@ -1049,7 +1052,7 @@ var nodeRequetTimer = setInterval(function () {
         clearInterval(nodeRequetTimer);
         treeReloadFlag = false;
     }
-}, 5);
+}, userPerformance);
 
 // 遍历某个子树的函数
 function ergodicNode(node, fun) {
@@ -1221,7 +1224,7 @@ function treeReload() {
             clearInterval(nodeRequetTimer);
             treeReloadFlag = false;
         }
-    }, 5);
+    }, userPerformance);
 }
 
 // ——————————————————右侧—————————————————— 
@@ -1844,10 +1847,10 @@ function hideLineClick() {
             });
         }
     } else {
-        lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)';
+        lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
         ergodicTree(function (node) {
             // node.lineColor = textColor;
-            node.lineColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.3)';
+            node.lineColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
         });
         if (nowNode) {
             var t = nowNode;
@@ -1906,7 +1909,7 @@ setInterval(function () {
             runConstraint(node1, node2, type, len);
         }
     }
-}, 5);
+}, userPerformance);
 
 // 维护节点间线条的定时器
 setInterval(function () {
@@ -1915,7 +1918,7 @@ setInterval(function () {
         var node2 = setLineArr[i][1];
         setline(node1, node2);
     }
-}, 5);
+}, userPerformance);
 
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
