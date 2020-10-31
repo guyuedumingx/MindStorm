@@ -1043,6 +1043,7 @@ var nodeRequetTimer = setInterval(function () {
 
         // 清除定时器
         clearInterval(nodeRequetTimer);
+        treeReloadFlag = false;
     }
 }, 5);
 
@@ -1148,7 +1149,7 @@ function treeRemoveNode(node) {
 }
 
 // 刷新树盒子
-var treeReloadFlag = false;
+var treeReloadFlag = true;
 
 function treeReload() {
     if (treeReloadFlag) {
