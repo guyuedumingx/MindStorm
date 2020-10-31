@@ -50,7 +50,12 @@ function ajax(options, fileState) {
 
         // 判断请求方式，并根据请求方式做不同的处理
         if (defaults.type != 'post') {
-            defaults.url = defaults.url + '?' + parameter;
+            if (defaults.type == 'put') {
+                defaults.url = defaults.url + '?' + parameter;
+                // defaults.url = defaults.url + '?' + parameter.replace(/\n/g, '\n\r');
+            } else {
+                defaults.url = defaults.url + '?' + parameter;
+            }
             xhr.open(defaults.type, defaults.url);
             var contentType = defaults.header['Content-Type'];
             xhr.setRequestHeader('Content-Type', contentType);
