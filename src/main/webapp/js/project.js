@@ -77,9 +77,9 @@ function setColor() {
     getDom('.progressBar .countDown').style.color = textColor;
     getDom('.progressBar .countDown').style.transition = 'color .5s';
     getDom('.progressBar .progressBarTop .progressBox .progressContent').style.backgroundColor = progressColor;
-    getDom('.progressBar .progressBarTop .progressBox .progressContent').style.transition = 'all .5s';
+    getDom('.progressBar .progressBarTop .progressBox .progressContent').style.transition = 'width 1s background-color .5s';
     getDom('.progressBar .progressBarTop .progressBox .wave').style.backgroundColor = progressColor;
-    getDom('.progressBar .progressBarTop .progressBox .wave').style.transition = 'all .5s';
+    getDom('.progressBar .progressBarTop .progressBox .wave').style.transition = 'left 1s background-color .5s';
     getDom('.progressBar .progressBarTop .progressBox').style.backgroundColor = progressBoxColor;
     getDom('.progressBar .progressBarTop .progressBox').style.transition = 'background-color .5s';
     getDom('.mainBoxRight .projectId h4').style.color = textColor;
