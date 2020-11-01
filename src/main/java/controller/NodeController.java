@@ -10,7 +10,6 @@ import pojo.Node;
 import pojo.User;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,8 +46,8 @@ public class NodeController extends BaseController{
         Result result = new Result();
         Node node = WebUtil.getJson(req, Node.class);
         //敏感词过滤
-        node.setTheme(filter.replaceSensitiveWord(node.getTheme(), 1, "*"));
-        node.setContent(filter.replaceSensitiveWord(node.getContent(), 1, "*"));
+        node.setTheme(filter.replaceSensitiveWord(node.getTheme(), 0, "*"));
+        node.setContent(filter.replaceSensitiveWord(node.getContent(), 0, "*"));
         if(node!=null){
             node.setAuthor(user.getId());
             node.setLastEditId(user.getId());
