@@ -1309,13 +1309,13 @@ function treeReload() {
 // ——————————————————右侧—————————————————— 
 var projectIdBox = getDom('.mainBoxRight .projectId h4 span'); // 项目ID
 var projectCopyId = getDom('.mainBoxRight .projectId .copyId'); // 复制ID
-var btnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
+var firstbtnArr = getDomA('.mainBoxRight .controller .btnBox .btn'); // 按钮数组
 var onOffArr = getDomA('.onOffBox .onOff .onOffBorder'); // 开关数组
-var addNode = btnArr[0]; // 创建节点
-var removeNode = btnArr[1]; // 删除节点
-var changeNode = btnArr[2]; // 修改节点
-var queryNode = btnArr[3]; // 查询节点
-var refreshTree = btnArr[4]; // 刷新树
+var addNode = firstbtnArr[0]; // 创建节点
+var removeNode = firstbtnArr[1]; // 删除节点
+var changeNode = firstbtnArr[2]; // 修改节点
+var queryNode = firstbtnArr[3]; // 查询节点
+var refreshTree = firstbtnArr[4]; // 刷新树
 var operationNodeBox = getDom('.operationNodeBox'); // 操作节点盒子
 var operationNodeBoxClose = operationNodeBox.getDom('.close'); // 操作节点盒子中关闭按钮
 var operationNodeBoxTheme = operationNodeBox.getDom('h4 input'); // 节点主题
@@ -1360,8 +1360,8 @@ operationNodeBoxStarBox.hide();
 transparentBaffle.hide();
 
 // 按钮随机颜色
-for (var i = 0; i < btnArr.length; i++) {
-    btnArr[i].style.backgroundColor = randomColor(120, 180);
+for (var i = 0; i < firstbtnArr.length; i++) {
+    firstbtnArr[i].style.backgroundColor = randomColor(120, 180);
 }
 
 // 初始化ID
@@ -1857,12 +1857,12 @@ operationNodeBoxStar.addEventListener('click', function () {
 });
 
 // 循环按钮精灵图
-cycleSprite(btnArr, 0, 0, 40);
+cycleSprite(firstbtnArr, 0, 0, 40);
 
 // 夜间模式相关事件
 
 var changeColorState = false; // 节流阀
-var nightBtn = btnArr[btnArr.length - 1];
+var nightBtn = firstbtnArr[firstbtnArr.length - 1];
 nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
 nightBtn.style.backgroundSize = '60%';
 nightBtn.style.backgroundPosition = 'center';

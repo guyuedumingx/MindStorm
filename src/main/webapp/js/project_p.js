@@ -67,6 +67,17 @@ function setColor() {
 
 setColor();
 
+// ————————————左侧控件————————————
+
+var firstbtnArr = getDom('.control .first').children; // 第一套按钮数组
+var addNode = firstbtnArr[0]; // 创建节点
+var removeNode = firstbtnArr[1]; // 删除节点
+var changeNode = firstbtnArr[2]; // 修改节点
+var queryNode = firstbtnArr[3]; // 查询节点
+var refreshTree = firstbtnArr[4]; // 刷新树
+
+cycleSprite(firstbtnArr, 0, 0, 30);
+
 // ——————————————中间——————————————
 var treeBox = getDom('.treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子

@@ -13,6 +13,7 @@
     justify-content: space-between;
     align-items: center;
     width: 40px;
+    padding: 20px 0px;
     background-color: #333;
 }
 
@@ -128,5 +129,5 @@
 
 .treeList {
     width: 20%;
-    background-color: #111;
+    background-color: #333;
 }
