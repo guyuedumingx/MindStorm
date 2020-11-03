@@ -989,6 +989,34 @@ function addList(box, node) {
     var h4 = document.createElement('h4');
     var ch = document.createElement('div');
     h4.innerText = node.children[0].innerText;
+    h4.addEventListener('click', function () {
+        if (nowNode) {
+            nowNode.style.boxShadow = 'none';
+            var t = nowNode;
+            while (t.father) {
+                removeHeightLight(t.father);
+                t = t.father;
+            }
+            changeChild(nowNode, removeHeightLight);
+            nowNode.list.children[0].removeClass('treeListHeightLight');
+            setTimeout(function () {
+                nowNode == null;
+                changeNodeEvent();
+            }, 1);
+        }
+        nowNode = this.parentNode.node;
+        changeNodeEvent();
+
+        var t = nowNode;
+        while (t.father) {
+            addHeightLight(t.father);
+            t = t.father;
+        }
+        changeChild(nowNode, addHeightLight);
+        // 设置当前节点的样式
+        nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
+
+    });
     ch.addClass('children');
     div.node = node;
     div.appendChild(h4);

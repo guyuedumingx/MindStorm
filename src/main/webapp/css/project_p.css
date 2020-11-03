@@ -147,6 +147,7 @@
     padding-left: 10px;
     line-height: 30px;
     color: #eee;
+    cursor: pointer;
     transition: background-color .2s;
 }
 
