@@ -26,8 +26,11 @@ document.addEventListener('keydown', function (e) {
         //                 });
         //             }
         //         }
-        //         nowNode = null;
-        //         changeNodeEvent();
+        //         nowNode.list.children[0].removeClass('treeListHeightLight');
+        //         setTimeout(function () {
+        //             nowNode == null;
+        //             changeNodeEvent();
+        //         }, 1);
         //         lineColor = lineUpColor;
         //         document.removeEventListener('mousemove', move);
         //     }
@@ -77,6 +80,18 @@ var queryNode = firstbtnArr[3]; // 查询节点
 var refreshTree = firstbtnArr[4]; // 刷新树
 
 cycleSprite(firstbtnArr, 0, 0, 30);
+
+
+// 刷新按钮点击事件
+refreshTree.addEventListener('click', function () {
+    treeReload();
+});
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'r' && e.ctrlKey) {
+        e.preventDefault();
+        treeReload();
+    }
+});
 
 // ——————————————中间——————————————
 var treeBox = getDom('.treeBox'); // 树盒子框架
@@ -146,8 +161,11 @@ treeBoxMain.addEventListener('mousedown', function (e) {
         //         node.addClass('hideTheme');
         //     });
         // }
-        nowNode = null;
-        changeNodeEvent();
+        nowNode.list.children[0].removeClass('treeListHeightLight');
+        setTimeout(function () {
+            nowNode == null;
+            changeNodeEvent();
+        }, 1);
     }
 });
 
@@ -477,6 +495,11 @@ function addTreeConstraint(root, n) {
                 t = t.father;
             }
             changeChild(nowNode, removeHeightLight);
+            nowNode.list.children[0].removeClass('treeListHeightLight');
+            setTimeout(function () {
+                nowNode == null;
+                changeNodeEvent();
+            }, 1);
         }
 
         // 获取鼠标位置
@@ -668,6 +691,7 @@ var nodeRequetTimer = setInterval(function () {
         // 清除定时器
         clearInterval(nodeRequetTimer);
         treeReloadFlag = false;
+        addList(treeListMain, root);
     }
 }, userPerformance);
 
@@ -812,8 +836,11 @@ function treeReload() {
     treeReloadFlag = true;
 
     // 将当前选中节点置空
-    nowNode = null;
-    changeNodeEvent();
+    nowNode.list.children[0].removeClass('treeListHeightLight');
+    setTimeout(function () {
+        nowNode == null;
+        changeNodeEvent();
+    }, 1);
 
     // 将所有节点和对应的线条从树盒子中删除掉
     for (var i = 0; i < nodeSet.length; i++) {
@@ -887,6 +914,7 @@ function treeReload() {
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
+        nowNode.list.children[0].addClass('treeListHeightLight');
         // nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
         // nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
         // nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
@@ -951,6 +979,27 @@ setInterval(function () {
         setline(node1, node2);
     }
 }, userPerformance);
+
+// ——————————————右侧列表——————————————
+var treeList = getDom('.treeList');
+var treeListMain = getDom('.treeListMain');
+
+function addList(box, node) {
+    var div = document.createElement('div');
+    var h4 = document.createElement('h4');
+    var ch = document.createElement('div');
+    h4.innerText = node.children[0].innerText;
+    ch.addClass('children');
+    div.node = node;
+    div.appendChild(h4);
+    div.appendChild(ch);
+    box.appendChild(div);
+    node.list = div;
+    var chArr = node.childArr;
+    for (var i = 0; i < chArr.length; i++) {
+        addList(ch, chArr[i]);
+    }
+}
 
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
