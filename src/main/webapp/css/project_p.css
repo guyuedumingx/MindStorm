@@ -28,7 +28,15 @@
 .control .first div {
     width: 30px;
     height: 30px;
-    background-color: pink;
+    border-radius: 15px;
+    background-image: url(../img/project_rightButton.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.control .first div:hover {
+    background-color: #666;
 }
 
 .treeBox {

@@ -4,7 +4,6 @@ tool.textProhibition();
 
 var userPerformance = 5; // 性能参数
 
-
 // 设置主题色
 // var mainColor = '#1e1e1e'; // 主背景色
 // var modularColor = 'rgb(51, 51, 51)'; // 模块背景色
