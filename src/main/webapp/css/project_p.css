@@ -140,21 +140,67 @@
 }
 
 .treeListMain div {
-    padding-left: 2em;
+    padding-left: 1em;
 }
 
 .treeListMain h4 {
-    padding-left: 10px;
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+    font-weight: 400;
     line-height: 30px;
-    color: #eee;
+    color: #ccc;
     cursor: pointer;
     transition: background-color .2s;
 }
+
+.treeListMain h4:hover {
+    background-color: #555555;
+}
+
+.treeListMain h4 span {
+    /* display: none; */
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    width: 12px;
+    height: 12px;
+    background-image: url(../img/project_p_fold.png);
+    background-repeat: no-repeat;
+    background-size: 120%;
+    transform: translate(0, -50%) rotate(90deg);
+    transition: transform .3s;
+}
+
+/* .treeListMain h4:hover span {
+    display: block;
+} */
 
 .treeListMain .children {
     padding-left: 0;
 }
 
+.treeListMain .myList {
+    color: #fff;
+}
+
 .treeListMain .treeListHeightLight {
-    background-color: #555555;
+    background-color: #666666;
+}
+
+.treeListMain .lock {
+    position: relative;
+    padding-right: 20px;
+}
+
+.treeListMain .lock::before {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #ddd;
+    transform: translate(0, -50%);
+    content: '';
 }
