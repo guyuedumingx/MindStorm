@@ -1,0 +1,160 @@
+.mainBox {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+}
+
+.control {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 40px;
+    padding: 20px 0px;
+    background-color: #333;
+}
+
+.control .first {
+    /* flex: 1; */
+    height: 200px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.control .first div {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-image: url(../img/project_rightButton.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.control .first div:hover {
+    background-color: #666;
+}
+
+.treeBox {
+    flex: 1;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #666;
+    overflow: hidden;
+}
+
+.treeBox .treeBoxMain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    min-width: 1260px;
+    min-height: 700px;
+    border-radius: 5px;
+    background-color: rgb(230, 238, 241);
+    transform: translate(-50%, -50%);
+}
+
+.treeBox .root {
+    position: absolute;
+    z-index: 20;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.treeBox .node {
+    position: absolute;
+    z-index: 20;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.treeBox .theme {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    width: 200px;
+    height: 15px;
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #214B5B;
+    pointer-events: none;
+    transform: translate(-50%, 0);
+}
+
+.treeBox .hideTheme .theme {
+    display: none;
+}
+
+.treeBox .treeBoxFullScreen {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/project_fullScreen.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.treeBox .treeBoxPercentageTips {
+    display: none;
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, 0);
+}
+
+.treeList {
+    width: 20%;
+    background-color: #333;
+}
+
+.treeListMain {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.treeListMain div {
+    padding-left: 2em;
+}
+
+.treeListMain h4 {
+    padding-left: 10px;
+    line-height: 30px;
+    color: #eee;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.treeListMain .children {
+    padding-left: 0;
+}
+
+.treeListMain .treeListHeightLight {
+    background-color: #555555;
+}
