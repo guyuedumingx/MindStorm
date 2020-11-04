@@ -33,7 +33,6 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         Object user = request.getSession().getAttribute("user");
         String uri = request.getRequestURI();
-        System.out.println(uri);
         if(uri.contains("newHand")||uri.contains("login")){
             filterChain.doFilter(servletRequest,servletResponse);
         }else {
