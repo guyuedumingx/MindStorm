@@ -18,7 +18,7 @@ user.push({
     id: 1,
     theme: '节点主题一',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
-    children: [2, 3, 4, 5, 6, 7, 8],
+    children: [2, 3, 4, 8, 5, 6, 7],
     star: 22,
     stared: false,
     banAppend: false,

@@ -177,7 +177,19 @@
 } */
 
 .treeListMain .children {
+    position: relative;
     padding-left: 0;
+}
+
+.treeListMain .children::before {
+    position: absolute;
+    left: 12.5px;
+    top: 0px;
+    width: 0px;
+    height: 100%;
+    /* border-left: 1px dashed #999; */
+    border-left: 1px solid #666;
+    content: '';
 }
 
 .treeListMain .myList {
