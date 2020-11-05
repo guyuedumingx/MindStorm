@@ -241,7 +241,6 @@ app.get('/', function (req, res) {
     });
 });
 function getNode(id) {
-    console.log('要获取的节点：' + id);
     for (var i = 0; i < user.length; i++) {
         if (user[i]) {
             if (user[i].id == id) {
