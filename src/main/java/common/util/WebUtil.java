@@ -3,15 +3,18 @@ package common.util;
 import com.alibaba.fastjson.JSON;
 import common.dto.Result;
 import common.dto.StatusCode;
+import common.online.OnlineUsers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.annotation.WebFilter;
+import pojo.User;
+import socket.NodeSocket;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * 与前端交互的工具类
@@ -38,6 +41,42 @@ public class WebUtil {
             resp.getWriter().write(s);
         }catch (IOException e) {
             logger.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 渲染json
+     * @param session
+     * @param object
+     */
+    public static void renderJson(Session session, Object object) {
+        try {
+            String s = JSON.toJSONString(object);
+            session.getBasicRemote().getSendWriter().write(s);
+        }catch (IOException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 将更改发送给参与者
+     * @param user
+     * @param object
+     */
+    public static void renderForContributors(User user, Object object){
+        int id = user.getId();
+        OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
+        String s = JSON.toJSONString(object);
+        int projectId = onlineUsers.get(id).getProjectId();
+        List<NodeSocket> socketForProject = onlineUsers.getSocketForProject(projectId);
+        for(NodeSocket socket : socketForProject){
+            try {
+                if(socket.getUserId()!=id){
+                    socket.getSession().getBasicRemote().getSendWriter().write(s);
+                }
+            }catch (IOException e) {
+                logger.error(e.getMessage());
+            }
         }
     }
 

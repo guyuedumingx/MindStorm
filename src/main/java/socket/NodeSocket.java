@@ -1,7 +1,6 @@
 package socket;
 
 import common.online.OnlineUsers;
-
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -29,9 +28,6 @@ public class NodeSocket {
 
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-        System.out.println(this.userId);
-        //回复用户
-        session.getBasicRemote().sendText("收到 "+this.userId+" 的消息 ");
     }
 
     @OnError
@@ -61,5 +57,13 @@ public class NodeSocket {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

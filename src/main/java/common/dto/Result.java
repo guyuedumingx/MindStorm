@@ -16,6 +16,14 @@ public class Result extends HashMap<String,String>{
         this.put("status_code",statusCode+"");
     }
 
+    public void setChangeType(String str){
+        this.put("type",str);
+    }
+    
+    public void setChangeId(int nodeId){
+        this.put("node_id",nodeId+"");
+    }
+
     /**
      * 存储需要返回给前端的键值对
      * @param key 键
