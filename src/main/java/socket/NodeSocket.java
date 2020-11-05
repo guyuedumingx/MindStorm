@@ -28,6 +28,9 @@ public class NodeSocket {
 
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
+        System.out.println(message);
+        session.getBasicRemote().sendText(message);
+        session.getBasicRemote().getSendWriter().write(message);
     }
 
     @OnError
