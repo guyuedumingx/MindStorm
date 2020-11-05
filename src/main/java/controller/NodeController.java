@@ -44,10 +44,13 @@ public class NodeController extends BaseController{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Result result = new Result();
+        Result msg = new Result();
+        msg.setChangeType("N");
         Node node = WebUtil.getJson(req, Node.class);
         //敏感词过滤
         node.setTheme(filter.replaceSensitiveWord(node.getTheme(), 0, "*"));
         node.setContent(filter.replaceSensitiveWord(node.getContent(), 0, "*"));
+
         if(node!=null){
             node.setAuthor(user.getId());
             node.setLastEditId(user.getId());
@@ -56,11 +59,13 @@ public class NodeController extends BaseController{
             int statusCode = StatusCode.isZero(nodeId);
             result.put("node_id",nodeId);
             result.setStatus_code(statusCode);
+            msg.setChangeId(nodeId);
         }else {
             result.setStatus_code(StatusCode.LOST);
         }
 
         WebUtil.renderJson(resp,result);
+        WebUtil.renderForContributors(user,msg);
     }
 
     /**
