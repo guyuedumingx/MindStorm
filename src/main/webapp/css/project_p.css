@@ -140,21 +140,153 @@
 }
 
 .treeListMain div {
-    padding-left: 2em;
+    padding-left: 1em;
 }
 
 .treeListMain h4 {
-    padding-left: 10px;
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+    font-weight: 400;
     line-height: 30px;
-    color: #eee;
+    color: #ccc;
     cursor: pointer;
     transition: background-color .2s;
 }
+
+.treeListMain h4:hover {
+    background-color: #555555;
+}
+
+.treeListMain h4 span {
+    /* display: none; */
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    width: 12px;
+    height: 12px;
+    background-image: url(../img/project_p_fold.png);
+    background-repeat: no-repeat;
+    background-size: 120%;
+    transform: translate(0, -50%) rotate(90deg);
+    transition: transform .3s;
+}
+
+/* .treeListMain h4:hover span {
+    display: block;
+} */
 
 .treeListMain .children {
     padding-left: 0;
 }
 
+.treeListMain .myList {
+    color: #fff;
+}
+
 .treeListMain .treeListHeightLight {
-    background-color: #555555;
+    background-color: #666666;
+}
+
+.treeListMain .lock {
+    position: relative;
+    padding-right: 20px;
+}
+
+.treeListMain .lock::before {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #ddd;
+    transform: translate(0, -50%);
+    content: '';
+}
+
+/* 弹窗 */
+.popup {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 100%;
+    width: 18%;
+    padding: 25px 20px;
+    color: #eee;
+    background-color: #444;
+    box-sizing: border-box;
+}
+
+/* 标题 */
+.popup .popTitle,
+.popup .popCont {
+    color: #eee;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 标题输入框 */
+.popup .inTitle,
+.popup textarea {
+    width: 100%;
+    height: 5%;
+    padding: 5px 10px;
+    margin: 15px 0 25px 0;
+    border: none;
+    color: #eee;
+    font-size: 18px;
+    background-color: #555;
+    box-sizing: border-box;
+}
+
+/* 内容输入框 */
+.popup textarea {
+    height: 60%;
+    line-height: 24px;
+    padding: 10px;
+    /*不可调节*/
+    resize: none;
+}
+
+/* 是否选择 */
+/* 按钮 */
+.onOffBorder {
+    float: right;
+    position: relative;
+    width: 40px;
+    height: 18px;
+    margin-top: 4px;
+    border-radius: 9px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #2c3e50;
+    cursor: pointer;
+    transition: all .3s;
+    vertical-align: middle;
+}
+
+.onOffBorder .onOffRod {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #46607b;
+    transition: all .3s;
+}
+
+/* 提交 */
+.popup .sub {
+    position: absolute;
+    right: 20px;
+    bottom: 25px;
+    letter-spacing: 5px;
+    font-size: 18px;
 }

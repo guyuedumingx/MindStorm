@@ -4,6 +4,14 @@
 var tool = new Tool(document, window);
 tool.textProhibition();
 
+// 创建user对象
+var user = {};
+
+// 从cookie中获取值
+user.userId = getCookie('user_id') - 0;
+user.userName = getCookie('user_name');
+
+// 获取项目ID
 var projectId = getLocation('project_id');
 var ctrlState = false;
 
@@ -28,7 +36,7 @@ document.addEventListener('keydown', function (e) {
         //         }
         //         nowNode.list.children[0].removeClass('treeListHeightLight');
         //         setTimeout(function () {
-        //             nowNode == null;
+        //             nowNode = null;
         //             changeNodeEvent();
         //         }, 1);
         //         lineColor = lineUpColor;
@@ -48,7 +56,7 @@ document.addEventListener('keyup', function (e) {
 var userPerformance = 5; // 性能参数
 
 var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
-['#1e1e1e', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
+['#4c4c4c', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
 var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
@@ -66,10 +74,48 @@ function setColor() {
     progressColor = colorSet[colorState][4];
     progressBoxColor = colorSet[colorState][5];
     logoBGI = colorSet[colorState][6];
+    getDom('.treeBox .treeBoxMain').backgroundColor = mainColor;
+    getDom('.treeBox .treeBoxMain').style.transition = 'background-color .5s';
 }
 
 setColor();
 
+var changeColorState = false; // 节流阀
+
+// 改变页面主题色
+function changeColor(state) {
+    if (changeColorState) {
+        return;
+    }
+    changeColorState = true;
+    mainColor = colorSet[state][0];
+    modularColor = colorSet[state][1];
+    textColor = colorSet[state][2];
+    textLightColor = colorSet[state][3];
+    progressColor = colorSet[state][4];
+    progressBoxColor = colorSet[state][5];
+    logoBGI = colorSet[state][6];
+    console.log(getDom('.treeBox .treeBoxMain'));
+    console.log(mainColor);
+    getDom('.treeBox .treeBoxMain').style.backgroundColor = mainColor;
+    ergodicTree(function (node) {
+        node.getDom('.theme').style.color = textColor;
+    });
+    lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
+    // hideLineClick();
+    setTimeout(function () {
+        changeColorState = false;
+        nightState = 1 - nightState;
+    }, 1000);
+}
+
+var nightState = 1; // 当前状态
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'e' && e.ctrlKey) {
+        e.preventDefault();
+        changeColor(nightState);
+    }
+});
 // ————————————左侧控件————————————
 
 var firstbtnArr = getDom('.control .first').children; // 第一套按钮数组
@@ -93,6 +139,42 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// 隐藏无关节点间线条函数
+function hideLineClick() {
+    // if (hideLine.state) {
+    if (false) {
+        lineUpColor = mainColor;
+        ergodicTree(function (node) {
+            node.lineColor = mainColor;
+        });
+        if (nowNode) {
+            var t = nowNode;
+            while (t.father) {
+                t = t.father;
+                t.lineColor = 'rgb(106, 193, 237)';
+            }
+            changeChild(nowNode, function (node) {
+                node.lineColor = 'rgb(106, 193, 237)';
+            });
+        }
+    } else {
+        lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
+        ergodicTree(function (node) {
+            // node.lineColor = textColor;
+            node.lineColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
+        });
+        if (nowNode) {
+            var t = nowNode;
+            while (t.father) {
+                t = t.father;
+                t.lineColor = 'rgb(106, 193, 237)';
+            }
+            changeChild(nowNode, function (node) {
+                node.lineColor = 'rgb(106, 193, 237)';
+            });
+        }
+    }
+}
 // ——————————————中间——————————————
 var treeBox = getDom('.treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子
@@ -130,7 +212,6 @@ treeBox.addEventListener('mouseout', function () {
 
 // 树盒子缩放
 treeBox.addEventListener('mousewheel', function (e) {
-    console.log(1);
     if (ctrlState) {
         e.preventDefault();
         if (e.deltaY < 0) {
@@ -162,10 +243,8 @@ treeBoxMain.addEventListener('mousedown', function (e) {
         //     });
         // }
         nowNode.list.children[0].removeClass('treeListHeightLight');
-        setTimeout(function () {
-            nowNode == null;
-            changeNodeEvent();
-        }, 1);
+        nowNode = null;
+        changeNodeEvent();
     }
 });
 
@@ -273,14 +352,13 @@ window.addEventListener('resize', maintainTreeBox);
 
 // 给节点添加高亮
 function addHeightLight(node) {
-    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+    node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
     node.lineColor = lineDownColor;
     node.line.lineZIndex = 19;
 }
 
 // 给节点删除高亮
 function removeHeightLight(node) {
-    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
     node.style.boxShadow = 'none';
     node.lineColor = lineUpColor;
     node.line.lineZIndex = 1;
@@ -496,10 +574,8 @@ function addTreeConstraint(root, n) {
             }
             changeChild(nowNode, removeHeightLight);
             nowNode.list.children[0].removeClass('treeListHeightLight');
-            setTimeout(function () {
-                nowNode == null;
-                changeNodeEvent();
-            }, 1);
+            nowNode = null;
+            changeNodeEvent();
         }
 
         // 获取鼠标位置
@@ -836,11 +912,13 @@ function treeReload() {
     treeReloadFlag = true;
 
     // 将当前选中节点置空
-    nowNode.list.children[0].removeClass('treeListHeightLight');
-    setTimeout(function () {
-        nowNode == null;
+    if (nowNode) {
+        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode = null;
         changeNodeEvent();
-    }, 1);
+    }
+
+    treeListMain.removeChild(root.list);
 
     // 将所有节点和对应的线条从树盒子中删除掉
     for (var i = 0; i < nodeSet.length; i++) {
@@ -906,6 +984,7 @@ function treeReload() {
             // 清除定时器
             clearInterval(nodeRequetTimer);
             treeReloadFlag = false;
+            addList(treeListMain, root);
         }
     }, userPerformance);
 }
@@ -988,6 +1067,19 @@ function addList(box, node) {
     var div = document.createElement('div');
     var h4 = document.createElement('h4');
     var ch = document.createElement('div');
+    var span = document.createElement('span');
+    div.foldState = false;
+    span.addEventListener('click', function () {
+        var list = this.parentNode.parentNode;
+        if (list.foldState) {
+            this.style.transform = 'translate(0, -50%) rotate(90deg)';
+            list.getDom('.children').show();
+        } else {
+            this.style.transform = 'translate(0, -50%) rotate(0deg)';
+            list.getDom('.children').hide();
+        }
+        list.foldState = !list.foldState;
+    });
     h4.innerText = node.children[0].innerText;
     h4.addEventListener('click', function () {
         if (nowNode) {
@@ -999,10 +1091,8 @@ function addList(box, node) {
             }
             changeChild(nowNode, removeHeightLight);
             nowNode.list.children[0].removeClass('treeListHeightLight');
-            setTimeout(function () {
-                nowNode == null;
-                changeNodeEvent();
-            }, 1);
+            nowNode = null;
+            changeNodeEvent();
         }
         nowNode = this.parentNode.node;
         changeNodeEvent();
@@ -1013,11 +1103,19 @@ function addList(box, node) {
             t = t.father;
         }
         changeChild(nowNode, addHeightLight);
+
         // 设置当前节点的样式
         nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
 
     });
+    if (node.authorId == user.userId) {
+        h4.addClass('myList');
+    }
+    if (node.authorId != user.userId && node.editable) {
+        h4.addClass('lock');
+    }
     ch.addClass('children');
+    h4.appendChild(span);
     div.node = node;
     div.appendChild(h4);
     div.appendChild(ch);
