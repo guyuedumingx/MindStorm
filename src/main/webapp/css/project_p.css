@@ -10,7 +10,7 @@
 .control {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     width: 40px;
     padding: 20px 0px;
@@ -38,6 +38,58 @@
 
 .control .first div:hover {
     background-color: #666;
+}
+
+.control .secound {
+    height: 160px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.control .secound div {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-image: url(../img/project_rightButton.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.control .secound div:hover {
+    background-color: #666;
+}
+
+.control .secound .heightLight {
+    background-color: #262626;
+}
+
+.control .third {
+    height: 200px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.control .third div {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-image: url(../img/project_rightButton.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.control .third div:hover {
+    background-color: #666;
+}
+
+.control .third .heightLight {
+    background-color: #262626;
 }
 
 .treeBox {

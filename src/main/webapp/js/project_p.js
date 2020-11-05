@@ -351,8 +351,8 @@ window.addEventListener('resize', maintainTreeBox);
 
 // 给节点添加高亮
 function addHeightLight(node) {
-    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
-    node.style.boxShadow = '0px 0px ' + node.offsetHeight / 2 + 'px ' + lineDownColor;
+    node.style.boxShadow = '0px 0px 10px ' + lineDownColor;
+    // node.style.boxShadow = '0px 0px ' + node.offsetHeight / 2 + 'px ' + lineDownColor;
     node.lineColor = lineDownColor;
     node.line.lineZIndex = 19;
 }
