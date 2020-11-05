@@ -308,7 +308,7 @@ var topBoundary = 0; // 边界约束中的边界
 var leftBoundary = 0;
 var bottomBoundary = treeBoxMain.offsetHeight;
 var rightBoundary = treeBoxMain.offsetWidth;
-var boundaryMinLength = bottomBoundary * 0.08; //边界约束中和边界的最小距离
+var boundaryMinLength = bottomBoundary * 0.03; //边界约束中和边界的最小距离
 var treeBoxMainWidth = treeBoxMain.offsetWidth;
 
 // 鼠标拖动的函数
@@ -352,7 +352,7 @@ window.addEventListener('resize', maintainTreeBox);
 // 给节点添加高亮
 function addHeightLight(node) {
     // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
-    node.style.boxShadow = '0px 0px ' + node.offsetHeight + 'px ' + lineDownColor;
+    node.style.boxShadow = '0px 0px ' + node.offsetHeight / 2 + 'px ' + lineDownColor;
     node.lineColor = lineDownColor;
     node.line.lineZIndex = 19;
 }
