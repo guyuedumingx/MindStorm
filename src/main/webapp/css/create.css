@@ -433,7 +433,7 @@ body .mainBox {
 .mainBox .Box .join_bigBox .click2{
     display: none;
 }
-.mainBox .Box .join_bigBox .click_join:hover {
+.mainBox .Box .join_bigBox .click_join:hover,.mainBox .Box .join_bigBox .click2:hover {
     cursor: pointer;
     background-image: url(../img/join_logo.png);
 }

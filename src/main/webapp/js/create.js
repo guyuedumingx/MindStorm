@@ -275,8 +275,6 @@ var joinBut2 = getDom(".click2");
 var inputID = getDom(".inputID");
 
 function joinButClick() {
-    	console.log("1");
-    password();
     if (inputID.value == "请输入项目ID") {
         inputID.addClass("idPd");
     } else {
@@ -302,9 +300,8 @@ function joinButClick() {
     }
 }
 function but2 () {
-    console.log("2");
 if (inputID.value == "") {
-    inputID.addClass("idPd");
+    	alert("请输入密码");
 } else {
     var idnum = inputID.value;
     ajax({
@@ -360,13 +357,13 @@ back[1].addEventListener("click", function () {
         joinBig.style.display = "none";
         inputID.removeClass("idPd");
     } else {
-        inputID.type = "password";
+        inputID.type = "text";
         inputTips(inputID, "请输入项目ID", "idTips");
         getDom(".join_til").innerText = "加入项目";
         inputID.removeClass("idPd");
         joinBut.style.display = "block";
         joinBut2.style.display = "none";
-        joinBut2.removeEventListener("click",but2)
+        joinBut2.removeEventListener("click", but2)
     }
 })
 
