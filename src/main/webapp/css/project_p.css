@@ -250,6 +250,9 @@
 }
 
 /* 是否选择 */
+.popup .choice{
+    display: none;
+}
 /* 按钮 */
 .onOffBorder {
     float: right;
@@ -289,4 +292,45 @@
     bottom: 25px;
     letter-spacing: 5px;
     font-size: 18px;
+    display: none;
+}
+/* 创建者、最后修改 */ 
+.popup .author,.popup .lastTime{
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* 点赞 */
+.popup .star {
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    width: 48px;
+    height: 50px;
+}
+
+.popup .star .starPhoto {
+    width: 24px;
+    height: 24px;
+    margin: 0px auto 5px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+}
+
+.popup .star .starFalse {
+    background-image: url(../img/project_starFalse.png);
+}
+
+.popup .star .starTrue {
+    background-image: url(../img/project_starTrue.png);
+}
+
+.popup .star .starNumber {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    color: #999;
 }
