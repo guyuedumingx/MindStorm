@@ -145,7 +145,7 @@
 
 .treeListMain h4 {
     position: relative;
-    padding-left: 20px;
+    padding-left: 24px;
     font-size: 14px;
     font-weight: 400;
     line-height: 30px;
@@ -162,7 +162,7 @@
     /* display: none; */
     position: absolute;
     top: 50%;
-    left: 5px;
+    left: 8px;
     width: 12px;
     height: 12px;
     background-image: url(../img/project_p_fold.png);
@@ -197,10 +197,12 @@
     position: absolute;
     top: 50%;
     right: 5px;
-    width: 8px;
-    height: 8px;
-    border-radius: 4px;
-    background-color: #ddd;
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/project_p_lock.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
     transform: translate(0, -50%);
     content: '';
 }
