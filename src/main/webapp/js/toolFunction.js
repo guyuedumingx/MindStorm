@@ -1148,35 +1148,61 @@ function inputTips(input, tipsText, className) {
         input.value = tipsText;
         input.type = 'text';
         input.addClass(className);
-        input.addEventListener('focus', function () {
+        input.onfocus = function () {
             if (input.value == tipsText) {
                 input.value = '';
                 input.type = 'password';
                 input.removeClass(className);
             }
-        });
-        input.addEventListener('blur', function () {
+        }
+        input.onblur = function () {
             if (input.value == '') {
                 input.value = tipsText;
                 input.type = 'text';
                 input.addClass(className);
             }
-        });
+        }
+        // input.addEventListener('focus', function () {
+        //     if (input.value == tipsText) {
+        //         input.value = '';
+        //         input.type = 'password';
+        //         input.removeClass(className);
+        //     }
+        // });
+        // input.addEventListener('blur', function () {
+        //     if (input.value == '') {
+        //         input.value = tipsText;
+        //         input.type = 'text';
+        //         input.addClass(className);
+        //     }
+        // });
     } else {
         input.value = tipsText;
         input.addClass(className);
-        input.addEventListener('focus', function () {
+        // input.addEventListener('focus', function () {
+        //     if (input.value == tipsText) {
+        //         input.value = '';
+        //         input.removeClass(className);
+        //     }
+        // });
+        // input.addEventListener('blur', function () {
+        //     if (input.value == '') {
+        //         input.value = tipsText;
+        //         input.addClass(className);
+        //     }
+        // });
+        input.onfocus = function () {
             if (input.value == tipsText) {
                 input.value = '';
                 input.removeClass(className);
             }
-        });
-        input.addEventListener('blur', function () {
+        }
+        input.onblur = function () {
             if (input.value == '') {
                 input.value = tipsText;
                 input.addClass(className);
             }
-        });
+        }
     }
 }
 
