@@ -4,7 +4,6 @@
 
 var tool = new Tool(document, window);
 tool.textProhibition();
-
 //-----------------------------------------------------
 // // 获取快捷键按钮
 // var shortcut = getDom(".shortcutKey");
@@ -238,27 +237,6 @@ changeJoin.addEventListener("click", function () {
 
 })
 
-// 新建返回
-var back = getDomA(".back");
-back[0].addEventListener("click", function () {
-    changeEst.style.animation = "";
-    changeJoin.style.animation = "";
-    //新建返回
-    changeEst.style.display = "inline-block";
-    join.style.display = "inline-block";
-    estBig.style.display = "none";
-    joinTips.style.display = "table";
-})
-back[1].addEventListener("click", function () {
-    changeEst.style.animation = "";
-    changeJoin.style.animation = "";
-    estTips.style.display = "table";
-    //加入返回
-    changeJoin.style.display = "inline-block";
-    establish.style.display = "inline-block";
-    joinBig.style.display = "none";
-    inputID.removeClass("idPd");
-})
 
 
 
@@ -291,6 +269,7 @@ onOff.addEventListener('click', function () {
 // 表单判断------------
 // 获取加入按钮
 var joinBut = getDom(".click_join");
+var joinBut2 = getDom(".click2");
 
 // 获取输入id框
 var inputID = getDom(".inputID");
@@ -320,6 +299,74 @@ function joinButClick() {
         });
     }
 }
+function but2 () {
+if (inputID.value == "") {
+    	alert("请输入密码");
+} else {
+    var idnum = inputID.value;
+    ajax({
+        type: 'get',
+        url: '/util/project',
+        data: {
+            id: idnum
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
+                // "test2.html?"+"txt="+encodeURI(s.value);
+            } else {
+                topAlert("该房间不存在");
+            }
+        }
+    });
+}
+}
+// 输入密码
+function password() {
+    joinBut.style.display = "none";
+    joinBut2.style.display = "block";
+    inputID.type = "password";
+    inputTips(inputID, "", "idTips");
+    getDom(".join_til").innerText = "项目密码";
+    joinBut2.addEventListener("click",but2)
+}
+
+
+// 新建返回
+var back = getDomA(".back");
+back[0].addEventListener("click", function () {
+    changeEst.style.animation = "";
+    changeJoin.style.animation = "";
+    //新建返回
+    changeEst.style.display = "inline-block";
+    join.style.display = "inline-block";
+    estBig.style.display = "none";
+    joinTips.style.display = "table";
+})
+back[1].addEventListener("click", function () {
+    if (getDom(".join_til").innerText == "加入项目") {
+        changeEst.style.animation = "";
+        changeJoin.style.animation = "";
+        estTips.style.display = "table";
+        //加入返回
+        changeJoin.style.display = "inline-block";
+        establish.style.display = "inline-block";
+        joinBig.style.display = "none";
+        inputID.removeClass("idPd");
+    } else {
+        inputID.type = "text";
+        inputTips(inputID, "请输入项目ID", "idTips");
+        getDom(".join_til").innerText = "加入项目";
+        inputID.removeClass("idPd");
+        joinBut.style.display = "block";
+        joinBut2.style.display = "none";
+        joinBut2.removeEventListener("click", but2)
+    }
+})
+
 //回车进入
 inputEnterEvent(inputID, joinButClick);
 
@@ -467,7 +514,7 @@ function changeColor() {
     getDom(".mainTitle").style.color = textColor;
     //页面底色
     getDom("body").style.backgroundColor = mainColor;
-   //大盒子底色
+    //大盒子底色
     getDom(".est_bigBox").style.backgroundColor = progressBoxColor;
     getDom(".est_bigBox").style.color = textColor;
     getDom(".join_bigBox").style.backgroundColor = progressBoxColor;
@@ -488,7 +535,7 @@ function changeColor() {
     getDom(".click_est").style.color = textColor;
     //小盒子
     var smallBox = getDomA(".smallBox");
-    for (var i = 0; i < smallBox.length; i++){
+    for (var i = 0; i < smallBox.length; i++) {
         //背景色
         smallBox[i].style.backgroundColor = progressBoxColor;
     }

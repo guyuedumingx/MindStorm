@@ -407,6 +407,7 @@ body .mainBox {
     border: none;
     border-radius: 5px;
     background-color: transparent;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .idTips {
@@ -419,7 +420,7 @@ body .mainBox {
 }
 
 /* 点击进入 */
-.mainBox .Box .join_bigBox .click_join {
+.mainBox .Box .join_bigBox .click_join,.mainBox .Box .join_bigBox .click2 {
     float: right;
     width: 60px;
     height: 60px;
@@ -429,8 +430,10 @@ body .mainBox {
     background-position: center;
     background-repeat: no-repeat;
 }
-
-.mainBox .Box .join_bigBox .click_join:hover {
+.mainBox .Box .join_bigBox .click2{
+    display: none;
+}
+.mainBox .Box .join_bigBox .click_join:hover,.mainBox .Box .join_bigBox .click2:hover {
     cursor: pointer;
     background-image: url(../img/join_logo.png);
 }
