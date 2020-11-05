@@ -65,6 +65,7 @@ var textLightColor; // 文本高亮色
 var progressColor; // 进度条颜色
 var progressBoxColor; // 进度条盒子颜色
 var logoBGI; // logo的url
+
 // 配色函数
 function setColor() {
     mainColor = colorSet[colorState][0];
@@ -95,14 +96,12 @@ function changeColor(state) {
     progressColor = colorSet[state][4];
     progressBoxColor = colorSet[state][5];
     logoBGI = colorSet[state][6];
-    console.log(getDom('.treeBox .treeBoxMain'));
-    console.log(mainColor);
     getDom('.treeBox .treeBoxMain').style.backgroundColor = mainColor;
     ergodicTree(function (node) {
         node.getDom('.theme').style.color = textColor;
     });
     lineUpColor = 'rgba(' + textColor.split(')')[0].split('(')[1] + ', 0.5)';
-    // hideLineClick();
+    hideLineClick();
     setTimeout(function () {
         changeColorState = false;
         nightState = 1 - nightState;
@@ -309,7 +308,7 @@ var topBoundary = 0; // 边界约束中的边界
 var leftBoundary = 0;
 var bottomBoundary = treeBoxMain.offsetHeight;
 var rightBoundary = treeBoxMain.offsetWidth;
-var boundaryMinLength = bottomBoundary * 0.18; //边界约束中和边界的最小距离
+var boundaryMinLength = bottomBoundary * 0.08; //边界约束中和边界的最小距离
 var treeBoxMainWidth = treeBoxMain.offsetWidth;
 
 // 鼠标拖动的函数
@@ -352,7 +351,8 @@ window.addEventListener('resize', maintainTreeBox);
 
 // 给节点添加高亮
 function addHeightLight(node) {
-    node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
+    node.style.boxShadow = '0px 0px ' + node.offsetHeight + 'px ' + lineDownColor;
     node.lineColor = lineDownColor;
     node.line.lineZIndex = 19;
 }
@@ -545,7 +545,6 @@ function runConstraint(node1, node2, type, len) {
 
 // 节点数组
 var nodeSet = new Array();
-
 
 // 给树添加相关约束
 function addTreeConstraint(root, n) {
