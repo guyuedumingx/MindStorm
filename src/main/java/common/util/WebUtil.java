@@ -72,7 +72,7 @@ public class WebUtil {
         for(NodeSocket socket : socketForProject){
             try {
                 if(socket.getUserId()!=id){
-                    logger.debug(s);
+                    logger.debug(socket.getUserId()+" to this user");
 //                    socket.getSession().getBasicRemote().getSendWriter().write(s);
                     socket.getSession().getBasicRemote().sendText(s);
                 }

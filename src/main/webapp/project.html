@@ -205,7 +205,8 @@
 
     <script>
         if ('WebSocket' in window) {
-            websocket = new WebSocket("ws://localhost:8080/node/socket/" + user.userID + "/" + projectId);
+            //8.129.110.151/MindStorm-1.0-SNAPSHOT
+            websocket = new WebSocket("ws://192.168.43.248:8080/node/socket/" + user.userId + "/" + projectId);
             console.log("link success")
         } else {
             alert('Not support websocket')

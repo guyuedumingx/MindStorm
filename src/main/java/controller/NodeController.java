@@ -65,7 +65,7 @@ public class NodeController extends BaseController{
         }
 
         WebUtil.renderJson(resp,result);
-//        WebUtil.renderForContributors(user,msg);
+        WebUtil.renderForContributors(user,msg);
     }
 
     /**
@@ -82,7 +82,7 @@ public class NodeController extends BaseController{
         int statusCode = service.delNode(nodeId, user.getId());
         WebUtil.renderMap(response,"status_code",statusCode+"");
         msg.setChangeId(nodeId);
-//        WebUtil.renderForContributors(user,msg);
+        WebUtil.renderForContributors(user,msg);
     }
 
     /**
@@ -99,7 +99,7 @@ public class NodeController extends BaseController{
         int statusCode = service.chNode(node);
         WebUtil.renderMap(response,"status_code",statusCode+"");
         msg.setChangeId(node.getId());
-//        WebUtil.renderForContributors(user,msg);
+        WebUtil.renderForContributors(user,msg);
     }
 
     private Node initNode(HttpServletRequest request) {

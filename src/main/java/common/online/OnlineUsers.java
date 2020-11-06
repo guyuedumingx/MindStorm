@@ -23,14 +23,17 @@ public class OnlineUsers {
         int projectId = socket.getProjectId();
         Set<Integer> set = null;
         if(projectMap.containsKey(projectId)){
+            System.out.println(socket.getUserId()+" second");
             set = projectMap.get(projectId);
         }else {
+            System.out.println(socket.getUserId()+" first");
             set = new HashSet<>();
         }
         set.add(socket.getUserId());
         if(socketMap.containsKey(socket.getUserId())){
             socketMap.remove(socket.getUserId());
         }
+        projectMap.put(projectId,set);
         socketMap.put(socket.getUserId(),socket);
     }
 
