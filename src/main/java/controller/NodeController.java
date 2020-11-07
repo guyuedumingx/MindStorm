@@ -1,6 +1,6 @@
 package controller;
 
-import common.container.History;
+import common.container.history.History;
 import common.dto.OperaType;
 import common.dto.Result;
 import common.dto.StatusCode;

@@ -73,6 +73,9 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public Node getNode(int nodeId,int userId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
+        if(node==null){
+            return null;
+        }
         Star star = starDao.selectOne(new Star(userId,nodeId));
         User lastEditUser = userDao.selectOne(new User(node.getLastEditId()));
         User author = userDao.selectOne(new User(node.getAuthor()));

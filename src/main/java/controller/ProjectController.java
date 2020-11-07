@@ -1,6 +1,6 @@
 package controller;
 
-import common.container.History;
+import common.container.history.History;
 import common.dto.Result;
 import common.dto.SearchBack;
 import common.dto.StatusCode;
@@ -74,7 +74,7 @@ public class ProjectController extends BaseController{
         }else {
             WebUtil.renderJson(response,project);
         }
-        History history = new History();
+        History history = new History(user);
         HttpSession session = request.getSession();
         session.setAttribute("history",history);
     }

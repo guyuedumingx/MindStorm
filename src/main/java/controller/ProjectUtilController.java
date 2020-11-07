@@ -39,4 +39,16 @@ public class ProjectUtilController extends BaseController {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().setAttribute("history",null);
     }
+
+    /**
+     * 获取公开项目列表
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
 }

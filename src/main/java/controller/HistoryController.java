@@ -1,6 +1,7 @@
 package controller;
 
-import common.container.History;
+import common.container.history.History;
+import common.container.history.HistoryNode;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class HistoryController extends BaseController {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<String> historyTypeList = history.getHistoryTypeList();
-        WebUtil.renderJson(resp,historyTypeList);
+        List<HistoryNode> historyList = history.getHistoryList();
+        WebUtil.renderJson(resp,historyList);
     }
 }

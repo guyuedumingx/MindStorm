@@ -1,12 +1,14 @@
-package common.container;
+package common.container.history;
 
 import common.dto.OperaType;
 import pojo.Node;
+import pojo.User;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * 保存用户的历史记录
@@ -15,6 +17,11 @@ import java.util.List;
 public class History {
     List<HistoryNode> list = new ArrayList<>();
     NodeService service = new NodeServiceImpl();
+    User user = null;
+
+    public History(User user){
+        this.user = user;
+    }
 
     /**
      * 添加历史记录
@@ -57,14 +64,20 @@ public class History {
     public int back(int index){
         if(!list.isEmpty()){
             HistoryNode pop = list.remove(index);
-            Node operaNode = pop.getOperaNode();
+            Node operaNode = pop.getNode();
             int back = 0;
             if(OperaType.CREATE.equals(pop.getOperaType())){
-                back = service.delNode(operaNode.getId(), operaNode.getAuthor());
+                Node parent = service.getNode(operaNode.getParentId(), user.getId());
+                if(parent!=null){
+                    back = service.delNode(operaNode.getId(), operaNode.getAuthor());
+                }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
                 back = service.chNode(operaNode);
             }else if(OperaType.DELETE.equals(pop.getOperaType())){
-                back = service.newNode(operaNode);
+                Node parent = service.getNode(operaNode.getParentId(), user.getId());
+                if(parent!=null){
+                    back = service.newNode(operaNode);
+                }
             }
             return back;
         }
@@ -80,30 +93,20 @@ public class History {
        return this.back(list.size()-1);
     }
 
-    public  List<String> getHistoryTypeList(){
+    public  List<HistoryNode> getHistoryList(){
         Iterator<HistoryNode> iterator = list.iterator();
-        List<String> back = new ArrayList<>();
+        List<HistoryNode> historyNodeList = new ArrayList<>();
         while (iterator.hasNext()){
-            back.add(iterator.next().getOperaType());
+            HistoryNode next = iterator.next();
+            if(OperaType.UPDATE.equals(next.getOperaType())){
+                next.setAfter(service.getNode(next.getNode().getId(),user.getId()));
+            }else if(OperaType.CREATE.equals(next.getOperaType())){
+                next.setAfter(service.getNode(next.getNode().getId(),user.getId()));
+                next.setNode(null);
+            }
+            historyNodeList.add(next);
         }
-        return back;
+        return historyNodeList;
     }
 }
 
-class HistoryNode{
-    private String operaType;
-    private Node operaNode;
-
-    public HistoryNode(String operaType, Node operaNode){
-        this.operaNode = operaNode;
-        this.operaType = operaType;
-    }
-
-    public String getOperaType() {
-        return operaType;
-    }
-
-    public Node getOperaNode() {
-        return operaNode;
-    }
-}
