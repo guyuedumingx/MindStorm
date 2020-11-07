@@ -13,6 +13,7 @@ import java.io.IOException;
 public class ProjectUtilController extends BaseController {
 
     ProjectService service = new ProjectServiceImpl();
+
     /**
      * 检测项目是否存在
      * @param req
@@ -25,5 +26,17 @@ public class ProjectUtilController extends BaseController {
         int id = Integer.valueOf(req.getParameter("id"));
         int statusCode = service.existProject(id);
         WebUtil.renderMap(resp,"status_code",statusCode+"");
+    }
+
+
+    /**
+     * 退出项目
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().setAttribute("history",null);
     }
 }

@@ -1,8 +1,7 @@
-package common.online;
+package common.container;
 
 import socket.NodeSocket;
 
-import javax.websocket.Session;
 import java.util.*;
 
 /**

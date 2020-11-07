@@ -3,7 +3,7 @@ package common.util;
 import com.alibaba.fastjson.JSON;
 import common.dto.Result;
 import common.dto.StatusCode;
-import common.online.OnlineUsers;
+import common.container.OnlineUsers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.User;

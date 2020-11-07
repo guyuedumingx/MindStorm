@@ -1,6 +1,6 @@
 package socket;
 
-import common.online.OnlineUsers;
+import common.container.OnlineUsers;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;

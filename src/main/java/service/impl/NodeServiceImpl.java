@@ -26,6 +26,8 @@ public class NodeServiceImpl implements NodeService {
     UserDao userDao = DaoFactory.getUserDao();
     RecentProjectDaoImpl recentProjectDao = new RecentProjectDaoImpl();
 
+    public NodeServiceImpl(){}
+
     @Override
     public int newNode(Node node) {
         //设置节点的最近编辑时间
@@ -87,7 +89,6 @@ public class NodeServiceImpl implements NodeService {
         node.setChildren(children);
         return node;
     }
-
 
     /**
      * 把操作者设置成项目的贡献者

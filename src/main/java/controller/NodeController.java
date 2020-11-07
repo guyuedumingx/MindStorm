@@ -1,5 +1,7 @@
 package controller;
 
+import common.container.History;
+import common.dto.OperaType;
 import common.dto.Result;
 import common.dto.StatusCode;
 import common.util.SensitiveWordUtil;
@@ -27,12 +29,14 @@ public class NodeController extends BaseController{
     User user = null;
     NodeService service = new NodeServiceImpl();
     SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
+    History history = null;
 
     @Override
     protected void before(HttpServletRequest req, HttpServletResponse resp) {
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        history = (History) session.getAttribute("history");
     }
 
     /**
@@ -45,7 +49,7 @@ public class NodeController extends BaseController{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Result result = new Result();
         Result msg = new Result();
-        msg.setChangeType("N");
+        msg.setChangeType(OperaType.CREATE);
         Node node = WebUtil.getJson(req, Node.class);
         //敏感词过滤
         node.setTheme(filter.replaceSensitiveWord(node.getTheme(), 0, "*"));
@@ -60,6 +64,7 @@ public class NodeController extends BaseController{
             result.put("node_id",nodeId);
             result.setStatus_code(statusCode);
             msg.setChangeId(nodeId);
+            history.addNewNodeHistory(nodeId);
         }else {
             result.setStatus_code(StatusCode.LOST);
         }
@@ -67,6 +72,7 @@ public class NodeController extends BaseController{
         WebUtil.renderJson(resp,result);
         WebUtil.renderForContributors(user,msg);
     }
+
 
     /**
      * 删除节点
@@ -77,12 +83,16 @@ public class NodeController extends BaseController{
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Result msg = new Result();
-        msg.setChangeType("D");
+        msg.setChangeType(OperaType.DELETE);
         int nodeId =Integer.valueOf(request.getParameter("nodeId"));
+        Node node = service.getNode(nodeId, user.getId());
         int statusCode = service.delNode(nodeId, user.getId());
         WebUtil.renderMap(response,"status_code",statusCode+"");
-        msg.setChangeId(nodeId);
-        WebUtil.renderForContributors(user,msg);
+        if(StatusCode.OK==statusCode){
+            msg.setChangeId(nodeId);
+            WebUtil.renderForContributors(user,msg);
+            history.addDelNodeHistory(node);
+        }
     }
 
     /**
@@ -94,12 +104,16 @@ public class NodeController extends BaseController{
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Result msg = new Result();
-        msg.setChangeType("U");
+        msg.setChangeType(OperaType.UPDATE);
         Node node = initNode(request);
+        Node historyNode = service.getNode(node.getId(), user.getId());
         int statusCode = service.chNode(node);
         WebUtil.renderMap(response,"status_code",statusCode+"");
-        msg.setChangeId(node.getId());
-        WebUtil.renderForContributors(user,msg);
+        if(StatusCode.OK==statusCode){
+            msg.setChangeId(node.getId());
+            WebUtil.renderForContributors(user,msg);
+            history.addUpdateNodeHistory(historyNode);
+        }
     }
 
     private Node initNode(HttpServletRequest request) {
@@ -135,13 +149,9 @@ public class NodeController extends BaseController{
         WebUtil.renderJson(response,node);
     }
 
-    /**
-     * 点赞或取消点赞
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    public void star(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    @Override
+    protected void after(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = req.getSession();
+        session.setAttribute("history",history);
     }
 }
