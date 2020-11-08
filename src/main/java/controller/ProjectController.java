@@ -27,7 +27,7 @@ import java.util.List;
 @WebServlet("/project")
 public class ProjectController extends BaseController{
     Logger logger = LoggerFactory.getLogger(ProjectController.class);
-    ProjectService service = new ProjectServiceImpl();
+    ProjectService service = null;
     SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
     User user = null;
 
@@ -36,6 +36,7 @@ public class ProjectController extends BaseController{
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        service = new ProjectServiceImpl(user);
     }
 
     /**

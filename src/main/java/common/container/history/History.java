@@ -69,13 +69,16 @@ public class History {
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.delNode(operaNode.getId(), operaNode.getAuthor());
+                    addDelNodeHistory(operaNode);
                 }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
+                addUpdateNodeHistory(service.getNode(operaNode.getId(),user.getId()));
                 back = service.chNode(operaNode);
             }else if(OperaType.DELETE.equals(pop.getOperaType())){
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.newNode(operaNode);
+                    addNewNodeHistory(back);
                 }
             }
             return back;
