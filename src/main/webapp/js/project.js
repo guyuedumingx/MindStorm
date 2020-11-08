@@ -2107,7 +2107,7 @@ function recursionAppendNode(res) {
 
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
-    back = JSON.parse(e.data)
+    var back = JSON.parse(e.data);
     var socketNode = getTreeNode(back.node_id);
     if (back.type == "N") {
         ajax({
