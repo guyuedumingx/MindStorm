@@ -1123,7 +1123,7 @@ function treeAppendNode(father, nodeData) {
         author: user.userId,
         lastEditName: user.userName,
         lastEditTime: Date.now(),
-        star : 0,
+        star: 0,
         stared: false
     }
 
@@ -2088,7 +2088,7 @@ function recursionAppendNode(res) {
                 lastEditName: res.lastEditName,
                 lastEditTime: res.lastEditTime,
                 star: res.star,
-                stared : res.stared
+                stared: res.stared
             });
         }
     }
@@ -2132,8 +2132,8 @@ websocket.onmessage = function (e) {
                 socketNode.content = res.content;
                 socketNode.lastEditName = res.lastEditName;
                 socketNode.lastEditTime = res.lastEditTime;
-                node.star = res.star;
-                node.stared = res.stared;
+                socketNode.star = res.star;
+                socketNode.stared = res.stared;
             }
         });
     } else {
