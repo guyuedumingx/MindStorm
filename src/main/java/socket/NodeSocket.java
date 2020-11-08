@@ -1,10 +1,14 @@
 package socket;
 
 import common.container.OnlineUsers;
+import common.dto.OperaType;
+import common.dto.Result;
+import common.util.WebUtil;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+
 
 @ServerEndpoint(value="/node/socket/{userId}/{projectId}")
 public class NodeSocket {
@@ -26,11 +30,18 @@ public class NodeSocket {
         onlineUsers.remove(this);
     }
 
+    /**
+     * 正在编辑显示
+     * @param message
+     * @param session
+     * @throws IOException
+     */
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-        System.out.println(message);
-        session.getBasicRemote().sendText(message);
-        session.getBasicRemote().getSendWriter().write(message);
+        Result result = new Result();
+        result.setChangeType(OperaType.EDITING);
+        result.setChangeId(message);
+        WebUtil.renderJson(session,result);
     }
 
     @OnError

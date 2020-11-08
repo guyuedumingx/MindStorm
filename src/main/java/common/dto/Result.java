@@ -24,6 +24,10 @@ public class Result extends HashMap<String,String>{
         this.put("node_id",nodeId+"");
     }
 
+    public void setChangeId(String nodeId){
+        this.put("node_id",nodeId);
+    }
+
     /**
      * 存储需要返回给前端的键值对
      * @param key 键

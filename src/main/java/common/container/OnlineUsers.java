@@ -67,5 +67,4 @@ public class OnlineUsers {
     public static OnlineUsers getOnlineUsers(){
         return list;
     }
-
 }

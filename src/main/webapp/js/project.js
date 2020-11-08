@@ -2078,7 +2078,7 @@ function recursionAppendNode(res) {
     for (var i = 0; i < nodeSet.length; i++) {
         if (nodeSet[i].id == res.parentId) {
             treeAppendNode(nodeSet[i], {
-                id: e.data.node_id,
+                id: back.node_id,
                 theme: res.theme,
                 content: res.content,
                 editable: res.banAppend,
@@ -2107,24 +2107,25 @@ function recursionAppendNode(res) {
 
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
-    var socketNode = getTreeNode(e.data.node_id);
-    if (e.data.type == 'N') {
+    back = JSON.parse(e.data)
+    var socketNode = getTreeNode(back.node_id);
+    if (back.type == "N") {
         ajax({
             type: 'get',
             url: '/node',
             data: {
-                id: e.data.node_id
+                id: back.node_id
             },
             success: recursionAppendNode
         });
-    } else if (e.data.type == 'D') {
+    } else if (back.type == "D") {
         treeRemoveNode(socketNode);
-    } else if (e.data.type == 'U') {
+    } else if (back.type == "U") {
         ajax({
             type: 'get',
             url: '/node',
             data: {
-                id: e.data.node_id
+                id: back.node_id
             },
             success: function (res) {
                 socketNode.getDom('.theme').innerText = res.theme;

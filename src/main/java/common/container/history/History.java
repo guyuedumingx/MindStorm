@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 /**
  * 保存用户的历史记录
  * @author yohoyes
@@ -41,7 +40,7 @@ public class History {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                add(OperaType.CREATE,new Node(nodeId));
+                add(OperaType.CREATE,service.getNode(nodeId, user.getId()));
             }
         }).start();
     }
@@ -101,7 +100,7 @@ public class History {
             if(OperaType.UPDATE.equals(next.getOperaType())){
                 next.setAfter(service.getNode(next.getNode().getId(),user.getId()));
             }else if(OperaType.CREATE.equals(next.getOperaType())){
-                next.setAfter(service.getNode(next.getNode().getId(),user.getId()));
+                next.setAfter(next.getNode());
                 next.setNode(null);
             }
             historyNodeList.add(next);

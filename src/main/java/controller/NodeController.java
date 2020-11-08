@@ -90,8 +90,8 @@ public class NodeController extends BaseController{
         WebUtil.renderMap(response,"status_code",statusCode+"");
         if(StatusCode.OK==statusCode){
             msg.setChangeId(nodeId);
-            WebUtil.renderForContributors(user,msg);
             history.addDelNodeHistory(node);
+            WebUtil.renderForContributors(user,msg);
         }
     }
 
@@ -111,13 +111,14 @@ public class NodeController extends BaseController{
         WebUtil.renderMap(response,"status_code",statusCode+"");
         if(StatusCode.OK==statusCode){
             msg.setChangeId(node.getId());
-            WebUtil.renderForContributors(user,msg);
             history.addUpdateNodeHistory(historyNode);
+            WebUtil.renderForContributors(user,msg);
         }
     }
 
     private Node initNode(HttpServletRequest request) {
-        int id = Integer.valueOf(request.getParameter("id"));
+        String idStr = request.getParameter("id");
+        int id = Integer.valueOf(idStr);
         String theme = request.getParameter("theme");
         String content = request.getParameter("content");
         //敏感词过滤
