@@ -2078,7 +2078,7 @@ function recursionAppendNode(res) {
     for (var i = 0; i < nodeSet.length; i++) {
         if (nodeSet[i].id == res.parentId) {
             treeAppendNode(nodeSet[i], {
-                id: back.node_id,
+                id: res.id,
                 theme: res.theme,
                 content: res.content,
                 editable: res.banAppend,
