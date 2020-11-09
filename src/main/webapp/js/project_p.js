@@ -55,8 +55,10 @@ document.addEventListener('keyup', function (e) {
 
 var userPerformance = 5; // 性能参数
 
-var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
-['#4c4c4c', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
+var colorSet = [
+    ['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
+    ['#4c4c4c', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']
+];
 var colorState = 0;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
@@ -580,16 +582,20 @@ var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
 
+var moveleft = projectMessage.offsetWidth;
+window.addEventListener('resize', function () {
+    moveleft = projectMessage.offsetWidth;
+})
 // 隐藏项目信息盒子
 function projectMessageHide() {
     // 芷欣
-    projectMessage.hide();
+    moveLeftRight(projectMessage, "left",-moveleft, 20);
 }
 
 // 显示项目信息盒子
 function projectMessageShow() {
     // 芷欣
-    projectMessage.show();
+    moveLeftRight(projectMessage, "left", moveleft, 20);
 }
 
 projectMessageBtn.addEventListener('click', function () {
@@ -806,7 +812,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) { }
+    } catch (e) {}
 
     // 创建div元素
     node1.line = document.createElement('div');
@@ -1351,8 +1357,7 @@ function treeReload() {
     for (var i = 0; i < nodeSet.length; i++) {
         try {
             treeBoxMain.removeChild(nodeSet[i].line);
-        } catch (e) {
-        }
+        } catch (e) {}
         treeBoxMain.removeChild(nodeSet[i]);
     }
 
