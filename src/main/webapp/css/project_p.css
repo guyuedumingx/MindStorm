@@ -425,6 +425,7 @@
     color: rgb(163, 175, 190);
     background-color: #444;
     box-sizing: border-box;
+    transition: transform .5s;
 }
 
 .message div {

@@ -582,21 +582,16 @@ var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
 
-// 获得大盒子的宽度
-var moveleft = projectMessage.offsetWidth;
-window.addEventListener('resize', function () {
-    moveleft = projectMessage.offsetWidth;
-});
+
 // 隐藏项目信息盒子
 function projectMessageHide() {
-    // 芷欣
-    moveLeftRight(projectMessage, "left",-moveleft, 20);
+    projectMessage.style.transform = "translate(-100%,0)";
 }
 
 // 显示项目信息盒子
 function projectMessageShow() {
     // 芷欣
-    moveLeftRight(projectMessage, "left", moveleft, 20);
+    projectMessage.style.transform = "translate(0%,0)";
 }
 
 projectMessageBtn.addEventListener('click', function () {
