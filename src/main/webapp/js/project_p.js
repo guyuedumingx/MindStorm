@@ -384,10 +384,11 @@ var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
 
+// 获得大盒子的宽度
 var moveleft = projectMessage.offsetWidth;
 window.addEventListener('resize', function () {
     moveleft = projectMessage.offsetWidth;
-})
+});
 // 隐藏项目信息盒子
 function projectMessageHide() {
     // 芷欣
