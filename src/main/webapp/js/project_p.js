@@ -721,7 +721,23 @@ setBtnEvent(hideTheme, function () {
     }
 });
 setBtnEvent(lockingNode);
-setBtnEvent(layerColor);
+setBtnEvent(layerColor, function () {
+    if (layerColor.state) {
+        layerColor.colorArr = [];
+        layerColor.colorArr.push(randomColor(120, 180));
+        for (var i = 0; i < 20; i++) {
+            layerColor.colorArr.push(randomColor(160, 220));
+        }
+        for (var i = 0; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
+        }
+    } else {
+        nodeSet[0].style.backgroundColor = randomColor(120, 180);
+        for (var i = 1; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = randomColor(160, 220);
+        }
+    }
+});
 
 // 隐藏无关节点间线条函数
 function hideLineClick() {
@@ -1175,6 +1191,9 @@ function addTreeConstraint(root, n) {
 
     // 设置节点层级
     root.layer = n;
+    if (layerColor.state) {
+        root.style.backgroundColor = layerColor.colorArr[root.layer];
+    }
 
     // 设置节点坐标
     root.x = root.offsetLeft;
@@ -1436,7 +1455,7 @@ function treeAppendNode(father, nodeData) {
     father.childArr.push(appendNode);
 
     // 添加相关样式和节点id
-    appendNode.style.backgroundColor = randomColor(100, 180);
+    appendNode.style.backgroundColor = randomColor(160, 220);
     appendNode.addClass('node');
     appendNode.id = defaults.id;
     appendNode.childArr = defaults.childArr;
