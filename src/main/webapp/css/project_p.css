@@ -286,6 +286,7 @@
     box-sizing: border-box;
     display: none;
     z-index: 57;
+    transition: transform .5s;
 }
 
 /* 标题 */
