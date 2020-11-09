@@ -604,7 +604,7 @@ document.addEventListener('keydown', function (e) {
 
 // 初始化节流阀
 removeNodeState = false;
-deleteProject = false;
+deleteProjectState = false;
 
 // 提示框中确定相关事件
 function tipsYesFunction() {
@@ -632,10 +632,10 @@ function tipsYesFunction() {
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
     } else if (tipsState == 'deleteProject') {
-        if (deleteProject) {
+        if (deleteProjectState) {
             return;
         }
-        deleteProject = true;
+        deleteProjectState = true;
         ajax({
             type: 'delete',
             url: '/project',
@@ -643,12 +643,13 @@ function tipsYesFunction() {
                 id: projectId
             },
             success: function (res) {
+                console.log(res);
                 if (res.status_code == '200') {
                     window.location = 'index.html'
                 } else {
                     topAlert('删除失败');
                 }
-                deleteProject = false;
+                deleteProjectState = false;
             }
         });
     }
@@ -779,9 +780,14 @@ function hideLineClick() {
 
 
 // 第三组按钮
-var thirdbtnArr = getDom('.mainBox .third');
+var thirdbtnArr = getDomA('.mainBox .third div');
+var projectMessageBtn = thirdbtnArr[0]; // 显示项目信息的按钮
+var contributors = thirdbtnArr[1]; // 显示贡献者列表的按钮
+var exportProject = thirdbtnArr[2]; // 导出项目按钮
+var signOutProject = thirdbtnArr[3]; // 退出项目按钮
+var deleteProject = thirdbtnArr[4]; // 删除项目按钮
 
-var projectMessageBtn = thirdbtnArr.getDom('.projectInformation'); // 显示项目信息的按钮
+// 项目信息相关操作
 var projectMessage = getDom('.message'); // 项目信息盒子
 var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目创建者
 var projectName = projectMessage.getDom('.project_name span'); // 项目名
@@ -789,7 +795,6 @@ var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目�
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
-
 
 // 隐藏项目信息盒子
 function projectMessageHide() {
@@ -805,12 +810,42 @@ projectMessageBtn.addEventListener('click', function () {
     projectMessageShow();
 });
 
+// 点击空白处隐藏
 document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, projectMessage) && e.target != projectMessageBtn) {
         projectMessageHide();
     }
 });
+
+// 贡献者列表相关操作
+// 开发中
+
+// 导出项目相关操作
+exportProject.addEventListener('click', function () {
+    tipsState = 'exportProject';
+    tipsTitle.innerText = '导出项目';
+    tipsContent.innerText = '项目将会导出到本地，是否继续';
+    tipsBox.show();
+    transparentBaffle.show();
+})
+
+// 退出项目相关操作
+// 开发中
+
+// 删除项目相关操作
+deleteProject.addEventListener('click', function () {
+    if (projectCreatorId != user.userId) {
+        topAlert('您没有权限执行此操作');
+    } else {
+        tipsState = 'deleteProject';
+        tipsTitle.innerText = '删除项目';
+        tipsContent.innerText = '此项目将会被删除，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+});
+
 // ——————————————中间——————————————
 var treeBox = getDom('.treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子
