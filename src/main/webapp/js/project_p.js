@@ -18,32 +18,30 @@ var ctrlState = false;
 // 键盘按下切换ctrl状态
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
-        // if (transparentBaffle.getCSS('display') == 'none') {
-        //     if (!ctrlState) {
-        //         if (nowNode) {
-        //             nowNode.style.boxShadow = 'none';
-        //             var t = nowNode;
-        //             while (t.father) {
-        //                 removeHeightLight(t.father);
-        //                 t = t.father;
-        //             }
-        //             changeChild(nowNode, removeHeightLight);
-        //             if (hideTheme.state) {
-        //                 ergodicTree(function (node) {
-        //                     node.addClass('hideTheme');
-        //                 });
-        //             }
-        //         }
-        //         nowNode.list.children[0].removeClass('treeListHeightLight');
-        //         setTimeout(function () {
-        //             nowNode = null;
-        //             changeNodeEvent();
-        //         }, 1);
-        //         lineColor = lineUpColor;
-        //         document.removeEventListener('mousemove', move);
-        //     }
-        //     ctrlState = true;
-        // }
+        if (transparentBaffle.getCSS('display') == 'none') {
+            if (!ctrlState) {
+                if (nowNode) {
+                    nowNode.style.boxShadow = 'none';
+                    var t = nowNode;
+                    while (t.father) {
+                        removeHeightLight(t.father);
+                        t = t.father;
+                    }
+                    changeChild(nowNode, removeHeightLight);
+                    if (hideTheme.state) {
+                        ergodicTree(function (node) {
+                            node.addClass('hideTheme');
+                        });
+                    }
+                    nowNode.list.children[0].removeClass('treeListHeightLight');
+                    nowNode = null;
+                    changeNodeEvent();
+                }
+                lineColor = lineUpColor;
+                document.removeEventListener('mousemove', move);
+            }
+            ctrlState = true;
+        }
         ctrlState = true;
     }
 });
@@ -152,6 +150,8 @@ var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
 
 var nowOperation = 'null'; // 操作节点盒子状态
 var tipsState = 'null'; // 提示盒子状态
+
+transparentBaffle.hide();
 
 // 隐藏操作节点盒子
 function operationNodeBoxHide() {
@@ -698,7 +698,28 @@ function setBtnEvent(btn, fun) {
 }
 
 setBtnEvent(hideLine, hideLineClick);
-setBtnEvent(hideTheme);
+setBtnEvent(hideTheme, function () {
+    if (hideTheme.state) {
+        ergodicTree(function (node) {
+            node.addClass('hideTheme');
+        });
+        if (nowNode) {
+            var t = nowNode;
+            t.removeClass('hideTheme');
+            while (t.father) {
+                t = t.father;
+                t.removeClass('hideTheme');
+            }
+            changeChild(nowNode, function (node) {
+                node.removeClass('hideTheme');
+            });
+        }
+    } else {
+        ergodicTree(function (node) {
+            node.removeClass('hideTheme');
+        });
+    }
+});
 setBtnEvent(lockingNode);
 setBtnEvent(layerColor);
 
@@ -836,11 +857,11 @@ treeBoxMain.addEventListener('mousedown', function (e) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
-        // if (hideTheme.state) {
-        //     ergodicTree(function (node) {
-        //         node.addClass('hideTheme');
-        //     });
-        // }
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+        }
         nowNode.list.children[0].removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
@@ -1203,22 +1224,22 @@ function addTreeConstraint(root, n) {
         }
 
         // 判断节点主题是否被隐藏，并执行相关动作
-        // if (hideTheme.state) {
-        //     ergodicTree(function (node) {
-        //         node.addClass('hideTheme');
-        //     });
-        //     if (nowNode) {
-        //         var t = nowNode;
-        //         t.removeClass('hideTheme');
-        //         while (t.father) {
-        //             t = t.father;
-        //             t.removeClass('hideTheme');
-        //         }
-        //         changeChild(nowNode, function (node) {
-        //             node.removeClass('hideTheme');
-        //         });
-        //     }
-        // }
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+            if (nowNode) {
+                var t = nowNode;
+                t.removeClass('hideTheme');
+                while (t.father) {
+                    t = t.father;
+                    t.removeClass('hideTheme');
+                }
+                changeChild(nowNode, function (node) {
+                    node.removeClass('hideTheme');
+                });
+            }
+        }
     });
 
     // 将当前节点添加到节点数组中
