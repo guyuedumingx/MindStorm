@@ -129,6 +129,7 @@ var refreshTree = firstbtnArr[4]; // 刷新树
 cycleSprite(firstbtnArr, 0, 0, 30);
 
 var operationNodeBox = getDom('.popup'); // 操作节点盒子
+var operationNodeBoxClose = operationNodeBox.getDom('.popClose'); // 操作节点盒子中关闭按钮
 var operationNodeBoxTheme = operationNodeBox.getDom('.inTitle'); // 节点主题
 var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.choice'); // 允许追加子节点盒子
 var operationNodeBoxJurisdiction = operationNodeBoxJurisdictionBox.getDom('.onOffBorder'); // 允许追加子节点开关
@@ -139,6 +140,13 @@ var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞盒子
 var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
 var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
+var tipsBox = getDom('.small'); // 提示框盒子
+var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
+var tipsTitle = tipsBox.getDom('.delNode'); // 提示框标题
+var tipsContent = tipsBox.getDom('.sureNode'); // 提示内容n
+var tipsYes = tipsBox.getDom('.yes'); // 是
+var tipsNo = tipsBox.getDom('.no'); // 否
+var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
 
 var nowOperation = 'null'; // 操作节点盒子状态
 var tipsState = 'null'; // 提示盒子状态
@@ -253,6 +261,25 @@ document.addEventListener('keydown', function (e) {
     if (e.key == 'Tab' && nowNode && nowOperation == 'null') {
         e.preventDefault();
         addNodeFunction();
+    }
+});
+
+// 删除节点相关事件
+function removeNodeFunction() {
+    if (removeNode.jurisdiction) {
+        tipsState = 'deleteNode';
+        tipsTitle.innerText = '删除节点';
+        tipsContent.innerText = '该操作不可恢复，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+}
+
+removeNode.addEventListener('click', removeNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Delete' && nowNode && nowOperation == 'null') {
+        e.preventDefault();
+        removeNodeFunction();
     }
 });
 
@@ -397,11 +424,10 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                         content: inpContent,
                         editable: operationNodeBoxJurisdiction.state,
                     });
-                    operationNodeBoxCloseFunction();
                 } else {
                     topAlert('创建失败');
-                    operationNodeBoxCloseFunction();
                 }
+                operationNodeBoxHide();
                 addNodeState = false;
             }
         });
@@ -441,17 +467,16 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     nowNode.children[0].innerText = inpTheme;
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
-                    operationNodeBoxCloseFunction();
                 } else {
                     topAlert('修改失败');
-                    operationNodeBoxCloseFunction();
                 }
+                operationNodeBoxHide();
                 changeNodeState = false;
             }
         });
     } else {
         topAlert('出现未知错误');
-        operationNodeBoxCloseFunction();
+        operationNodeBoxHide();
     }
 });
 
@@ -531,6 +556,89 @@ function setOnOffEvent(onOff, fun) {
 // 设置节点禁止追加子节点
 setOnOffEvent(operationNodeBoxJurisdiction);
 
+// 关闭提示框相关事件
+function tipsCloseFunction() {
+    tipsState = 'null';
+    tipsTitle.innerText = '？';
+    tipsContent.innerText = '？？？';
+    tipsBox.hide();
+    transparentBaffle.hide();
+}
+
+tipsClose.addEventListener('click', tipsCloseFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape' && tipsState != 'null') {
+        e.preventDefault();
+        tipsCloseFunction();
+    }
+});
+
+
+// 初始化节流阀
+removeNodeState = false;
+deleteProject = false;
+
+// 提示框中确定相关事件
+function tipsYesFunction() {
+    if (tipsState == 'deleteNode') {
+        if (removeNodeState) {
+            return;
+        }
+        removeNodeState = true;
+        ajax({
+            type: 'delete',
+            url: '/node',
+            data: {
+                nodeId: nowNode.id
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    treeRemoveNode(nowNode);
+                    nowNode = null;
+                } else {
+                    topAlert('删除失败');
+                }
+                removeNodeState = false;
+            }
+        });
+    } else if (tipsState == 'exportProject') {
+        window.location = '/util/xmind?project_id=' + projectId;
+    } else if (tipsState == 'deleteProject') {
+        if (deleteProject) {
+            return;
+        }
+        deleteProject = true;
+        ajax({
+            type: 'delete',
+            url: '/project',
+            data: {
+                id: projectId
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location = 'index.html'
+                } else {
+                    topAlert('删除失败');
+                }
+                deleteProject = false;
+            }
+        });
+    }
+    tipsCloseFunction();
+}
+tipsYes.addEventListener('click', tipsYesFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && tipsState != 'null') {
+        tipsYesFunction();
+    }
+});
+
+// 提示框中取消按钮点击事件
+tipsNo.addEventListener('click', tipsCloseFunction);
+
+
+// 第二组按钮
+
 // 隐藏无关节点间线条函数
 function hideLineClick() {
     // if (hideLine.state) {
@@ -577,7 +685,7 @@ var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目�
 var projectName = projectMessage.getDom('.project_name span'); // 项目名
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
-var projectIdBoxz = projectMessage.getDom('.project_id span'); // 项目ID
+var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
 
 
@@ -1277,6 +1385,7 @@ function treeAppendNode(father, nodeData) {
 
 // 动态删除页面中的节点
 function treeRemoveNode(node) {
+    removeDom(node.list);
     if (node.childArr.length == 0 && node.father) {
         var father = node.father;
 

@@ -271,19 +271,25 @@ app.post('/node', function (req, res) {
 });
 app.delete('/node', function (req, res) {
     var text = req.query;
+    var arr = new Array();
+    var p = 0;
+    var fa;
     for (var i = 0; i < user.length; i++) {
-        if (user[i]) {
-            if (user[i].id == text.id) {
-                var f = user.father;
-                for (var j = 0; j < f.children.length; j++) {
-                    if (f.children[j] == text.id) {
-                        f.children[j] == null;
-                    }
-                }
-            }
-            user[i] = null;
+        if (user[i].id != text.nodeId) {
+            arr[p++] = user[i];
+        } else {
+            fa = getNode(user[i].father);
         }
     }
+    user = arr;
+    arr = new Array();
+    p = 0;
+    for (var i = 0; i < fa.children.length; i++) {
+        if (fa.children[i] != text.nodeId) {
+            arr[p++] = fa.children[i];
+        }
+    }
+    fa.children = arr;
     res.send({
         status_code: '200'
     })
