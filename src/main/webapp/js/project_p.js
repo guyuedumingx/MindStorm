@@ -145,14 +145,12 @@ var tipsState = 'null'; // 提示盒子状态
 
 // 隐藏操作节点盒子
 function operationNodeBoxHide() {
-    // 芷欣
-    operationNodeBox.hide();
+    operationNodeBox.style.transform = "translate(-100%,0)";
 }
 
 // 显示操作节点盒子
 function operationNodeBoxShow() {
-    // 芷欣
-    operationNodeBox.show();
+    operationNodeBox.style.transform = "translate(0%,0)";
 }
 
 refreshTree.jurisdiction = true;
@@ -579,22 +577,18 @@ var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目�
 var projectName = projectMessage.getDom('.project_name span'); // 项目名
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
-var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
+var projectIdBoxz = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
 
-var moveleft = projectMessage.offsetWidth;
-window.addEventListener('resize', function () {
-    moveleft = projectMessage.offsetWidth;
-});
 
 // 隐藏项目信息盒子
 function projectMessageHide() {
-    moveLeftRight(projectMessage, "left", -moveleft, 50);
+    projectMessage.style.transform = "translate(-100%,0)";
 }
 
 // 显示项目信息盒子
 function projectMessageShow() {
-    moveLeftRight(projectMessage, "left", moveleft, 50);
+    projectMessage.style.transform = "translate(0%,0)";
 }
 
 projectMessageBtn.addEventListener('click', function () {

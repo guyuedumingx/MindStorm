@@ -286,6 +286,7 @@
     box-sizing: border-box;
     display: none;
     z-index: 57;
+    transition: transform .5s;
 }
 
 /* 标题 */
@@ -425,6 +426,7 @@
     color: rgb(163, 175, 190);
     background-color: #444;
     box-sizing: border-box;
+    transition: transform .5s;
 }
 
 .message div {
