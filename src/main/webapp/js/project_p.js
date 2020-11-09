@@ -262,7 +262,10 @@ function addNodeFunction() {
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = '';
         operationNodeBoxTheme.readOnly = false;
-        // operationNodeBoxTheme.addClass('editable');
+
+        // 芷欣
+        operationNodeBoxTheme.addClass(''); // 里面写可编辑时候的类名，不用写点
+
         operationNodeBoxJurisdictionBox.show();
         if (operationNodeBoxJurisdiction.state) {
             onOffChange(operationNodeBoxJurisdiction);
@@ -270,7 +273,10 @@ function addNodeFunction() {
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = '';
         operationNodeBoxContent.readOnly = false;
-        // operationNodeBoxContent.addClass('textareaEditable');
+
+        // 芷欣
+        operationNodeBoxContent.addClass('');
+
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
@@ -315,7 +321,10 @@ function changeNodeFunction() {
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = false;
-        // operationNodeBoxTheme.addClass('editable');
+
+        // 芷欣
+        operationNodeBoxTheme.addClass('');
+
         operationNodeBoxJurisdictionBox.show();
         if (operationNodeBoxJurisdiction.state) {
             onOffChange(operationNodeBoxJurisdiction);
@@ -326,7 +335,10 @@ function changeNodeFunction() {
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = false;
-        // operationNodeBoxContent.addClass('textareaEditable');
+
+        // 芷欣
+        operationNodeBoxContent.addClass('');
+
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
@@ -352,12 +364,18 @@ function queryNodeFunction() {
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = true;
-        // operationNodeBoxTheme.removeClass('editable');
+
+        // 芷欣
+        operationNodeBoxTheme.removeClass('');
+
         operationNodeBoxJurisdictionBox.hide();
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = true;
-        // operationNodeBoxContent.removeClass('textareaEditable');
+
+        // 芷欣
+        operationNodeBoxContent.removeClass('');
+
         operationNodeBoxNodeCreator.show();
         operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
         operationNodeBoxLastRevision.show();
