@@ -128,7 +128,7 @@ cycleSprite(firstbtnArr, 0, 0, 30);
 
 var operationNodeBox = getDom('.popup'); // 操作节点盒子
 var operationNodeBoxTheme = operationNodeBox.getDom('.inTitle'); // 节点主题
-var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('choice'); // 允许追加子节点盒子
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.choice'); // 允许追加子节点盒子
 var operationNodeBoxJurisdiction = operationNodeBoxJurisdictionBox.getDom('.onOffBorder'); // 允许追加子节点开关
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.author'); // 节点创建者
@@ -138,9 +138,11 @@ var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按�
 var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
 
+var nowOperation = 'null'; // 操作节点盒子状态
+var tipsState = 'null'; // 提示盒子状态
+
 refreshTree.jurisdiction = true;
 operationNodeBox.hide();
-operationNodeBoxClose.hide();
 operationNodeBoxTheme.hide();
 operationNodeBoxJurisdictionBox.hide();
 operationNodeBoxContent.hide();
@@ -148,7 +150,178 @@ operationNodeBoxNodeCreator.hide();
 operationNodeBoxLastRevision.hide();
 operationNodeBoxSubmit.hide();
 operationNodeBoxStarBox.hide();
-transparentBaffle.hide();
+
+// 按钮禁用
+function btnDisable(btn) {
+    btn.jurisdiction = false;
+    btn.style.cursor = 'not-allowed';
+}
+
+// 取消按钮禁用
+function btnCancelDisable(btn) {
+    btn.jurisdiction = true;
+    btn.style.cursor = 'pointer';
+}
+
+// 改变当前节点的函数
+function changeNodeEvent() {
+    if (nowNode) {
+        nowNode.list.children[0].addClass('treeListHeightLight');
+        // nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
+        // nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
+        // nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
+        // nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
+        // nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
+        // nowNodeBox.children[1].innerText = '';
+
+        // 判断按钮权限
+        if (!nowNode.editable || (nowNode.authorId == user.userId)) {
+            btnCancelDisable(addNode);
+        } else {
+            btnDisable(addNode);
+        }
+        if (nowNode.authorId == user.userId) {
+            btnCancelDisable(changeNode);
+            if (nowNode.childArr.length == 0) {
+                btnCancelDisable(removeNode);
+            } else {
+                btnDisable(removeNode);
+            }
+        } else {
+            btnDisable(removeNode);
+            btnDisable(changeNode);
+        }
+        btnCancelDisable(queryNode);
+    } else {
+        // nowNodeBox.children[0].innerText = '请选择节点';
+        // nowNodeBox.children[0].innerText = '';
+        // nowNodeBox.children[1].style.backgroundColor = '#ccc';
+        // nowNodeBox.children[1].style.width = '30px';
+        // nowNodeBox.children[1].style.height = '30px';
+        // nowNodeBox.children[1].style.borderRadius = '15px';
+        // nowNodeBox.children[1].innerText = '?';
+        btnDisable(addNode);
+        btnDisable(removeNode);
+        btnDisable(changeNode);
+        btnDisable(queryNode);
+    }
+}
+
+// 页面加载时先调用一次
+changeNodeEvent();
+
+// 创建节点相关事件
+function addNodeFunction() {
+    if (addNode.jurisdiction) {
+        nowOperation = 'add';
+        // transparentBaffle.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = '';
+        operationNodeBoxTheme.readOnly = false;
+        // operationNodeBoxTheme.addClass('editable');
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = '';
+        operationNodeBoxContent.readOnly = false;
+        // operationNodeBoxContent.addClass('textareaEditable');
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+        operationNodeBoxStarBox.hide();
+        operationNodeBox.show();
+        operationNodeBoxTheme.focus();
+    }
+}
+
+addNode.addEventListener('click', addNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Tab' && nowNode && nowOperation == 'null') {
+        e.preventDefault();
+        addNodeFunction();
+    }
+});
+
+// 修改节点相关事件
+function changeNodeFunction() {
+    if (changeNode.jurisdiction) {
+        nowOperation = 'change';
+        // transparentBaffle.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = false;
+        // operationNodeBoxTheme.addClass('editable');
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        if (nowNode.editable) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = false;
+        // operationNodeBoxContent.addClass('textareaEditable');
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+        operationNodeBoxStarBox.hide();
+        operationNodeBox.show();
+        operationNodeBoxTheme.focus();
+    }
+}
+
+changeNode.addEventListener('click', changeNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId && nowOperation == 'null') {
+        e.preventDefault();
+        changeNodeFunction();
+    }
+});
+
+// 查看节点相关事件
+function queryNodeFunction() {
+    if (queryNode.jurisdiction) {
+        nowOperation = 'query';
+        operationNodeBox.show();
+        // transparentBaffle.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = true;
+        // operationNodeBoxTheme.removeClass('editable');
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = true;
+        // operationNodeBoxContent.removeClass('textareaEditable');
+        operationNodeBoxNodeCreator.show();
+        operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
+        operationNodeBoxLastRevision.show();
+        var date = new Date(nowNode.lastEditTime - 0);
+        var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+        operationNodeBoxLastRevision.children[0].innerText = str;
+        operationNodeBoxSubmit.hide();
+        // operationNodeBoxStar.innerText = nowNode.star;
+        if (nowNode.stared) {
+            operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+        } else {
+            operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+        }
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        operationNodeBoxStarBox.show();
+    }
+}
+
+queryNode.addEventListener('click', queryNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId && nowOperation == 'null') {
+        e.preventDefault();
+        queryNodeFunction();
+    }
+});
+
 // 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
     treeReload();
@@ -1043,51 +1216,6 @@ function treeReload() {
             addList(treeListMain, root);
         }
     }, userPerformance);
-}
-
-
-// 改变当前节点的函数
-function changeNodeEvent() {
-    if (nowNode) {
-        nowNode.list.children[0].addClass('treeListHeightLight');
-        // nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
-        // nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
-        // nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
-        // nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
-        // nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
-        // nowNodeBox.children[1].innerText = '';
-
-        // 判断按钮权限
-        // if (!nowNode.editable || (nowNode.authorId == user.userId)) {
-        //     btnCancelDisable(addNode);
-        // } else {
-        //     btnDisable(addNode);
-        // }
-        // if (nowNode.authorId == user.userId) {
-        //     btnCancelDisable(changeNode);
-        //     if (nowNode.childArr.length == 0) {
-        //         btnCancelDisable(removeNode);
-        //     } else {
-        //         btnDisable(removeNode);
-        //     }
-        // } else {
-        //     btnDisable(removeNode);
-        //     btnDisable(changeNode);
-        // }
-        // btnCancelDisable(queryNode);
-    } else {
-        // nowNodeBox.children[0].innerText = '请选择节点';
-        // nowNodeBox.children[0].innerText = '';
-        // nowNodeBox.children[1].style.backgroundColor = '#ccc';
-        // nowNodeBox.children[1].style.width = '30px';
-        // nowNodeBox.children[1].style.height = '30px';
-        // nowNodeBox.children[1].style.borderRadius = '15px';
-        // nowNodeBox.children[1].innerText = '?';
-        // btnDisable(addNode);
-        // btnDisable(removeNode);
-        // btnDisable(changeNode);
-        // btnDisable(queryNode);
-    }
 }
 
 // 页面加载时先调用一次
