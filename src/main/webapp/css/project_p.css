@@ -352,6 +352,10 @@
     line-height: 15px;
     text-align: center;
     color: #fff;
+    background-image: url(../img/public_onOffFalse.png);
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
     background-color: #46607b;
     transition: all .3s;
 }
@@ -417,7 +421,7 @@
     left: 40px;
     height: 100%;
     width: 18%;
-    padding: 25px ;
+    padding: 25px;
     color: rgb(163, 175, 190);
     background-color: #444;
     box-sizing: border-box;

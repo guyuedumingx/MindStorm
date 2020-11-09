@@ -1719,7 +1719,7 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-// 操作节点框
+// 操作节点框详细内容
 operationNodeBoxContent.addEventListener('focus', function () {
     if (this.value == '暂无') {
         this.value = '';
@@ -1889,6 +1889,7 @@ document.addEventListener('keydown', function (e) {
         changeColor(nightState);
     }
 });
+
 // 开关切换函数
 function onOffChange(onOff) {
     if (onOff.state) {
@@ -1987,7 +1988,7 @@ setOnOffEvent(hideTheme, function () {
     }
 });
 
-// 设置节点允许追加子节点
+// 设置节点禁止追加子节点
 setOnOffEvent(operationNodeBoxJurisdiction);
 
 // 维护约束的定时器

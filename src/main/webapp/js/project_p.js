@@ -143,8 +143,20 @@ var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
 var nowOperation = 'null'; // 操作节点盒子状态
 var tipsState = 'null'; // 提示盒子状态
 
+// 隐藏操作节点盒子
+function operationNodeBoxHide() {
+    // 芷欣
+    operationNodeBox.hide();
+}
+
+// 显示操作节点盒子
+function operationNodeBoxShow() {
+    // 芷欣
+    operationNodeBox.show();
+}
+
 refreshTree.jurisdiction = true;
-operationNodeBox.hide();
+operationNodeBoxHide();
 operationNodeBoxTheme.hide();
 operationNodeBoxJurisdictionBox.hide();
 operationNodeBoxContent.hide();
@@ -233,7 +245,7 @@ function addNodeFunction() {
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
         operationNodeBoxStarBox.hide();
-        operationNodeBox.show();
+        operationNodeBoxShow();
         operationNodeBoxTheme.focus();
     }
 }
@@ -270,7 +282,7 @@ function changeNodeFunction() {
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
         operationNodeBoxStarBox.hide();
-        operationNodeBox.show();
+        operationNodeBoxShow();
         operationNodeBoxTheme.focus();
     }
 }
@@ -287,7 +299,6 @@ document.addEventListener('keydown', function (e) {
 function queryNodeFunction() {
     if (queryNode.jurisdiction) {
         nowOperation = 'query';
-        operationNodeBox.show();
         // transparentBaffle.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
@@ -313,6 +324,7 @@ function queryNodeFunction() {
         }
         operationNodeBoxStarNumber.innerText = nowNode.star;
         operationNodeBoxStarBox.show();
+        operationNodeBoxShow();
     }
 }
 
@@ -334,6 +346,192 @@ document.addEventListener('keydown', function (e) {
         treeReload();
     }
 });
+
+// 操作节点框详细内容
+operationNodeBoxContent.addEventListener('focus', function () {
+    if (this.value == '暂无') {
+        this.value = '';
+    }
+});
+
+// 操作节点框中提交相关事件
+
+// 初始化节流阀
+addNodeState = false;
+changeNodeState = false;
+
+operationNodeBoxSubmit.addEventListener('click', function () {
+    if (nowOperation == 'add') {
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        if (addNodeState) {
+            return;
+        }
+        addNodeState = true;
+        ajax({
+            type: 'post',
+            url: '/node',
+            data: {
+                content: inpContent,
+                banAppend: operationNodeBoxJurisdiction.state,
+                theme: inpTheme,
+                parentId: nowNode.id,
+                projectId: projectId
+            },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
+            success: function (res) {
+                if (res.status_code == '200') {
+                    treeAppendNode(nowNode, {
+                        id: res.node_id,
+                        theme: inpTheme,
+                        content: inpContent,
+                        editable: operationNodeBoxJurisdiction.state,
+                    });
+                    operationNodeBoxCloseFunction();
+                } else {
+                    topAlert('创建失败');
+                    operationNodeBoxCloseFunction();
+                }
+                addNodeState = false;
+            }
+        });
+    } else if (nowOperation == 'change') {
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        if (changeNodeState) {
+            return;
+        }
+        changeNodeState = true;
+        ajax({
+            type: 'put',
+            url: '/node',
+            data: {
+                id: nowNode.id,
+                theme: inpTheme,
+                content: inpContent,
+                banAppend: operationNodeBoxJurisdiction.state,
+                projectId: projectId
+            },
+            header: {
+                'Content-Type': 'application/json',
+                "X-HTTP-Method-Override": "PUT"
+            }, // 请求头
+            success: function (res) {
+                if (res.status_code == '200') {
+                    nowNode.children[0].innerText = inpTheme;
+                    nowNode.content = inpContent;
+                    nowNode.editable = operationNodeBoxJurisdiction.state;
+                    operationNodeBoxCloseFunction();
+                } else {
+                    topAlert('修改失败');
+                    operationNodeBoxCloseFunction();
+                }
+                changeNodeState = false;
+            }
+        });
+    } else {
+        topAlert('出现未知错误');
+        operationNodeBoxCloseFunction();
+    }
+});
+
+// 点赞相关事件
+
+operationNodeBoxStarState = false;
+operationNodeBoxStar.addEventListener('click', function () {
+    if (operationNodeBoxStarState) {
+        return;
+    }
+    operationNodeBoxStarState = true;
+    ajax({
+        type: 'put',
+        url: '/util',
+        data: {
+            nodeId: nowNode.id
+        },
+        header: {
+            'Content-Type': 'application/json',
+            "X-HTTP-Method-Override": "PUT"
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                if (nowNode.stared) {
+                    nowNode.star--;
+                    operationNodeBoxStarNumber.innerText = nowNode.star;
+                    nowNode.stared = false;
+                    operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+                } else {
+                    nowNode.star++;
+                    operationNodeBoxStarNumber.innerText = nowNode.star;
+                    nowNode.stared = true;
+                    operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+                }
+            } else {
+                topAlert('操作失败');
+            }
+            setTimeout(function () {
+                operationNodeBoxStarState = false;
+            }, 1000);
+        }
+    });
+});
+
+// 开关切换函数
+function onOffChange(onOff) {
+    if (onOff.state) {
+        onOff.state = false;
+        onOff.style.backgroundColor = '#2c3e50';
+        onOff.children[0].style.left = '1.5px';
+        onOff.children[0].style.backgroundColor = ' #46607b';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
+    } else {
+        onOff.state = true;
+        onOff.style.backgroundColor = '#16a085';
+        onOff.children[0].style.left = '23.5px';
+        onOff.children[0].style.backgroundColor = '#1abc9c';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
+    }
+}
+
+// 开关初始化函数
+function setOnOffEvent(onOff, fun) {
+    onOff.state = false;
+    if (fun) {
+        onOff.addEventListener('click', function () {
+            onOffChange(this);
+            fun();
+        });
+    } else {
+        onOff.addEventListener('click', function () {
+            onOffChange(this);
+        });
+    }
+}
+
+// 设置节点禁止追加子节点
+setOnOffEvent(operationNodeBoxJurisdiction);
 
 // 隐藏无关节点间线条函数
 function hideLineClick() {
