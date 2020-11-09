@@ -1195,9 +1195,9 @@ function addTreeConstraint(root, n) {
 
         // 设置当前节点的样式
         nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
-        // if (ctrlState && !lockingNode.state) {
-        //     document.addEventListener('mousemove', move);
-        // }
+        if (ctrlState && !lockingNode.state) {
+            document.addEventListener('mousemove', move);
+        }
         if (ctrlState) {
             document.addEventListener('mousemove', move);
         }
@@ -1608,15 +1608,15 @@ changeNodeEvent();
 
 // 维护约束的定时器
 setInterval(function () {
-    // if (!lockingNode.state) {
-    for (var i = 0; i < constraintArr.length; i++) {
-        var node1 = constraintArr[i][0];
-        var node2 = constraintArr[i][1];
-        var type = constraintArr[i][2];
-        var len = constraintArr[i][3];
-        runConstraint(node1, node2, type, len);
+    if (!lockingNode.state) {
+        for (var i = 0; i < constraintArr.length; i++) {
+            var node1 = constraintArr[i][0];
+            var node2 = constraintArr[i][1];
+            var type = constraintArr[i][2];
+            var len = constraintArr[i][3];
+            runConstraint(node1, node2, type, len);
+        }
     }
-    // }
 }, userPerformance);
 
 // 维护节点间线条的定时器
