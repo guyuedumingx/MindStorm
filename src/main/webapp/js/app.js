@@ -283,7 +283,6 @@ app.delete('/node', function (req, res) {
         if (user[i].id != text.nodeId) {
             arr[p++] = user[i];
         } else {
-            console.log(user[i].id);
             fa = getNode(user[i].father);
         }
     }

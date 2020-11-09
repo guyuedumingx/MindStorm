@@ -59,7 +59,7 @@ var colorSet = [
     ['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
     ['#4c4c4c', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']
 ];
-var colorState = 0;
+var colorState = 1;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
 var textColor = 'rgb(33, 75, 91)'; // 文字颜色
@@ -77,8 +77,10 @@ function setColor() {
     progressColor = colorSet[colorState][4];
     progressBoxColor = colorSet[colorState][5];
     logoBGI = colorSet[colorState][6];
-    getDom('.treeBox .treeBoxMain').backgroundColor = mainColor;
-    getDom('.treeBox .treeBoxMain').style.transition = 'background-color .5s';
+    getDom('.treeBox .treeBoxMain').style.backgroundColor = mainColor;
+    setTimeout(function () {
+        getDom('.treeBox .treeBoxMain').style.transition = 'background-color .5s';
+    }, 1);
 }
 
 setColor();
@@ -110,7 +112,7 @@ function changeColor(state) {
     }, 1000);
 }
 
-var nightState = 1; // 当前状态
+var nightState = 1 - colorState; // 当前状态
 document.addEventListener('keydown', function (e) {
     if (e.key == 'e' && e.ctrlKey) {
         e.preventDefault();
@@ -1391,6 +1393,7 @@ function treeAppendNode(father, nodeData) {
     var theme = document.createElement('div');
     theme.addClass('theme');
     theme.innerText = defaults.theme;
+    theme.style.color = textColor;
     appendNode.appendChild(theme);
 
     // 添加相关数据
