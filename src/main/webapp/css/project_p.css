@@ -285,6 +285,7 @@
     background-color: #444;
     box-sizing: border-box;
     display: none;
+    z-index: 57;
 }
 
 /* 标题 */
@@ -363,6 +364,7 @@
     letter-spacing: 5px;
     font-size: 18px;
     display: none;
+    cursor: pointer;
 }
 
 /* 创建者、最后修改 */
@@ -415,7 +417,7 @@
     left: 40px;
     height: 100%;
     width: 18%;
-    padding: 25px 28px 25px 20px;
+    padding: 25px ;
     color: rgb(163, 175, 190);
     background-color: #444;
     box-sizing: border-box;
@@ -452,7 +454,7 @@
     left: 50%;
     width: 360px;
     height: 170px;
-    padding: 25px 28px 25px 20px;
+    padding: 25px;
     text-align: center;
     color: #eee;
     background-color: #444;
