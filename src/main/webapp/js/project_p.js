@@ -264,7 +264,8 @@ function addNodeFunction() {
         operationNodeBoxTheme.readOnly = false;
 
         // 芷欣
-        operationNodeBoxTheme.addClass(''); // 里面写可编辑时候的类名，不用写点
+        operationNodeBoxTheme.addClass('');
+        // 引号里面写可编辑时候的类名，类名前面不要写点，下面几处同理
 
         operationNodeBoxJurisdictionBox.show();
         if (operationNodeBoxJurisdiction.state) {
