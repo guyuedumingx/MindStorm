@@ -1354,6 +1354,18 @@ function ergodicTree(fun) {
 // 向页面中动态的增加一个节点
 function treeAppendNode(father, nodeData) {
 
+    var defaults = {
+        childArr: [],
+        userName: user.userName,
+        author: user.userId,
+        lastEditName: user.userName,
+        lastEditTime: Date.now(),
+        star: 0,
+        stared: false
+    }
+
+    Object.assign(defaults, nodeData);
+
     // 创建div元素
     var appendNode = document.createElement('div');
 
@@ -1366,9 +1378,9 @@ function treeAppendNode(father, nodeData) {
     // 添加相关样式和节点id
     appendNode.style.backgroundColor = randomColor(100, 180);
     appendNode.addClass('node');
-    appendNode.id = nodeData.id;
-    appendNode.childArr = new Array();
-    appendNode.style.display = 'none';
+    appendNode.id = defaults.id;
+    appendNode.childArr = defaults.childArr;
+    appendNode.hide();
     appendNode.line = document.createElement('div');
     appendNode.lineColor = lineUpColor;
     appendNode.lineZIndex = 0;
@@ -1378,20 +1390,21 @@ function treeAppendNode(father, nodeData) {
     appendNode.childIdArr = [];
     var theme = document.createElement('div');
     theme.addClass('theme');
-    theme.innerText = nodeData.theme;
+    theme.innerText = defaults.theme;
     appendNode.appendChild(theme);
 
     // 添加相关数据
-    appendNode.content = nodeData.content; // 主要内容
-    appendNode.editable = nodeData.editable; // 是否可被编辑
-    appendNode.userName = user.userName; // 创建者
-    appendNode.authorId = user.userId; // 创建者Id
-    appendNode.lastEditName = user.userName; // 最后修改者
-    appendNode.lastEditTime = Date.now(); // 最后修改时间
-    appendNode.star = 0; // 点赞数
+    appendNode.content = defaults.content; // 主要内容
+    appendNode.editable = defaults.editable; // 是否可被编辑
+    appendNode.userName = defaults.userName; // 创建者
+    appendNode.authorId = defaults.author; // 创建者Id
+    appendNode.lastEditName = defaults.lastEditName; // 最后修改者
+    appendNode.lastEditTime = defaults.lastEditTime; // 最后修改时间
+    appendNode.star = defaults.star; // 点赞数
+    appendNode.stared = defaults.stared; // 点赞状态
 
     // 随机位置
-    appendNode.style.display = 'block';
+    appendNode.show();
     appendNode.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
     appendNode.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
     appendNode.x = appendNode.offsetLeft;
@@ -1407,6 +1420,7 @@ function treeAppendNode(father, nodeData) {
         }
     }
     addConstraint(appendNode, null, 3, null);
+    addList(father.list.getDom('.children'), appendNode);
 }
 
 // 动态删除页面中的节点

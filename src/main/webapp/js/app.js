@@ -9,6 +9,7 @@ const {
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(bodyParser.json());
 var url = __dirname.substring(0, __dirname.length - 3);
 // app.use(express.static('C:\\Users\\Lenovo\\Desktop\\111\\111'));
 app.use(express.static(url));
@@ -251,6 +252,9 @@ function getNode(id) {
     return null;
 }
 app.post('/node', function (req, res) {
+    console.log(req.body);
+    console.log(req.query);
+    console.log(req);
     var text = req.body;
     user.push({
         author: 8848,
