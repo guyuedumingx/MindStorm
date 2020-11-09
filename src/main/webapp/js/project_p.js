@@ -826,11 +826,12 @@ function projectMessageShow() {
     projectMessage.style.transform = "translate(0%,0)";
 }
 
+// 点击按钮显示项目信息
 projectMessageBtn.addEventListener('click', function () {
     projectMessageShow();
 });
 
-// 点击空白处隐藏
+// 点击空白处隐藏项目信息
 document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, projectMessage) && e.target != projectMessageBtn) {
@@ -854,6 +855,19 @@ function contributorsShow() {
     // 芷欣
     contributorsBox.show();
 }
+
+// 点击按钮显示贡献者列表
+projectMessageBtn.addEventListener('click', function () {
+    contributorsShow();
+});
+
+// 点击空白处隐藏贡献者列表
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, contributorsBox) && e.target != contributors) {
+        contributorsHide();
+    }
+});
 
 // 导出项目相关操作
 exportProject.addEventListener('click', function () {
