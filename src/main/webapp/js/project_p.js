@@ -161,6 +161,28 @@ function operationNodeBoxShow() {
     operationNodeBox.style.transform = "translate(0%,0)";
 }
 
+
+// 关闭按钮相关事件
+function operationNodeBoxCloseFunction() {
+    nowOperation = 'null';
+    operationNodeBoxHide();
+    transparentBaffle.hide();
+    operationNodeBoxClose.hide();
+    operationNodeBoxTheme.hide();
+    operationNodeBoxJurisdictionBox.hide();
+    operationNodeBoxContent.hide();
+    operationNodeBoxNodeCreator.hide();
+    operationNodeBoxLastRevision.hide();
+    operationNodeBoxSubmit.hide();
+}
+
+operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape' && nowOperation != 'null') {
+        operationNodeBoxCloseFunction();
+    }
+});
+
 refreshTree.jurisdiction = true;
 operationNodeBoxHide();
 operationNodeBoxTheme.hide();
@@ -427,6 +449,7 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                 } else {
                     topAlert('创建失败');
                 }
+                operationNodeBoxCloseFunction();
                 operationNodeBoxHide();
                 addNodeState = false;
             }
@@ -465,17 +488,20 @@ operationNodeBoxSubmit.addEventListener('click', function () {
             success: function (res) {
                 if (res.status_code == '200') {
                     nowNode.children[0].innerText = inpTheme;
+                    nowNode.list.getDom('h4').innerText = inpTheme;
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
                 } else {
                     topAlert('修改失败');
                 }
+                operationNodeBoxCloseFunction();
                 operationNodeBoxHide();
                 changeNodeState = false;
             }
         });
     } else {
         topAlert('出现未知错误');
+        operationNodeBoxCloseFunction();
         operationNodeBoxHide();
     }
 });
