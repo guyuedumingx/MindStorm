@@ -224,6 +224,7 @@ user.push({
     userName: '陈七',
     father: 14,
 });
+var nodeLen = user.length;
 var template = {
     id: "@id()",
     username: "@cname()",
@@ -252,25 +253,25 @@ function getNode(id) {
     return null;
 }
 app.post('/node', function (req, res) {
-    console.log(req.body);
-    console.log(req.query);
-    console.log(req);
     var text = req.body;
     user.push({
-        author: 8848,
-        id: user.length + 1,
+        author: 1,
+        id: nodeLen,
         theme: text.theme,
         content: text.content,
         children: [],
         star: 0,
-        editable: text.banAppend,
-        lastEditName: '60rzvvbj',
+        stared: false,
+        banAppend: text.banAppend,
+        lastEditName: '张三',
         lastEditTime: Date.now(),
-        userName: '60rzvvbj',
+        userName: '张三',
+        father: text.parentId
     });
-    getNode(text.parentId).children.push(user.length);
+    getNode(text.parentId).children.push(nodeLen);
     res.send({
-        status_code: '200'
+        status_code: '200',
+        node_id: nodeLen++
     });
 });
 app.delete('/node', function (req, res) {
@@ -282,6 +283,7 @@ app.delete('/node', function (req, res) {
         if (user[i].id != text.nodeId) {
             arr[p++] = user[i];
         } else {
+            console.log(user[i].id);
             fa = getNode(user[i].father);
         }
     }
