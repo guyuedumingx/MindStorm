@@ -585,17 +585,16 @@ projectIdBox.innerText = projectId;
 var moveleft = projectMessage.offsetWidth;
 window.addEventListener('resize', function () {
     moveleft = projectMessage.offsetWidth;
-})
+});
+
 // 隐藏项目信息盒子
 function projectMessageHide() {
-    // 芷欣
-    moveLeftRight(projectMessage, "left",-moveleft, 20);
+    moveLeftRight(projectMessage, "left", -moveleft, 50);
 }
 
 // 显示项目信息盒子
 function projectMessageShow() {
-    // 芷欣
-    moveLeftRight(projectMessage, "left", moveleft, 20);
+    moveLeftRight(projectMessage, "left", moveleft, 50);
 }
 
 projectMessageBtn.addEventListener('click', function () {
@@ -812,7 +811,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) {}
+    } catch (e) { }
 
     // 创建div元素
     node1.line = document.createElement('div');
@@ -1357,7 +1356,7 @@ function treeReload() {
     for (var i = 0; i < nodeSet.length; i++) {
         try {
             treeBoxMain.removeChild(nodeSet[i].line);
-        } catch (e) {}
+        } catch (e) { }
         treeBoxMain.removeChild(nodeSet[i]);
     }
 
