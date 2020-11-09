@@ -1117,6 +1117,18 @@ function ergodicTree(fun) {
 // 向页面中动态的增加一个节点
 function treeAppendNode(father, nodeData) {
 
+    var defaults = {
+        childArr: [],
+        userName: user.userName,
+        author: user.userId,
+        lastEditName: user.userName,
+        lastEditTime: Date.now(),
+        star: 0,
+        stared: false
+    }
+
+    Object.assign(defaults, nodeData);
+
     // 创建div元素
     var appendNode = document.createElement('div');
 
@@ -1129,9 +1141,9 @@ function treeAppendNode(father, nodeData) {
     // 添加相关样式和节点id
     appendNode.style.backgroundColor = randomColor(100, 180);
     appendNode.addClass('node');
-    appendNode.id = nodeData.id;
-    appendNode.childArr = new Array();
-    appendNode.style.display = 'none';
+    appendNode.id = defaults.id;
+    appendNode.childArr = defaults.childArr;
+    appendNode.hide();
     appendNode.line = document.createElement('div');
     appendNode.lineColor = lineUpColor;
     appendNode.lineZIndex = 0;
@@ -1141,20 +1153,21 @@ function treeAppendNode(father, nodeData) {
     appendNode.childIdArr = [];
     var theme = document.createElement('div');
     theme.addClass('theme');
-    theme.innerText = nodeData.theme;
+    theme.innerText = defaults.theme;
     appendNode.appendChild(theme);
 
     // 添加相关数据
-    appendNode.content = nodeData.content; // 主要内容
-    appendNode.editable = nodeData.editable; // 是否可被编辑
-    appendNode.userName = user.userName; // 创建者
-    appendNode.authorId = user.userId; // 创建者Id
-    appendNode.lastEditName = user.userName; // 最后修改者
-    appendNode.lastEditTime = Date.now(); // 最后修改时间
-    appendNode.star = 0; // 点赞数
+    appendNode.content = defaults.content; // 主要内容
+    appendNode.editable = defaults.editable; // 是否可被编辑
+    appendNode.userName = defaults.userName; // 创建者
+    appendNode.authorId = defaults.author; // 创建者Id
+    appendNode.lastEditName = defaults.lastEditName; // 最后修改者
+    appendNode.lastEditTime = defaults.lastEditTime; // 最后修改时间
+    appendNode.star = defaults.star; // 点赞数
+    appendNode.stared = defaults.stared; // 点赞状态
 
     // 随机位置
-    appendNode.style.display = 'block';
+    appendNode.show();
     appendNode.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
     appendNode.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
     appendNode.x = appendNode.offsetLeft;
@@ -1324,7 +1337,7 @@ var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
-var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞按钮
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞盒子
 var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
 var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
@@ -1999,6 +2012,16 @@ setInterval(function () {
     }
 }, userPerformance);
 
+// 通过id获取对应节点
+function getTreeNode(id) {
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i].id == id) {
+            return nodeSet[i];
+        }
+    }
+    return null;
+}
+
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
 
@@ -2030,4 +2053,100 @@ window.onload = function () {
             createRoot(res.headNodeId);
         }
     });
+}
+
+// webSocket
+if ('WebSocket' in window) {
+    //8.129.110.151/MindStorm-1.0-SNAPSHOT
+    websocket = new WebSocket("ws://192.168.43.248:8080/node/socket/" + user.userId + "/" + projectId);
+} else {
+    alert('Not support websocket')
+}
+
+//连接发生错误的回调方法
+websocket.onerror = function () {
+    console.log("error");
+};
+
+//连接成功建立的回调方法
+websocket.onopen = function (event) {
+    console.log("open");
+}
+
+// 递归动态添加节点
+function recursionAppendNode(res) {
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i].id == res.parentId) {
+            treeAppendNode(nodeSet[i], {
+                id: res.id,
+                theme: res.theme,
+                content: res.content,
+                editable: res.banAppend,
+                childArr: [],
+                userName: res.userName,
+                author: res.author,
+                lastEditName: res.lastEditName,
+                lastEditTime: res.lastEditTime,
+                star: res.star,
+                stared: res.stared
+            });
+        }
+    }
+    var arr = res.children;
+    for (var i = 0; i < arr.length; i++) {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: arr[i]
+            },
+            success: recursionAppendNode
+        });
+    }
+}
+
+//接收到消息的回调方法
+websocket.onmessage = function (e) {
+    var back = JSON.parse(e.data);
+    var socketNode = getTreeNode(back.node_id);
+    if (back.type == "N") {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: back.node_id
+            },
+            success: recursionAppendNode
+        });
+    } else if (back.type == "D") {
+        treeRemoveNode(socketNode);
+    } else if (back.type == "U") {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: back.node_id
+            },
+            success: function (res) {
+                socketNode.getDom('.theme').innerText = res.theme;
+                socketNode.content = res.content;
+                socketNode.lastEditName = res.lastEditName;
+                socketNode.lastEditTime = res.lastEditTime;
+                socketNode.star = res.star;
+                socketNode.stared = res.stared;
+            }
+        });
+    } else {
+        topAlert('发生未知错误');
+    }
+}
+
+//连接关闭的回调方法
+websocket.onclose = function () {
+    console.log("close");
+}
+
+//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+window.onbeforeunload = function () {
+    websocket.close();
 }

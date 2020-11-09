@@ -1,5 +1,6 @@
 package controller;
 
+import common.container.history.History;
 import common.dto.Result;
 import common.dto.SearchBack;
 import common.dto.StatusCode;
@@ -26,7 +27,7 @@ import java.util.List;
 @WebServlet("/project")
 public class ProjectController extends BaseController{
     Logger logger = LoggerFactory.getLogger(ProjectController.class);
-    ProjectService service = new ProjectServiceImpl();
+    ProjectService service = null;
     SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
     User user = null;
 
@@ -35,6 +36,7 @@ public class ProjectController extends BaseController{
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
+        service = new ProjectServiceImpl(user);
     }
 
     /**
@@ -67,14 +69,15 @@ public class ProjectController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
         int id =Integer.valueOf(request.getParameter("id"));
-        logger.debug("进入的项目id: "+id+"");
         Project project = service.getProject(id);
-        logger.debug("获取到的项目: "+project.toString()+"");
         if(project==null){
             request.getRequestDispatcher("index.html").forward(request,response);
         }else {
             WebUtil.renderJson(response,project);
         }
+        History history = new History(user);
+        HttpSession session = request.getSession();
+        session.setAttribute("history",history);
     }
 
     /**

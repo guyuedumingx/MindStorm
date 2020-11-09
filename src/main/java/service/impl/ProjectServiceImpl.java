@@ -26,6 +26,13 @@ public class ProjectServiceImpl implements ProjectService {
     UserDao userDao = DaoFactory.getUserDao();
     ContributorDaoImpl contributorDao = new ContributorDaoImpl();
     RecentProjectDaoImpl recentProjectDao = new RecentProjectDaoImpl();
+    User user = null;
+
+    public ProjectServiceImpl(){}
+
+    public ProjectServiceImpl(User user){
+        this.user = user;
+    }
 
     @Override
     public int newProject(Project project,int userId) {
@@ -120,7 +127,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> search(String key) {
         List<Project> back = new ArrayList<>();
-        List<Project> projects = projectDao.searchProjects(key);
+        List<Project> projects = projectDao.searchProjects(key,user.getId());
         Iterator<Project> iterator = projects.iterator();
         while (iterator.hasNext()){
             Project in = iterator.next();

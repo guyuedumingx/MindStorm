@@ -3,7 +3,7 @@ package common.util;
 import com.alibaba.fastjson.JSON;
 import common.dto.Result;
 import common.dto.StatusCode;
-import common.online.OnlineUsers;
+import common.container.OnlineUsers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.User;
@@ -72,7 +72,7 @@ public class WebUtil {
         for(NodeSocket socket : socketForProject){
             try {
                 if(socket.getUserId()!=id){
-                    socket.getSession().getBasicRemote().getSendWriter().write(s);
+                    socket.getSession().getBasicRemote().sendText(s);
                 }
             }catch (IOException e) {
                 logger.error(e.getMessage());

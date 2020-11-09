@@ -117,16 +117,38 @@ document.addEventListener('keydown', function (e) {
 });
 // ————————————左侧控件————————————
 
+// 第一组按钮
 var firstbtnArr = getDom('.control .first').children; // 第一套按钮数组
 var addNode = firstbtnArr[0]; // 创建节点
 var removeNode = firstbtnArr[1]; // 删除节点
 var changeNode = firstbtnArr[2]; // 修改节点
 var queryNode = firstbtnArr[3]; // 查询节点
 var refreshTree = firstbtnArr[4]; // 刷新树
-
 cycleSprite(firstbtnArr, 0, 0, 30);
 
+var operationNodeBox = getDom('.popup'); // 操作节点盒子
+var operationNodeBoxTheme = operationNodeBox.getDom('.inTitle'); // 节点主题
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('choice'); // 允许追加子节点盒子
+var operationNodeBoxJurisdiction = operationNodeBoxJurisdictionBox.getDom('.onOffBorder'); // 允许追加子节点开关
+var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
+var operationNodeBoxNodeCreator = operationNodeBox.getDom('.author'); // 节点创建者
+var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastTime'); // 最后修改
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞盒子
+var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
+var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
+var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
 
+refreshTree.jurisdiction = true;
+operationNodeBox.hide();
+operationNodeBoxClose.hide();
+operationNodeBoxTheme.hide();
+operationNodeBoxJurisdictionBox.hide();
+operationNodeBoxContent.hide();
+operationNodeBoxNodeCreator.hide();
+operationNodeBoxLastRevision.hide();
+operationNodeBoxSubmit.hide();
+operationNodeBoxStarBox.hide();
+transparentBaffle.hide();
 // 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
     treeReload();
@@ -174,6 +196,41 @@ function hideLineClick() {
         }
     }
 }
+
+// 第三组按钮
+var thirdbtnArr = getDom('.mainBox .third');
+
+var projectMessageBtn = thirdbtnArr.getDom('.projectInformation'); // 显示项目信息的按钮
+var projectMessage = getDom('.message'); // 项目信息盒子
+var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目创建者
+var projectName = projectMessage.getDom('.project_name span'); // 项目名
+var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
+var introduceP = projectMessage.getDom('p'); // 项目简介内容
+var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
+projectIdBox.innerText = projectId;
+
+// 隐藏项目信息盒子
+function projectMessageHide() {
+    // 芷欣
+    projectMessage.hide();
+}
+
+// 显示项目信息盒子
+function projectMessageShow() {
+    // 芷欣
+    projectMessage.show();
+}
+
+projectMessageBtn.addEventListener('click', function () {
+    projectMessageShow();
+});
+
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, projectMessage) && e.target != projectMessageBtn) {
+        projectMessageHide();
+    }
+});
 // ——————————————中间——————————————
 var treeBox = getDom('.treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子
@@ -351,8 +408,8 @@ window.addEventListener('resize', maintainTreeBox);
 
 // 给节点添加高亮
 function addHeightLight(node) {
-    // node.style.boxShadow = '0px 0px 30px ' + lineDownColor;
-    node.style.boxShadow = '0px 0px ' + node.offsetHeight / 2 + 'px ' + lineDownColor;
+    node.style.boxShadow = '0px 0px 10px ' + lineDownColor;
+    // node.style.boxShadow = '0px 0px ' + node.offsetHeight / 2 + 'px ' + lineDownColor;
     node.lineColor = lineDownColor;
     node.line.lineZIndex = 19;
 }
@@ -1138,12 +1195,12 @@ window.onload = function () {
         },
         success: function (res) {
             projectHeadNodeId = res.headNodeId;
-            // introduceP.innerText = res.introduction;
+            introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
-            // projectCreatorName.innerText = res.creatorName;
+            projectCreatorName.innerText = res.creatorName;
             // generateParticipant(res.contributors);
-            // projectName.innerText = res.name;
-            // projectLevel.innerText = res.rank;
+            projectName.innerText = res.name;
+            projectLevel.innerText = res.rank;
             // var date = new Date(res.createTime - 0);
             // var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
             // creationDate.innerText = str;
