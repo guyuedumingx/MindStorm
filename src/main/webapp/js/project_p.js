@@ -666,11 +666,45 @@ tipsNo.addEventListener('click', tipsCloseFunction);
 
 
 // 第二组按钮
+var secoundbtnArr = getDomA('.mainBox .secound div');
+
+var hideLine = secoundbtnArr[0]; // 隐藏节点间线条
+var hideTheme = secoundbtnArr[1]; // 隐藏无关节点主题
+var lockingNode = secoundbtnArr[2]; // 锁定所有节点
+var layerColor = secoundbtnArr[3]; // 根据节点层级显示不同颜色
+
+function btnChange(btn) {
+    if (btn.state) {
+        btn.state = false;
+        btn.removeClass('heightLight');
+    } else {
+        btn.state = true;
+        btn.addClass('heightLight');
+    }
+}
+
+function setBtnEvent(btn, fun) {
+    btn.state = false;
+    if (fun) {
+        btn.addEventListener('click', function () {
+            btnChange(this);
+            fun();
+        });
+    } else {
+        btn.addEventListener('click', function () {
+            btnChange(this);
+        });
+    }
+}
+
+setBtnEvent(hideLine, hideLineClick);
+setBtnEvent(hideTheme);
+setBtnEvent(lockingNode);
+setBtnEvent(layerColor);
 
 // 隐藏无关节点间线条函数
 function hideLineClick() {
-    // if (hideLine.state) {
-    if (false) {
+    if (hideLine.state) {
         lineUpColor = mainColor;
         ergodicTree(function (node) {
             node.lineColor = mainColor;
@@ -703,6 +737,9 @@ function hideLineClick() {
         }
     }
 }
+
+
+
 
 // 第三组按钮
 var thirdbtnArr = getDom('.mainBox .third');
