@@ -631,6 +631,27 @@ function tipsYesFunction() {
         });
     } else if (tipsState == 'exportProject') {
         window.location = '/util/xmind?project_id=' + projectId;
+    } else if (tipsState == 'signOutProject') {
+        if (signOutProjectState) {
+            return;
+        }
+        signOutProjectState = true;
+        // 开发中
+        ajax({
+            type: '',
+            url: '/',
+            data: {
+
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location = 'index.html';
+                } else {
+                    topAlert('退出失败');
+                }
+                signOutProjectState = false;
+            }
+        });
     } else if (tipsState == 'deleteProject') {
         if (deleteProjectState) {
             return;
@@ -643,7 +664,6 @@ function tipsYesFunction() {
                 id: projectId
             },
             success: function (res) {
-                console.log(res);
                 if (res.status_code == '200') {
                     window.location = 'index.html'
                 } else {
@@ -821,6 +841,20 @@ document.addEventListener('click', function (e) {
 // 贡献者列表相关操作
 // 开发中
 
+var contributorsBox = getDom('.'); // 贡献者列表盒子
+
+// 隐藏贡献者列表
+function contributorsHide() {
+    // 芷欣
+    contributorsBox.hide();
+}
+
+// 显示贡献者列表
+function contributorsShow() {
+    // 芷欣
+    contributorsBox.show();
+}
+
 // 导出项目相关操作
 exportProject.addEventListener('click', function () {
     tipsState = 'exportProject';
@@ -831,7 +865,17 @@ exportProject.addEventListener('click', function () {
 })
 
 // 退出项目相关操作
-// 开发中
+signOutProject.addEventListener('click', function () {
+    if (projectCreatorId == user.userId) {
+        topAlert('项目创建者不可退出项目');
+    } else {
+        tipsState = 'signOutProject';
+        tipsTitle.innerText = '删除项目';
+        tipsContent.innerText = '您将退出此项目，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+});
 
 // 删除项目相关操作
 deleteProject.addEventListener('click', function () {
