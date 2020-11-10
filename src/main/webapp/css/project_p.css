@@ -564,7 +564,7 @@
     color: rgb(163, 175, 190);
     background-color: #444;
     box-sizing: border-box;
-    /* transform: translate(-100%, 0); */
+    transform: translate(-100%, 0);
     transition: transform .5s;
     z-index: 57;
 }
@@ -607,7 +607,7 @@
     margin-right: 20px;
     border-radius: 50px;
     vertical-align: middle;
-    border: solid;
+    /* border: solid; */
 }
 
 .contributorsBox i {
