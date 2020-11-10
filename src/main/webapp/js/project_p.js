@@ -309,7 +309,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if (e.key == 'Delete' && nowNode && nowOperation == 'null') {
+    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && nowOperation == 'null') {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -1831,6 +1831,18 @@ function listClick(e, node) {
     nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
 }
 
+function listFold(foldBtn) {
+    var list = foldBtn.parentNode.parentNode;
+    if (list.foldState) {
+        foldBtn.style.transform = 'translate(0, -50%) rotate(90deg)';
+        list.getDom('.children').show();
+    } else {
+        foldBtn.style.transform = 'translate(0, -50%) rotate(0deg)';
+        list.getDom('.children').hide();
+    }
+    list.foldState = !list.foldState;
+}
+
 function addList(box, node) {
     var div = document.createElement('div');
     var h4 = document.createElement('h4');
@@ -1838,15 +1850,7 @@ function addList(box, node) {
     var span = document.createElement('span');
     div.foldState = false;
     span.addEventListener('click', function () {
-        var list = this.parentNode.parentNode;
-        if (list.foldState) {
-            this.style.transform = 'translate(0, -50%) rotate(90deg)';
-            list.getDom('.children').show();
-        } else {
-            this.style.transform = 'translate(0, -50%) rotate(0deg)';
-            list.getDom('.children').hide();
-        }
-        list.foldState = !list.foldState;
+        listFold(this);
     });
     h4.innerText = node.children[0].innerText;
     h4.addEventListener('click', listClick);
@@ -1901,6 +1905,7 @@ function addListContextRecursion(node) {
     }
 }
 
+// 判断当前列表元素是否被隐藏了
 function judgeListHide(list) {
     if (list.fatherlist) {
         if (list.fatherlist.children[1].getCSS('display') == 'none' || judgeListHide(list.fatherlist)) {
@@ -1931,9 +1936,14 @@ document.addEventListener('keydown', function (e) {
             }
             listClick(null, nowList.node);
         } else if (e.key == 'ArrowLeft') {
-            console.log('左');
+            e.preventDefault();
+            nowList = nowList.fatherlist;
+            while (judgeListHide(nowList)) {
+                nowList = nowList.fatherlist;
+            }
+            listClick(null, nowList.node);
         } else if (e.key == 'ArrowRight') {
-            console.log('右');
+            listFold(nowList.getDom('h4 span'));
         }
     }
 });
