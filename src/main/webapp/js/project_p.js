@@ -816,9 +816,11 @@ function hideLineClick() {
 var thirdbtnArr = getDomA('.mainBox .third div');
 var projectMessageBtn = thirdbtnArr[0]; // 显示项目信息的按钮
 var contributors = thirdbtnArr[1]; // 显示贡献者列表的按钮
-var exportProject = thirdbtnArr[2]; // 导出项目按钮
-var signOutProject = thirdbtnArr[3]; // 退出项目按钮
-var deleteProject = thirdbtnArr[4]; // 删除项目按钮
+var operationRecord = thirdbtnArr[2]; // 操作记录按钮
+var exportProject = thirdbtnArr[3]; // 导出项目按钮
+var signOutProject = thirdbtnArr[4]; // 退出项目按钮
+var deleteProject = thirdbtnArr[5]; // 删除项目按钮
+var classic = thirdbtnArr[6]; // 返回经典模式按钮
 
 // 项目信息相关操作
 var projectMessage = getDom('.message'); // 项目信息盒子
@@ -882,6 +884,35 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// 操作记录相关操作
+// 开发中
+
+var operationRecordBox = getDom('.'); // 操作记录盒子
+
+// 隐藏操作记录
+function operationRecordHide() {
+    // 芷欣
+    operationRecordBox.hide();
+}
+
+// 显示操作记录
+function operationRecordShow() {
+    // 芷欣
+    operationRecordBox.show();
+}
+
+operationRecord.addEventListener('click', function () {
+
+});
+
+// 点击空白处隐藏贡献者列表
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, operationRecordBox) && e.target != operationRecord) {
+        operationRecordHide();
+    }
+});
+
 // 导出项目相关操作
 exportProject.addEventListener('click', function () {
     tipsState = 'exportProject';
@@ -915,6 +946,11 @@ deleteProject.addEventListener('click', function () {
         tipsBox.show();
         transparentBaffle.show();
     }
+});
+
+// 返回经典模式相关操作
+classic.addEventListener('click', function () {
+    window.location = 'project.html?project_id=' + projectId;
 });
 
 // ——————————————中间——————————————
