@@ -181,7 +181,6 @@ function operationNodeBoxCloseFunction() {
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
 document.addEventListener('keydown', function (e) {
-    console.log(1);
     if (e.key == 'Escape' && nowOperation != 'null') {
         operationNodeBoxCloseFunction();
     }
