@@ -265,7 +265,7 @@ function addNodeFunction() {
         operationNodeBoxTheme.readOnly = false;
 
         // 芷欣
-        operationNodeBoxTheme.addClass('');
+        operationNodeBoxTheme.addClass('changeColor');
         // 引号里面写可编辑时候的类名，类名前面不要写点，下面几处同理
 
         operationNodeBoxJurisdictionBox.show();
@@ -277,7 +277,7 @@ function addNodeFunction() {
         operationNodeBoxContent.readOnly = false;
 
         // 芷欣
-        operationNodeBoxContent.addClass('');
+        operationNodeBoxContent.addClass('changeColor');
 
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
@@ -325,7 +325,7 @@ function changeNodeFunction() {
         operationNodeBoxTheme.readOnly = false;
 
         // 芷欣
-        operationNodeBoxTheme.addClass('');
+        operationNodeBoxTheme.addClass('changeColor');
 
         operationNodeBoxJurisdictionBox.show();
         if (operationNodeBoxJurisdiction.state) {
@@ -339,7 +339,7 @@ function changeNodeFunction() {
         operationNodeBoxContent.readOnly = false;
 
         // 芷欣
-        operationNodeBoxContent.addClass('');
+        operationNodeBoxContent.addClass('changeColor');
 
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
@@ -368,7 +368,7 @@ function queryNodeFunction() {
         operationNodeBoxTheme.readOnly = true;
 
         // 芷欣
-        operationNodeBoxTheme.removeClass('');
+        operationNodeBoxTheme.removeClass('changeColor');
 
         operationNodeBoxJurisdictionBox.hide();
         operationNodeBoxContent.show();
@@ -376,7 +376,7 @@ function queryNodeFunction() {
         operationNodeBoxContent.readOnly = true;
 
         // 芷欣
-        operationNodeBoxContent.removeClass('');
+        operationNodeBoxContent.removeClass('changeColor');
 
         operationNodeBoxNodeCreator.show();
         operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;

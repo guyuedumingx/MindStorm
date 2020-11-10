@@ -316,8 +316,26 @@
     height: 60%;
     line-height: 24px;
     padding: 10px;
+    background-color:transparent;
     /*不可调节*/
     resize: none;
+}
+.changeColor{
+    background-color:#555;
+}
+
+.popup textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+.popup textarea::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #777;
+}
+
+.popup textarea::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #555;
 }
 
 /* 是否选择 */
@@ -451,7 +469,27 @@
 .message p {
     width: 100%;
     height: 50%;
-    background-color: #555;
+    padding: 8px;
+    line-height: 25px;
+    font-size: 15px;
+    color: #eee;
+    box-sizing: border-box;
+    /* background-color: #555; */
+    overflow: auto;
+}
+
+.message p::-webkit-scrollbar {
+    width: 5px;
+}
+
+.message p::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #777;
+}
+
+.message p::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #555;
 }
 
 /* 小盒子 */
@@ -472,7 +510,9 @@
 }
 
 /* 关闭 */
-.small .close {
+.small .close,
+.message .mesClose,
+.popup .popClose {
     position: absolute;
     right: 10px;
     top: 10px;
