@@ -276,7 +276,7 @@ function addNodeFunction() {
         operationNodeBoxContent.value = '';
         operationNodeBoxContent.readOnly = false;
 
-  
+
         operationNodeBoxContent.addClass('changeColor');
 
         operationNodeBoxNodeCreator.hide();
@@ -324,7 +324,7 @@ function changeNodeFunction() {
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = false;
 
-      
+
         operationNodeBoxTheme.addClass('changeColor');
 
         operationNodeBoxJurisdictionBox.show();
@@ -338,7 +338,7 @@ function changeNodeFunction() {
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = false;
 
-        
+
         operationNodeBoxContent.addClass('changeColor');
 
         operationNodeBoxNodeCreator.hide();
@@ -367,7 +367,7 @@ function queryNodeFunction() {
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = true;
 
-        
+
         operationNodeBoxTheme.removeClass('changeColor');
 
         operationNodeBoxJurisdictionBox.hide();
@@ -375,7 +375,7 @@ function queryNodeFunction() {
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = true;
 
-        
+
         operationNodeBoxContent.removeClass('changeColor');
 
         operationNodeBoxNodeCreator.show();
@@ -655,12 +655,11 @@ function tipsYesFunction() {
             return;
         }
         signOutProjectState = true;
-        // 开发中
         ajax({
             type: 'delete',
             url: '/util/project',
             data: {
-
+                projectId: projectId
             },
             success: function (res) {
                 if (res.status_code == '200') {
@@ -1856,6 +1855,16 @@ function addList(box, node) {
         addList(ch, chArr[i]);
     }
 }
+
+// 列表键盘事件
+document.addEventListener('keydown', function (e) {
+    console.log(e.key);
+    if (e.key == 'ArrowUp') {
+
+
+    }
+});
+
 
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
