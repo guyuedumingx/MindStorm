@@ -316,8 +316,12 @@
     height: 60%;
     line-height: 24px;
     padding: 10px;
+    background-color:transparent;
     /*不可调节*/
     resize: none;
+}
+.changeColor{
+    background-color:#555;
 }
 
 .popup textarea::-webkit-scrollbar {
@@ -470,7 +474,7 @@
     font-size: 15px;
     color: #eee;
     box-sizing: border-box;
-    background-color: #555;
+    /* background-color: #555; */
     overflow: auto;
 }
 
