@@ -1621,12 +1621,22 @@ function treeAppendNode(father, nodeData) {
         }
     }
     addConstraint(appendNode, null, 3, null);
+    var listLast = father.list.getDom('.children');
+    while (listLast.children.length != 0) {
+        listLast = listLast.children[listLast.children.length - 1].getDom('.children');
+    }
     addList(father.list.getDom('.children'), appendNode);
+    appendNode.list.last = listLast.parentNode;
+    appendNode.list.next = appendNode.list.last.next;
+    appendNode.list.next.last = appendNode.list;
+    appendNode.list.last.next = appendNode.list;
 }
 
 // 动态删除页面中的节点
 function treeRemoveNode(node) {
     removeDom(node.list);
+    node.list.last.next = node.list.next;
+    node.list.next.last = node.list.last;
     if (node.childArr.length == 0 && node.father) {
         var father = node.father;
 
@@ -1861,9 +1871,13 @@ function addList(box, node) {
 }
 
 var listArr; // 列表数组
+
+// 构建列表元素间关系
 function addListContext() {
     listArr = new Array();
     addListContextRecursion(root);
+
+    // 构建双向循环链表
     for (var i = 1; i < listArr.length - 1; i++) {
         listArr[i - 1].next = listArr[i];
         listArr[i + 1].last = listArr[i];
@@ -1873,9 +1887,13 @@ function addListContext() {
         listArr[0].last = listArr[listArr.length - 1];
         listArr[listArr.length - 1].next = listArr[0];
         listArr[listArr.length - 2].next = listArr[listArr.length - 1];
+    } else {
+        listArr[0].next = listArr[0];
+        listArr[0].last = listArr[0];
     }
 }
 
+// 构建列表元素间关系的递归函数
 function addListContextRecursion(node) {
     listArr.push(node.list);
     for (var i = 0; i < node.childArr.length; i++) {
