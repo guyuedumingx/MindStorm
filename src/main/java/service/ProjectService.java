@@ -49,6 +49,13 @@ import java.util.List;
      Project getProject(int projectId);
 
     /**
+     * 获取公有项目
+     * @param pages
+     * @return
+     */
+     List<Project> getPublicProjectsFromPages(int pages);
+
+    /**
      * 项目是否存在
      */
     int existProject(int projectId);
@@ -61,4 +68,11 @@ import java.util.List;
     List<Project> search(String key);
 
     List<Project> getRecentProjectList(int userId);
+
+    /**
+     * 删除项目记录,用户退出项目
+     * @param projectId
+     * @return
+     */
+    int delPrecentProject(int projectId);
 }
