@@ -27,4 +27,12 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
                 " introduction like '%" + key + "%')";
         return this.select(new Project(), sql);
     }
+
+    @Override
+    public List<Project> getPublicProjectsFromPages(int pages, int numsForPage) {
+        int index = pages*numsForPage-numsForPage;
+        String sql = "select * from t_project where public=false order by (select count(*) from t_star where node_id" +
+                " = p.head_id) limit "+index+" ,"+index+numsForPage;
+        return this.select(new Project(), sql);
+    }
 }

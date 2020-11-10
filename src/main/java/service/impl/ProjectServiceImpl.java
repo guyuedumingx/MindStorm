@@ -108,6 +108,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> getPublicProjectsFromPages(int pages) {
+        return projectDao.getPublicProjectsFromPages(pages,6);
+    }
+
+    @Override
     public int existProject(int projectId) {
         Project project = projectDao.selectOne(new Project(projectId));
         return StatusCode.nullObjcet(project);
@@ -122,6 +127,11 @@ public class ProjectServiceImpl implements ProjectService {
             res.add(this.getProject(iterator.next().getProjectId()));
         }
         return res;
+    }
+
+    @Override
+    public int delPrecentProject(int projectId){
+        return recentProjectDao.deleteOne(new RecentProject(user.getId(), projectId));
     }
 
     @Override

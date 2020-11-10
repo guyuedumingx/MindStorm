@@ -1,20 +1,26 @@
 package controller;
 
 import common.dto.Result;
+import common.dto.StatusCode;
 import common.util.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.Project;
 import service.ProjectService;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet("/util/project")
 public class ProjectUtilController extends BaseController {
 
+    Logger logger = LoggerFactory.getLogger(ProjectUtilController.class);
     ProjectService service = new ProjectServiceImpl();
 
     /**
@@ -40,7 +46,21 @@ public class ProjectUtilController extends BaseController {
      */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.getSession().setAttribute("history",null);
+        Result result = new Result();
+        String id = request.getParameter("projectId");
+        if (id!=null&&!"".equals(id)){
+            try {
+                int isSuccess = service.delPrecentProject(Integer.valueOf(id));
+                int statusCode = isSuccess==0 ? StatusCode.LOST : StatusCode.OK;
+                result.setStatus_code(statusCode);
+            }catch (NumberFormatException e){
+                result.setStatus_code(StatusCode.LOST);
+                logger.error(e.getMessage());
+            }
+        }else {
+            result.setStatus_code(StatusCode.LOST);
+        }
+        WebUtil.renderJson(response,result);
     }
 
     /**
@@ -68,5 +88,13 @@ public class ProjectUtilController extends BaseController {
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String page = req.getParameter("page");
+        List<Project> publicProjectsFromPages = null;
+        try {
+            publicProjectsFromPages = service.getPublicProjectsFromPages(Integer.valueOf(page));
+        }catch (NumberFormatException e){
+            logger.error(e.getMessage());
+        }
+        WebUtil.renderJson(resp,publicProjectsFromPages);
     }
 }
