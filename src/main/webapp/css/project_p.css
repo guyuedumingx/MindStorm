@@ -307,7 +307,7 @@
     border: none;
     color: #eee;
     font-size: 18px;
-    background-color: #555;
+    background-color: transparent;
     box-sizing: border-box;
 }
 
@@ -316,12 +316,12 @@
     height: 60%;
     line-height: 24px;
     padding: 10px;
-    background-color:transparent;
     /*不可调节*/
     resize: none;
 }
-.changeColor{
-    background-color:#555;
+
+.changeColor {
+    background-color: #555;
 }
 
 .popup textarea::-webkit-scrollbar {
@@ -446,6 +446,7 @@
     box-sizing: border-box;
     transform: translate(-100%, 0);
     transition: transform .5s;
+    z-index: 57;
 }
 
 .message div {
@@ -512,7 +513,8 @@
 /* 关闭 */
 .small .close,
 .message .mesClose,
-.popup .popClose {
+.popup .popClose,
+.contributorsBox .contribut_close {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -549,6 +551,74 @@
 
 .small span:hover {
     background-color: #222;
+}
+
+/* 贡献者列表 */
+.contributorsBox {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 100%;
+    width: 18%;
+    padding: 25px;
+    color: rgb(163, 175, 190);
+    background-color: #444;
+    box-sizing: border-box;
+    /* transform: translate(-100%, 0); */
+    transition: transform .5s;
+    z-index: 57;
+}
+
+/* 标题 */
+.contributorsBox .contribut_title {
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #eee;
+}
+
+.contributorsBox ul {
+    max-height: 80%;
+    overflow: auto;
+}
+
+.contributorsBox ul::-webkit-scrollbar {
+    width: 5px;
+}
+
+.contributorsBox ul::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #777;
+}
+
+.contributorsBox ul::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #555;
+}
+
+.contributorsBox ul li {
+    /* border: solid; */
+    padding: 10px 0;
+}
+
+.contributorsBox span {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    border-radius: 50px;
+    vertical-align: middle;
+    border: solid;
+}
+
+.contributorsBox i {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 62%;
+    line-height: 40px;
+    overflow: hidden;
+    font-style: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .transparentBaffle {
