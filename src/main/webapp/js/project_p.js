@@ -147,6 +147,7 @@ var tipsContent = tipsBox.getDom('.sure'); // 提示内容n
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
 var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
+var leftTransparentBaffle = getDom('.leftTransparentBaffle'); // 左侧透明挡板
 
 var nowOperation = 'null'; // 操作节点盒子状态
 var tipsState = 'null'; // 提示盒子状态
@@ -167,9 +168,10 @@ function operationNodeBoxShow() {
 function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBoxHide();
+    transparentBaffle.hide();
+    leftTransparentBaffle.hide();
     setTimeout(function () {
         if (nowOperation == 'null') {
-            transparentBaffle.hide();
             operationNodeBoxTheme.hide();
             operationNodeBoxJurisdictionBox.hide();
             operationNodeBoxContent.hide();
@@ -260,14 +262,12 @@ changeNodeEvent();
 function addNodeFunction() {
     if (addNode.jurisdiction) {
         nowOperation = 'add';
-        // transparentBaffle.show();
+        transparentBaffle.show();
+        leftTransparentBaffle.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = '';
         operationNodeBoxTheme.readOnly = false;
-
         operationNodeBoxTheme.addClass('changeColor');
-        // 引号里面写可编辑时候的类名，类名前面不要写点，下面几处同理
-
         operationNodeBoxJurisdictionBox.show();
         if (operationNodeBoxJurisdiction.state) {
             onOffChange(operationNodeBoxJurisdiction);
@@ -275,10 +275,7 @@ function addNodeFunction() {
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = '';
         operationNodeBoxContent.readOnly = false;
-
-
         operationNodeBoxContent.addClass('changeColor');
-
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
@@ -319,14 +316,12 @@ document.addEventListener('keydown', function (e) {
 function changeNodeFunction() {
     if (changeNode.jurisdiction) {
         nowOperation = 'change';
-        // transparentBaffle.show();
+        transparentBaffle.show();
+        leftTransparentBaffle.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = false;
-
-
         operationNodeBoxTheme.addClass('changeColor');
-
         operationNodeBoxJurisdictionBox.show();
         if (operationNodeBoxJurisdiction.state) {
             onOffChange(operationNodeBoxJurisdiction);
@@ -337,10 +332,7 @@ function changeNodeFunction() {
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = false;
-
-
         operationNodeBoxContent.addClass('changeColor');
-
         operationNodeBoxNodeCreator.hide();
         operationNodeBoxLastRevision.hide();
         operationNodeBoxSubmit.show();
@@ -362,22 +354,17 @@ document.addEventListener('keydown', function (e) {
 function queryNodeFunction() {
     if (queryNode.jurisdiction) {
         nowOperation = 'query';
-        // transparentBaffle.show();
+        transparentBaffle.show();
+        leftTransparentBaffle.show();
         operationNodeBoxTheme.show();
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = true;
-
-
         operationNodeBoxTheme.removeClass('changeColor');
-
         operationNodeBoxJurisdictionBox.hide();
         operationNodeBoxContent.show();
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = true;
-
-
         operationNodeBoxContent.removeClass('changeColor');
-
         operationNodeBoxNodeCreator.show();
         operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
         operationNodeBoxLastRevision.show();
@@ -385,7 +372,6 @@ function queryNodeFunction() {
         var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
         operationNodeBoxLastRevision.children[0].innerText = str;
         operationNodeBoxSubmit.hide();
-        // operationNodeBoxStar.innerText = nowNode.star;
         if (nowNode.stared) {
             operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
         } else {
