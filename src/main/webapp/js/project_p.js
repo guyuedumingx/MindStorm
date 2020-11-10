@@ -163,19 +163,20 @@ function operationNodeBoxShow() {
     operationNodeBox.style.transform = "translate(0%,0)";
 }
 
-
 // 关闭按钮相关事件
 function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBoxHide();
     setTimeout(function () {
-        transparentBaffle.hide();
-        operationNodeBoxTheme.hide();
-        operationNodeBoxJurisdictionBox.hide();
-        operationNodeBoxContent.hide();
-        operationNodeBoxNodeCreator.hide();
-        operationNodeBoxLastRevision.hide();
-        operationNodeBoxSubmit.hide();
+        if (nowOperation == 'null') {
+            transparentBaffle.hide();
+            operationNodeBoxTheme.hide();
+            operationNodeBoxJurisdictionBox.hide();
+            operationNodeBoxContent.hide();
+            operationNodeBoxNodeCreator.hide();
+            operationNodeBoxLastRevision.hide();
+            operationNodeBoxSubmit.hide();
+        }
     }, 500);
 }
 
@@ -657,8 +658,8 @@ function tipsYesFunction() {
         signOutProjectState = true;
         // 开发中
         ajax({
-            type: '',
-            url: '/',
+            type: 'delete',
+            url: '/util/project',
             data: {
 
             },
