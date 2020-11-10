@@ -168,18 +168,20 @@ function operationNodeBoxShow() {
 function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBoxHide();
-    transparentBaffle.hide();
-    operationNodeBoxClose.hide();
-    operationNodeBoxTheme.hide();
-    operationNodeBoxJurisdictionBox.hide();
-    operationNodeBoxContent.hide();
-    operationNodeBoxNodeCreator.hide();
-    operationNodeBoxLastRevision.hide();
-    operationNodeBoxSubmit.hide();
+    setTimeout(function () {
+        transparentBaffle.hide();
+        operationNodeBoxTheme.hide();
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.hide();
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.hide();
+    }, 500);
 }
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
 document.addEventListener('keydown', function (e) {
+    console.log(1);
     if (e.key == 'Escape' && nowOperation != 'null') {
         operationNodeBoxCloseFunction();
     }
@@ -471,7 +473,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('创建失败');
                 }
                 operationNodeBoxCloseFunction();
-                operationNodeBoxHide();
                 addNodeState = false;
             }
         });
@@ -516,7 +517,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('修改失败');
                 }
                 operationNodeBoxCloseFunction();
-                operationNodeBoxHide();
                 changeNodeState = false;
             }
         });
