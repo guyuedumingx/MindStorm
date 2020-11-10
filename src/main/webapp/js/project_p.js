@@ -168,18 +168,20 @@ function operationNodeBoxShow() {
 function operationNodeBoxCloseFunction() {
     nowOperation = 'null';
     operationNodeBoxHide();
-    transparentBaffle.hide();
-    operationNodeBoxClose.hide();
-    operationNodeBoxTheme.hide();
-    operationNodeBoxJurisdictionBox.hide();
-    operationNodeBoxContent.hide();
-    operationNodeBoxNodeCreator.hide();
-    operationNodeBoxLastRevision.hide();
-    operationNodeBoxSubmit.hide();
+    setTimeout(function () {
+        transparentBaffle.hide();
+        operationNodeBoxTheme.hide();
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.hide();
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.hide();
+    }, 500);
 }
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
 document.addEventListener('keydown', function (e) {
+    console.log(1);
     if (e.key == 'Escape' && nowOperation != 'null') {
         operationNodeBoxCloseFunction();
     }
@@ -471,7 +473,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('创建失败');
                 }
                 operationNodeBoxCloseFunction();
-                operationNodeBoxHide();
                 addNodeState = false;
             }
         });
@@ -516,7 +517,6 @@ operationNodeBoxSubmit.addEventListener('click', function () {
                     topAlert('修改失败');
                 }
                 operationNodeBoxCloseFunction();
-                operationNodeBoxHide();
                 changeNodeState = false;
             }
         });
@@ -738,7 +738,10 @@ function setBtnEvent(btn, fun) {
     }
 }
 
+// 隐藏无关节点间线条
 setBtnEvent(hideLine, hideLineClick);
+
+// 隐藏无关节点主题
 setBtnEvent(hideTheme, function () {
     if (hideTheme.state) {
         ergodicTree(function (node) {
@@ -761,13 +764,19 @@ setBtnEvent(hideTheme, function () {
         });
     }
 });
+
+// 固定所有节点
 setBtnEvent(lockingNode);
+
+// 节点根据层级显示不同颜色
 setBtnEvent(layerColor, function () {
     if (layerColor.state) {
         layerColor.colorArr = [];
         layerColor.colorArr.push(randomColor(120, 180));
         for (var i = 0; i < 20; i++) {
-            layerColor.colorArr.push(randomColor(160, 220));
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ')');
         }
         for (var i = 0; i < nodeSet.length; i++) {
             nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
