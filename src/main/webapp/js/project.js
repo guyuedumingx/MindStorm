@@ -1875,7 +1875,7 @@ cycleSprite(firstbtnArr, 0, 0, 40);
 // 夜间模式相关事件
 
 var changeColorState = false; // 节流阀
-var nightBtn = firstbtnArr[firstbtnArr.length - 1];
+var nightBtn = firstbtnArr[firstbtnArr.length - 2];
 nightBtn.style.backgroundImage = 'url(img/project_moon.png)';
 nightBtn.style.backgroundSize = '60%';
 nightBtn.style.backgroundPosition = 'center';
@@ -1888,6 +1888,12 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
         changeColor(nightState);
     }
+});
+
+var goEditPattern = firstbtnArr[firstbtnArr.length - 1];
+
+goEditPattern.addEventListener('click', function () {
+    window.location = 'project_p.html?project_id=' + projectId;
 });
 
 // 开关切换函数
