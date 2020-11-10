@@ -265,7 +265,6 @@ function addNodeFunction() {
         operationNodeBoxTheme.value = '';
         operationNodeBoxTheme.readOnly = false;
 
-        // 芷欣
         operationNodeBoxTheme.addClass('changeColor');
         // 引号里面写可编辑时候的类名，类名前面不要写点，下面几处同理
 
@@ -277,7 +276,7 @@ function addNodeFunction() {
         operationNodeBoxContent.value = '';
         operationNodeBoxContent.readOnly = false;
 
-        // 芷欣
+  
         operationNodeBoxContent.addClass('changeColor');
 
         operationNodeBoxNodeCreator.hide();
@@ -325,7 +324,7 @@ function changeNodeFunction() {
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = false;
 
-        // 芷欣
+      
         operationNodeBoxTheme.addClass('changeColor');
 
         operationNodeBoxJurisdictionBox.show();
@@ -339,7 +338,7 @@ function changeNodeFunction() {
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = false;
 
-        // 芷欣
+        
         operationNodeBoxContent.addClass('changeColor');
 
         operationNodeBoxNodeCreator.hide();
@@ -368,7 +367,7 @@ function queryNodeFunction() {
         operationNodeBoxTheme.value = nowNode.children[0].innerText;
         operationNodeBoxTheme.readOnly = true;
 
-        // 芷欣
+        
         operationNodeBoxTheme.removeClass('changeColor');
 
         operationNodeBoxJurisdictionBox.hide();
@@ -376,7 +375,7 @@ function queryNodeFunction() {
         operationNodeBoxContent.value = nowNode.content;
         operationNodeBoxContent.readOnly = true;
 
-        // 芷欣
+        
         operationNodeBoxContent.removeClass('changeColor');
 
         operationNodeBoxNodeCreator.show();
@@ -871,7 +870,7 @@ document.addEventListener('click', function (e) {
 // 贡献者列表相关操作
 // 开发中
 
-var contributorsBox = getDom('.'); // 贡献者列表盒子
+var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
 
 // 隐藏贡献者列表
 function contributorsHide() {
