@@ -142,8 +142,8 @@ var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点�
 var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
 var tipsBox = getDom('.small'); // 提示框盒子
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
-var tipsTitle = tipsBox.getDom('.delNode'); // 提示框标题
-var tipsContent = tipsBox.getDom('.sureNode'); // 提示内容n
+var tipsTitle = tipsBox.getDom('.title_cont'); // 提示框标题
+var tipsContent = tipsBox.getDom('.sure'); // 提示内容n
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
 var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
@@ -1527,6 +1527,7 @@ var nodeRequetTimer = setInterval(function () {
         clearInterval(nodeRequetTimer);
         treeReloadFlag = false;
         addList(treeListMain, root);
+        addListContext();
     }
 }, userPerformance);
 
@@ -1759,6 +1760,7 @@ function treeReload() {
             clearInterval(nodeRequetTimer);
             treeReloadFlag = false;
             addList(treeListMain, root);
+            addListContext();
         }
     }, userPerformance);
 }
@@ -1792,6 +1794,33 @@ setInterval(function () {
 var treeList = getDom('.treeList');
 var treeListMain = getDom('.treeListMain');
 
+function listClick(e, node) {
+    if (nowNode) {
+        nowNode.style.boxShadow = 'none';
+        var t = nowNode;
+        while (t.father) {
+            removeHeightLight(t.father);
+            t = t.father;
+        }
+        changeChild(nowNode, removeHeightLight);
+        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode = null;
+        changeNodeEvent();
+    }
+    nowNode = node ? node : this.parentNode.node;
+    changeNodeEvent();
+
+    var t = nowNode;
+    while (t.father) {
+        addHeightLight(t.father);
+        t = t.father;
+    }
+    changeChild(nowNode, addHeightLight);
+
+    // 设置当前节点的样式
+    nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
+}
+
 function addList(box, node) {
     var div = document.createElement('div');
     var h4 = document.createElement('h4');
@@ -1810,33 +1839,7 @@ function addList(box, node) {
         list.foldState = !list.foldState;
     });
     h4.innerText = node.children[0].innerText;
-    h4.addEventListener('click', function () {
-        if (nowNode) {
-            nowNode.style.boxShadow = 'none';
-            var t = nowNode;
-            while (t.father) {
-                removeHeightLight(t.father);
-                t = t.father;
-            }
-            changeChild(nowNode, removeHeightLight);
-            nowNode.list.children[0].removeClass('treeListHeightLight');
-            nowNode = null;
-            changeNodeEvent();
-        }
-        nowNode = this.parentNode.node;
-        changeNodeEvent();
-
-        var t = nowNode;
-        while (t.father) {
-            addHeightLight(t.father);
-            t = t.father;
-        }
-        changeChild(nowNode, addHeightLight);
-
-        // 设置当前节点的样式
-        nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
-
-    });
+    h4.addEventListener('click', listClick);
     if (node.authorId == user.userId) {
         h4.addClass('myList');
     }
@@ -1846,6 +1849,7 @@ function addList(box, node) {
     ch.addClass('children');
     h4.appendChild(span);
     div.node = node;
+    div.fatherlist = node.father ? node.father.list : null;
     div.appendChild(h4);
     div.appendChild(ch);
     box.appendChild(div);
@@ -1856,12 +1860,63 @@ function addList(box, node) {
     }
 }
 
+var listArr; // 列表数组
+function addListContext() {
+    listArr = new Array();
+    addListContextRecursion(root);
+    for (var i = 1; i < listArr.length - 1; i++) {
+        listArr[i - 1].next = listArr[i];
+        listArr[i + 1].last = listArr[i];
+    }
+    if (listArr.length >= 2) {
+        listArr[1].last = listArr[0];
+        listArr[0].last = listArr[listArr.length - 1];
+        listArr[listArr.length - 1].next = listArr[0];
+        listArr[listArr.length - 2].next = listArr[listArr.length - 1];
+    }
+}
+
+function addListContextRecursion(node) {
+    listArr.push(node.list);
+    for (var i = 0; i < node.childArr.length; i++) {
+        addListContextRecursion(node.childArr[i]);
+    }
+}
+
+function judgeListHide(list) {
+    if (list.fatherlist) {
+        if (list.fatherlist.children[1].getCSS('display') == 'none' || judgeListHide(list.fatherlist)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    return false;
+}
+
 // 列表键盘事件
 document.addEventListener('keydown', function (e) {
-    console.log(e.key);
-    if (e.key == 'ArrowUp') {
-
-
+    if (nowNode) {
+        var nowList = nowNode.list;
+        if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            nowList = nowList.last;
+            while (judgeListHide(nowList)) {
+                nowList = nowList.last;
+            }
+            listClick(null, nowList.node);
+        } else if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            nowList = nowList.next;
+            while (judgeListHide(nowList)) {
+                nowList = nowList.next;
+            }
+            listClick(null, nowList.node);
+        } else if (e.key == 'ArrowLeft') {
+            console.log('左');
+        } else if (e.key == 'ArrowRight') {
+            console.log('右');
+        }
     }
 });
 
