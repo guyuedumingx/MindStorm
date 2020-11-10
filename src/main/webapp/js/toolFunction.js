@@ -1552,3 +1552,13 @@ function debounce(fn, delay) {
         }, delay);
     }
 }
+
+/**
+ * 
+ * 函数功能：删除页面中的dom元素
+ * 
+ * @param {Node} node dom元素
+ */
+function removeDom(node) {
+    node.parentNode.removeChild(node);
+}

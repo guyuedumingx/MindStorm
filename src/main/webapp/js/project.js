@@ -1337,7 +1337,7 @@ var operationNodeBoxJurisdiction = operationNodeBox.getDom('.onOff .onOffBorder'
 var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
 var operationNodeBoxNodeCreator = operationNodeBox.getDom('.nodeCreator'); // 节点创建者
 var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastRevision'); // 最后修改
-var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞按钮
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞盒子
 var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
 var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
 var operationNodeBoxSubmit = operationNodeBox.getDomA('input')[1]; // 提交按钮
@@ -1719,7 +1719,7 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-// 操作节点框
+// 操作节点框详细内容
 operationNodeBoxContent.addEventListener('focus', function () {
     if (this.value == '暂无') {
         this.value = '';
@@ -1889,6 +1889,7 @@ document.addEventListener('keydown', function (e) {
         changeColor(nightState);
     }
 });
+
 // 开关切换函数
 function onOffChange(onOff) {
     if (onOff.state) {
@@ -1987,7 +1988,7 @@ setOnOffEvent(hideTheme, function () {
     }
 });
 
-// 设置节点允许追加子节点
+// 设置节点禁止追加子节点
 setOnOffEvent(operationNodeBoxJurisdiction);
 
 // 维护约束的定时器

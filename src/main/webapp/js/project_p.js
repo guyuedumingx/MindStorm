@@ -18,32 +18,30 @@ var ctrlState = false;
 // 键盘按下切换ctrl状态
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 17) {
-        // if (transparentBaffle.getCSS('display') == 'none') {
-        //     if (!ctrlState) {
-        //         if (nowNode) {
-        //             nowNode.style.boxShadow = 'none';
-        //             var t = nowNode;
-        //             while (t.father) {
-        //                 removeHeightLight(t.father);
-        //                 t = t.father;
-        //             }
-        //             changeChild(nowNode, removeHeightLight);
-        //             if (hideTheme.state) {
-        //                 ergodicTree(function (node) {
-        //                     node.addClass('hideTheme');
-        //                 });
-        //             }
-        //         }
-        //         nowNode.list.children[0].removeClass('treeListHeightLight');
-        //         setTimeout(function () {
-        //             nowNode = null;
-        //             changeNodeEvent();
-        //         }, 1);
-        //         lineColor = lineUpColor;
-        //         document.removeEventListener('mousemove', move);
-        //     }
-        //     ctrlState = true;
-        // }
+        if (transparentBaffle.getCSS('display') == 'none') {
+            if (!ctrlState) {
+                if (nowNode) {
+                    nowNode.style.boxShadow = 'none';
+                    var t = nowNode;
+                    while (t.father) {
+                        removeHeightLight(t.father);
+                        t = t.father;
+                    }
+                    changeChild(nowNode, removeHeightLight);
+                    if (hideTheme.state) {
+                        ergodicTree(function (node) {
+                            node.addClass('hideTheme');
+                        });
+                    }
+                    nowNode.list.children[0].removeClass('treeListHeightLight');
+                    nowNode = null;
+                    changeNodeEvent();
+                }
+                lineColor = lineUpColor;
+                document.removeEventListener('mousemove', move);
+            }
+            ctrlState = true;
+        }
         ctrlState = true;
     }
 });
@@ -55,9 +53,11 @@ document.addEventListener('keyup', function (e) {
 
 var userPerformance = 5; // 性能参数
 
-var colorSet = [['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
-['#4c4c4c', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']];
-var colorState = 0;
+var colorSet = [
+    ['#e6eef1', 'rgb(248, 252, 250)', 'rgb(33, 75, 91)', 'rgba(255, 167, 15)', '#214b5b', '#ffffff', 'url(img/logo1.png)'],
+    ['#4c4c4c', 'rgb(51, 51, 51)', 'rgb(205, 205, 205)', 'rgba(255, 167, 15)', '#cccccc', '#666666', 'url(img/project_logo_q.png)']
+];
+var colorState = 1;
 var mainColor; // 主背景色
 var modularColor; // 模块背景色
 var textColor = 'rgb(33, 75, 91)'; // 文字颜色
@@ -75,8 +75,10 @@ function setColor() {
     progressColor = colorSet[colorState][4];
     progressBoxColor = colorSet[colorState][5];
     logoBGI = colorSet[colorState][6];
-    getDom('.treeBox .treeBoxMain').backgroundColor = mainColor;
-    getDom('.treeBox .treeBoxMain').style.transition = 'background-color .5s';
+    getDom('.treeBox .treeBoxMain').style.backgroundColor = mainColor;
+    setTimeout(function () {
+        getDom('.treeBox .treeBoxMain').style.transition = 'background-color .5s';
+    }, 1);
 }
 
 setColor();
@@ -108,7 +110,7 @@ function changeColor(state) {
     }, 1000);
 }
 
-var nightState = 1; // 当前状态
+var nightState = 1 - colorState; // 当前状态
 document.addEventListener('keydown', function (e) {
     if (e.key == 'e' && e.ctrlKey) {
         e.preventDefault();
@@ -117,15 +119,291 @@ document.addEventListener('keydown', function (e) {
 });
 // ————————————左侧控件————————————
 
+// 第一组按钮
 var firstbtnArr = getDom('.control .first').children; // 第一套按钮数组
 var addNode = firstbtnArr[0]; // 创建节点
 var removeNode = firstbtnArr[1]; // 删除节点
 var changeNode = firstbtnArr[2]; // 修改节点
 var queryNode = firstbtnArr[3]; // 查询节点
 var refreshTree = firstbtnArr[4]; // 刷新树
-
 cycleSprite(firstbtnArr, 0, 0, 30);
 
+var operationNodeBox = getDom('.popup'); // 操作节点盒子
+var operationNodeBoxClose = operationNodeBox.getDom('.popClose'); // 操作节点盒子中关闭按钮
+var operationNodeBoxTheme = operationNodeBox.getDom('.inTitle'); // 节点主题
+var operationNodeBoxJurisdictionBox = operationNodeBox.getDom('.choice'); // 允许追加子节点盒子
+var operationNodeBoxJurisdiction = operationNodeBoxJurisdictionBox.getDom('.onOffBorder'); // 允许追加子节点开关
+var operationNodeBoxContent = operationNodeBox.getDom('textarea'); // 详细内容
+var operationNodeBoxNodeCreator = operationNodeBox.getDom('.author'); // 节点创建者
+var operationNodeBoxLastRevision = operationNodeBox.getDom('.lastTime'); // 最后修改
+var operationNodeBoxStarBox = operationNodeBox.getDom('.star'); // 点赞盒子
+var operationNodeBoxStar = operationNodeBox.getDom('.starPhoto'); // 点赞按钮
+var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点赞数
+var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
+var tipsBox = getDom('.small'); // 提示框盒子
+var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
+var tipsTitle = tipsBox.getDom('.delNode'); // 提示框标题
+var tipsContent = tipsBox.getDom('.sureNode'); // 提示内容n
+var tipsYes = tipsBox.getDom('.yes'); // 是
+var tipsNo = tipsBox.getDom('.no'); // 否
+var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
+
+var nowOperation = 'null'; // 操作节点盒子状态
+var tipsState = 'null'; // 提示盒子状态
+
+transparentBaffle.hide();
+
+// 隐藏操作节点盒子
+function operationNodeBoxHide() {
+    operationNodeBox.style.transform = "translate(-100%,0)";
+}
+
+// 显示操作节点盒子
+function operationNodeBoxShow() {
+    operationNodeBox.style.transform = "translate(0%,0)";
+}
+
+// 关闭按钮相关事件
+function operationNodeBoxCloseFunction() {
+    nowOperation = 'null';
+    operationNodeBoxHide();
+    setTimeout(function () {
+        if (nowOperation == 'null') {
+            transparentBaffle.hide();
+            operationNodeBoxTheme.hide();
+            operationNodeBoxJurisdictionBox.hide();
+            operationNodeBoxContent.hide();
+            operationNodeBoxNodeCreator.hide();
+            operationNodeBoxLastRevision.hide();
+            operationNodeBoxSubmit.hide();
+        }
+    }, 500);
+}
+
+operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape' && nowOperation != 'null') {
+        operationNodeBoxCloseFunction();
+    }
+});
+
+refreshTree.jurisdiction = true;
+operationNodeBoxHide();
+operationNodeBoxTheme.hide();
+operationNodeBoxJurisdictionBox.hide();
+operationNodeBoxContent.hide();
+operationNodeBoxNodeCreator.hide();
+operationNodeBoxLastRevision.hide();
+operationNodeBoxSubmit.hide();
+operationNodeBoxStarBox.hide();
+
+// 按钮禁用
+function btnDisable(btn) {
+    btn.jurisdiction = false;
+    btn.style.cursor = 'not-allowed';
+}
+
+// 取消按钮禁用
+function btnCancelDisable(btn) {
+    btn.jurisdiction = true;
+    btn.style.cursor = 'pointer';
+}
+
+// 改变当前节点的函数
+function changeNodeEvent() {
+    if (nowNode) {
+        nowNode.list.children[0].addClass('treeListHeightLight');
+        // nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
+        // nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
+        // nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
+        // nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
+        // nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
+        // nowNodeBox.children[1].innerText = '';
+
+        // 判断按钮权限
+        if (!nowNode.editable || (nowNode.authorId == user.userId)) {
+            btnCancelDisable(addNode);
+        } else {
+            btnDisable(addNode);
+        }
+        if (nowNode.authorId == user.userId) {
+            btnCancelDisable(changeNode);
+            if (nowNode.childArr.length == 0) {
+                btnCancelDisable(removeNode);
+            } else {
+                btnDisable(removeNode);
+            }
+        } else {
+            btnDisable(removeNode);
+            btnDisable(changeNode);
+        }
+        btnCancelDisable(queryNode);
+    } else {
+        // nowNodeBox.children[0].innerText = '请选择节点';
+        // nowNodeBox.children[0].innerText = '';
+        // nowNodeBox.children[1].style.backgroundColor = '#ccc';
+        // nowNodeBox.children[1].style.width = '30px';
+        // nowNodeBox.children[1].style.height = '30px';
+        // nowNodeBox.children[1].style.borderRadius = '15px';
+        // nowNodeBox.children[1].innerText = '?';
+        btnDisable(addNode);
+        btnDisable(removeNode);
+        btnDisable(changeNode);
+        btnDisable(queryNode);
+    }
+}
+
+// 页面加载时先调用一次
+changeNodeEvent();
+
+// 创建节点相关事件
+function addNodeFunction() {
+    if (addNode.jurisdiction) {
+        nowOperation = 'add';
+        // transparentBaffle.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = '';
+        operationNodeBoxTheme.readOnly = false;
+
+        operationNodeBoxTheme.addClass('changeColor');
+        // 引号里面写可编辑时候的类名，类名前面不要写点，下面几处同理
+
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = '';
+        operationNodeBoxContent.readOnly = false;
+
+
+        operationNodeBoxContent.addClass('changeColor');
+
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+        operationNodeBoxStarBox.hide();
+        operationNodeBoxShow();
+        operationNodeBoxTheme.focus();
+    }
+}
+
+addNode.addEventListener('click', addNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Tab' && nowNode && nowOperation == 'null') {
+        e.preventDefault();
+        addNodeFunction();
+    }
+});
+
+// 删除节点相关事件
+function removeNodeFunction() {
+    if (removeNode.jurisdiction) {
+        tipsState = 'deleteNode';
+        tipsTitle.innerText = '删除节点';
+        tipsContent.innerText = '该操作不可恢复，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+}
+
+removeNode.addEventListener('click', removeNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Delete' && nowNode && nowOperation == 'null') {
+        e.preventDefault();
+        removeNodeFunction();
+    }
+});
+
+// 修改节点相关事件
+function changeNodeFunction() {
+    if (changeNode.jurisdiction) {
+        nowOperation = 'change';
+        // transparentBaffle.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = false;
+
+
+        operationNodeBoxTheme.addClass('changeColor');
+
+        operationNodeBoxJurisdictionBox.show();
+        if (operationNodeBoxJurisdiction.state) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        if (nowNode.editable) {
+            onOffChange(operationNodeBoxJurisdiction);
+        }
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = false;
+
+
+        operationNodeBoxContent.addClass('changeColor');
+
+        operationNodeBoxNodeCreator.hide();
+        operationNodeBoxLastRevision.hide();
+        operationNodeBoxSubmit.show();
+        operationNodeBoxStarBox.hide();
+        operationNodeBoxShow();
+        operationNodeBoxTheme.focus();
+    }
+}
+
+changeNode.addEventListener('click', changeNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == ' ' && nowNode && user.userId == nowNode.authorId && nowOperation == 'null') {
+        e.preventDefault();
+        changeNodeFunction();
+    }
+});
+
+// 查看节点相关事件
+function queryNodeFunction() {
+    if (queryNode.jurisdiction) {
+        nowOperation = 'query';
+        // transparentBaffle.show();
+        operationNodeBoxTheme.show();
+        operationNodeBoxTheme.value = nowNode.children[0].innerText;
+        operationNodeBoxTheme.readOnly = true;
+
+
+        operationNodeBoxTheme.removeClass('changeColor');
+
+        operationNodeBoxJurisdictionBox.hide();
+        operationNodeBoxContent.show();
+        operationNodeBoxContent.value = nowNode.content;
+        operationNodeBoxContent.readOnly = true;
+
+
+        operationNodeBoxContent.removeClass('changeColor');
+
+        operationNodeBoxNodeCreator.show();
+        operationNodeBoxNodeCreator.children[0].innerText = nowNode.userName;
+        operationNodeBoxLastRevision.show();
+        var date = new Date(nowNode.lastEditTime - 0);
+        var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+        operationNodeBoxLastRevision.children[0].innerText = str;
+        operationNodeBoxSubmit.hide();
+        // operationNodeBoxStar.innerText = nowNode.star;
+        if (nowNode.stared) {
+            operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+        } else {
+            operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+        }
+        operationNodeBoxStarNumber.innerText = nowNode.star;
+        operationNodeBoxStarBox.show();
+        operationNodeBoxShow();
+    }
+}
+
+queryNode.addEventListener('click', queryNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == ' ' && nowNode && user.userId != nowNode.authorId && nowOperation == 'null') {
+        e.preventDefault();
+        queryNodeFunction();
+    }
+});
 
 // 刷新按钮点击事件
 refreshTree.addEventListener('click', function () {
@@ -138,10 +416,380 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// 操作节点框详细内容
+operationNodeBoxContent.addEventListener('focus', function () {
+    if (this.value == '暂无') {
+        this.value = '';
+    }
+});
+
+// 操作节点框中提交相关事件
+
+// 初始化节流阀
+addNodeState = false;
+changeNodeState = false;
+
+operationNodeBoxSubmit.addEventListener('click', function () {
+    if (nowOperation == 'add') {
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        if (addNodeState) {
+            return;
+        }
+        addNodeState = true;
+        ajax({
+            type: 'post',
+            url: '/node',
+            data: {
+                content: inpContent,
+                banAppend: operationNodeBoxJurisdiction.state,
+                theme: inpTheme,
+                parentId: nowNode.id,
+                projectId: projectId
+            },
+            header: {
+                'Content-Type': 'application/json'
+            }, // 请求头
+            success: function (res) {
+                if (res.status_code == '200') {
+                    treeAppendNode(nowNode, {
+                        id: res.node_id,
+                        theme: inpTheme,
+                        content: inpContent,
+                        editable: operationNodeBoxJurisdiction.state,
+                    });
+                } else {
+                    topAlert('创建失败');
+                }
+                operationNodeBoxCloseFunction();
+                addNodeState = false;
+            }
+        });
+    } else if (nowOperation == 'change') {
+        var inpTheme = operationNodeBoxTheme.value;
+        if (inpTheme.length <= 0) {
+            topAlert('节点主题不能为空');
+            return;
+        } else if (inpTheme.length >= 20) {
+            topAlert('节点主题不能超过20个字符');
+            return;
+        }
+        var inpContent = operationNodeBoxContent.value;
+        if (inpContent.length == 0) {
+            inpContent = '暂无';
+        }
+        if (changeNodeState) {
+            return;
+        }
+        changeNodeState = true;
+        ajax({
+            type: 'put',
+            url: '/node',
+            data: {
+                id: nowNode.id,
+                theme: inpTheme,
+                content: inpContent,
+                banAppend: operationNodeBoxJurisdiction.state,
+                projectId: projectId
+            },
+            header: {
+                'Content-Type': 'application/json',
+                "X-HTTP-Method-Override": "PUT"
+            }, // 请求头
+            success: function (res) {
+                if (res.status_code == '200') {
+                    nowNode.children[0].innerText = inpTheme;
+                    nowNode.list.getDom('h4').innerText = inpTheme;
+                    nowNode.content = inpContent;
+                    nowNode.editable = operationNodeBoxJurisdiction.state;
+                } else {
+                    topAlert('修改失败');
+                }
+                operationNodeBoxCloseFunction();
+                changeNodeState = false;
+            }
+        });
+    } else {
+        topAlert('出现未知错误');
+        operationNodeBoxCloseFunction();
+        operationNodeBoxHide();
+    }
+});
+
+// 点赞相关事件
+
+operationNodeBoxStarState = false;
+operationNodeBoxStar.addEventListener('click', function () {
+    if (operationNodeBoxStarState) {
+        return;
+    }
+    operationNodeBoxStarState = true;
+    ajax({
+        type: 'put',
+        url: '/util',
+        data: {
+            nodeId: nowNode.id
+        },
+        header: {
+            'Content-Type': 'application/json',
+            "X-HTTP-Method-Override": "PUT"
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                if (nowNode.stared) {
+                    nowNode.star--;
+                    operationNodeBoxStarNumber.innerText = nowNode.star;
+                    nowNode.stared = false;
+                    operationNodeBoxStar.replaceClass('starTrue', 'starFalse');
+                } else {
+                    nowNode.star++;
+                    operationNodeBoxStarNumber.innerText = nowNode.star;
+                    nowNode.stared = true;
+                    operationNodeBoxStar.replaceClass('starFalse', 'starTrue');
+                }
+            } else {
+                topAlert('操作失败');
+            }
+            setTimeout(function () {
+                operationNodeBoxStarState = false;
+            }, 1000);
+        }
+    });
+});
+
+// 开关切换函数
+function onOffChange(onOff) {
+    if (onOff.state) {
+        onOff.state = false;
+        onOff.style.backgroundColor = '#2c3e50';
+        onOff.children[0].style.left = '1.5px';
+        onOff.children[0].style.backgroundColor = ' #46607b';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
+    } else {
+        onOff.state = true;
+        onOff.style.backgroundColor = '#16a085';
+        onOff.children[0].style.left = '23.5px';
+        onOff.children[0].style.backgroundColor = '#1abc9c';
+        onOff.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
+    }
+}
+
+// 开关初始化函数
+function setOnOffEvent(onOff, fun) {
+    onOff.state = false;
+    if (fun) {
+        onOff.addEventListener('click', function () {
+            onOffChange(this);
+            fun();
+        });
+    } else {
+        onOff.addEventListener('click', function () {
+            onOffChange(this);
+        });
+    }
+}
+
+// 设置节点禁止追加子节点
+setOnOffEvent(operationNodeBoxJurisdiction);
+
+// 关闭提示框相关事件
+function tipsCloseFunction() {
+    tipsState = 'null';
+    tipsTitle.innerText = '？';
+    tipsContent.innerText = '？？？';
+    tipsBox.hide();
+    transparentBaffle.hide();
+}
+
+tipsClose.addEventListener('click', tipsCloseFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape' && tipsState != 'null') {
+        e.preventDefault();
+        tipsCloseFunction();
+    }
+});
+
+
+// 初始化节流阀
+removeNodeState = false;
+deleteProjectState = false;
+signOutProjectState = false;
+
+// 提示框中确定相关事件
+function tipsYesFunction() {
+    if (tipsState == 'deleteNode') {
+        if (removeNodeState) {
+            return;
+        }
+        removeNodeState = true;
+        ajax({
+            type: 'delete',
+            url: '/node',
+            data: {
+                nodeId: nowNode.id
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    treeRemoveNode(nowNode);
+                    nowNode = null;
+                } else {
+                    topAlert('删除失败');
+                }
+                removeNodeState = false;
+            }
+        });
+    } else if (tipsState == 'exportProject') {
+        window.location = '/util/xmind?project_id=' + projectId;
+    } else if (tipsState == 'signOutProject') {
+        if (signOutProjectState) {
+            return;
+        }
+        signOutProjectState = true;
+        ajax({
+            type: 'delete',
+            url: '/util/project',
+            data: {
+                projectId: projectId
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location = 'index.html';
+                } else {
+                    topAlert('退出失败');
+                }
+                signOutProjectState = false;
+            }
+        });
+    } else if (tipsState == 'deleteProject') {
+        if (deleteProjectState) {
+            return;
+        }
+        deleteProjectState = true;
+        ajax({
+            type: 'delete',
+            url: '/project',
+            data: {
+                id: projectId
+            },
+            success: function (res) {
+                if (res.status_code == '200') {
+                    window.location = 'index.html'
+                } else {
+                    topAlert('删除失败');
+                }
+                deleteProjectState = false;
+            }
+        });
+    }
+    tipsCloseFunction();
+}
+tipsYes.addEventListener('click', tipsYesFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && tipsState != 'null') {
+        tipsYesFunction();
+    }
+});
+
+// 提示框中取消按钮点击事件
+tipsNo.addEventListener('click', tipsCloseFunction);
+
+
+// 第二组按钮
+var secoundbtnArr = getDomA('.mainBox .secound div');
+
+var hideLine = secoundbtnArr[0]; // 隐藏节点间线条
+var hideTheme = secoundbtnArr[1]; // 隐藏无关节点主题
+var lockingNode = secoundbtnArr[2]; // 锁定所有节点
+var layerColor = secoundbtnArr[3]; // 根据节点层级显示不同颜色
+
+function btnChange(btn) {
+    if (btn.state) {
+        btn.state = false;
+        btn.removeClass('heightLight');
+    } else {
+        btn.state = true;
+        btn.addClass('heightLight');
+    }
+}
+
+function setBtnEvent(btn, fun) {
+    btn.state = false;
+    if (fun) {
+        btn.addEventListener('click', function () {
+            btnChange(this);
+            fun();
+        });
+    } else {
+        btn.addEventListener('click', function () {
+            btnChange(this);
+        });
+    }
+}
+
+// 隐藏无关节点间线条
+setBtnEvent(hideLine, hideLineClick);
+
+// 隐藏无关节点主题
+setBtnEvent(hideTheme, function () {
+    if (hideTheme.state) {
+        ergodicTree(function (node) {
+            node.addClass('hideTheme');
+        });
+        if (nowNode) {
+            var t = nowNode;
+            t.removeClass('hideTheme');
+            while (t.father) {
+                t = t.father;
+                t.removeClass('hideTheme');
+            }
+            changeChild(nowNode, function (node) {
+                node.removeClass('hideTheme');
+            });
+        }
+    } else {
+        ergodicTree(function (node) {
+            node.removeClass('hideTheme');
+        });
+    }
+});
+
+// 固定所有节点
+setBtnEvent(lockingNode);
+
+// 节点根据层级显示不同颜色
+setBtnEvent(layerColor, function () {
+    if (layerColor.state) {
+        layerColor.colorArr = [];
+        layerColor.colorArr.push(randomColor(120, 180));
+        for (var i = 0; i < 20; i++) {
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ')');
+        }
+        for (var i = 0; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
+        }
+    } else {
+        nodeSet[0].style.backgroundColor = randomColor(120, 180);
+        for (var i = 1; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = randomColor(160, 220);
+        }
+    }
+});
+
 // 隐藏无关节点间线条函数
 function hideLineClick() {
-    // if (hideLine.state) {
-    if (false) {
+    if (hideLine.state) {
         lineUpColor = mainColor;
         ergodicTree(function (node) {
             node.lineColor = mainColor;
@@ -174,6 +822,115 @@ function hideLineClick() {
         }
     }
 }
+
+
+
+
+// 第三组按钮
+var thirdbtnArr = getDomA('.mainBox .third div');
+var projectMessageBtn = thirdbtnArr[0]; // 显示项目信息的按钮
+var contributors = thirdbtnArr[1]; // 显示贡献者列表的按钮
+var exportProject = thirdbtnArr[2]; // 导出项目按钮
+var signOutProject = thirdbtnArr[3]; // 退出项目按钮
+var deleteProject = thirdbtnArr[4]; // 删除项目按钮
+
+// 项目信息相关操作
+var projectMessage = getDom('.message'); // 项目信息盒子
+var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目创建者
+var projectName = projectMessage.getDom('.project_name span'); // 项目名
+var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
+var introduceP = projectMessage.getDom('p'); // 项目简介内容
+var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
+projectIdBox.innerText = projectId;
+
+// 隐藏项目信息盒子
+function projectMessageHide() {
+    projectMessage.style.transform = "translate(-100%,0)";
+}
+
+// 显示项目信息盒子
+function projectMessageShow() {
+    projectMessage.style.transform = "translate(0%,0)";
+}
+
+// 点击按钮显示项目信息
+projectMessageBtn.addEventListener('click', function () {
+    projectMessageShow();
+});
+
+// 点击空白处隐藏项目信息
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, projectMessage) && e.target != projectMessageBtn) {
+        projectMessageHide();
+    }
+});
+
+// 贡献者列表相关操作
+// 开发中
+
+var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
+
+// 隐藏贡献者列表
+function contributorsHide() {
+    // 芷欣
+    contributorsBox.hide();
+}
+
+// 显示贡献者列表
+function contributorsShow() {
+    // 芷欣
+    contributorsBox.show();
+}
+
+// 点击按钮显示贡献者列表
+projectMessageBtn.addEventListener('click', function () {
+    contributorsShow();
+});
+
+// 点击空白处隐藏贡献者列表
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, contributorsBox) && e.target != contributors) {
+        contributorsHide();
+    }
+});
+
+// 导出项目相关操作
+exportProject.addEventListener('click', function () {
+    tipsState = 'exportProject';
+    tipsTitle.innerText = '导出项目';
+    tipsContent.innerText = '项目将会导出到本地，是否继续';
+    tipsBox.show();
+    transparentBaffle.show();
+})
+
+// 退出项目相关操作
+signOutProject.addEventListener('click', function () {
+    if (projectCreatorId == user.userId) {
+        topAlert('项目创建者不可退出项目');
+    } else {
+        tipsState = 'signOutProject';
+        tipsTitle.innerText = '删除项目';
+        tipsContent.innerText = '您将退出此项目，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+});
+
+// 删除项目相关操作
+deleteProject.addEventListener('click', function () {
+    if (projectCreatorId != user.userId) {
+        topAlert('您没有权限执行此操作');
+    } else {
+        tipsState = 'deleteProject';
+        tipsTitle.innerText = '删除项目';
+        tipsContent.innerText = '此项目将会被删除，是否继续';
+        tipsBox.show();
+        transparentBaffle.show();
+    }
+});
+
 // ——————————————中间——————————————
 var treeBox = getDom('.treeBox'); // 树盒子框架
 var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子
@@ -236,11 +993,11 @@ treeBoxMain.addEventListener('mousedown', function (e) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
-        // if (hideTheme.state) {
-        //     ergodicTree(function (node) {
-        //         node.addClass('hideTheme');
-        //     });
-        // }
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+        }
         nowNode.list.children[0].removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
@@ -554,6 +1311,9 @@ function addTreeConstraint(root, n) {
 
     // 设置节点层级
     root.layer = n;
+    if (layerColor.state) {
+        root.style.backgroundColor = layerColor.colorArr[root.layer];
+    }
 
     // 设置节点坐标
     root.x = root.offsetLeft;
@@ -595,30 +1355,30 @@ function addTreeConstraint(root, n) {
 
         // 设置当前节点的样式
         nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
-        // if (ctrlState && !lockingNode.state) {
-        //     document.addEventListener('mousemove', move);
-        // }
+        if (ctrlState && !lockingNode.state) {
+            document.addEventListener('mousemove', move);
+        }
         if (ctrlState) {
             document.addEventListener('mousemove', move);
         }
 
         // 判断节点主题是否被隐藏，并执行相关动作
-        // if (hideTheme.state) {
-        //     ergodicTree(function (node) {
-        //         node.addClass('hideTheme');
-        //     });
-        //     if (nowNode) {
-        //         var t = nowNode;
-        //         t.removeClass('hideTheme');
-        //         while (t.father) {
-        //             t = t.father;
-        //             t.removeClass('hideTheme');
-        //         }
-        //         changeChild(nowNode, function (node) {
-        //             node.removeClass('hideTheme');
-        //         });
-        //     }
-        // }
+        if (hideTheme.state) {
+            ergodicTree(function (node) {
+                node.addClass('hideTheme');
+            });
+            if (nowNode) {
+                var t = nowNode;
+                t.removeClass('hideTheme');
+                while (t.father) {
+                    t = t.father;
+                    t.removeClass('hideTheme');
+                }
+                changeChild(nowNode, function (node) {
+                    node.removeClass('hideTheme');
+                });
+            }
+        }
     });
 
     // 将当前节点添加到节点数组中
@@ -793,6 +1553,18 @@ function ergodicTree(fun) {
 // 向页面中动态的增加一个节点
 function treeAppendNode(father, nodeData) {
 
+    var defaults = {
+        childArr: [],
+        userName: user.userName,
+        author: user.userId,
+        lastEditName: user.userName,
+        lastEditTime: Date.now(),
+        star: 0,
+        stared: false
+    }
+
+    Object.assign(defaults, nodeData);
+
     // 创建div元素
     var appendNode = document.createElement('div');
 
@@ -803,11 +1575,11 @@ function treeAppendNode(father, nodeData) {
     father.childArr.push(appendNode);
 
     // 添加相关样式和节点id
-    appendNode.style.backgroundColor = randomColor(100, 180);
+    appendNode.style.backgroundColor = randomColor(160, 220);
     appendNode.addClass('node');
-    appendNode.id = nodeData.id;
-    appendNode.childArr = new Array();
-    appendNode.style.display = 'none';
+    appendNode.id = defaults.id;
+    appendNode.childArr = defaults.childArr;
+    appendNode.hide();
     appendNode.line = document.createElement('div');
     appendNode.lineColor = lineUpColor;
     appendNode.lineZIndex = 0;
@@ -817,20 +1589,22 @@ function treeAppendNode(father, nodeData) {
     appendNode.childIdArr = [];
     var theme = document.createElement('div');
     theme.addClass('theme');
-    theme.innerText = nodeData.theme;
+    theme.innerText = defaults.theme;
+    theme.style.color = textColor;
     appendNode.appendChild(theme);
 
     // 添加相关数据
-    appendNode.content = nodeData.content; // 主要内容
-    appendNode.editable = nodeData.editable; // 是否可被编辑
-    appendNode.userName = user.userName; // 创建者
-    appendNode.authorId = user.userId; // 创建者Id
-    appendNode.lastEditName = user.userName; // 最后修改者
-    appendNode.lastEditTime = Date.now(); // 最后修改时间
-    appendNode.star = 0; // 点赞数
+    appendNode.content = defaults.content; // 主要内容
+    appendNode.editable = defaults.editable; // 是否可被编辑
+    appendNode.userName = defaults.userName; // 创建者
+    appendNode.authorId = defaults.author; // 创建者Id
+    appendNode.lastEditName = defaults.lastEditName; // 最后修改者
+    appendNode.lastEditTime = defaults.lastEditTime; // 最后修改时间
+    appendNode.star = defaults.star; // 点赞数
+    appendNode.stared = defaults.stared; // 点赞状态
 
     // 随机位置
-    appendNode.style.display = 'block';
+    appendNode.show();
     appendNode.style.left = getIntRandom(leftBoundary + boundaryMinLength, rightBoundary - boundaryMinLength) + 'px';
     appendNode.style.top = getIntRandom(topBoundary + boundaryMinLength, bottomBoundary - boundaryMinLength) + 'px';
     appendNode.x = appendNode.offsetLeft;
@@ -846,10 +1620,12 @@ function treeAppendNode(father, nodeData) {
         }
     }
     addConstraint(appendNode, null, 3, null);
+    addList(father.list.getDom('.children'), appendNode);
 }
 
 // 动态删除页面中的节点
 function treeRemoveNode(node) {
+    removeDom(node.list);
     if (node.childArr.length == 0 && node.father) {
         var father = node.father;
 
@@ -923,8 +1699,7 @@ function treeReload() {
     for (var i = 0; i < nodeSet.length; i++) {
         try {
             treeBoxMain.removeChild(nodeSet[i].line);
-        } catch (e) {
-        }
+        } catch (e) { }
         treeBoxMain.removeChild(nodeSet[i]);
     }
 
@@ -988,65 +1763,20 @@ function treeReload() {
     }, userPerformance);
 }
 
-
-// 改变当前节点的函数
-function changeNodeEvent() {
-    if (nowNode) {
-        nowNode.list.children[0].addClass('treeListHeightLight');
-        // nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
-        // nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
-        // nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
-        // nowNodeBox.children[1].style.height = nowNode.offsetHeight + 'px';
-        // nowNodeBox.children[1].style.borderRadius = nowNode.offsetHeight / 2 + 'px';
-        // nowNodeBox.children[1].innerText = '';
-
-        // 判断按钮权限
-        // if (!nowNode.editable || (nowNode.authorId == user.userId)) {
-        //     btnCancelDisable(addNode);
-        // } else {
-        //     btnDisable(addNode);
-        // }
-        // if (nowNode.authorId == user.userId) {
-        //     btnCancelDisable(changeNode);
-        //     if (nowNode.childArr.length == 0) {
-        //         btnCancelDisable(removeNode);
-        //     } else {
-        //         btnDisable(removeNode);
-        //     }
-        // } else {
-        //     btnDisable(removeNode);
-        //     btnDisable(changeNode);
-        // }
-        // btnCancelDisable(queryNode);
-    } else {
-        // nowNodeBox.children[0].innerText = '请选择节点';
-        // nowNodeBox.children[0].innerText = '';
-        // nowNodeBox.children[1].style.backgroundColor = '#ccc';
-        // nowNodeBox.children[1].style.width = '30px';
-        // nowNodeBox.children[1].style.height = '30px';
-        // nowNodeBox.children[1].style.borderRadius = '15px';
-        // nowNodeBox.children[1].innerText = '?';
-        // btnDisable(addNode);
-        // btnDisable(removeNode);
-        // btnDisable(changeNode);
-        // btnDisable(queryNode);
-    }
-}
-
 // 页面加载时先调用一次
 changeNodeEvent();
 
 // 维护约束的定时器
 setInterval(function () {
-    // if (!lockingNode.state) {
-    for (var i = 0; i < constraintArr.length; i++) {
-        var node1 = constraintArr[i][0];
-        var node2 = constraintArr[i][1];
-        var type = constraintArr[i][2];
-        var len = constraintArr[i][3];
-        runConstraint(node1, node2, type, len);
+    if (!lockingNode.state) {
+        for (var i = 0; i < constraintArr.length; i++) {
+            var node1 = constraintArr[i][0];
+            var node2 = constraintArr[i][1];
+            var type = constraintArr[i][2];
+            var len = constraintArr[i][3];
+            runConstraint(node1, node2, type, len);
+        }
     }
-    // }
 }, userPerformance);
 
 // 维护节点间线条的定时器
@@ -1126,6 +1856,16 @@ function addList(box, node) {
     }
 }
 
+// 列表键盘事件
+document.addEventListener('keydown', function (e) {
+    console.log(e.key);
+    if (e.key == 'ArrowUp') {
+
+
+    }
+});
+
+
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
 
@@ -1138,12 +1878,12 @@ window.onload = function () {
         },
         success: function (res) {
             projectHeadNodeId = res.headNodeId;
-            // introduceP.innerText = res.introduction;
+            introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
-            // projectCreatorName.innerText = res.creatorName;
+            projectCreatorName.innerText = res.creatorName;
             // generateParticipant(res.contributors);
-            // projectName.innerText = res.name;
-            // projectLevel.innerText = res.rank;
+            projectName.innerText = res.name;
+            projectLevel.innerText = res.rank;
             // var date = new Date(res.createTime - 0);
             // var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
             // creationDate.innerText = str;

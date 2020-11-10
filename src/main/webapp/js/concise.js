@@ -19,7 +19,11 @@ function getHtml() {
  * @author 60rzvvbj
  */
 function getDom(str, node) {
-    return node ? node.querySelector(str) : document.querySelector(str);
+    try {
+        return node ? node.querySelector(str) : document.querySelector(str);
+    } catch (e) {
+        return null;
+    }
 }
 
 /**
@@ -32,7 +36,11 @@ function getDom(str, node) {
  * @author 60rzvvbj
  */
 function getDomA(str, node) {
-    return node ? node.querySelectorAll(str) : document.querySelectorAll(str);
+    try {
+        return node ? node.querySelectorAll(str) : document.querySelectorAll(str);
+    } catch (e) {
+        return new Array();
+    }
 }
 
 /**

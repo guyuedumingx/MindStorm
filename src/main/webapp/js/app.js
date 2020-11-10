@@ -9,6 +9,7 @@ const {
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(bodyParser.json());
 var url = __dirname.substring(0, __dirname.length - 3);
 // app.use(express.static('C:\\Users\\Lenovo\\Desktop\\111\\111'));
 app.use(express.static(url));
@@ -223,6 +224,7 @@ user.push({
     userName: '陈七',
     father: 14,
 });
+var nodeLen = user.length;
 var template = {
     id: "@id()",
     username: "@cname()",
@@ -253,37 +255,46 @@ function getNode(id) {
 app.post('/node', function (req, res) {
     var text = req.body;
     user.push({
-        author: 8848,
-        id: user.length + 1,
+        author: 1,
+        id: nodeLen,
         theme: text.theme,
         content: text.content,
         children: [],
         star: 0,
-        editable: text.banAppend,
-        lastEditName: '60rzvvbj',
+        stared: false,
+        banAppend: text.banAppend,
+        lastEditName: '张三',
         lastEditTime: Date.now(),
-        userName: '60rzvvbj',
+        userName: '张三',
+        father: text.parentId
     });
-    getNode(text.parentId).children.push(user.length);
+    getNode(text.parentId).children.push(nodeLen);
     res.send({
-        status_code: '200'
+        status_code: '200',
+        node_id: nodeLen++
     });
 });
 app.delete('/node', function (req, res) {
     var text = req.query;
+    var arr = new Array();
+    var p = 0;
+    var fa;
     for (var i = 0; i < user.length; i++) {
-        if (user[i]) {
-            if (user[i].id == text.id) {
-                var f = user.father;
-                for (var j = 0; j < f.children.length; j++) {
-                    if (f.children[j] == text.id) {
-                        f.children[j] == null;
-                    }
-                }
-            }
-            user[i] = null;
+        if (user[i].id != text.nodeId) {
+            arr[p++] = user[i];
+        } else {
+            fa = getNode(user[i].father);
         }
     }
+    user = arr;
+    arr = new Array();
+    p = 0;
+    for (var i = 0; i < fa.children.length; i++) {
+        if (fa.children[i] != text.nodeId) {
+            arr[p++] = fa.children[i];
+        }
+    }
+    fa.children = arr;
     res.send({
         status_code: '200'
     })
@@ -365,11 +376,11 @@ app.get('/user', function (req, res) {
 });
 app.get('/project', function (req, res) {
     res.send({
-        id: 123456,
+        id: 123456789,
         name: '绝不互相甩锅',
         isPublic: false,
         rank: 3,
-        author: 123456,
+        author: 1,
         creatorName: '张三',
         headNodeId: 1,
         introduction: '回答安睡裤就很烦实发回复丢奥会发生发\n哦if和暴富暴富奥斯发红包回复博爱发包方冰风暴奥斯佛阿发sofa搜发哦是开放\n八分饱发阿克a凹坑\n积分兑换把上阿斯利康就很大声狄拉克机\n会大还费电暗示法哈斯福海哦哈酒合法司法噶仿古白发给巴斯房改房爱是发给巴斯覆盖表覆盖富奥斯䦹',
@@ -378,6 +389,11 @@ app.get('/project', function (req, res) {
         deadline: new Date('2020-10-28 8:8:8').valueOf()
     });
 });
+app.delete('/project', function (req, res) {
+    res.send({
+        status_code: '200'
+    });
+})
 app.put('/util', function (req, res) {
     res.send({
         status_code: '200'
