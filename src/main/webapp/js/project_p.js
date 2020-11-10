@@ -624,6 +624,7 @@ document.addEventListener('keydown', function (e) {
 // 初始化节流阀
 removeNodeState = false;
 deleteProjectState = false;
+signOutProjectState = false;
 
 // 提示框中确定相关事件
 function tipsYesFunction() {
