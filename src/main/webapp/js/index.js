@@ -302,19 +302,15 @@ function start() {
 start();
 // 点击共享项目
 shareBox.addEventListener("click", function () {
-    // // 点击按钮样式
-    // shareBox.style.backgroundColor = "rgb(241, 240, 230)";
-    // shareBox.style.color = "#071f3d";
-    // personalBox.style.backgroundColor = "";
-    // personalBox.style.color = "#fff";
-    // // 板块显示
-    // shareNav.style.display = "block";
-    // personalNav.style.display = "none";
-    // projectSize(shareNav);
-    // window.addEventListener('resize', function () {
-    //     projectSize(shareNav);
-    // });
-    topAlert("暂未开发！");
+    shareBox.style.backgroundColor = "#D1DADA";
+    shareBox.style.color = "#071F3D";
+    shareNav.style.display = "block";
+    personalBox.style.backgroundColor = "";
+    personalBox.style.color = "#214B5B";
+    personalNav.style.display = "none";
+    searchNav.style.display = "none";
+    projectSize(personalNav);
+    projectSize(searchNav);
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
@@ -530,3 +526,38 @@ searchBut.state = true;
 searchBut.addEventListener("click", search);
 //回车
 inputEnterEvent(searchCont, search);
+
+function getPublic(page) {
+    ajax({
+        type: 'put',
+        url: '/project',
+        data: {
+            page: page
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                if (getDom(".noneP")) {
+                    getDom(".noneP").parentNode.removeChild(getDom(".noneP"));
+                }
+                personalNav.hide();
+                searchNav.show();
+                projectSize(searchNav);
+
+                removeLi();
+                //项目数组--
+                searchProject = res.result;
+                // 长度
+                searchProjectLength = searchProject.length;
+
+                addLiBox(searchProjectLength, searchProject, searchNav)
+                personalBox.style.backgroundColor = "";
+                personalBox.style.color = "#214B5B";
+            } else {
+                topAlert("搜索失败");
+            }
+        }
+    });
+}
