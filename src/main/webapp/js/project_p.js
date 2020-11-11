@@ -698,6 +698,7 @@ var hideTheme = secoundbtnArr[1]; // 隐藏无关节点主题
 var lockingNode = secoundbtnArr[2]; // 锁定所有节点
 var layerColor = secoundbtnArr[3]; // 根据节点层级显示不同颜色
 
+cycleSprite(secoundbtnArr, 0, 'center', 30);
 function btnChange(btn) {
     if (btn.state) {
         btn.state = false;

@@ -54,7 +54,7 @@
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    background-image: url(../img/project_rightButton.png);
+    background-image: url(../img/project_p_nodeControl.png);
     background-repeat: no-repeat;
     background-size: 100%;
     cursor: pointer;
@@ -69,7 +69,7 @@
 }
 
 .control .third {
-    height: 200px;
+    height: 280px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
