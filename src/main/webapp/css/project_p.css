@@ -627,7 +627,8 @@
     background: #555;
 }
 
-.contributorsBox ul li,.historyBox ul li {
+.contributorsBox ul li,
+.historyBox ul li {
     /* border: solid; */
     padding: 10px 0;
 }
@@ -640,6 +641,9 @@
     border-radius: 50px;
     vertical-align: middle;
     /* border: solid; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .contributorsBox i {
@@ -668,12 +672,14 @@
     transition: transform .5s;
     z-index: 57;
 }
-.historyBox li span{
+
+.historyBox li span {
     display: inline-block;
     margin-bottom: 5px;
     color: #eee;
 }
-.historyBox li p{
+
+.historyBox li p {
     font-size: 15px;
     line-height: 24px;
     display: none;

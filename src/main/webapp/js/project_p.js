@@ -142,8 +142,8 @@ var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点�
 var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
 var tipsBox = getDom('.small'); // 提示框盒子
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
-var tipsTitle = tipsBox.getDom('.title_cont'); // 提示框标题
-var tipsContent = tipsBox.getDom('.sure'); // 提示内容n
+var tipsTitle = tipsBox.getDom('.title'); // 提示框标题
+var tipsContent = tipsBox.getDom('.content'); // 提示内容n
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
 var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
@@ -306,7 +306,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && nowOperation == 'null') {
+    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null') {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -627,7 +627,6 @@ function tipsYesFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     treeRemoveNode(nowNode);
-                    nowNode = null;
                 } else {
                     topAlert('删除失败');
                 }
@@ -860,6 +859,33 @@ document.addEventListener('click', function (e) {
 // 开发中
 
 var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
+var contributorsClose = contributorsBox.getDom('.contributorsClose'); // 关闭按钮
+var contributorsUl = contributorsBox.getDom('ul'); // 成员列表盒子中的Ul
+
+// 生成贡献者列表
+function generateContributes(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        ajax({
+            type: 'get',
+            url: '/user',
+            data: {
+                id: arr[i]
+            },
+            success: function (res) {
+                var li = document.createElement('li');
+                var userPhoto = document.createElement('span');
+                var userName = document.createElement('i');
+                userName.innerText = res.name;
+                userName.addClass('contribut_name');
+                userPhoto.style.backgroundImage = 'url(' + res.userAvatar + ')';
+                userPhoto.addClass('contribut_head');
+                li.appendChild(userPhoto);
+                li.appendChild(userName);
+                contributorsUl.appendChild(li);
+            }
+        });
+    }
+}
 
 // 隐藏贡献者列表
 function contributorsHide() {
@@ -872,7 +898,7 @@ function contributorsShow() {
 }
 
 // 点击按钮显示贡献者列表
-projectMessageBtn.addEventListener('click', function () {
+contributors.addEventListener('click', function () {
     contributorsShow();
 });
 
@@ -887,7 +913,7 @@ document.addEventListener('click', function (e) {
 // 操作记录相关操作
 // 开发中
 
-var operationRecordBox = getDom('.'); // 操作记录盒子
+var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
 
 // 隐藏操作记录
 function operationRecordHide() {
@@ -1155,7 +1181,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) {}
+    } catch (e) { }
 
     // 创建div元素
     node1.line = document.createElement('div');
@@ -1703,6 +1729,7 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
+        listClick(null, node.father);
     } else {
         topAlert('删除失败');
     }
@@ -1730,7 +1757,7 @@ function treeReload() {
     for (var i = 0; i < nodeSet.length; i++) {
         try {
             treeBoxMain.removeChild(nodeSet[i].line);
-        } catch (e) {}
+        } catch (e) { }
         treeBoxMain.removeChild(nodeSet[i]);
     }
 
@@ -1984,7 +2011,7 @@ window.onload = function () {
             introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
-            // generateParticipant(res.contributors);
+            generateContributes(res.contributors);
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
             // var date = new Date(res.createTime - 0);
