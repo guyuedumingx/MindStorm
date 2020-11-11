@@ -142,8 +142,8 @@ var operationNodeBoxStarNumber = operationNodeBox.getDom('.starNumber'); // 点�
 var operationNodeBoxSubmit = operationNodeBox.getDom('.sub'); // 提交按钮
 var tipsBox = getDom('.small'); // 提示框盒子
 var tipsClose = tipsBox.getDom('.close'); // 提示盒子右上角的叉
-var tipsTitle = tipsBox.getDom('.title_cont'); // 提示框标题
-var tipsContent = tipsBox.getDom('.sure'); // 提示内容n
+var tipsTitle = tipsBox.getDom('.title'); // 提示框标题
+var tipsContent = tipsBox.getDom('.content'); // 提示内容n
 var tipsYes = tipsBox.getDom('.yes'); // 是
 var tipsNo = tipsBox.getDom('.no'); // 否
 var transparentBaffle = getDom('.transparentBaffle'); // 透明挡板
@@ -627,7 +627,6 @@ function tipsYesFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     treeRemoveNode(nowNode);
-                    nowNode = null;
                 } else {
                     topAlert('删除失败');
                 }
@@ -878,7 +877,6 @@ function generateContributes(arr) {
                 var userName = document.createElement('i');
                 userName.innerText = res.name;
                 userName.addClass('contribut_name');
-                console.log(userPhoto);
                 userPhoto.style.backgroundImage = 'url(' + res.userAvatar + ')';
                 userPhoto.addClass('contribut_head');
                 li.appendChild(userPhoto);
@@ -1183,7 +1181,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) {}
+    } catch (e) { }
 
     // 创建div元素
     node1.line = document.createElement('div');
@@ -1685,6 +1683,9 @@ function treeRemoveNode(node) {
     removeDom(node.list);
     node.list.last.next = node.list.next;
     node.list.next.last = node.list.last;
+    nowNode = node.father;
+    changeNodeEvent();
+    listClick(null, node.father);
     if (node.childArr.length == 0 && node.father) {
         var father = node.father;
 
@@ -1758,7 +1759,7 @@ function treeReload() {
     for (var i = 0; i < nodeSet.length; i++) {
         try {
             treeBoxMain.removeChild(nodeSet[i].line);
-        } catch (e) {}
+        } catch (e) { }
         treeBoxMain.removeChild(nodeSet[i]);
     }
 
