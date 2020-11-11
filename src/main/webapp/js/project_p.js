@@ -699,6 +699,7 @@ var lockingNode = secoundbtnArr[2]; // 锁定所有节点
 var layerColor = secoundbtnArr[3]; // 根据节点层级显示不同颜色
 
 cycleSprite(secoundbtnArr, 0, 'center', 30);
+
 function btnChange(btn) {
     if (btn.state) {
         btn.state = false;
@@ -862,14 +863,12 @@ var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
 
 // 隐藏贡献者列表
 function contributorsHide() {
-    // 芷欣
-    contributorsBox.hide();
+    contributorsBox.style.transform = "translate(-100%,0)";
 }
 
 // 显示贡献者列表
 function contributorsShow() {
-    // 芷欣
-    contributorsBox.show();
+    contributorsBox.style.transform = "translate(0%,0)";
 }
 
 // 点击按钮显示贡献者列表
@@ -892,14 +891,12 @@ var operationRecordBox = getDom('.'); // 操作记录盒子
 
 // 隐藏操作记录
 function operationRecordHide() {
-    // 芷欣
-    operationRecordBox.hide();
+    operationRecordBox.style.transform = "translate(-100%,0)";
 }
 
 // 显示操作记录
 function operationRecordShow() {
-    // 芷欣
-    operationRecordBox.show();
+    operationRecordBox.style.transform = "translate(0%,0)";
 }
 
 operationRecord.addEventListener('click', function () {
@@ -1158,7 +1155,7 @@ function changeChild(node, fun) {
 function setline(node1, node2) {
     try {
         treeBoxMain.removeChild(node1.line);
-    } catch (e) { }
+    } catch (e) {}
 
     // 创建div元素
     node1.line = document.createElement('div');
@@ -1733,7 +1730,7 @@ function treeReload() {
     for (var i = 0; i < nodeSet.length; i++) {
         try {
             treeBoxMain.removeChild(nodeSet[i].line);
-        } catch (e) { }
+        } catch (e) {}
         treeBoxMain.removeChild(nodeSet[i]);
     }
 
