@@ -859,6 +859,34 @@ document.addEventListener('click', function (e) {
 // 开发中
 
 var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
+var contributorsClose = contributorsBox.getDom('.contributorsClose'); // 关闭按钮
+var contributorsUl = contributorsBox.getDom('ul'); // 成员列表盒子中的Ul
+
+// 生成贡献者列表
+function generateContributes(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        ajax({
+            type: 'get',
+            url: '/user',
+            data: {
+                id: arr[i]
+            },
+            success: function (res) {
+                var li = document.createElement('li');
+                var userPhoto = document.createElement('span');
+                var userName = document.createElement('i');
+                userName.innerText = res.name;
+                userName.addClass('contribut_name');
+                console.log(userPhoto);
+                userPhoto.style.backgroundImage = 'url(' + res.userAvatar + ')';
+                userPhoto.addClass('contribut_head');
+                li.appendChild(userPhoto);
+                li.appendChild(userName);
+                contributorsUl.appendChild(li);
+            }
+        });
+    }
+}
 
 // 隐藏贡献者列表
 function contributorsHide() {
@@ -873,7 +901,7 @@ function contributorsShow() {
 }
 
 // 点击按钮显示贡献者列表
-projectMessageBtn.addEventListener('click', function () {
+contributors.addEventListener('click', function () {
     contributorsShow();
 });
 
@@ -888,7 +916,7 @@ document.addEventListener('click', function (e) {
 // 操作记录相关操作
 // 开发中
 
-var operationRecordBox = getDom('.'); // 操作记录盒子
+var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
 
 // 隐藏操作记录
 function operationRecordHide() {
@@ -1987,7 +2015,7 @@ window.onload = function () {
             introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
-            // generateParticipant(res.contributors);
+            generateContributes(res.contributors);
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
             // var date = new Date(res.createTime - 0);
