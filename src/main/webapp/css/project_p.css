@@ -668,7 +668,6 @@
     transition: transform .5s;
     z-index: 57;
 }
-
 .historyBox li span{
     display: inline-block;
     margin-bottom: 5px;
