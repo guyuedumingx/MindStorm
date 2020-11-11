@@ -306,7 +306,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && nowOperation == 'null') {
+    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null') {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -1683,9 +1683,6 @@ function treeRemoveNode(node) {
     removeDom(node.list);
     node.list.last.next = node.list.next;
     node.list.next.last = node.list.last;
-    nowNode = node.father;
-    changeNodeEvent();
-    listClick(null, node.father);
     if (node.childArr.length == 0 && node.father) {
         var father = node.father;
 
@@ -1732,6 +1729,7 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
+        listClick(null, node.father);
     } else {
         topAlert('删除失败');
     }
