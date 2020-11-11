@@ -540,13 +540,14 @@
 .small .close,
 .message .mesClose,
 .popup .popClose,
-.contributorsBox .contribut_close {
+.contributorsBox .contributClose,
+.historyBox .historyClose {
     position: absolute;
     right: 10px;
     top: 10px;
     height: 20px;
     width: 20px;
-    background-image: url(../img/project_close.png);
+    background-image: url(../img/project_p_close.png);
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -596,32 +597,37 @@
 }
 
 /* 标题 */
-.contributorsBox .contribut_title {
+.contributorsBox .contribut_title,
+.historyBox .historyTitle {
     margin-bottom: 25px;
     font-size: 24px;
     color: #eee;
 }
 
-.contributorsBox ul {
+.contributorsBox ul,
+.historyBox ul {
     max-height: 80%;
     overflow: auto;
 }
 
-.contributorsBox ul::-webkit-scrollbar {
+.contributorsBox ul::-webkit-scrollbar,
+.historyBox ul::-webkit-scrollbar {
     width: 5px;
 }
 
-.contributorsBox ul::-webkit-scrollbar-thumb {
+.contributorsBox ul::-webkit-scrollbar-thumb,
+.historyBox ul::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #777;
 }
 
-.contributorsBox ul::-webkit-scrollbar-track {
+.contributorsBox ul::-webkit-scrollbar-track,
+.historyBox ul::-webkit-scrollbar-track {
     border-radius: 10px;
     background: #555;
 }
 
-.contributorsBox ul li {
+.contributorsBox ul li,.historyBox ul li {
     /* border: solid; */
     padding: 10px 0;
 }
@@ -645,6 +651,33 @@
     font-style: normal;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* 历史记录 */
+.historyBox {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 100%;
+    width: 18%;
+    padding: 25px;
+    color: rgb(163, 175, 190);
+    background-color: #444;
+    box-sizing: border-box;
+    /* transform: translate(-100%, 0); */
+    transition: transform .5s;
+    z-index: 57;
+}
+
+.historyBox li span{
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #eee;
+}
+.historyBox li p{
+    font-size: 15px;
+    line-height: 24px;
+    display: none;
 }
 
 .transparentBaffle {
