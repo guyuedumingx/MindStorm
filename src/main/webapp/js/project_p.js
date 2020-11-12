@@ -696,6 +696,7 @@ var hideLine = secoundbtnArr[0]; // 隐藏节点间线条
 var hideTheme = secoundbtnArr[1]; // 隐藏无关节点主题
 var lockingNode = secoundbtnArr[2]; // 锁定所有节点
 var layerColor = secoundbtnArr[3]; // 根据节点层级显示不同颜色
+var standard = secoundbtnArr[4]; // 一键规范化
 
 cycleSprite(secoundbtnArr, 0, 'center', 30);
 
@@ -751,7 +752,11 @@ setBtnEvent(hideTheme, function () {
 });
 
 // 固定所有节点
-setBtnEvent(lockingNode);
+setBtnEvent(lockingNode, function () {
+    if (standard.state) {
+        btnChange(standard);
+    }
+});
 
 // 节点根据层级显示不同颜色
 setBtnEvent(layerColor, function () {
@@ -810,7 +815,66 @@ function hideLineClick() {
     }
 }
 
+var leafSet; // 叶节点数组
+var treeDepth; // 树的深度
 
+// 生成节点标准坐标
+function standardCoordinates() {
+    leafSet = [];
+    searchLeaf(root);
+    generateDepth();
+    x = treeBox.offsetWidth / (treeDepth + 2);
+    y = treeBox.offsetHeight / (leafSet.length + 1);
+    // standardX
+    for (var i = 0; i < leafSet.length; i++) {
+        leafSet[i].standardY = (i + 1) * y;
+        leafSet[i].standardX = x * (leafSet[i].layer + 2);
+        leafSet[i].isLeaf = true;
+    }
+    for (var i = treeDepth; i >= 0; i--) {
+        for (var j = 0; j < nodeSet.length; j++) {
+            if (nodeSet[j].layer == i && !nodeSet[j].isLeaf) {
+                nodeSet[j].standardX = x * (nodeSet[j].layer + 2);
+                nodeSet[j].standardY = (nodeSet[j].childArr[0].standardY + nodeSet[j].childArr[nodeSet[j].childArr.length - 1].standardY) / 2;
+            }
+        }
+    }
+    var controlWidth = getDom('.control').offsetWidth;
+    for (var i = 0; i < nodeSet.length; i++) {
+        nodeSet[i].x = nodeSet[i].standardX;
+        nodeSet[i].y = nodeSet[i].standardY;
+        setPosition(nodeSet[i]);
+    }
+}
+
+// 寻找叶子节点的递归函数
+function searchLeaf(node) {
+    if (node.childArr.length == 0) {
+        leafSet.push(node);
+        return;
+    }
+    for (var i = 0; i < node.childArr.length; i++) {
+        searchLeaf(node.childArr[i]);
+    }
+}
+
+// 生成树的深度
+function generateDepth() {
+    treeDepth = 0;
+    for (var i = 0; i < leafSet.length; i++) {
+        treeDepth = treeDepth > leafSet[i].layer ? treeDepth : leafSet[i].layer;
+    }
+}
+
+setBtnEvent(standard, function () {
+    if (standard.state) {
+        if (!lockingNode.state) {
+            btnChange(lockingNode);
+            lockingNode.state = true;
+        }
+        standardCoordinates();
+    }
+});
 
 
 // 第三组按钮
@@ -822,6 +886,8 @@ var exportProject = thirdbtnArr[3]; // 导出项目按钮
 var signOutProject = thirdbtnArr[4]; // 退出项目按钮
 var deleteProject = thirdbtnArr[5]; // 删除项目按钮
 var classic = thirdbtnArr[6]; // 返回经典模式按钮
+
+cycleSprite(thirdbtnArr, 0, 0, 30);
 
 // 项目信息相关操作
 var projectMessage = getDom('.message'); // 项目信息盒子
@@ -927,6 +993,32 @@ function operationRecordShow() {
 
 operationRecord.addEventListener('click', function () {
 
+});
+
+// 请求历史记录
+function getHistory() {
+    ajax({
+        type: 'get',
+        url: '/history',
+        data: {
+
+        },
+        success: function (res) {
+            for (var i = 0; i < res.length; i++) {
+                var jlType = res[i].operaType; // N 创建 U 修改 D 删除
+                var nodeBefore = res[i].node; // 源节点信息
+                var nodeAfter = res[i].after; // 修改后节点信息
+                console.log(jlType);
+                console.log(nodeBefore);
+                console.log(nodeAfter);
+            }
+        }
+    });
+}
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'h') {
+        getHistory();
+    }
 });
 
 // 点击空白处隐藏贡献者列表
@@ -1073,7 +1165,7 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
         if (!treeFullScreenState) {
             domFullScreen(treeBox);
-            this.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+            treeFullScreenOnOff.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
             treeFullScreenState = true;
         }
     }

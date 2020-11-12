@@ -26,6 +26,8 @@
     flex-flow: column nowrap;
     justify-content: space-around;
     align-items: center;
+    /* border-radius: 15px;
+    background-color: #282828; */
 }
 
 .control .first div {
@@ -43,11 +45,13 @@
 }
 
 .control .secound {
-    height: 160px;
+    height: 200px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
     align-items: center;
+    /* border-radius: 15px;
+    background-color: #282828; */
 }
 
 .control .secound div {
@@ -74,13 +78,15 @@
     flex-flow: column nowrap;
     justify-content: space-around;
     align-items: center;
+    /* border-radius: 15px;
+    background-color: #282828; */
 }
 
 .control .third div {
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    background-image: url(../img/project_rightButton.png);
+    background-image: url(../img/project_p_projectHandle.png);
     background-repeat: no-repeat;
     background-size: 100%;
     cursor: pointer;
