@@ -227,6 +227,8 @@ function search() {
                         addLiBox(searchProjectLength, searchProject, searchNav)
                         personalBox.style.backgroundColor = "";
                         personalBox.style.color = "#214B5B";
+                        shareBox.style.backgroundColor = "";
+                        shareBox.style.color = "#214B5B";
                     } else {
                         topAlert("搜索失败");
                     }
@@ -377,14 +379,11 @@ function butStyle(project, liArr, x) {
         leftBut.style.display = "none";
         rightBut.style.display = "none";
     } else {
-
         //左右滑动
         move(x);
         window.addEventListener('resize', function () {
             move(x);
         });
-
-
     }
 }
 
@@ -392,7 +391,7 @@ function butStyle(project, liArr, x) {
 function addLi(li, name, introduce, author, number, projectID) {
     var divName = document.createElement("div");
     divName.className = "projectName";
-    divName.innerText = name; 
+    divName.innerText = name;
     divName.title = name;
     var divIn = document.createElement("div");
     divIn.className = "introduce";
@@ -527,10 +526,36 @@ searchBut.addEventListener("click", search);
 //回车
 inputEnterEvent(searchCont, search);
 
+//公有项目
+//项目板块添加
+function addLiShareBox(projectLength, project, projectNav) {
+    //获取项目大框架
+    var projectLi = getDom(".projectLi", projectNav);
+    var div = document.createElement("div");
+    div.className = "liNav";
+    projectLi.appendChild(div);
+    for (var j = 0; j < 6; j++) {
+        var li = document.createElement("li");
+        div.appendChild(li);
+    }
+    projectSize(projectNav);
+    // 获取li数组
+    var liArr = getDomA("li", div);
+
+    // 将项目放进板块
+    create(project, projectLength, liArr);
+
+    //判断是否有内容
+    liStyle(liArr);
+
+}
+//公有总页数
+var allPage = 0;
+
 function getPublic(page) {
     ajax({
         type: 'put',
-        url: '/project',
+        url: '/util/project',
         data: {
             page: page
         },
@@ -539,37 +564,60 @@ function getPublic(page) {
         }, // 请求头
         success: function (res) {
             if (res.status_code == '200') {
-                if (getDom(".noneP")) {
-                    getDom(".noneP").parentNode.removeChild(getDom(".noneP"));
+                if (page == 1 && !res.result) {
+                    noProject(shareNav);
                 }
-                personalNav.hide();
-                searchNav.show();
-                projectSize(searchNav);
+                if (res.result) {
+                    //项目数组--
+                    shareProject = res.result;
+                    // 长度
+                    shareProjectLength = shareProject.length;
 
-                removeLi();
-                //项目数组--
-                searchProject = res.result;
-                // 长度
-                searchProjectLength = searchProject.length;
-
-                addLiBox(searchProjectLength, searchProject, searchNav)
-                personalBox.style.backgroundColor = "";
-                personalBox.style.color = "#214B5B";
+                    addLiShareBox(shareProjectLength, shareProject, shareNav)
+                    allPage++;
+                }
             } else {
-                topAlert("搜索失败");
+                topAlert("发生未知错误");
             }
         }
     });
 }
+// 先请求两页
+getPublic(1);
+getPublic(2);
 
-function pdPage(){
+function sharePage() {
     var page = 1;
-    var rightBut = getDom(".rightBut",shareNav);
+    var rightBut = getDom(".rightBut", shareNav);
     var leftBut = getDom(".leftBut", shareNav);
+    // 第一页没有左箭头
+    if (page == 1)
+        leftBut.style.display = "none";
+    // 只有一页没有又箭头
+    if (page == allPage)
+        rightBut.style.display = "none";
     rightBut.addEventListener("click", function () {
+        // 点击右页数增加
         page++;
+        //当前页数加一大于总页数
+        if (page + 1 > allPage) {
+            //获取下一页的项目
+            getPublic(page + 1);
+        }
+        // 左箭头显示
+        leftBut.style.display = "block";
+        // 当页数相同时即请求下一页无内容 右箭头消失
+        if (page == allPage)
+            rightBut.style.display = "none";
     })
     leftBut.addEventListener("click", function () {
+        //页数减少
         page--;
+        // 右箭头显示
+        rightBut.style.display = "block";
+        // 当第一页时左箭头隐藏
+        if (page == 1)
+            leftBut.style.display = "none";
     })
 }
+sharePage();
