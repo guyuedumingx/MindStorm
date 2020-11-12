@@ -571,11 +571,10 @@ function getPublic(page) {
         success: function (res) {
             pdqq--;
             if (res.status_code == '200') {
-                if (page == 1 && !res.result) {
-                    projectSize(shareNav);
+                if (page == 1 && res.result.length == 0) {
                     noProject(shareNav);
                 }
-                if (res.result.length == 0) {
+                if (res.result.length != 0) {
                     //项目数组--
                     shareProject = res.result;
                     // 长度
