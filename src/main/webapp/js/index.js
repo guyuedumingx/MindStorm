@@ -561,3 +561,15 @@ function getPublic(page) {
         }
     });
 }
+
+function pdPage(){
+    var page = 1;
+    var rightBut = getDom(".rightBut",shareNav);
+    var leftBut = getDom(".leftBut", shareNav);
+    rightBut.addEventListener("click", function () {
+        page++;
+    })
+    leftBut.addEventListener("click", function () {
+        page--;
+    })
+}
