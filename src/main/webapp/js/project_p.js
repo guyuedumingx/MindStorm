@@ -1105,11 +1105,11 @@ function getHistory() {
         success: function (res) {
             for (var i = 0; i < res.length; i++) {
                 var jlType = res[i].operaType; // N 创建 U 修改 D 删除
+                console.log('jlType: ', jlType);
                 var nodeBefore = res[i].node; // 源节点信息
+                console.log('nodeBefore: ', nodeBefore);
                 var nodeAfter = res[i].after; // 修改后节点信息
-                console.log(jlType);
-                console.log(nodeBefore);
-                console.log(nodeAfter);
+                console.log('nodeAfter: ', nodeAfter);
             }
         }
     });
