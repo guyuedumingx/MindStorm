@@ -69,7 +69,6 @@ public class NodeController extends BaseController{
             result.setStatus_code(StatusCode.LOST);
         }
 
-        logger.debug("user_id : "+user.getId()+" : msg");
         WebUtil.renderForContributors(user,msg);
         WebUtil.renderJson(resp,result);
     }
@@ -92,7 +91,6 @@ public class NodeController extends BaseController{
         if(StatusCode.OK==statusCode){
             msg.setChangeId(nodeId);
             history.addDelNodeHistory(node);
-            logger.debug("user_id : "+user.getId()+" : msg");
             WebUtil.renderForContributors(user,msg);
         }
     }
@@ -114,7 +112,6 @@ public class NodeController extends BaseController{
         if(StatusCode.OK==statusCode){
             msg.setChangeId(node.getId());
             history.addUpdateNodeHistory(historyNode);
-            logger.debug("user_id : "+user.getId()+" : msg");
             WebUtil.renderForContributors(user,msg);
         }
     }

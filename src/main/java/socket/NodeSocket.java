@@ -24,7 +24,6 @@ public class NodeSocket {
     @OnOpen
     public void onOpen(@PathParam("userId") String userId,@PathParam("projectId") String projectId, Session session) throws IOException {
         this.userId =Integer.valueOf(userId);
-        logger.debug(userId+" : "+projectId);
         this.projectId = Integer.valueOf(projectId);
         this.session = session;
         onlineUsers.add(this);
