@@ -611,6 +611,10 @@ body .mainBox {
     color: #fff;
     background-color: #46607b;
     transition: all .3s;
+    background-image: url(../img/public_onOffFalse.png);
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
 }
 
 .mainBox .Box .est_bigBox .est_but input {
