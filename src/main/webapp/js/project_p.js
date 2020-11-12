@@ -1047,6 +1047,7 @@ document.addEventListener('keydown', function (e) {
 
 var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
 var operationRecordClose = operationRecordBox.getDom('.historyClose'); // 操作记录盒子中关闭按钮 
+var operationRecordUl = operationRecordBox.getDom('ul'); // 操作记录盒子中ul
 
 // 操作记录盒子状态
 operationRecordBox.state = false;
@@ -1078,7 +1079,7 @@ operationRecordClose.addEventListener('click', function () {
     operationRecordBox.state = false;
 });
 
-// 点击空白处隐藏贡献者列表
+// 点击空白处隐藏操作记录列表
 document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, operationRecordBox) && e.target != operationRecord) {
@@ -1087,7 +1088,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// 按ESC隐藏贡献者列表
+// 按ESC隐藏操作记录列表
 document.addEventListener('keydown', function (e) {
     if (e.key == 'Escape') {
         operationRecordHide();
@@ -1104,13 +1105,26 @@ function getHistory() {
 
         },
         success: function (res) {
+            while (operationRecordUl.children.length != 0) {
+                operationRecordUl.removeChild(operationRecordUl.children[0]);
+            }
             for (var i = 0; i < res.length; i++) {
                 var jlType = res[i].operaType; // N 创建 U 修改 D 删除
-                console.log('jlType: ', jlType);
+                var li = document.createElement('li');
+                var span = document.createElement('span');
                 var nodeBefore = res[i].node; // 源节点信息
-                console.log('nodeBefore: ', nodeBefore);
                 var nodeAfter = res[i].after; // 修改后节点信息
-                console.log('nodeAfter: ', nodeAfter);
+                if (jlType == 'N') {
+                    span.innerText = '创建了节点 \'' + nodeAfter.theme + ' \'';
+                } else if (jlType == 'U') {
+                    span.innerText = '修改了节点 \'' + nodeAfter.theme + ' \'';
+                } else if (jlType == 'D') {
+                    span.innerText = '删除了节点 \'' + nodeBefore.theme + ' \'';
+                } else {
+                    topAlert('出bug啦');
+                }
+                li.appendChild(span);
+                operationRecordUl.appendChild(li);
             }
         }
     });
@@ -2227,6 +2241,7 @@ window.onload = function () {
             // progressContent.style.width = progress + '%';
             // progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);
+            setInterval(getHistory, 1000);
         }
     });
 }
