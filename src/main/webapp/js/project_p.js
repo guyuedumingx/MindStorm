@@ -645,6 +645,7 @@ function tipsYesFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     treeRemoveNode(nowNode);
+                    listClick(null, nowNode.father);
                 } else {
                     topAlert('删除失败');
                 }
@@ -1046,6 +1047,7 @@ document.addEventListener('keydown', function (e) {
 
 var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
 var operationRecordClose = operationRecordBox.getDom('.historyClose'); // 操作记录盒子中关闭按钮 
+var operationRecordUl = operationRecordBox.getDom('ul'); // 操作记录盒子中ul
 
 // 操作记录盒子状态
 operationRecordBox.state = false;
@@ -1077,7 +1079,7 @@ operationRecordClose.addEventListener('click', function () {
     operationRecordBox.state = false;
 });
 
-// 点击空白处隐藏贡献者列表
+// 点击空白处隐藏操作记录列表
 document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, operationRecordBox) && e.target != operationRecord) {
@@ -1086,7 +1088,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// 按ESC隐藏贡献者列表
+// 按ESC隐藏操作记录列表
 document.addEventListener('keydown', function (e) {
     if (e.key == 'Escape') {
         operationRecordHide();
@@ -1103,13 +1105,26 @@ function getHistory() {
 
         },
         success: function (res) {
+            while (operationRecordUl.children.length != 0) {
+                operationRecordUl.removeChild(operationRecordUl.children[0]);
+            }
             for (var i = 0; i < res.length; i++) {
                 var jlType = res[i].operaType; // N 创建 U 修改 D 删除
+                var li = document.createElement('li');
+                var span = document.createElement('span');
                 var nodeBefore = res[i].node; // 源节点信息
                 var nodeAfter = res[i].after; // 修改后节点信息
-                console.log(jlType);
-                console.log(nodeBefore);
-                console.log(nodeAfter);
+                if (jlType == 'N') {
+                    span.innerText = '创建了节点 \'' + nodeAfter.theme + ' \'';
+                } else if (jlType == 'U') {
+                    span.innerText = '修改了节点 \'' + nodeAfter.theme + ' \'';
+                } else if (jlType == 'D') {
+                    span.innerText = '删除了节点 \'' + nodeBefore.theme + ' \'';
+                } else {
+                    topAlert('出bug啦');
+                }
+                li.appendChild(span);
+                operationRecordUl.appendChild(li);
             }
         }
     });
@@ -1915,7 +1930,6 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
-        listClick(null, node.father);
     } else {
         topAlert('删除失败');
     }
@@ -2189,7 +2203,15 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-
+// 通过id获取对应节点
+function getTreeNode(id) {
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i].id == id) {
+            return nodeSet[i];
+        }
+    }
+    return null;
+}
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
 
@@ -2219,6 +2241,103 @@ window.onload = function () {
             // progressContent.style.width = progress + '%';
             // progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);
+            setInterval(getHistory, 1000);
         }
     });
+}
+
+// webSocket
+if ('WebSocket' in window) {
+    //8.129.110.151/MindStorm-1.0-SNAPSHOT
+    websocket = new WebSocket("ws://8.129.110.151:17682/MindStorm-1.0-SNAPSHOT/node/socket/" + user.userId + "/" + projectId);
+} else {
+    alert('Not support websocket')
+}
+
+//连接发生错误的回调方法
+websocket.onerror = function () {
+    console.log("error");
+};
+
+//连接成功建立的回调方法
+websocket.onopen = function (event) {
+    console.log("open");
+}
+
+// 递归动态添加节点
+function recursionAppendNode(res) {
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i].id == res.parentId) {
+            treeAppendNode(nodeSet[i], {
+                id: res.id,
+                theme: res.theme,
+                content: res.content,
+                editable: res.banAppend,
+                childArr: [],
+                userName: res.userName,
+                author: res.author,
+                lastEditName: res.lastEditName,
+                lastEditTime: res.lastEditTime,
+                star: res.star,
+                stared: res.stared
+            });
+        }
+    }
+    var arr = res.children;
+    for (var i = 0; i < arr.length; i++) {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: arr[i]
+            },
+            success: recursionAppendNode
+        });
+    }
+}
+
+//接收到消息的回调方法
+websocket.onmessage = function (e) {
+    var back = JSON.parse(e.data);
+    var socketNode = getTreeNode(back.node_id);
+    if (back.type == "N") {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: back.node_id
+            },
+            success: recursionAppendNode
+        });
+    } else if (back.type == "D") {
+        treeRemoveNode(socketNode);
+    } else if (back.type == "U") {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: back.node_id
+            },
+            success: function (res) {
+                socketNode.getDom('.theme').innerText = res.theme;
+                socketNode.content = res.content;
+                socketNode.lastEditName = res.lastEditName;
+                socketNode.lastEditTime = res.lastEditTime;
+                socketNode.star = res.star;
+                socketNode.stared = res.stared;
+            }
+        });
+    } else {
+        topAlert('发生未知错误');
+    }
+}
+
+//连接关闭的回调方法
+websocket.onclose = function () {
+    console.log("close");
+}
+
+//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+window.onbeforeunload = function () {
+    websocket.close();
 }
