@@ -2222,3 +2222,99 @@ window.onload = function () {
         }
     });
 }
+
+// webSocket
+if ('WebSocket' in window) {
+    //8.129.110.151/MindStorm-1.0-SNAPSHOT
+    websocket = new WebSocket("ws://8.129.110.151:17682/MindStorm-1.0-SNAPSHOT/node/socket/" + user.userId + "/" + projectId);
+} else {
+    alert('Not support websocket')
+}
+
+//连接发生错误的回调方法
+websocket.onerror = function () {
+    console.log("error");
+};
+
+//连接成功建立的回调方法
+websocket.onopen = function (event) {
+    console.log("open");
+}
+
+// 递归动态添加节点
+function recursionAppendNode(res) {
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i].id == res.parentId) {
+            treeAppendNode(nodeSet[i], {
+                id: res.id,
+                theme: res.theme,
+                content: res.content,
+                editable: res.banAppend,
+                childArr: [],
+                userName: res.userName,
+                author: res.author,
+                lastEditName: res.lastEditName,
+                lastEditTime: res.lastEditTime,
+                star: res.star,
+                stared: res.stared
+            });
+        }
+    }
+    var arr = res.children;
+    for (var i = 0; i < arr.length; i++) {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: arr[i]
+            },
+            success: recursionAppendNode
+        });
+    }
+}
+
+//接收到消息的回调方法
+websocket.onmessage = function (e) {
+    var back = JSON.parse(e.data);
+    var socketNode = getTreeNode(back.node_id);
+    if (back.type == "N") {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: back.node_id
+            },
+            success: recursionAppendNode
+        });
+    } else if (back.type == "D") {
+        treeRemoveNode(socketNode);
+    } else if (back.type == "U") {
+        ajax({
+            type: 'get',
+            url: '/node',
+            data: {
+                id: back.node_id
+            },
+            success: function (res) {
+                socketNode.getDom('.theme').innerText = res.theme;
+                socketNode.content = res.content;
+                socketNode.lastEditName = res.lastEditName;
+                socketNode.lastEditTime = res.lastEditTime;
+                socketNode.star = res.star;
+                socketNode.stared = res.stared;
+            }
+        });
+    } else {
+        topAlert('发生未知错误');
+    }
+}
+
+//连接关闭的回调方法
+websocket.onclose = function () {
+    console.log("close");
+}
+
+//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+window.onbeforeunload = function () {
+    websocket.close();
+}
