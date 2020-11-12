@@ -1070,6 +1070,7 @@ operationRecord.addEventListener('click', function () {
     } else {
         operationRecordShow();
         operationRecordBox.state = true;
+        getHistory();
     }
 });
 
@@ -2242,7 +2243,6 @@ window.onload = function () {
             // progressContent.style.width = progress + '%';
             // progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);
-            setInterval(getHistory, 1000);
         }
     });
 }
