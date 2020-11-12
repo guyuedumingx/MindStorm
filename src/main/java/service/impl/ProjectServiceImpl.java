@@ -109,7 +109,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getPublicProjectsFromPages(int pages) {
-        return projectDao.getPublicProjectsFromPages(pages,6);
+        List<Project> publicProjectsFromPages = projectDao.getPublicProjectsFromPages(pages, 6);
+        List<Project> back = new ArrayList<>();
+        List<Project> projects = publicProjectsFromPages;
+        Iterator<Project> iterator = projects.iterator();
+        while (iterator.hasNext()){
+            Project in = iterator.next();
+            Project project = getProject(in.getId());
+            back.add(project);
+        }
+        return back;
     }
 
     @Override

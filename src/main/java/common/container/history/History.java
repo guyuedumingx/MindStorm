@@ -36,13 +36,8 @@ public class History {
         list.add(historyNode);
     }
 
-    public void addNewNodeHistory(int nodeId){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                add(OperaType.CREATE,service.getNode(nodeId, user.getId()));
-            }
-        }).start();
+    public void addNewNodeHistory(int nodeId) {
+        add(OperaType.CREATE, service.getNode(nodeId, user.getId()));
     }
 
     public void addDelNodeHistory(Node node){
