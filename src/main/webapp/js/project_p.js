@@ -298,6 +298,10 @@ document.addEventListener('keydown', function (e) {
 // 删除节点相关事件
 function removeNodeFunction() {
     if (removeNode.jurisdiction) {
+        if (nowNode == root) {
+            topAlert('根节点不可删除');
+            return;
+        }
         tipsState = 'deleteNode';
         tipsTitle.innerText = '删除节点';
         tipsContent.innerText = '该操作不可恢复，是否继续';
