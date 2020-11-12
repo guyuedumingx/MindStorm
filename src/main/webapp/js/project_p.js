@@ -2189,7 +2189,15 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-
+// 通过id获取对应节点
+function getTreeNode(id) {
+    for (var i = 0; i < nodeSet.length; i++) {
+        if (nodeSet[i].id == id) {
+            return nodeSet[i];
+        }
+    }
+    return null;
+}
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
 
