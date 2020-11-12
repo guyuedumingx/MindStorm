@@ -242,6 +242,7 @@ app.get('/', function (req, res) {
         }
     });
 });
+
 function getNode(id) {
     for (var i = 0; i < user.length; i++) {
         if (user[i]) {
@@ -328,6 +329,13 @@ app.get('/', function (req, res) {
 });
 
 app.put('/util/project', function (req, res) {
+    res.send({
+        status_code: "200",
+        result: null
+    });
+    if (1 + 1 == 2) {
+        return;
+    }
     var text = req.query;
     var page = text.page;
     if (page >= 5) {
