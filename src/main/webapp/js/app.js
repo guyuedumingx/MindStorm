@@ -334,6 +334,7 @@ app.put('/util/project', function (req, res) {
         res.send({
             status_code: '500',
         });
+        return;
     }
     var p = 1;
     var resArr = [];
