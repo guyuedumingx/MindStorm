@@ -110,6 +110,10 @@
           <artifactId>commons-lang</artifactId>
           <groupId>commons-lang</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>slf4j-log4j12</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -179,6 +183,11 @@
       <artifactId>javax.websocket-api</artifactId>
       <version>1.1</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.websocket</groupId>
+      <artifactId>javax.websocket-client-api</artifactId>
+      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>org.xmind</groupId>

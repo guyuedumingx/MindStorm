@@ -45,7 +45,9 @@ public class NodeSocket {
         Result result = new Result();
         result.setChangeType(OperaType.EDITING);
         result.setChangeId(message);
-        WebUtil.renderJson(session,result);
+//        WebUtil.renderJson(session,result);
+//        logger.debug(message);
+        session.getBasicRemote().sendText(message);
     }
 
     @OnError

@@ -64,32 +64,24 @@ public class WebUtil {
      * @param object
      */
     public static void renderForContributors(User user, Object object){
-        logger.debug("render:"+user.getId());
-        try {
-            int id = user.getId();
-            logger.debug("opera: " + id);
-            OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
-            logger.debug("onlineUsers:" + onlineUsers.get(id));
-            String s = JSON.toJSONString(object);
-            logger.debug(onlineUsers.get(id) + "");
-            NodeSocket uSocket = onlineUsers.get(id);
-            if (uSocket != null) {
-                int projectId = uSocket.getProjectId();
-                List<NodeSocket> socketForProject = onlineUsers.getSocketForProject(projectId);
-                for (NodeSocket socket : socketForProject) {
-                    try {
-                        if (socket.getUserId() != id) {
-                            socket.getSession().getBasicRemote().sendText(s);
-                        }
-                    } catch (IOException e) {
-                        logger.error(e.getMessage());
+        int id = user.getId();
+        OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
+        String s = JSON.toJSONString(object);
+        NodeSocket uSocket = onlineUsers.get(id);
+        if (uSocket != null) {
+            int projectId = uSocket.getProjectId();
+            List<NodeSocket> socketForProject = onlineUsers.getSocketForProject(projectId);
+            for (NodeSocket socket : socketForProject) {
+                try {
+                    if (socket.getUserId() != id) {
+                        socket.getSession().getBasicRemote().sendText(s);
                     }
+                } catch (IOException e) {
+                    logger.error(e.getMessage());
                 }
-            } else {
-                logger.error("没有用户在线错误");
             }
-        }catch (Exception e){
-            logger.error(e.getMessage());
+        } else {
+            logger.error("没有用户在线错误");
         }
     }
 
