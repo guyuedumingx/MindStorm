@@ -214,6 +214,7 @@ function search() {
                         // searchNav.style.display = "block";
                         // =======
                         personalNav.hide();
+                        shareNav.hide();
                         searchNav.show();
                         projectSize(searchNav);
                         // >>>>>>> 传入的更改
@@ -554,8 +555,10 @@ function addLiShareBox(projectLength, project, projectNav) {
 
 //公有总页数
 var allPage = 0;
+var pdqq = 0;
 
 function getPublic(page) {
+    pdqq++;
     ajax({
         type: 'put',
         url: '/util/project',
@@ -566,8 +569,10 @@ function getPublic(page) {
             'Content-Type': 'application/json'
         }, // 请求头
         success: function (res) {
+            pdqq--;
             if (res.status_code == '200') {
                 if (page == 1 && !res.result) {
+                    projectSize(shareNav);
                     noProject(shareNav);
                 }
                 if (res.result) {
@@ -581,7 +586,7 @@ function getPublic(page) {
                     console.log(allPage + "a");
                 }
             } else {
-                topAlert("发生未知错误");
+                // topAlert("发生未知错误");
             }
         }
     });
@@ -598,27 +603,30 @@ function sharePage() {
     var leftBut = getDom(".leftBut", shareNav);
     var projectLiA = getDom(".projectLi", shareNav);
     // 第一页没有左箭头
-    if (page == 1)
-        leftBut.style.display = "none";
-    if (page == allPage)
+    // if (page == 1)
+    leftBut.style.display = "none";
+    if (page == allPage || allPage == 0)
         rightBut.style.display = "none";
     rightBut.addEventListener("click", function () {
         moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10);
-        // 点击右页数增加
-        page++;
         //当前页数加一等于总页数
         if (page + 1 == allPage) {
             //获取下一页的项目
-            getPublic(page + 1);
-
+            getPublic(page + 2);
         }
         // 左箭头显示
         leftBut.style.display = "block";
         // 当页数相同时即请求下一页无内容 右箭头消失
-        if (page == allPage)
-            rightBut.style.display = "none";
+        var timerp = setInterval(function () {
+            if (pdqq == 0) {
+                if (page == allPage)
+                    rightBut.style.display = "none";
+                clearInterval(timerp);
+            }
+        }, 100)
+        // 点击右页数增加
+        page++;
         console.log(page);
-
     })
     leftBut.addEventListener("click", function () {
         moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10);
@@ -633,8 +641,11 @@ function sharePage() {
     })
 
 }
-setTimeout(function () {
-    sharePage();
-}, 500);
+var timer = setInterval(function () {
+    if (pdqq == 0) {
+        sharePage();
+        clearInterval(timer);
+    }
+}, 100)
 
 start();
