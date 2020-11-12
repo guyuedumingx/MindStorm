@@ -250,7 +250,6 @@ onOff.state = false;
 
 //点击改变
 onOff.addEventListener('click', function () {
-
     if (!onOff.state) {
         onOff.state = true;
         onOff.style.backgroundColor = '#2c3e50';
@@ -423,7 +422,7 @@ estBut.addEventListener("click", function () {
             type: 'post',
             url: '/project',
             data: {
-                public: public,
+                public: !public,
                 name: name,
                 deadline: createTime + time,
                 rank: rank,
