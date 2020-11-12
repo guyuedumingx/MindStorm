@@ -298,6 +298,10 @@ document.addEventListener('keydown', function (e) {
 // 删除节点相关事件
 function removeNodeFunction() {
     if (removeNode.jurisdiction) {
+        if (nowNode == root) {
+            topAlert('根节点不可删除');
+            return;
+        }
         tipsState = 'deleteNode';
         tipsTitle.innerText = '删除节点';
         tipsContent.innerText = '该操作不可恢复，是否继续';
@@ -308,7 +312,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null' && transparentBaffle.getCSS('display' == null)) {
+    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null' && transparentBaffle.getCSS('display') == 'none') {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -837,6 +841,7 @@ function standardCoordinates() {
     leafSet = [];
     searchLeaf(root);
     generateDepth();
+    console.log(treeDepth);
     x = treeBox.offsetWidth / (treeDepth + 2);
     y = treeBox.offsetHeight / (leafSet.length + 1);
     // standardX
@@ -853,7 +858,6 @@ function standardCoordinates() {
             }
         }
     }
-    var controlWidth = getDom('.control').offsetWidth;
     for (var i = 0; i < nodeSet.length; i++) {
         nodeSet[i].x = nodeSet[i].standardX;
         nodeSet[i].y = nodeSet[i].standardY;
@@ -1855,6 +1859,9 @@ function treeAppendNode(father, nodeData) {
     appendNode.list.next = appendNode.list.last.next;
     appendNode.list.next.last = appendNode.list;
     appendNode.list.last.next = appendNode.list;
+    if (standard.state) {
+        standardCoordinates();
+    }
 }
 
 // 动态删除页面中的节点
