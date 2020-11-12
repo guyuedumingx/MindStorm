@@ -645,6 +645,7 @@ function tipsYesFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     treeRemoveNode(nowNode);
+                    listClick(null, nowNode.father);
                 } else {
                     topAlert('删除失败');
                 }
@@ -1915,7 +1916,6 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
-        listClick(null, node.father);
     } else {
         topAlert('删除失败');
     }
