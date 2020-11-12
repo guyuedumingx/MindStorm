@@ -151,6 +151,8 @@ var leftTransparentBaffle = getDom('.leftTransparentBaffle'); // 左侧透明挡
 
 var nowOperation = 'null'; // 操作节点盒子状态
 var tipsState = 'null'; // 提示盒子状态
+inputSelectAllText(operationNodeBoxTheme);
+inputSelectAllText(operationNodeBoxContent);
 
 transparentBaffle.hide();
 
@@ -306,7 +308,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null') {
+    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null' && transparentBaffle.getCSS('display' == null)) {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -415,7 +417,8 @@ operationNodeBoxContent.addEventListener('focus', function () {
 addNodeState = false;
 changeNodeState = false;
 
-operationNodeBoxSubmit.addEventListener('click', function () {
+// 提交函数
+function operationNodeBoxSubmitFunction() {
     if (nowOperation == 'add') {
         var inpTheme = operationNodeBoxTheme.value;
         if (inpTheme.length <= 0) {
@@ -510,8 +513,19 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         operationNodeBoxCloseFunction();
         operationNodeBoxHide();
     }
-});
+}
 
+operationNodeBoxSubmit.addEventListener('click', operationNodeBoxSubmitFunction);
+operationNodeBoxTheme.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && ctrlState) {
+        operationNodeBoxSubmitFunction();
+    }
+});
+operationNodeBoxContent.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && ctrlState) {
+        operationNodeBoxSubmitFunction();
+    }
+});
 // 点赞相关事件
 
 operationNodeBoxStarState = false;
@@ -2042,6 +2056,14 @@ function listClick(e, node) {
     // 设置当前节点的样式
     nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
 }
+
+// 选中根节点(ctrl + d)
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'd' && ctrlState && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        listClick(null, root);
+    }
+});
 
 function listFold(foldBtn) {
     var list = foldBtn.parentNode.parentNode;
