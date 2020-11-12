@@ -151,6 +151,8 @@ var leftTransparentBaffle = getDom('.leftTransparentBaffle'); // 左侧透明挡
 
 var nowOperation = 'null'; // 操作节点盒子状态
 var tipsState = 'null'; // 提示盒子状态
+inputSelectAllText(operationNodeBoxTheme);
+inputSelectAllText(operationNodeBoxContent);
 
 transparentBaffle.hide();
 
@@ -306,7 +308,7 @@ function removeNodeFunction() {
 
 removeNode.addEventListener('click', removeNodeFunction);
 document.addEventListener('keydown', function (e) {
-    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null') {
+    if ((e.key == 'Delete' || e.key == 'Backspace') && nowNode && tipsState == 'null' && transparentBaffle.getCSS('display' == null)) {
         e.preventDefault();
         removeNodeFunction();
     }
@@ -415,7 +417,8 @@ operationNodeBoxContent.addEventListener('focus', function () {
 addNodeState = false;
 changeNodeState = false;
 
-operationNodeBoxSubmit.addEventListener('click', function () {
+// 提交函数
+function operationNodeBoxSubmitFunction() {
     if (nowOperation == 'add') {
         var inpTheme = operationNodeBoxTheme.value;
         if (inpTheme.length <= 0) {
@@ -510,8 +513,19 @@ operationNodeBoxSubmit.addEventListener('click', function () {
         operationNodeBoxCloseFunction();
         operationNodeBoxHide();
     }
-});
+}
 
+operationNodeBoxSubmit.addEventListener('click', operationNodeBoxSubmitFunction);
+operationNodeBoxTheme.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && ctrlState) {
+        operationNodeBoxSubmitFunction();
+    }
+});
+operationNodeBoxContent.addEventListener('keydown', function (e) {
+    if (e.key == 'Enter' && ctrlState) {
+        operationNodeBoxSubmitFunction();
+    }
+});
 // 点赞相关事件
 
 operationNodeBoxStarState = false;
@@ -696,6 +710,7 @@ var hideLine = secoundbtnArr[0]; // 隐藏节点间线条
 var hideTheme = secoundbtnArr[1]; // 隐藏无关节点主题
 var lockingNode = secoundbtnArr[2]; // 锁定所有节点
 var layerColor = secoundbtnArr[3]; // 根据节点层级显示不同颜色
+var standard = secoundbtnArr[4]; // 一键规范化
 
 cycleSprite(secoundbtnArr, 0, 'center', 30);
 
@@ -751,7 +766,11 @@ setBtnEvent(hideTheme, function () {
 });
 
 // 固定所有节点
-setBtnEvent(lockingNode);
+setBtnEvent(lockingNode, function () {
+    if (standard.state) {
+        btnChange(standard);
+    }
+});
 
 // 节点根据层级显示不同颜色
 setBtnEvent(layerColor, function () {
@@ -810,7 +829,66 @@ function hideLineClick() {
     }
 }
 
+var leafSet; // 叶节点数组
+var treeDepth; // 树的深度
 
+// 生成节点标准坐标
+function standardCoordinates() {
+    leafSet = [];
+    searchLeaf(root);
+    generateDepth();
+    x = treeBox.offsetWidth / (treeDepth + 2);
+    y = treeBox.offsetHeight / (leafSet.length + 1);
+    // standardX
+    for (var i = 0; i < leafSet.length; i++) {
+        leafSet[i].standardY = (i + 1) * y;
+        leafSet[i].standardX = x * (leafSet[i].layer + 2);
+        leafSet[i].isLeaf = true;
+    }
+    for (var i = treeDepth; i >= 0; i--) {
+        for (var j = 0; j < nodeSet.length; j++) {
+            if (nodeSet[j].layer == i && !nodeSet[j].isLeaf) {
+                nodeSet[j].standardX = x * (nodeSet[j].layer + 2);
+                nodeSet[j].standardY = (nodeSet[j].childArr[0].standardY + nodeSet[j].childArr[nodeSet[j].childArr.length - 1].standardY) / 2;
+            }
+        }
+    }
+    var controlWidth = getDom('.control').offsetWidth;
+    for (var i = 0; i < nodeSet.length; i++) {
+        nodeSet[i].x = nodeSet[i].standardX;
+        nodeSet[i].y = nodeSet[i].standardY;
+        setPosition(nodeSet[i]);
+    }
+}
+
+// 寻找叶子节点的递归函数
+function searchLeaf(node) {
+    if (node.childArr.length == 0) {
+        leafSet.push(node);
+        return;
+    }
+    for (var i = 0; i < node.childArr.length; i++) {
+        searchLeaf(node.childArr[i]);
+    }
+}
+
+// 生成树的深度
+function generateDepth() {
+    treeDepth = 0;
+    for (var i = 0; i < leafSet.length; i++) {
+        treeDepth = treeDepth > leafSet[i].layer ? treeDepth : leafSet[i].layer;
+    }
+}
+
+setBtnEvent(standard, function () {
+    if (standard.state) {
+        if (!lockingNode.state) {
+            btnChange(lockingNode);
+            lockingNode.state = true;
+        }
+        standardCoordinates();
+    }
+});
 
 
 // 第三组按钮
@@ -823,14 +901,20 @@ var signOutProject = thirdbtnArr[4]; // 退出项目按钮
 var deleteProject = thirdbtnArr[5]; // 删除项目按钮
 var classic = thirdbtnArr[6]; // 返回经典模式按钮
 
+cycleSprite(thirdbtnArr, 0, 0, 30);
+
 // 项目信息相关操作
 var projectMessage = getDom('.message'); // 项目信息盒子
+var projectMessageClose = projectMessage.getDom('.mesClose'); //项目信息盒子关闭按钮
 var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目创建者
 var projectName = projectMessage.getDom('.project_name span'); // 项目名
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
+
+// 弹框状态
+projectMessage.state = false;
 
 // 隐藏项目信息盒子
 function projectMessageHide() {
@@ -842,9 +926,21 @@ function projectMessageShow() {
     projectMessage.style.transform = "translate(0%,0)";
 }
 
-// 点击按钮显示项目信息
+// 点击按钮 显示/关闭 项目信息
 projectMessageBtn.addEventListener('click', function () {
-    projectMessageShow();
+    if (projectMessage.state) {
+        projectMessageHide();
+        projectMessage.state = false;
+    } else {
+        projectMessageShow();
+        projectMessage.state = true;
+    }
+});
+
+// 点击关闭按钮隐藏项目信息
+projectMessageClose.addEventListener('click', function () {
+    projectMessageHide();
+    projectMessage.state = false;
 });
 
 // 点击空白处隐藏项目信息
@@ -852,6 +948,15 @@ document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, projectMessage) && e.target != projectMessageBtn) {
         projectMessageHide();
+        projectMessage.state = false;
+    }
+});
+
+// 按ESC隐藏项目信息
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        projectMessageHide();
+        projectMessage.state = false;
     }
 });
 
@@ -859,7 +964,7 @@ document.addEventListener('click', function (e) {
 // 开发中
 
 var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
-var contributorsClose = contributorsBox.getDom('.contributorsClose'); // 关闭按钮
+var contributorsClose = contributorsBox.getDom('.contributClose'); // 关闭按钮
 var contributorsUl = contributorsBox.getDom('ul'); // 成员列表盒子中的Ul
 
 // 生成贡献者列表
@@ -887,6 +992,9 @@ function generateContributes(arr) {
     }
 }
 
+// 贡献者列表盒子状态
+contributors.state = false;
+
 // 隐藏贡献者列表
 function contributorsHide() {
     contributorsBox.style.transform = "translate(-100%,0)";
@@ -897,9 +1005,21 @@ function contributorsShow() {
     contributorsBox.style.transform = "translate(0%,0)";
 }
 
-// 点击按钮显示贡献者列表
+// 点击按钮 显示/关闭 贡献者列表
 contributors.addEventListener('click', function () {
-    contributorsShow();
+    if (contributors.state) {
+        contributorsHide();
+        contributors.state = false;
+    } else {
+        contributorsShow();
+        contributors.state = true;
+    }
+});
+
+// 点击关闭按钮隐藏贡献者列表
+contributorsClose.addEventListener('click', function () {
+    contributorsHide();
+    contributors.state = false;
 });
 
 // 点击空白处隐藏贡献者列表
@@ -910,10 +1030,21 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// 按ESC隐藏贡献者列表
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        contributorsHide();
+        contributors.state = false;
+    }
+});
 // 操作记录相关操作
 // 开发中
 
 var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
+var operationRecordClose = operationRecordBox.getDom('.historyClose'); // 操作记录盒子中关闭按钮 
+
+// 操作记录盒子状态
+operationRecordBox.state = false;
 
 // 隐藏操作记录
 function operationRecordHide() {
@@ -925,8 +1056,21 @@ function operationRecordShow() {
     operationRecordBox.style.transform = "translate(0%,0)";
 }
 
+// 点击按钮 显示/关闭 操作记录列表
 operationRecord.addEventListener('click', function () {
+    if (operationRecordBox.state) {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    } else {
+        operationRecordShow();
+        operationRecordBox.state = true;
+    }
+});
 
+// 点击关闭按钮隐藏操作记录列表
+operationRecordClose.addEventListener('click', function () {
+    operationRecordHide();
+    operationRecordBox.state = false;
 });
 
 // 点击空白处隐藏贡献者列表
@@ -934,6 +1078,41 @@ document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, operationRecordBox) && e.target != operationRecord) {
         operationRecordHide();
+        operationRecordBox.state = false;
+    }
+});
+
+// 按ESC隐藏贡献者列表
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    }
+});
+
+// 请求历史记录
+function getHistory() {
+    ajax({
+        type: 'get',
+        url: '/history',
+        data: {
+
+        },
+        success: function (res) {
+            for (var i = 0; i < res.length; i++) {
+                var jlType = res[i].operaType; // N 创建 U 修改 D 删除
+                var nodeBefore = res[i].node; // 源节点信息
+                var nodeAfter = res[i].after; // 修改后节点信息
+                console.log(jlType);
+                console.log(nodeBefore);
+                console.log(nodeAfter);
+            }
+        }
+    });
+}
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'h') {
+        getHistory();
     }
 });
 
@@ -1073,7 +1252,7 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
         if (!treeFullScreenState) {
             domFullScreen(treeBox);
-            this.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+            treeFullScreenOnOff.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
             treeFullScreenState = true;
         }
     }
@@ -1877,6 +2056,14 @@ function listClick(e, node) {
     // 设置当前节点的样式
     nowNode.style.boxShadow = '0px 0px ' + nowNode.offsetHeight + 'px ' + nowNodeBoxShadowColor;
 }
+
+// 选中根节点(ctrl + d)
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'd' && ctrlState && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        listClick(null, root);
+    }
+});
 
 function listFold(foldBtn) {
     var list = foldBtn.parentNode.parentNode;

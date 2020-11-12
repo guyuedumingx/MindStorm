@@ -1892,6 +1892,9 @@ document.addEventListener('keydown', function (e) {
 
 var goEditPattern = firstbtnArr[firstbtnArr.length - 1];
 
+goEditPattern.style.backgroundImage = 'url(img/project_goProject_p.png)';
+goEditPattern.style.backgroundSize = '60%';
+goEditPattern.style.backgroundPosition = 'center';
 goEditPattern.addEventListener('click', function () {
     window.location = 'project_p.html?project_id=' + projectId;
 });
