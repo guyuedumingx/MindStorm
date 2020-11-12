@@ -328,47 +328,37 @@ app.get('/', function (req, res) {
 });
 
 app.put('/util/project', function (req, res) {
-    var page = req.page;
+    var text = req.query;
+    var page = text.page;
+    if (page > 5) {
+        res.send({
+            status_code: '500',
+        });
+    }
     var p = 1;
+    var resArr = [];
+    for (var i = 1; i <= 6; i++) {
+        resArr.push({
+            name: '第' + page + '页项目' + i,
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        });
+    }
+    if (page == 4) {
+        var farr = [];
+        for (var i = 0; i < 4; i++) {
+            farr.push(resArr[i]);
+        }
+        res.send({
+            status_code: '200',
+            result: farr
+        })
+    }
     res.send({
         status_code: '200',
-        result: [{
-            name: '第' + page + '页项目' + (p++),
-            introduction: '简介',
-            creatorName: '创建者',
-            numbers: 12,
-            id: 123456789
-        }, {
-            name: '第' + page + '页项目' + (p++),
-            introduction: '简介',
-            creatorName: '创建者',
-            numbers: 12,
-            id: 123456789
-        }, {
-            name: '第' + page + '页项目' + (p++),
-            introduction: '简介',
-            creatorName: '创建者',
-            numbers: 12,
-            id: 123456789
-        }, {
-            name: '第' + page + '页项目' + (p++),
-            introduction: '简介',
-            creatorName: '创建者',
-            numbers: 12,
-            id: 123456789
-        }, {
-            name: '第' + page + '页项目' + (p++),
-            introduction: '简介',
-            creatorName: '创建者',
-            numbers: 12,
-            id: 123456789
-        }, {
-            name: '第' + page + '页项目' + (p++),
-            introduction: '简介',
-            creatorName: '创建者',
-            numbers: 12,
-            id: 123456789
-        }]
+        result: resArr
     });
 });
 
