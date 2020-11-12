@@ -891,12 +891,16 @@ cycleSprite(thirdbtnArr, 0, 0, 30);
 
 // 项目信息相关操作
 var projectMessage = getDom('.message'); // 项目信息盒子
+var projectMessageClose = projectMessage.getDom('.mesClose'); //项目信息盒子关闭按钮
 var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目创建者
 var projectName = projectMessage.getDom('.project_name span'); // 项目名
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
 projectIdBox.innerText = projectId;
+
+// 弹框状态
+projectMessage.state = false;
 
 // 隐藏项目信息盒子
 function projectMessageHide() {
@@ -908,9 +912,21 @@ function projectMessageShow() {
     projectMessage.style.transform = "translate(0%,0)";
 }
 
-// 点击按钮显示项目信息
+// 点击按钮 显示/关闭 项目信息
 projectMessageBtn.addEventListener('click', function () {
-    projectMessageShow();
+    if (projectMessage.state) {
+        projectMessageHide();
+        projectMessage.state = false;
+    } else {
+        projectMessageShow();
+        projectMessage.state = true;
+    }
+});
+
+// 点击关闭按钮隐藏项目信息
+projectMessageClose.addEventListener('click', function () {
+    projectMessageHide();
+    projectMessage.state = false;
 });
 
 // 点击空白处隐藏项目信息
@@ -918,6 +934,15 @@ document.addEventListener('click', function (e) {
     e = e || window.event;
     if (!isParent(e.target, projectMessage) && e.target != projectMessageBtn) {
         projectMessageHide();
+        projectMessage.state = false;
+    }
+});
+
+// 按ESC隐藏项目信息
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        projectMessageHide();
+        projectMessage.state = false;
     }
 });
 
@@ -925,7 +950,7 @@ document.addEventListener('click', function (e) {
 // 开发中
 
 var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
-var contributorsClose = contributorsBox.getDom('.contributorsClose'); // 关闭按钮
+var contributorsClose = contributorsBox.getDom('.contributClose'); // 关闭按钮
 var contributorsUl = contributorsBox.getDom('ul'); // 成员列表盒子中的Ul
 
 // 生成贡献者列表
@@ -953,6 +978,9 @@ function generateContributes(arr) {
     }
 }
 
+// 贡献者列表盒子状态
+contributors.state = false;
+
 // 隐藏贡献者列表
 function contributorsHide() {
     contributorsBox.style.transform = "translate(-100%,0)";
@@ -963,9 +991,21 @@ function contributorsShow() {
     contributorsBox.style.transform = "translate(0%,0)";
 }
 
-// 点击按钮显示贡献者列表
+// 点击按钮 显示/关闭 贡献者列表
 contributors.addEventListener('click', function () {
-    contributorsShow();
+    if (contributors.state) {
+        contributorsHide();
+        contributors.state = false;
+    } else {
+        contributorsShow();
+        contributors.state = true;
+    }
+});
+
+// 点击关闭按钮隐藏贡献者列表
+contributorsClose.addEventListener('click', function () {
+    contributorsHide();
+    contributors.state = false;
 });
 
 // 点击空白处隐藏贡献者列表
@@ -976,10 +1016,21 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// 按ESC隐藏贡献者列表
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        contributorsHide();
+        contributors.state = false;
+    }
+});
 // 操作记录相关操作
 // 开发中
 
 var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
+var operationRecordClose = operationRecordBox.getDom('.historyClose'); // 操作记录盒子中关闭按钮 
+
+// 操作记录盒子状态
+operationRecordBox.state = false;
 
 // 隐藏操作记录
 function operationRecordHide() {
@@ -991,8 +1042,38 @@ function operationRecordShow() {
     operationRecordBox.style.transform = "translate(0%,0)";
 }
 
+// 点击按钮 显示/关闭 操作记录列表
 operationRecord.addEventListener('click', function () {
+    if (operationRecordBox.state) {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    } else {
+        operationRecordShow();
+        operationRecordBox.state = true;
+    }
+});
 
+// 点击关闭按钮隐藏操作记录列表
+operationRecordClose.addEventListener('click', function () {
+    operationRecordHide();
+    operationRecordBox.state = false;
+});
+
+// 点击空白处隐藏贡献者列表
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, operationRecordBox) && e.target != operationRecord) {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    }
+});
+
+// 按ESC隐藏贡献者列表
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    }
 });
 
 // 请求历史记录
@@ -1018,14 +1099,6 @@ function getHistory() {
 document.addEventListener('keydown', function (e) {
     if (e.key == 'h') {
         getHistory();
-    }
-});
-
-// 点击空白处隐藏贡献者列表
-document.addEventListener('click', function (e) {
-    e = e || window.event;
-    if (!isParent(e.target, operationRecordBox) && e.target != operationRecord) {
-        operationRecordHide();
     }
 });
 
