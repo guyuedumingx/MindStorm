@@ -540,6 +540,8 @@
     background-color: #444;
     box-sizing: border-box;
     transform: translate(-50%, -50%);
+    /* border: 1px #eee solid; */
+    box-shadow: 0 0 5px 0 rgb(141, 140, 140);
 }
 
 /* 关闭 */
@@ -683,6 +685,7 @@
     display: inline-block;
     margin-bottom: 5px;
     color: #eee;
+    cursor: pointer;
 }
 
 .historyBox li p {
