@@ -575,7 +575,7 @@ function getPublic(page) {
                     projectSize(shareNav);
                     noProject(shareNav);
                 }
-                if (res.result) {
+                if (res.result.length == 0) {
                     //项目数组--
                     shareProject = res.result;
                     // 长度
