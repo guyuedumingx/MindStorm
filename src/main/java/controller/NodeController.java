@@ -69,8 +69,9 @@ public class NodeController extends BaseController{
             result.setStatus_code(StatusCode.LOST);
         }
 
-        WebUtil.renderJson(resp,result);
+        logger.debug("user_id : "+user.getId()+" : msg");
         WebUtil.renderForContributors(user,msg);
+        WebUtil.renderJson(resp,result);
     }
 
 
@@ -91,6 +92,7 @@ public class NodeController extends BaseController{
         if(StatusCode.OK==statusCode){
             msg.setChangeId(nodeId);
             history.addDelNodeHistory(node);
+            logger.debug("user_id : "+user.getId()+" : msg");
             WebUtil.renderForContributors(user,msg);
         }
     }
@@ -112,6 +114,7 @@ public class NodeController extends BaseController{
         if(StatusCode.OK==statusCode){
             msg.setChangeId(node.getId());
             history.addUpdateNodeHistory(historyNode);
+            logger.debug("user_id : "+user.getId()+" : msg");
             WebUtil.renderForContributors(user,msg);
         }
     }
@@ -145,7 +148,6 @@ public class NodeController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nodeId = request.getParameter("id");
-        logger.debug("请求的节点Id: "+nodeId);
         Node node = service.getNode(Integer.valueOf(nodeId),user.getId());
         WebUtil.renderJson(response,node);
     }

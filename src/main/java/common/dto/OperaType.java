@@ -9,4 +9,5 @@ public class OperaType {
     public static final String CREATE = "N";
     public static final String DELETE = "D";
     public static final String EDITING = "E";
+    public static final String EDIT_COMPLETE = "C";
 }

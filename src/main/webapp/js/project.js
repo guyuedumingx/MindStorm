@@ -2064,8 +2064,8 @@ window.onload = function () {
 
 // webSocket
 if ('WebSocket' in window) {
-    //8.129.110.151/MindStorm-1.0-SNAPSHOT
-    websocket = new WebSocket("ws://8.129.110.151:17682/MindStorm-1.0-SNAPSHOT/node/socket/" + user.userId + "/" + projectId);
+    //8.129.0.145/MindStorm-1.0-SNAPSHOT
+    websocket = new WebSocket("ws://localhost:8080/node/socket/" + user.userId + "/" + projectId);
 } else {
     alert('Not support websocket')
 }

@@ -4,6 +4,9 @@ import common.container.OnlineUsers;
 import common.dto.OperaType;
 import common.dto.Result;
 import common.util.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -12,6 +15,7 @@ import java.io.IOException;
 
 @ServerEndpoint(value="/node/socket/{userId}/{projectId}")
 public class NodeSocket {
+    static Logger logger = LoggerFactory.getLogger(NodeSocket.class);
     private OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
     private int userId;
     private int projectId;
@@ -20,6 +24,7 @@ public class NodeSocket {
     @OnOpen
     public void onOpen(@PathParam("userId") String userId,@PathParam("projectId") String projectId, Session session) throws IOException {
         this.userId =Integer.valueOf(userId);
+        logger.debug(userId+" : "+projectId);
         this.projectId = Integer.valueOf(projectId);
         this.session = session;
         onlineUsers.add(this);
