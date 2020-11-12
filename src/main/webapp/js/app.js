@@ -326,6 +326,52 @@ app.get('/', function (req, res) {
         }
     });
 });
+
+app.put('/util/project', function (req, res) {
+    var page = req.page;
+    var p = 1;
+    res.send({
+        status_code: '200',
+        result: [{
+            name: '第' + page + '页项目' + (p++),
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        }, {
+            name: '第' + page + '页项目' + (p++),
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        }, {
+            name: '第' + page + '页项目' + (p++),
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        }, {
+            name: '第' + page + '页项目' + (p++),
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        }, {
+            name: '第' + page + '页项目' + (p++),
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        }, {
+            name: '第' + page + '页项目' + (p++),
+            introduction: '简介',
+            creatorName: '创建者',
+            numbers: 12,
+            id: 123456789
+        }]
+    });
+});
+
 app.post('/user/login', function (req, res) {
     var text = req.body;
 
