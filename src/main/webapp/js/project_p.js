@@ -1070,6 +1070,7 @@ operationRecord.addEventListener('click', function () {
     } else {
         operationRecordShow();
         operationRecordBox.state = true;
+        getHistory();
     }
 });
 
@@ -1112,14 +1113,15 @@ function getHistory() {
                 var jlType = res[i].operaType; // N 创建 U 修改 D 删除
                 var li = document.createElement('li');
                 var span = document.createElement('span');
+                span.addClass('operate');
                 var nodeBefore = res[i].node; // 源节点信息
                 var nodeAfter = res[i].after; // 修改后节点信息
                 if (jlType == 'N') {
-                    span.innerText = '创建了节点 \'' + nodeAfter.theme + ' \'';
+                    span.innerText = '创建了节点   \'' + nodeAfter.theme + '\'';
                 } else if (jlType == 'U') {
-                    span.innerText = '修改了节点 \'' + nodeAfter.theme + ' \'';
+                    span.innerText = '修改了节点   \'' + nodeAfter.theme + '\'';
                 } else if (jlType == 'D') {
-                    span.innerText = '删除了节点 \'' + nodeBefore.theme + ' \'';
+                    span.innerText = '删除了节点   \'' + nodeBefore.theme + '\'';
                 } else {
                     topAlert('出bug啦');
                 }
@@ -2241,7 +2243,6 @@ window.onload = function () {
             // progressContent.style.width = progress + '%';
             // progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);
-            setInterval(getHistory, 1000);
         }
     });
 }
