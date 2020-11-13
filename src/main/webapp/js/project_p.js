@@ -2174,9 +2174,28 @@ function judgeListHide(list) {
     return false;
 }
 
+// Alt+方向键移动节点事件
+document.addEventListener('keydown', function (e) {
+    if (nowNode && e.altKey) {
+        if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            nowNode.y = nowNode.y - 5;
+        } else if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            nowNode.y = nowNode.y + 5;
+        } else if (e.key == 'ArrowLeft') {
+            e.preventDefault();
+            nowNode.x = nowNode.x - 5;
+        } else if (e.key == 'ArrowRight') {
+            e.preventDefault();
+            nowNode.x = nowNode.x + 5;
+        }
+    }
+});
+
 // 列表键盘事件
 document.addEventListener('keydown', function (e) {
-    if (nowNode) {
+    if (nowNode && !e.altKey) {
         var nowList = nowNode.list;
         if (e.key == 'ArrowUp') {
             e.preventDefault();
