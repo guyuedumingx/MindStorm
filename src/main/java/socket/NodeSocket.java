@@ -4,6 +4,9 @@ import common.container.OnlineUsers;
 import common.dto.OperaType;
 import common.dto.Result;
 import common.util.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -12,6 +15,7 @@ import java.io.IOException;
 
 @ServerEndpoint(value="/node/socket/{userId}/{projectId}")
 public class NodeSocket {
+    static Logger logger = LoggerFactory.getLogger(NodeSocket.class);
     private OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
     private int userId;
     private int projectId;
@@ -41,7 +45,9 @@ public class NodeSocket {
         Result result = new Result();
         result.setChangeType(OperaType.EDITING);
         result.setChangeId(message);
-        WebUtil.renderJson(session,result);
+//        WebUtil.renderJson(session,result);
+//        logger.debug(message);
+        session.getBasicRemote().sendText(message);
     }
 
     @OnError

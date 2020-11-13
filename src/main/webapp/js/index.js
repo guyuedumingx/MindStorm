@@ -315,6 +315,12 @@ shareBox.addEventListener("click", function () {
     projectSize(personalNav);
     projectSize(searchNav);
     projectSize(shareNav);
+    var ulChild = getDom(".projectLi", shareNav);
+    var liChild = ulChild.children.length;
+    if (liChild == 0) {
+        noProject(shareNav);
+    }
+
 });
 // 点击参加项目
 personalBox.addEventListener("click", function () {
@@ -571,9 +577,9 @@ function getPublic(page) {
         success: function (res) {
             pdqq--;
             if (res.status_code == '200') {
-                if (page == 1 && res.result.length == 0) {
-                    noProject(shareNav);
-                }
+                // if (page == 1 && res.result.length == 0) {
+                //     noProject(shareNav);
+                // }
                 if (res.result.length != 0) {
                     //项目数组--
                     shareProject = res.result;
@@ -595,7 +601,6 @@ getPublic(1);
 getPublic(2);
 
 function sharePage() {
-    console.log(allPage + "a");
     var page = 1;
     var projectWidth = personalNav.offsetWidth;
     var rightBut = getDom(".rightBut", shareNav);
