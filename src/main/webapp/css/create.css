@@ -524,7 +524,19 @@ body .mainBox {
     resize: none;
     /*不可调节*/
 }
+.mainBox .Box .est_bigBox .introduction textarea::-webkit-scrollbar{
+    width: 5px;
+}
 
+.mainBox .Box .est_bigBox .introduction textarea::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background: #777;
+}
+
+.mainBox .Box .est_bigBox .introduction textarea::-webkit-scrollbar-track {
+    border-radius: 50px;
+    background: transparent;
+}
 .mainBox .Box .est_bigBox .introduction {
     position: relative;
 }
