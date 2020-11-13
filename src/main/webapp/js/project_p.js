@@ -2174,9 +2174,16 @@ function judgeListHide(list) {
     return false;
 }
 
+// 禁用浏览器默认的Alt+左右跳转页面功能
+document.addEventListener('keydown', function (e) {
+    if (e.altKey && (e.key == 'ArrowLeft' || e.key == 'ArrayRight')) {
+        e.preventDefault();
+    }
+});
+
 // Alt+方向键移动节点事件
 document.addEventListener('keydown', function (e) {
-    if (nowNode && e.altKey) {
+    if (nowNode && e.altKey && transparentBaffle.getCSS('display') == 'none') {
         if (e.key == 'ArrowUp') {
             e.preventDefault();
             nowNode.y = nowNode.y - 5;
@@ -2195,7 +2202,7 @@ document.addEventListener('keydown', function (e) {
 
 // 列表键盘事件
 document.addEventListener('keydown', function (e) {
-    if (nowNode && !e.altKey) {
+    if (nowNode && !e.altKey && transparentBaffle.getCSS('display') == 'none') {
         var nowList = nowNode.list;
         if (e.key == 'ArrowUp') {
             e.preventDefault();
@@ -2269,7 +2276,7 @@ window.onload = function () {
 // webSocket
 if ('WebSocket' in window) {
     //8.129.110.151/MindStorm-1.0-SNAPSHOT
-    websocket = new WebSocket("ws://"+window.document.domain+"/MindStorm-1.0-SNAPSHOT/node/socket/" + user.userId + "/" + projectId);
+    websocket = new WebSocket("ws://" + window.document.domain + "/MindStorm-1.0-SNAPSHOT/node/socket/" + user.userId + "/" + projectId);
 } else {
     alert('Not support websocket')
 }
