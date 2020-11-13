@@ -1112,7 +1112,8 @@ function getHistory() {
             for (var i = 0; i < res.length; i++) {
                 var li = document.createElement('li'); // 记录盒子
                 var span = document.createElement('span'); // 文本
-                var btn = document.createElement('// 芷欣'); // 撤销按钮
+                var btn = document.createElement('i'); // 撤销按钮
+                btn.innerText = '撤销';
                 btn.li = li;
                 li.operaType = res[i].operaType; // N 创建 U 修改 D 删除
                 span.addClass('operate');
@@ -1128,6 +1129,7 @@ function getHistory() {
                     topAlert('出bug啦');
                 }
                 li.appendChild(span);
+                li.appendChild(btn);
                 li.index = i;
                 btn.addEventListener('click', function () {
                     backHistory(this.li);

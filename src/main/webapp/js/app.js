@@ -327,7 +327,39 @@ app.get('/', function (req, res) {
         }
     });
 });
-
+app.get('/history', function (req, res) {
+    res.send([{
+        operaType: 'U',
+        node: {
+            author: 1,
+            id: 15,
+            theme: '节点主题十五',
+            content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
+            children: [],
+            star: 15,
+            stared: true,
+            banAppend: false,
+            lastEditName: '王五',
+            lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
+            userName: '陈七',
+            father: 14,
+        },
+        after: {
+            author: 1,
+            id: 15,
+            theme: '节点主题十五',
+            content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
+            children: [],
+            star: 15,
+            stared: true,
+            banAppend: false,
+            lastEditName: '王五',
+            lastEditTime: new Date('2020/10/10 8:8:8').valueOf(),
+            userName: '陈七',
+            father: 14,
+        }
+    }]);
+});
 app.put('/util/project', function (req, res) {
     res.send({
         status_code: "200",
