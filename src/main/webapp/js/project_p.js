@@ -1110,22 +1110,28 @@ function getHistory() {
                 operationRecordUl.removeChild(operationRecordUl.children[0]);
             }
             for (var i = 0; i < res.length; i++) {
-                var jlType = res[i].operaType; // N 创建 U 修改 D 删除
-                var li = document.createElement('li');
-                var span = document.createElement('span');
+                var li = document.createElement('li'); // 记录盒子
+                var span = document.createElement('span'); // 文本
+                var btn = document.createElement('// 芷欣'); // 撤销按钮
+                btn.li = li;
+                li.operaType = res[i].operaType; // N 创建 U 修改 D 删除
                 span.addClass('operate');
                 var nodeBefore = res[i].node; // 源节点信息
                 var nodeAfter = res[i].after; // 修改后节点信息
-                if (jlType == 'N') {
+                if (li.operaType == 'N') {
                     span.innerText = '创建了节点   \'' + nodeAfter.theme + '\'';
-                } else if (jlType == 'U') {
+                } else if (li.operaType == 'U') {
                     span.innerText = '修改了节点   \'' + nodeAfter.theme + '\'';
-                } else if (jlType == 'D') {
+                } else if (li.operaType == 'D') {
                     span.innerText = '删除了节点   \'' + nodeBefore.theme + '\'';
                 } else {
                     topAlert('出bug啦');
                 }
                 li.appendChild(span);
+                li.index = i;
+                btn.addEventListener('click', function () {
+                    backHistory(this.li);
+                });
                 operationRecordUl.appendChild(li);
             }
         }
@@ -1136,6 +1142,79 @@ document.addEventListener('keydown', function (e) {
         getHistory();
     }
 });
+
+function backHistory(historyLi) {
+    var type = historyLi.type;
+    var index = historyLi.index;
+    ajax({
+        type: 'post',
+        url: '/history',
+        data: {
+            index: index
+        },
+        success: function (res) {
+            if (res.status_code == '200') {
+                console.log(res.node_id);
+                if (type == 'N') {
+
+                    // 如果撤销的是创建节点的记录，则删除节点
+                    treeRemoveNode(getTreeNode(res.node_id));
+                } else if (type == 'U') {
+
+                    // 如果撤销的是修改节点的记录，则修改节点
+                    var node = getTreeNode(res.node_id);
+                    ajax({
+                        type: 'get',
+                        url: '/node',
+                        data: {
+                            id: res.node_id
+                        },
+                        success: function (res) {
+                            node.children[0].innerText = res.theme;
+                            node.list.getDom('h4').innerText = res.theme;
+                            node.content = res.content;
+                            node.editable = res.banAppend;
+                        }
+                    });
+                } else if (type == 'D') {
+
+                    // 如果撤销的是删除节点的记录，则创建节点
+                    // 此处的撤销没有递归请求节点信息，可能会出bug
+                    ajax({
+                        type: 'get',
+                        url: '/node',
+                        data: {
+                            id: res.node_id
+                        },
+                        success: function (res) {
+                            var father = getTreeNode(res.parentId);
+                            treeAppendNode(father, {
+                                id: res.id,
+                                theme: res.theme,
+                                content: res.content,
+                                editable: res.banAppend,
+                                childArr: [],
+                                userName: res.userName,
+                                author: res.author,
+                                lastEditName: res.lastEditName,
+                                lastEditTime: res.lastEditTime,
+                                star: res.star,
+                                stared: res.stared
+                            });
+                        }
+                    });
+                } else {
+                    topAlert('出bug啦！');
+                }
+
+                // 更新操作记录
+                getHistory();
+            } else {
+                topAlert('撤销失败！');
+            }
+        }
+    });
+}
 
 // 导出项目相关操作
 exportProject.addEventListener('click', function () {
@@ -2174,9 +2253,35 @@ function judgeListHide(list) {
     return false;
 }
 
+// 禁用浏览器默认的Alt+左右跳转页面功能
+document.addEventListener('keydown', function (e) {
+    if (e.altKey && (e.key == 'ArrowLeft' || e.key == 'ArrayRight')) {
+        e.preventDefault();
+    }
+});
+
+// Alt+方向键移动节点事件
+document.addEventListener('keydown', function (e) {
+    if (nowNode && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            nowNode.y = nowNode.y - 5;
+        } else if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            nowNode.y = nowNode.y + 5;
+        } else if (e.key == 'ArrowLeft') {
+            e.preventDefault();
+            nowNode.x = nowNode.x - 5;
+        } else if (e.key == 'ArrowRight') {
+            e.preventDefault();
+            nowNode.x = nowNode.x + 5;
+        }
+    }
+});
+
 // 列表键盘事件
 document.addEventListener('keydown', function (e) {
-    if (nowNode) {
+    if (nowNode && !e.altKey && transparentBaffle.getCSS('display') == 'none') {
         var nowList = nowNode.list;
         if (e.key == 'ArrowUp') {
             e.preventDefault();
@@ -2250,7 +2355,7 @@ window.onload = function () {
 // webSocket
 if ('WebSocket' in window) {
     //8.129.110.151/MindStorm-1.0-SNAPSHOT
-    websocket = new WebSocket("ws://8.129.110.151:17682/MindStorm-1.0-SNAPSHOT/node/socket/" + user.userId + "/" + projectId);
+    websocket = new WebSocket("ws://" + window.document.domain + ":8080/node/socket/" + user.userId + "/" + projectId);
 } else {
     alert('Not support websocket')
 }

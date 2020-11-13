@@ -79,6 +79,12 @@ public class DaoTest {
     }
 
     @Test
+    public void publicProject(){
+        List<Project> publicProjectsFromPages = new ProjectDaoImpl().getPublicProjectsFromPages(2, 6);
+        System.out.println(publicProjectsFromPages.size());
+    }
+
+    @Test
     public void RecentEditDaoTest(){
         RecentEdit edit = new RecentEdit(1,1,"insert",new Date().toString());
         RecentEditDaoImpl dao = new RecentEditDaoImpl();

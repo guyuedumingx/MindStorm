@@ -36,13 +36,8 @@ public class History {
         list.add(historyNode);
     }
 
-    public void addNewNodeHistory(int nodeId){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                add(OperaType.CREATE,service.getNode(nodeId, user.getId()));
-            }
-        }).start();
+    public void addNewNodeHistory(int nodeId) {
+        add(OperaType.CREATE, service.getNode(nodeId, user.getId()));
     }
 
     public void addDelNodeHistory(Node node){
@@ -54,8 +49,7 @@ public class History {
     }
 
     /**
-     * 没有记录返回-1
-     * 有记录操作失败返回0
+     * 操作失败返回0
      * 撤销新建返回200
      * 撤销删除和修改返回nodeId
      * @return
@@ -68,7 +62,8 @@ public class History {
             if(OperaType.CREATE.equals(pop.getOperaType())){
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
-                    back = service.delNode(operaNode.getId(), operaNode.getAuthor());
+                    service.delNode(operaNode.getId(), operaNode.getAuthor());
+                    back = operaNode.getId();
                     addDelNodeHistory(operaNode);
                 }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
@@ -84,7 +79,7 @@ public class History {
             return back;
         }
         //没有历史记录
-        return -1;
+        return 0;
     }
 
     /**

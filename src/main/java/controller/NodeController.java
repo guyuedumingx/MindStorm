@@ -69,8 +69,8 @@ public class NodeController extends BaseController{
             result.setStatus_code(StatusCode.LOST);
         }
 
-        WebUtil.renderJson(resp,result);
         WebUtil.renderForContributors(user,msg);
+        WebUtil.renderJson(resp,result);
     }
 
 
@@ -145,7 +145,6 @@ public class NodeController extends BaseController{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nodeId = request.getParameter("id");
-        logger.debug("请求的节点Id: "+nodeId);
         Node node = service.getNode(Integer.valueOf(nodeId),user.getId());
         WebUtil.renderJson(response,node);
     }

@@ -1,6 +1,7 @@
 package controller;
 
 import common.dto.Result;
+import common.dto.SearchBack;
 import common.dto.StatusCode;
 import common.util.WebUtil;
 import org.slf4j.Logger;
@@ -10,13 +11,18 @@ import service.ProjectService;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
+/**
+ * 项目增补接口
+ * @author yohoyes
+ */
 @WebServlet("/util/project")
 public class ProjectUtilController extends BaseController {
 
@@ -89,12 +95,17 @@ public class ProjectUtilController extends BaseController {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = req.getParameter("page");
+        SearchBack result = new SearchBack();
         List<Project> publicProjectsFromPages = null;
         try {
-            publicProjectsFromPages = service.getPublicProjectsFromPages(Integer.valueOf(page));
+            int p = Integer.valueOf(page);
+            publicProjectsFromPages = service.getPublicProjectsFromPages(p);
+            result.setResult(publicProjectsFromPages);
+            result.setStatus_code(StatusCode.OK);
         }catch (NumberFormatException e){
             logger.error(e.getMessage());
+            result.setStatus_code(StatusCode.ERROR);
         }
-        WebUtil.renderJson(resp,publicProjectsFromPages);
+        WebUtil.renderJson(resp,result);
     }
 }

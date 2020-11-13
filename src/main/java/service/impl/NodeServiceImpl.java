@@ -45,7 +45,7 @@ public class NodeServiceImpl implements NodeService {
     public int delNode(int nodeId, int operatorId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
         //如果存在子节点,不能删除
-        if(node.getChildren()!=null && node.getChildren().length!=0){
+        if(node.getChildren()!=null && node.getChildren().length!=0 && node.getParentId()==0){
             return StatusCode.LOST;
         }
         Project project = projectDao.selectOne(new Project(node.getProjectId()));
@@ -103,8 +103,16 @@ public class NodeServiceImpl implements NodeService {
             @Override
             public void run() {
                 Node node = nodeDao.selectOne(new Node(nodeId));
-                new ContributorDaoImpl().insertOne(new Contributor(node.getProjectId(),userId));
-                recentProjectDao.insertOne(new RecentProject(userId,node.getProjectId()));
+                ContributorDaoImpl contributorDao = new ContributorDaoImpl();
+                Contributor contributor = contributorDao.selectOne(new Contributor(nodeId, userId));
+                RecentProject recentProject = recentProjectDao.selectOne(new RecentProject(userId, node.getProjectId()));
+                logger.debug(recentProject+"");
+                if(contributor==null){
+                    contributorDao.insertOne(new Contributor(node.getProjectId(),userId));
+                }
+                if(recentProject==null){
+                    recentProjectDao.insertOne(new RecentProject(userId,node.getProjectId()));
+                }
             }
         }).start();
     }

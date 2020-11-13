@@ -52,7 +52,7 @@ public class WebUtil {
     public static void renderJson(Session session, Object object) {
         try {
             String s = JSON.toJSONString(object);
-            session.getBasicRemote().getSendWriter().write(s);
+            session.getBasicRemote().sendText(s);
         }catch (IOException e) {
             logger.error(e.getMessage());
         }
@@ -67,16 +67,21 @@ public class WebUtil {
         int id = user.getId();
         OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
         String s = JSON.toJSONString(object);
-        int projectId = onlineUsers.get(id).getProjectId();
-        List<NodeSocket> socketForProject = onlineUsers.getSocketForProject(projectId);
-        for(NodeSocket socket : socketForProject){
-            try {
-                if(socket.getUserId()!=id){
-                    socket.getSession().getBasicRemote().sendText(s);
+        NodeSocket uSocket = onlineUsers.get(id);
+        if (uSocket != null) {
+            int projectId = uSocket.getProjectId();
+            List<NodeSocket> socketForProject = onlineUsers.getSocketForProject(projectId);
+            for (NodeSocket socket : socketForProject) {
+                try {
+                    if (socket.getUserId() != id) {
+                        socket.getSession().getBasicRemote().sendText(s);
+                    }
+                } catch (IOException e) {
+                    logger.error(e.getMessage());
                 }
-            }catch (IOException e) {
-                logger.error(e.getMessage());
             }
+        } else {
+            logger.error("没有用户在线错误");
         }
     }
 

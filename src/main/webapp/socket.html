@@ -18,7 +18,7 @@
         //判断当前浏览器是否支持WebSocket
        var id = getCookie("user_id");
         if ('WebSocket' in window) {
-            websocket = new WebSocket("ws://localhost:8080/node/socket/"+id+"/100138");
+            websocket = new WebSocket("ws://"+window.document.domain+"/MindStorm-1.0-SNAPSHOT/node/socket/88/100138");
             console.log("link success")
         } else {
             alert('Not support websocket')
@@ -33,7 +33,6 @@
         websocket.onopen = function (event) {
             setMessageInnerHTML("open");
         }
-        console.log("-----")
 
         //接收到消息的回调方法
         websocket.onmessage = function (event) {
