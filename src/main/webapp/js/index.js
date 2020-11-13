@@ -173,6 +173,19 @@ modifyN.addEventListener("click", function () {
 });
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
+    ajax({
+        type: 'put',
+        url: '/project',
+        data: {
+            key: content
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+            
+        }
+    });
     nameBox.value = nameBox.value;
     nameU.innerText = nameBox.value;
     nameBox.readOnly = true;

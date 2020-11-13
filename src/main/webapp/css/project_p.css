@@ -680,12 +680,30 @@
     transition: transform .5s;
     z-index: 57;
 }
-
+.historyBox li{
+    position: relative;
+}
 .historyBox li span {
     display: inline-block;
+    width: 80%;
     margin-bottom: 5px;
     color: #eee;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* 撤销按钮 */
+.historyBox li i{
+    position: absolute;
+    right: 0;
+    color: #999;
+    font-size: 14px;
+    font-style: normal;
+}
+.historyBox li i:hover{
+  color: #eee;
+  cursor: pointer;
 }
 
 .historyBox li p {
