@@ -250,14 +250,14 @@ onOff.state = false;
 
 //点击改变
 onOff.addEventListener('click', function () {
-    if (!onOff.state) {
-        onOff.state = true;
+    if (onOff.state) {
+        onOff.state = false;
         onOff.style.backgroundColor = '#2c3e50';
         onOff.children[0].style.left = '1.5px';
         onOff.children[0].style.backgroundColor = ' #46607b';
         onOff.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
     } else {
-        onOff.state = false;
+        onOff.state = true;
         onOff.style.backgroundColor = '#16a085';
         onOff.children[0].style.left = '23.5px';
         onOff.children[0].style.backgroundColor = '#1abc9c';
@@ -404,7 +404,9 @@ estBut.addEventListener("click", function () {
     if (inputName.value == "") {
         inputName.style.color = "rgb(196, 60, 60)";
         inputName.style.boxShadow = "0 0 5px rgb(196, 60, 60)";
-    } else {
+    }else if(introduceInput.value.length > 200){
+        topAlert("超字数啦啦啦啦！")
+    }else {
         var createTime = Date.now();
         var name = inputName.value;
         var indu = introduceInput.value;
