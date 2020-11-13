@@ -1821,6 +1821,9 @@ var nodeRequetTimer = setInterval(function () {
             maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
         }
 
+        // 规范化初始坐标
+        standardCoordinates();
+
         // 初始化所有节点
         for (var i = 0; i < nodeSet.length; i++) {
 
@@ -1828,8 +1831,8 @@ var nodeRequetTimer = setInterval(function () {
             nodeSet[i].style.width = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
             nodeSet[i].style.height = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
             nodeSet[i].style.borderRadius = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) / 2 + 'px';
-            nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
-            nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+            // nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
+            // nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
             nodeSet[i].style.display = 'block';
             nodeSet[i].x = nodeSet[i].offsetLeft;
             nodeSet[i].y = nodeSet[i].offsetTop;
@@ -2067,6 +2070,9 @@ function treeReload() {
                 maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
             }
 
+            // 规范化初始坐标
+            standardCoordinates();
+
             // 初始化所有节点
             for (var i = 0; i < nodeSet.length; i++) {
 
@@ -2074,8 +2080,8 @@ function treeReload() {
                 nodeSet[i].style.width = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
                 nodeSet[i].style.height = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
                 nodeSet[i].style.borderRadius = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) / 2 + 'px';
-                nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
-                nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+                // nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
+                // nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
                 nodeSet[i].style.display = 'block';
                 nodeSet[i].x = nodeSet[i].offsetLeft;
                 nodeSet[i].y = nodeSet[i].offsetTop;
