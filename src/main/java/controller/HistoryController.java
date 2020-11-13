@@ -2,6 +2,8 @@ package controller;
 
 import common.container.history.History;
 import common.container.history.HistoryNode;
+import common.dto.Result;
+import common.dto.StatusCode;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,14 +47,23 @@ public class HistoryController extends BaseController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String index = req.getParameter("index");
+        Result result = new Result();
         if(index==null||"".equals(index)){
             history.back();
         }else {
             try {
-                history.back(Integer.valueOf(index));
+                int back = history.back(Integer.valueOf(index));
+                if(back==0){
+                    result.setStatus_code(StatusCode.LOST);
+                }else {
+                    result.setStatus_code(StatusCode.OK);
+                    result.put("node_id",back);
+                }
             }catch (NumberFormatException e){
+                result.setStatus_code(StatusCode.ERROR);
                 logger.error(e.getMessage());
             }
+            WebUtil.renderJson(resp,result);
         }
     }
 
