@@ -164,7 +164,7 @@
     right: 10px;
     width: 30px;
     height: 30px;
-    background-image: url(../img/project_fullScreen.png);
+    background-image: url(../img/project_p_fullScreen.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -680,9 +680,11 @@
     transition: transform .5s;
     z-index: 57;
 }
-.historyBox li{
+
+.historyBox li {
     position: relative;
 }
+
 .historyBox li span {
     display: inline-block;
     width: 80%;
@@ -693,17 +695,19 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 /* 撤销按钮 */
-.historyBox li i{
+.historyBox li i {
     position: absolute;
     right: 0;
     color: #999;
     font-size: 14px;
     font-style: normal;
 }
-.historyBox li i:hover{
-  color: #eee;
-  cursor: pointer;
+
+.historyBox li i:hover {
+    color: #eee;
+    cursor: pointer;
 }
 
 .historyBox li p {

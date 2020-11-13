@@ -1339,11 +1339,11 @@ var treeFullScreenOnOff = getDom('.treeBox .treeBoxFullScreen'); // 树盒子全
 treeFullScreenOnOff.addEventListener('click', function () {
     if (treeFullScreenState) {
         cancelFullscreen();
-        this.style.backgroundImage = 'url(img/project_fullScreen.png)';
+        this.style.backgroundImage = 'url(img/project_p_fullScreen.png)';
         treeFullScreenState = false;
     } else {
         domFullScreen(treeBox);
-        this.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+        this.style.backgroundImage = 'url(img/project_p_cancelFullScreen.png)';
         treeFullScreenState = true;
     }
 });
@@ -1354,7 +1354,7 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
         if (!treeFullScreenState) {
             domFullScreen(treeBox);
-            treeFullScreenOnOff.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+            treeFullScreenOnOff.style.backgroundImage = 'url(img/project_p_cancelFullScreen.png)';
             treeFullScreenState = true;
         }
     }
@@ -1367,7 +1367,7 @@ function checkFull() {
 window.addEventListener('resize', function () {
     if (!checkFull()) {
         //要执行的动作
-        treeFullScreenOnOff.style.backgroundImage = 'url(img/project_fullScreen.png)';
+        treeFullScreenOnOff.style.backgroundImage = 'url(img/project_p_fullScreen.png)';
         treeFullScreenState = false;
     }
 });
