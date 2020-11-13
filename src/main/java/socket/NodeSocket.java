@@ -6,7 +6,6 @@ import common.dto.Result;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -45,9 +44,7 @@ public class NodeSocket {
         Result result = new Result();
         result.setChangeType(OperaType.EDITING);
         result.setChangeId(message);
-//        WebUtil.renderJson(session,result);
-//        logger.debug(message);
-        session.getBasicRemote().sendText(message);
+        WebUtil.renderJson(session,result);
     }
 
     @OnError

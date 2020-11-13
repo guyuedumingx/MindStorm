@@ -105,8 +105,12 @@ public class NodeServiceImpl implements NodeService {
                 Node node = nodeDao.selectOne(new Node(nodeId));
                 ContributorDaoImpl contributorDao = new ContributorDaoImpl();
                 Contributor contributor = contributorDao.selectOne(new Contributor(nodeId, userId));
+                RecentProject recentProject = recentProjectDao.selectOne(new RecentProject(userId, node.getProjectId()));
+                logger.debug(recentProject+"");
                 if(contributor==null){
                     contributorDao.insertOne(new Contributor(node.getProjectId(),userId));
+                }
+                if(recentProject==null){
                     recentProjectDao.insertOne(new RecentProject(userId,node.getProjectId()));
                 }
             }

@@ -52,7 +52,7 @@ public class WebUtil {
     public static void renderJson(Session session, Object object) {
         try {
             String s = JSON.toJSONString(object);
-            session.getBasicRemote().getSendWriter().write(s);
+            session.getBasicRemote().sendText(s);
         }catch (IOException e) {
             logger.error(e.getMessage());
         }
