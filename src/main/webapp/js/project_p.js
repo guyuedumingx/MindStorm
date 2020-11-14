@@ -1313,9 +1313,9 @@ deleteProject.addEventListener('click', function () {
     }
 });
 
-// 返回经典模式相关操作
+// 返回首页模式相关操作
 classic.addEventListener('click', function () {
-    window.location = 'project.html?project_id=' + projectId;
+    window.location = 'index.html';
 });
 
 // ——————————————中间——————————————
