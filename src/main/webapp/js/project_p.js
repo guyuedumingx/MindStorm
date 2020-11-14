@@ -1280,23 +1280,54 @@ function backHistory(historyLi) {
 
 // 导出项目相关操作
 
-var exportProjectBox = getDom('.'); // 导出项目的弹框
+var exportProjectBox = getDom('.exportProjectBox'); // 导出项目的弹框
 // var exportProjectClose = exportProjectBox.getDom('.'); // 导出项目弹框的关闭按钮
 // var exportProjectSubmit = exportProjectBox.getDom('.'); // 导出项目弹框的提交按钮
+exportProjectBox.state = false;
 
 // 隐藏导出项目弹框
 function exportProjectHide() {
-    // 芷欣
+    exportProjectBox.style.transform = "translate(-100%,0)";
 }
 
 // 显示导出项目弹框
 function exportProjectShow() {
-    // 芷欣
+    exportProjectBox.style.transform = "translate(0%,0)";
 }
 
 exportProject.addEventListener('click', function () {
-
+    if (exportProjectBox.state) {
+        exportProjectHide();
+        exportProjectBox.state = false;
+    } else {
+        exportProjectShow();
+        exportProjectBox.state = true;
+    }
 })
+
+// 点击关闭按钮隐藏导出项目盒子
+exportProjectClose.addEventListener('click', function () {
+    operationNodeBoxHide();
+    operationNodeBox.state = false;
+});
+
+// 点击空白处隐藏导出项目盒子
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, exportProjectBox) && e.target != exportProject) {
+        exportProjectHide();
+        exportProjectBox.state = false;
+    }
+});
+
+// 按ESC隐藏导出项目盒子
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        exportProjectHide();
+        exportProjectBox.state = false;
+    }
+});
+
 
 // 此测试代码仅供开发阶段使用
 document.addEventListener('keydown', function (e) {
