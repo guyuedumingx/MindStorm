@@ -362,11 +362,11 @@ function password(idnum, joinPassword) {
     joinBut2.addEventListener("click", function () {
         but2(idnum, joinPassword);
     })
-    if (getDom(".join_til").innerText == "项目密码") {
-        inputEnterEvent(inputID, function () {
+    inputEnterEvent(inputID, function () {
+        if (getDom(".join_til").innerText == "项目密码") {
             but2(idnum, joinPassword);
-        });
-    }
+        }
+    });
 }
 
 
@@ -403,9 +403,11 @@ back[1].addEventListener("click", function () {
 })
 
 //回车进入
-if (getDom(".join_til").innerText == "加入项目") {
-    inputEnterEvent(inputID, joinButClick);
-}
+inputEnterEvent(inputID, function () {
+    if (getDom(".join_til").innerText == "加入项目") {
+        joinButClick();
+    }
+});
 // 点击进入
 joinBut.addEventListener("click", joinButClick);
 
