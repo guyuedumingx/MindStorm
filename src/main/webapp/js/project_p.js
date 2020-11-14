@@ -1295,6 +1295,7 @@ function exportProjectShow() {
     exportProjectBox.style.transform = "translate(0%,0)";
 }
 
+// 点击按钮 打开/关闭 导出项目盒子
 exportProject.addEventListener('click', function () {
     if (exportProjectBox.state) {
         exportProjectHide();
@@ -1307,8 +1308,8 @@ exportProject.addEventListener('click', function () {
 
 // 点击关闭按钮隐藏导出项目盒子
 exportProjectClose.addEventListener('click', function () {
-    operationNodeBoxHide();
-    operationNodeBox.state = false;
+    exportProjectHide();
+    exportProjectBox.state = false;
 });
 
 // 点击空白处隐藏导出项目盒子
