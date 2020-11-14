@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yohoyes
@@ -21,18 +22,16 @@ import java.util.List;
 @WebServlet("/history")
 public class HistoryController extends BaseController {
     Logger logger = LoggerFactory.getLogger(HistoryController.class);
+    Map<Integer,History> historyMap = null;
     History history = null;
+    int projectId;
 
     @Override
     protected void before(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
-        history = (History) session.getAttribute("history");
-    }
-
-    @Override
-    protected void after(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession session = req.getSession();
-        session.setAttribute("history",history);
+        historyMap = (Map<Integer,History>) session.getAttribute("history");
+        projectId = (Integer)session.getAttribute("projectId");
+        history = historyMap.get(projectId);
     }
 
     /**
@@ -47,6 +46,7 @@ public class HistoryController extends BaseController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String index = req.getParameter("index");
+
         Result result = new Result();
         if(index==null||"".equals(index)){
             history.back();
@@ -65,6 +65,10 @@ public class HistoryController extends BaseController {
             }
             WebUtil.renderJson(resp,result);
         }
+        HttpSession session = req.getSession();
+        historyMap.remove(projectId);
+        historyMap.put(projectId,history);
+        session.setAttribute("history", historyMap);
     }
 
     /**

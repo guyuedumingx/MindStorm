@@ -122,9 +122,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public int existProject(int projectId) {
+    public Project existProject(int projectId) {
         Project project = projectDao.selectOne(new Project(projectId));
-        return StatusCode.nullObjcet(project);
+        return project;
     }
 
     @Override

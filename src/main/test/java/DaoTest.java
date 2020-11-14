@@ -44,11 +44,11 @@ public class DaoTest {
     public void projectDaoImplTest() {
         ProjectDao projectDao = new ProjectDaoImpl();
         String time = new Date().toString();
-        Project p = new Project(1,1,1,true,"google","name name",time,time);
+        Project p = new Project(1,1,1,true,"google","name name",time,time,"1");
         int i = projectDao.insertOne(p);
         Project project = new Project();
         project.setId(i);
-        projectDao.selectOne(project);
+        project = projectDao.selectOne(project);
         project.setAuthor(2);
         projectDao.updateOne(project);
         projectDao.deleteOne(project.getId());

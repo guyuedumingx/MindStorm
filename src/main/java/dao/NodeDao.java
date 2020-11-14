@@ -12,4 +12,12 @@ public interface NodeDao extends BaseDao<Node>{
      * @return
      */
     int[] selectChildren(int id);
+
+    /**
+     * 更新id
+     * @param preId
+     * @param afterId
+     * @return
+     */
+    int updateId(int preId, int afterId);
 }
