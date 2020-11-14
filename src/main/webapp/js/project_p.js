@@ -1,5 +1,7 @@
 // ————————————全局————————————
 
+const { exception } = require("console");
+
 // 设置文本不可选中
 var tool = new Tool(document, window);
 tool.textProhibition();
@@ -519,6 +521,7 @@ function operationNodeBoxSubmitFunction() {
         topAlert('出现未知错误');
         operationNodeBoxCloseFunction();
         operationNodeBoxHide();
+        throw new exception('发生未知错误！');
     }
 }
 
@@ -1266,6 +1269,7 @@ function backHistory(historyLi) {
                     });
                 } else {
                     topAlert('发生未知错误！');
+                    throw new exception('发生未知错误！');
                 }
 
                 // 更新操作记录
