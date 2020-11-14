@@ -1,10 +1,16 @@
 package common.container.history;
 
+import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
+import common.container.OnlineUsers;
 import common.dto.OperaType;
+import common.dto.Result;
+import common.util.WebUtil;
 import pojo.Node;
 import pojo.User;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
+import socket.NodeSocket;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -60,25 +66,35 @@ public class History {
         if(!list.isEmpty()){
             HistoryNode pop = list.remove(index);
             Node operaNode = pop.getNode();
+            Result msg = new Result();
+            msg.setChangeId(operaNode.getId());
             int back = 0;
             if(OperaType.CREATE.equals(pop.getOperaType())){
+                msg.setChangeType(OperaType.DELETE);
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     service.delNode(operaNode.getId(), operaNode.getAuthor());
+
                     back = operaNode.getId();
                 }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
+                msg.setChangeType(OperaType.UPDATE);
                 back = service.chNode(operaNode);
             }else if(OperaType.DELETE.equals(pop.getOperaType())){
+                msg.setChangeType(OperaType.CREATE);
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.newNode(operaNode);
                     back = service.updateId(back,operaNode.getId());
+                    if(back==0){
+                        back = operaNode.getId();
+                    }
                 }
             }
             if(back==0){
                 list.add(pop);
             }
+            WebUtil.renderForContributors(user,msg);
             return back;
         }
         //没有历史记录
