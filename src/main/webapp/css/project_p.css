@@ -97,7 +97,7 @@
 }
 
 .control .third {
-    height: 280px;
+    height: 320px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;

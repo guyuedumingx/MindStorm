@@ -948,7 +948,8 @@ var operationRecord = thirdbtnArr[2]; // 操作记录按钮
 var exportProject = thirdbtnArr[3]; // 导出项目按钮
 var signOutProject = thirdbtnArr[4]; // 退出项目按钮
 var deleteProject = thirdbtnArr[5]; // 删除项目按钮
-var classic = thirdbtnArr[6]; // 返回经典模式按钮
+var classic = thirdbtnArr[6]; // 返回主页按钮
+var shortcutKey = thirdbtnArr[7]; // 快捷键列表按钮
 
 cycleSprite(thirdbtnArr, 0, 0, 30);
 
@@ -1199,11 +1200,6 @@ function getHistory() {
         }
     });
 }
-document.addEventListener('keydown', function (e) {
-    if (e.key == 'h') {
-        getHistory();
-    }
-});
 
 function backHistory(historyLi) {
     var type = historyLi.type;
@@ -1316,6 +1312,47 @@ deleteProject.addEventListener('click', function () {
 // 返回首页模式相关操作
 classic.addEventListener('click', function () {
     window.location = 'index.html';
+});
+
+// 快捷键列表相关操作
+// 开发中
+
+var shortcutKeyBox = getDom('.');
+// var shortcutKeyClose = shortcutKeyBox.getDom('.');
+
+// 隐藏快捷键列表盒子
+function shortcutKeyBoxHide() {
+    // 芷欣
+}
+
+// 显示快捷键列表盒子
+function shortcutKeyBoxShow() {
+    // 芷欣
+}
+
+shortcutKey.addEventListener('click', function () { });
+
+// 点击关闭按钮隐藏快捷键列表
+// shortcutKeyClose.addEventListener('click', function () {
+//     shortcutKeyBoxHide();
+//     shortcutKeyBox.state = false;
+// });
+
+// 点击空白处隐藏快捷键列表
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, shortcutKeyBox) && e.target != shortcutKey) {
+        shortcutKeyBoxHide();
+        shortcutKeyBox.state = false;
+    }
+});
+
+// 按ESC隐藏快捷键列表
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        shortcutKeyBoxHide();
+        shortcutKeyBox.state = false;
+    }
 });
 
 // ——————————————中间——————————————
