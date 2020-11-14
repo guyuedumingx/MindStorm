@@ -1280,18 +1280,18 @@ function backHistory(historyLi) {
 
 // 导出项目相关操作
 
-var exportProjectBox = getDom('.'); // 导出项目的弹框
+var exportProjectBox = getDom('.exportProjectBox'); // 导出项目的弹框
 // var exportProjectClose = exportProjectBox.getDom('.'); // 导出项目弹框的关闭按钮
 // var exportProjectSubmit = exportProjectBox.getDom('.'); // 导出项目弹框的提交按钮
 
 // 隐藏导出项目弹框
 function exportProjectHide() {
-    // 芷欣
+    exportProjectBox.style.transform = "translate(-100%,0)";
 }
 
 // 显示导出项目弹框
 function exportProjectShow() {
-    // 芷欣
+    exportProjectBox.style.transform = "translate(0%,0)";
 }
 
 exportProject.addEventListener('click', function () {
