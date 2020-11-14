@@ -574,7 +574,8 @@
 .popup .popClose,
 .contributorsBox .contributClose,
 .historyBox .historyClose,
-.shortcutKeyBox .shortcutKeyClose {
+.shortcutKeyBox .shortcutKeyClose,
+.exportProjectBox .exportProjectClose {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -632,7 +633,8 @@
 /* 标题 */
 .contributorsBox .contribut_title,
 .historyBox .historyTitle,
-.shortcutKeyBox .shortcutKeyTitle {
+.shortcutKeyBox .shortcutKeyTitle,
+.exportProjectBox .exportProjectTitle {
     margin-bottom: 25px;
     font-size: 24px;
     color: #eee;
@@ -785,7 +787,53 @@
     border: solid 1px;
     border-radius: 2px;
 }
-
+/* 导出项目 */
+.exportProjectBox {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 100%;
+    width: 18%;
+    padding: 25px;
+    color: rgb(163, 175, 190);
+    background-color: #444;
+    box-sizing: border-box;
+    /* transform: translate(-100%, 0); */
+    transition: transform .5s;
+    z-index: 57;
+}
+.exportProjectBox p{
+    margin: 20px 0 0 0;
+    padding: 5px;
+    font-size: 18px;
+    color: #eee;
+    cursor: pointer;
+}
+.exportProjectBox p:hover,.exportProjectBox ul li:hover{
+    background-color:  rgba(92, 93, 94, 0.452);
+}
+.exportProjectBox ul{
+    display: none;
+    padding-left: 20px;
+}
+.exportProjectBox ul li{
+    padding: 5px;
+    color: #eee;
+    cursor: pointer;
+}
+.exportProjectBox .choiceColor{
+    background-color: #666666;
+}
+.exportProjectBox .exportBut {
+    position: absolute;
+    right: 20px;
+    bottom: 25px;
+    color: #eee;
+    letter-spacing: 5px;
+    font-size: 18px;
+    /* display: none; */
+    cursor: pointer;
+}
 .transparentBaffle {
     display: none;
     position: fixed;

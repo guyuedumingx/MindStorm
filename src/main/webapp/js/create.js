@@ -247,7 +247,7 @@ var onOff = getDom(".onOffBorder");
 var onOffRod = getDom(".onOffRod");
 //初始状态
 onOff.state = false;
-//设置密码框
+//设置口令框
 var passwordChoice = getDom(".passwordChoice");
 
 //点击改变
@@ -270,12 +270,12 @@ onOff.addEventListener('click', function () {
         passwordChoice.style.display = "flex";
     }
 })
-//是否设置密码-----------
+//是否设置口令-----------
 var onOffP = getDom(".onOffBorderP");
 var onOffRodP = getDom(".onOffRodP");
 //初始状态
 onOffP.state = false;
-//密码框架
+//口令框架
 var passwordC = getDom(".passwordC");
 var projectPassword = getDom("#projectPassword");
 //点击改变
@@ -286,8 +286,8 @@ onOffP.addEventListener('click', function () {
         onOffP.children[0].style.left = '1.5px';
         onOffP.children[0].style.backgroundColor = ' #46607b';
         onOffP.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
-        passwordC.style.color = "#214B5B";
-        projectPassword.style.color = "#214B5B";
+        passwordC.style.color = "rgb(190, 190, 190)";
+        projectPassword.style.color = "rgb(190, 190, 190)";
         passwordC.style.pointerEvents = "none";
     } else {
         onOffP.state = true;
@@ -295,8 +295,8 @@ onOffP.addEventListener('click', function () {
         onOffP.children[0].style.left = '23.5px';
         onOffP.children[0].style.backgroundColor = '#1abc9c';
         onOffP.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
-        passwordC.style.color = "#000";
-        projectPassword.style.color = "#000";
+        passwordC.style.color = "#214B5B";
+        projectPassword.style.color = "#214B5B";
         passwordC.style.pointerEvents = "auto";
     }
 })
@@ -342,28 +342,28 @@ function joinButClick() {
 
 function but2(idnum, joinPassword) {
     if (inputID.value == "") {
-        alert("请输入密码");
+        alert("请输入口令");
     } else {
         var inputPass = inputID.value;
         if (inputPass == joinPassword) {
             window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
         } else {
-            topAlert("密码错误");
+            topAlert("口令错误");
         }
     }
 }
-// 输入密码
+// 输入口令
 function password(idnum, joinPassword) {
     joinBut.style.display = "none";
     joinBut2.style.display = "block";
     inputID.type = "password";
     inputTips(inputID, "", "idTips");
-    getDom(".join_til").innerText = "项目密码";
+    getDom(".join_til").innerText = "项目口令";
     joinBut2.addEventListener("click", function () {
         but2(idnum, joinPassword);
     })
     inputEnterEvent(inputID, function () {
-        if (getDom(".join_til").innerText == "项目密码") {
+        if (getDom(".join_til").innerText == "项目口令") {
             but2(idnum, joinPassword);
         }
     });
