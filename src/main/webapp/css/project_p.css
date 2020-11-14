@@ -573,7 +573,8 @@
 .message .mesClose,
 .popup .popClose,
 .contributorsBox .contributClose,
-.historyBox .historyClose {
+.historyBox .historyClose,
+.shortcutKeyBox .shortcutKeyClose {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -630,31 +631,35 @@
 
 /* 标题 */
 .contributorsBox .contribut_title,
-.historyBox .historyTitle {
+.historyBox .historyTitle,
+.shortcutKeyBox .shortcutKeyTitle {
     margin-bottom: 25px;
     font-size: 24px;
     color: #eee;
 }
 
 .contributorsBox ul,
-.historyBox ul {
+.historyBox ul{
     max-height: 80%;
     overflow: auto;
 }
 
 .contributorsBox ul::-webkit-scrollbar,
-.historyBox ul::-webkit-scrollbar {
+.historyBox ul::-webkit-scrollbar,
+.shortcutKeyBox ul::-webkit-scrollbar {
     width: 5px;
 }
 
 .contributorsBox ul::-webkit-scrollbar-thumb,
-.historyBox ul::-webkit-scrollbar-thumb {
+.historyBox ul::-webkit-scrollbar-thumb,
+.shortcutKeyBox ul::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #777;
 }
 
 .contributorsBox ul::-webkit-scrollbar-track,
-.historyBox ul::-webkit-scrollbar-track {
+.historyBox ul::-webkit-scrollbar-track,
+.shortcutKeyBox ul::-webkit-scrollbar-track {
     border-radius: 10px;
     background: #555;
 }
@@ -738,6 +743,40 @@
     font-size: 15px;
     line-height: 24px;
     display: none;
+}
+
+/* 快捷键 */
+.shortcutKeyBox {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 100%;
+    width: 18%;
+    padding: 25px;
+    color: rgb(163, 175, 190);
+    background-color: #444;
+    box-sizing: border-box;
+    /* transform: translate(-100%, 0); */
+    transition: transform .5s;
+    z-index: 57;
+}
+.shortcutKeyBox ul {
+    max-height: 85%;
+    overflow: auto;
+}
+.shortcutKeyBox li{
+    width: 100%;
+    padding-bottom: 5px;
+    font-size: 15px;
+    color: rgb(208, 208, 209);
+}
+.shortcutKeyBox li i{
+    float: right;
+    padding: 1px;
+    font-size: 10px;
+    font-style: normal;
+    border: solid 1px;
+    border-radius: 2px;
 }
 
 .transparentBaffle {
