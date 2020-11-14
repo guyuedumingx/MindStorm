@@ -1184,7 +1184,7 @@ function getHistory() {
                 var nodeBefore = res[i].node; // 源节点信息
                 var nodeAfter = res[i].after; // 修改后节点信息
                 if (li.operaType == 'N') {
-                    span.innerText = '创建了节点   \'' + nodeAfter.theme + '\'';
+                    span.innerText = '创建了节点   \'' + nodeBefore.theme + '\'';
                 } else if (li.operaType == 'U') {
                     span.innerText = '修改了节点   \'' + nodeAfter.theme + '\'';
                 } else if (li.operaType == 'D') {

@@ -8,6 +8,8 @@ import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.Node;
+
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +40,20 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
         String sql = "select *,count(user_id) as 'star' from t_node left join t_star " +
                 "on id=node_id group by id having id = "+node.getId();
         return sql;
+    }
+
+    @Override
+    public int updateId(int preId, int afterId){
+        String sql = "update "+getTableName()+" set id = ? where id = ?";
+        Object[] objects = new Object[]{preId,afterId};
+        QueryRunner runner = new QueryRunner();
+        int update = 0;
+        try {
+            update = runner.update(sql, objects);
+        }catch (SQLException e){
+            logger.error(e.getMessage());
+        }
+        return update;
     }
 
     @Override

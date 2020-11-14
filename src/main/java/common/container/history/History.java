@@ -61,8 +61,7 @@ public class History {
             HistoryNode pop = list.remove(index);
             Node operaNode = pop.getNode();
             int back = 0;
-            if(operaNode==null){
-                operaNode = pop.getAfter();
+            if(OperaType.CREATE.equals(pop.getOperaType())){
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     service.delNode(operaNode.getId(), operaNode.getAuthor());
@@ -74,7 +73,11 @@ public class History {
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.newNode(operaNode);
+                    back = service.updateId(back,operaNode.getId());
                 }
+            }
+            if(back==0){
+                list.add(pop);
             }
             return back;
         }
@@ -97,9 +100,6 @@ public class History {
             HistoryNode next = iterator.next();
             if(OperaType.UPDATE.equals(next.getOperaType())){
                 next.setAfter(service.getNode(next.getNode().getId(),user.getId()));
-            }else if(OperaType.CREATE.equals(next.getOperaType())){
-                next.setAfter(next.getNode());
-                next.setNode(null);
             }
             historyNodeList.add(next);
         }

@@ -114,7 +114,8 @@ public class NodeController extends BaseController{
         msg.setChangeType(OperaType.UPDATE);
         Node node = initNode(request);
         Node historyNode = service.getNode(node.getId(), user.getId());
-        int statusCode = service.chNode(node);
+        int id = service.chNode(node);
+        int statusCode = StatusCode.isZero(id);
         WebUtil.renderMap(response,"status_code",statusCode+"");
         if(StatusCode.OK==statusCode){
             msg.setChangeId(node.getId());
