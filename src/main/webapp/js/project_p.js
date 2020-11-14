@@ -1317,17 +1317,17 @@ classic.addEventListener('click', function () {
 // 快捷键列表相关操作
 // 开发中
 
-var shortcutKeyBox = getDom('.');
+var shortcutKeyBox = getDom('.shortcutKeyBox');
 // var shortcutKeyClose = shortcutKeyBox.getDom('.');
 
 // 隐藏快捷键列表盒子
 function shortcutKeyBoxHide() {
-    // 芷欣
+    shortcutKeyBox.style.transform = "translate(-100%,0)";
 }
 
 // 显示快捷键列表盒子
 function shortcutKeyBoxShow() {
-    // 芷欣
+    shortcutKeyBox.style.transform = "translate(0%,0)";
 }
 
 shortcutKey.addEventListener('click', function () { });
