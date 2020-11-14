@@ -975,8 +975,8 @@ function projectMessageShow() {
     projectMessage.style.transform = "translate(0%,0)";
 }
 
-// 点击按钮 显示/关闭 项目信息
-projectMessageBtn.addEventListener('click', function () {
+// 项目信息相关操作
+function projectMessageBtnFunction() {
     if (projectMessage.state) {
         projectMessageHide();
         projectMessage.state = false;
@@ -984,7 +984,15 @@ projectMessageBtn.addEventListener('click', function () {
         projectMessageShow();
         projectMessage.state = true;
     }
-});
+}
+
+projectMessageBtn.addEventListener('click', projectMessageBtnFunction);
+// document.addEventListener('keydown', function (e) {
+//     if (e.key == 'A' && e.altKey && e.shiftKey && transparentBaffle.getCSS('display') == 'none') {
+//         e.preventDefault();
+//         projectMessageBtnFunction();
+//     }
+// });
 
 // 点击关闭按钮隐藏项目信息
 projectMessageClose.addEventListener('click', function () {
@@ -1054,8 +1062,8 @@ function contributorsShow() {
     contributorsBox.style.transform = "translate(0%,0)";
 }
 
-// 点击按钮 显示/关闭 贡献者列表
-contributors.addEventListener('click', function () {
+// 贡献者列表相关操作
+function contributorsFunction() {
     if (contributors.state) {
         contributorsHide();
         contributors.state = false;
@@ -1063,7 +1071,15 @@ contributors.addEventListener('click', function () {
         contributorsShow();
         contributors.state = true;
     }
-});
+}
+
+contributors.addEventListener('click', contributorsFunction);
+// document.addEventListener('keydown', function (e) {
+//     if (e.key == 'S' && e.altKey && e.shiftKey && transparentBaffle.getCSS('display') == 'none') {
+//         e.preventDefault();
+//         contributorsFunction();
+//     }
+// });
 
 // 点击关闭按钮隐藏贡献者列表
 contributorsClose.addEventListener('click', function () {
