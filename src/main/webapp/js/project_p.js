@@ -842,7 +842,6 @@ function standardCoordinates() {
     leafSet = [];
     searchLeaf(root);
     generateDepth();
-    console.log(treeDepth);
     x = treeBox.offsetWidth / (treeDepth + 2);
     y = treeBox.offsetHeight / (leafSet.length + 1);
     // standardX
