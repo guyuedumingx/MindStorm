@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () { }
+        error: function () {}
     });
 
 
@@ -411,7 +411,7 @@ function butStyle(projectNav, liArr, x) {
 }
 
 //项目添加---------
-function addLi(li, name, introduce, author, number, projectID,projectTime) {
+function addLi(li, name, introduce, author, number, projectID, projectTime) {
     var divName = document.createElement("div");
     divName.className = "projectName";
     divName.innerText = name;
@@ -424,6 +424,8 @@ function addLi(li, name, introduce, author, number, projectID,projectTime) {
     spanTxt.title = introduce;
     var divDdl = document.createElement("div");
     divDdl.className = "ddl";
+    divDdl.style.padding = "0";
+    divDdl.style.width = projectTime + "%";
     var divBot = document.createElement("div");
     divBot.className = "bot cleafix";
     var divAut = document.createElement("div");
@@ -451,7 +453,7 @@ function addLi(li, name, introduce, author, number, projectID,projectTime) {
     li.addEventListener("click", function () {
         window.location = "project.html?project_id=" + projectID;
     })
-    divDdl.style.width = projectTime+"%";
+
 }
 //删除内容
 function removeLi() {
@@ -472,9 +474,9 @@ function create(project, projectLength, liArr) {
         var projectID = project[i].id;
         var createTime = project[i].createTime;
         var deadline = project[i].deadline;
-        var projectTime=jdt(createTime, deadline);
+        var projectTime = jdt(createTime, deadline);
         //将内容放进去
-        addLi(liArr[i], name, introduce, author, numbers, projectID,projectTime);
+        addLi(liArr[i], name, introduce, author, numbers, projectID, projectTime);
     }
 }
 //显示暂无内容
