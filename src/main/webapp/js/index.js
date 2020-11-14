@@ -243,6 +243,7 @@ function search() {
                         personalBox.style.color = "#214B5B";
                         shareBox.style.backgroundColor = "";
                         shareBox.style.color = "#214B5B";
+
                     } else {
                         topAlert("搜索失败");
                     }
@@ -410,7 +411,7 @@ function butStyle(projectNav, liArr, x) {
 }
 
 //项目添加---------
-function addLi(li, name, introduce, author, number, projectID) {
+function addLi(li, name, introduce, author, number, projectID,projectTime) {
     var divName = document.createElement("div");
     divName.className = "projectName";
     divName.innerText = name;
@@ -421,6 +422,8 @@ function addLi(li, name, introduce, author, number, projectID) {
     var spanTxt = document.createElement("span");
     spanTxt.innerText = introduce;
     spanTxt.title = introduce;
+    var divDdl = document.createElement("div");
+    divDdl.className = "ddl";
     var divBot = document.createElement("div");
     divBot.className = "bot cleafix";
     var divAut = document.createElement("div");
@@ -438,6 +441,7 @@ function addLi(li, name, introduce, author, number, projectID) {
     li.appendChild(divName);
     li.appendChild(divIn);
     divIn.appendChild(spanTxt);
+    li.appendChild(divDdl);
     li.appendChild(divBot);
     divBot.appendChild(divAut);
     divAut.appendChild(spanName);
@@ -447,6 +451,7 @@ function addLi(li, name, introduce, author, number, projectID) {
     li.addEventListener("click", function () {
         window.location = "project.html?project_id=" + projectID;
     })
+    divDdl.style.width = projectTime+"%";
 }
 //删除内容
 function removeLi() {
@@ -465,8 +470,9 @@ function create(project, projectLength, liArr) {
         var author = project[i].creatorName;
         var numbers = project[i].numbers;
         var projectID = project[i].id;
+        
         //将内容放进去
-        addLi(liArr[i], name, introduce, author, numbers, projectID);
+        addLi(liArr[i], name, introduce, author, numbers, projectID,projectTime);
     }
 }
 //显示暂无内容

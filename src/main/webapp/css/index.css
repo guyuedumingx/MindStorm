@@ -523,9 +523,16 @@ body .header {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+/* 进度条 */
+.mainBox .projectBox .projectLi .ddl{
+    height: 0.7%;
+    width: 70%;
+    padding: 0;
+    background-color:  #214B5B;
+}
 .mainBox .projectBox .projectLi .bot{
     position: relative;
-    height: 25%;
+    height: 24.3%;
     color: #071f3d;
     background-color: rgba(139, 158, 161, 0.363);
     border-radius:  0 0 5px 5px;
