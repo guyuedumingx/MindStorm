@@ -288,7 +288,7 @@ onOffP.addEventListener('click', function () {
         onOffP.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
         passwordC.style.color = "#214B5B";
         projectPassword.style.color = "#214B5B";
-        passwordC.style.pointerEvents= "none";
+        passwordC.style.pointerEvents = "none";
     } else {
         onOffP.state = true;
         onOffP.style.backgroundColor = '#16a085';
@@ -297,7 +297,7 @@ onOffP.addEventListener('click', function () {
         onOffP.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
         passwordC.style.color = "#000";
         projectPassword.style.color = "#000";
-        passwordC.style.pointerEvents= "auto";
+        passwordC.style.pointerEvents = "auto";
     }
 })
 
@@ -325,12 +325,12 @@ function joinButClick() {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    if (res.hasPassword=="true") {
+                    if (res.hasPassword == "true") {
                         var joinPassword = res.password;
-                        password(idnum,joinPassword);
+                        password(idnum, joinPassword);
                     } else {
                         window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
-                    // "test2.html?"+"txt="+encodeURI(s.value);
+                        // "test2.html?"+"txt="+encodeURI(s.value);
                     }
                 } else {
                     topAlert("该房间不存在");
@@ -340,7 +340,7 @@ function joinButClick() {
     }
 }
 
-function but2(idnum,joinPassword) {
+function but2(idnum, joinPassword) {
     if (inputID.value == "") {
         alert("请输入密码");
     } else {
@@ -353,7 +353,7 @@ function but2(idnum,joinPassword) {
     }
 }
 // 输入密码
-function password(idnum,joinPassword) {
+function password(idnum, joinPassword) {
     joinBut.style.display = "none";
     joinBut2.style.display = "block";
     inputID.type = "password";
@@ -362,6 +362,11 @@ function password(idnum,joinPassword) {
     joinBut2.addEventListener("click", function () {
         but2(idnum, joinPassword);
     })
+    if (getDom(".join_til").innerText == "项目密码") {
+        inputEnterEvent(inputID, function () {
+            but2(idnum, joinPassword);
+        });
+    }
 }
 
 
@@ -398,8 +403,9 @@ back[1].addEventListener("click", function () {
 })
 
 //回车进入
-inputEnterEvent(inputID, joinButClick);
-
+if (getDom(".join_til").innerText == "加入项目") {
+    inputEnterEvent(inputID, joinButClick);
+}
 // 点击进入
 joinBut.addEventListener("click", joinButClick);
 
@@ -431,11 +437,11 @@ var rankInput = getDom("#projectRank");
 var timeArr = [86400000, 259200000, 604800000, 2592000000, 7776000000, 15552000000, 31104000000];
 
 estBut.addEventListener("click", function () {
-    	console.log(passwordPP);
+    console.log(passwordPP);
     if (inputName.value == "") {
         inputName.style.color = "rgb(196, 60, 60)";
         inputName.style.boxShadow = "0 0 5px rgb(196, 60, 60)";
-    }else if(introduceInput.value.length > 200){
+    } else if (introduceInput.value.length > 200) {
         topAlert("超字数啦啦啦啦！")
     } else {
         var passwordPP = projectPassword.value;
@@ -462,7 +468,7 @@ estBut.addEventListener("click", function () {
                 rank: rank,
                 createTime: createTime,
                 introduction: indu,
-                password:passwordPP
+                password: passwordPP
             },
             header: {
                 'Content-Type': 'application/json'
