@@ -12,7 +12,7 @@ public class Project extends BaseModel{
     private int rank;
     @DbField(value = "author_id",update = false)
     private int author;
-    @DbField(value = "head_id",update = false)
+    @DbField(value = "head_id")
     private int headNodeId;
     private int[] contributors;
     @DbField("public")

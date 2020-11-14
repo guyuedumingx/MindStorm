@@ -42,7 +42,7 @@ public class ProjectUtilController extends BaseController {
         int statusCode = StatusCode.nullObjcet(project);
         result.setStatus_code(statusCode);
         if(project!=null){
-            boolean hasPassword = "".equals(project.getPassword());
+            boolean hasPassword = !"".equals(project.getPassword());
             result.put("hasPassword",hasPassword+"");
             result.put("password",project.getPassword());
         }
