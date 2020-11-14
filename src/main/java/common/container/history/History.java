@@ -80,13 +80,16 @@ public class History {
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
                 msg.setChangeType(OperaType.UPDATE);
                 back = service.chNode(operaNode);
+                if(back!=0){
+                    back = operaNode.getId();
+                }
             }else if(OperaType.DELETE.equals(pop.getOperaType())){
                 msg.setChangeType(OperaType.CREATE);
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.newNode(operaNode);
                     back = service.updateId(back,operaNode.getId());
-                    if(back==0){
+                    if(back!=0){
                         back = operaNode.getId();
                     }
                 }

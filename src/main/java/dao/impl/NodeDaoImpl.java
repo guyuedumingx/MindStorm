@@ -45,9 +45,9 @@ public class NodeDaoImpl extends BaseDaoImpl<Node> implements NodeDao {
     @Override
     public int updateId(int preId, int afterId){
         String sql = "update "+getTableName()+" set id = ? where id = ?";
-        Object[] objects = new Object[]{preId,afterId};
+        Object[] objects = new Object[]{afterId,preId};
         QueryRunner runner = new QueryRunner(JdbcUtil.getDataSource());
-        int update = -1;
+        int update = 0;
         try {
             update = runner.update(sql, objects);
         }catch (SQLException e){
