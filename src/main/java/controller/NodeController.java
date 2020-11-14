@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 负责处理有关于节点的请求
@@ -30,13 +31,17 @@ public class NodeController extends BaseController{
     NodeService service = new NodeServiceImpl();
     SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
     History history = null;
+    int projectId;
+    Map<Integer,History> historyMap = null;
 
     @Override
     protected void before(HttpServletRequest req, HttpServletResponse resp) {
         //获取用户id
         HttpSession session = req.getSession();
         user = (User)session.getAttribute("user");
-        history = (History) session.getAttribute("history");
+        historyMap = (Map<Integer,History>) session.getAttribute("history");
+        projectId = (Integer) session.getAttribute("projectId");
+        history = historyMap.get(projectId);
     }
 
     /**
@@ -71,6 +76,7 @@ public class NodeController extends BaseController{
 
         WebUtil.renderForContributors(user,msg);
         WebUtil.renderJson(resp,result);
+        afterOpera(req);
     }
 
 
@@ -93,6 +99,7 @@ public class NodeController extends BaseController{
             history.addDelNodeHistory(node);
             WebUtil.renderForContributors(user,msg);
         }
+        afterOpera(request);
     }
 
     /**
@@ -114,6 +121,7 @@ public class NodeController extends BaseController{
             history.addUpdateNodeHistory(historyNode);
             WebUtil.renderForContributors(user,msg);
         }
+        afterOpera(request);
     }
 
     private Node initNode(HttpServletRequest request) {
@@ -149,9 +157,10 @@ public class NodeController extends BaseController{
         WebUtil.renderJson(response,node);
     }
 
-    @Override
-    protected void after(HttpServletRequest req, HttpServletResponse resp) {
+    protected void afterOpera(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        session.setAttribute("history",history);
+        historyMap.remove(projectId);
+        historyMap.put(projectId,history);
+        session.setAttribute("history", historyMap);
     }
 }

@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 负责处理有关项目的请求
@@ -75,9 +77,18 @@ public class ProjectController extends BaseController{
         }else {
             WebUtil.renderJson(response,project);
         }
-        History history = new History(user);
         HttpSession session = request.getSession();
-        session.setAttribute("history",history);
+        Map<Integer,History> historyMap = (Map<Integer, History>) session.getAttribute("history");
+        if(historyMap==null){
+            historyMap = new HashMap<>();
+        }
+        History history = historyMap.get(id);
+        if(history==null){
+            history = new History(user,id);
+            historyMap.put(id,history);
+            session.setAttribute("history",historyMap);
+            session.setAttribute("projectId",id);
+        }
     }
 
     /**

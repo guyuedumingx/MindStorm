@@ -16,10 +16,12 @@ import java.util.List;
 public class History {
     List<HistoryNode> list = new ArrayList<>();
     NodeService service = new NodeServiceImpl();
+    int projectId;
     User user = null;
 
-    public History(User user){
+    public History(User user, int projectId){
         this.user = user;
+        this.projectId = projectId;
     }
 
     /**
@@ -59,21 +61,19 @@ public class History {
             HistoryNode pop = list.remove(index);
             Node operaNode = pop.getNode();
             int back = 0;
-            if(OperaType.CREATE.equals(pop.getOperaType())){
+            if(operaNode==null){
+                operaNode = pop.getAfter();
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     service.delNode(operaNode.getId(), operaNode.getAuthor());
                     back = operaNode.getId();
-                    addDelNodeHistory(operaNode);
                 }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
-                addUpdateNodeHistory(service.getNode(operaNode.getId(),user.getId()));
                 back = service.chNode(operaNode);
             }else if(OperaType.DELETE.equals(pop.getOperaType())){
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.newNode(operaNode);
-                    addNewNodeHistory(back);
                 }
             }
             return back;
@@ -104,6 +104,14 @@ public class History {
             historyNodeList.add(next);
         }
         return historyNodeList;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }
 
