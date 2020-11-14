@@ -284,6 +284,7 @@ function addNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+        // 用webSocket发请求
     }
 }
 
@@ -307,6 +308,7 @@ function removeNodeFunction() {
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
         transparentBaffle.show();
+        // 用websocket发请求
     }
 }
 
@@ -345,6 +347,7 @@ function changeNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+        // 用webSocket发请求
     }
 }
 
@@ -2538,6 +2541,10 @@ websocket.onmessage = function (e) {
                 socketNode.stared = res.stared;
             }
         });
+    } else if (back.type == "E") {
+        // 新增正在操作的用户
+    } else if (back.type == "C") {
+        // 删除正在操作的用户
     } else {
         topAlert('发生未知错误');
     }
@@ -2549,6 +2556,6 @@ websocket.onclose = function () {
 }
 
 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-window.onbeforeunload = function () {
+window.onbeforeunload = function (e) {
     websocket.close();
 }
