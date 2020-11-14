@@ -519,6 +519,7 @@ function operationNodeBoxSubmitFunction() {
         topAlert('出现未知错误');
         operationNodeBoxCloseFunction();
         operationNodeBoxHide();
+        throw new exception('发生未知错误！');
     }
 }
 
@@ -1184,7 +1185,7 @@ function getHistory() {
                 var nodeBefore = res[i].node; // 源节点信息
                 var nodeAfter = res[i].after; // 修改后节点信息
                 if (li.operaType == 'N') {
-                    span.innerText = '创建了节点   \'' + nodeAfter.theme + '\'';
+                    span.innerText = '创建了节点   \'' + nodeBefore.theme + '\'';
                 } else if (li.operaType == 'U') {
                     span.innerText = '修改了节点   \'' + nodeAfter.theme + '\'';
                 } else if (li.operaType == 'D') {
@@ -1215,7 +1216,6 @@ function backHistory(historyLi) {
         },
         success: function (res) {
             if (res.status_code == '200') {
-                console.log(res.node_id);
                 if (type == 'N') {
 
                     // 如果撤销的是创建节点的记录，则删除节点
@@ -1266,6 +1266,7 @@ function backHistory(historyLi) {
                     });
                 } else {
                     topAlert('发生未知错误！');
+                    throw new exception('发生未知错误！');
                 }
 
                 // 更新操作记录
@@ -1278,13 +1279,37 @@ function backHistory(historyLi) {
 }
 
 // 导出项目相关操作
+
+var exportProjectBox = getDom('.'); // 导出项目的弹框
+// var exportProjectClose = exportProjectBox.getDom('.'); // 导出项目弹框的关闭按钮
+// var exportProjectSubmit = exportProjectBox.getDom('.'); // 导出项目弹框的提交按钮
+
+// 隐藏导出项目弹框
+function exportProjectHide() {
+    // 芷欣
+}
+
+// 显示导出项目弹框
+function exportProjectShow() {
+    // 芷欣
+}
+
 exportProject.addEventListener('click', function () {
-    tipsState = 'exportProject';
-    tipsTitle.innerText = '导出项目';
-    tipsContent.innerText = '项目将会导出到本地，是否继续';
-    tipsBox.show();
-    transparentBaffle.show();
+
 })
+
+// 此测试代码仅供开发阶段使用
+document.addEventListener('keydown', function (e) {
+    if (e.altKey) {
+        if (e.key == 'u') {
+            window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
+        } else if (e.key == 'i') {
+            window.location = '/util/xmind?project_id=' + projectId + '&type=md';
+        } else if (e.key == 'o') {
+            window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
+        }
+    }
+});
 
 // 退出项目相关操作
 signOutProject.addEventListener('click', function () {
@@ -1320,8 +1345,9 @@ classic.addEventListener('click', function () {
 // 快捷键列表相关操作
 // 开发中
 
-var shortcutKeyBox = getDom('.shortcutKeyBox');
-// var shortcutKeyClose = shortcutKeyBox.getDom('.');
+var shortcutKeyBox = getDom('.shortcutKeyBox'); // 快捷键列表的盒子
+var shortcutKeyClose = shortcutKeyBox.getDom('.shortcutKeyClose'); // 快捷键列表盒子的关闭按钮
+shortcutKeyBox.state = false;
 
 // 隐藏快捷键列表盒子
 function shortcutKeyBoxHide() {
@@ -1333,13 +1359,24 @@ function shortcutKeyBoxShow() {
     shortcutKeyBox.style.transform = "translate(0%,0)";
 }
 
+function shortcutKeyFunction() {
+    if (operationRecordBox.state) {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    } else {
+        operationRecordShow();
+        operationRecordBox.state = true;
+        getHistory();
+    }
+}
+
 shortcutKey.addEventListener('click', function () { });
 
 // 点击关闭按钮隐藏快捷键列表
-// shortcutKeyClose.addEventListener('click', function () {
-//     shortcutKeyBoxHide();
-//     shortcutKeyBox.state = false;
-// });
+shortcutKeyClose.addEventListener('click', function () {
+    shortcutKeyBoxHide();
+    shortcutKeyBox.state = false;
+});
 
 // 点击空白处隐藏快捷键列表
 document.addEventListener('click', function (e) {

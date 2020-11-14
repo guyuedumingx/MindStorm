@@ -10,9 +10,9 @@ import common.annontation.DbField;
 public class Project extends BaseModel{
     @DbField("project_rank")
     private int rank;
-    @DbField("author_id")
+    @DbField(value = "author_id",update = false)
     private int author;
-    @DbField("head_id")
+    @DbField(value = "head_id")
     private int headNodeId;
     private int[] contributors;
     @DbField("public")
@@ -21,11 +21,13 @@ public class Project extends BaseModel{
     private String introduction = "请输入内容";
     @DbField("project_name")
     private String name = "请输入内容";
-    @DbField("create_time")
+    @DbField(value = "create_time",update = false)
     private String createTime = "";
     @DbField("deadline")
     private String deadline = "";
     private String creatorName = "";
+    @DbField("password")
+    private String password = "";
     private int numbers;
 
     public Project() {}
@@ -40,6 +42,17 @@ public class Project extends BaseModel{
         this.name = name;
         this.createTime = createTime;
         this.deadline = deadline;
+    }
+    public Project(int rank, int author, int headNodeId, boolean isPublic, String introduction, String name, String createTime, String deadline, String password) {
+        this.rank = rank;
+        this.author = author;
+        this.headNodeId = headNodeId;
+        this.isPublic = isPublic;
+        this.introduction = introduction;
+        this.name = name;
+        this.createTime = createTime;
+        this.deadline = deadline;
+        this.password = password;
     }
 
     public int getRank() {
@@ -128,6 +141,14 @@ public class Project extends BaseModel{
 
     public void setNumbers(int numbers) {
         this.numbers = numbers;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

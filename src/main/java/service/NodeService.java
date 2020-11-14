@@ -30,4 +30,12 @@ public interface NodeService {
      * @return
      */
     Node getNode(int nodeId, int userId);
+
+    /**
+     * 更新节点id
+     * @param preId
+     * @param afterId
+     * @return
+     */
+    int updateId(int preId, int afterId);
 }

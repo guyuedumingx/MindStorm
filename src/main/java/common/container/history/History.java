@@ -1,10 +1,16 @@
 package common.container.history;
 
+import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
+import common.container.OnlineUsers;
 import common.dto.OperaType;
+import common.dto.Result;
+import common.util.WebUtil;
 import pojo.Node;
 import pojo.User;
 import service.NodeService;
 import service.impl.NodeServiceImpl;
+import socket.NodeSocket;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,10 +22,12 @@ import java.util.List;
 public class History {
     List<HistoryNode> list = new ArrayList<>();
     NodeService service = new NodeServiceImpl();
+    int projectId;
     User user = null;
 
-    public History(User user){
+    public History(User user, int projectId){
         this.user = user;
+        this.projectId = projectId;
     }
 
     /**
@@ -58,24 +66,38 @@ public class History {
         if(!list.isEmpty()){
             HistoryNode pop = list.remove(index);
             Node operaNode = pop.getNode();
+            Result msg = new Result();
+            msg.setChangeId(operaNode.getId());
             int back = 0;
             if(OperaType.CREATE.equals(pop.getOperaType())){
+                msg.setChangeType(OperaType.DELETE);
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     service.delNode(operaNode.getId(), operaNode.getAuthor());
+
                     back = operaNode.getId();
-                    addDelNodeHistory(operaNode);
                 }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
-                addUpdateNodeHistory(service.getNode(operaNode.getId(),user.getId()));
+                msg.setChangeType(OperaType.UPDATE);
                 back = service.chNode(operaNode);
+                if(back!=0){
+                    back = operaNode.getId();
+                }
             }else if(OperaType.DELETE.equals(pop.getOperaType())){
+                msg.setChangeType(OperaType.CREATE);
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
                     back = service.newNode(operaNode);
-                    addNewNodeHistory(back);
+                    back = service.updateId(back,operaNode.getId());
+                    if(back!=0){
+                        back = operaNode.getId();
+                    }
                 }
             }
+            if(back==0){
+                list.add(pop);
+            }
+            WebUtil.renderForContributors(user,msg);
             return back;
         }
         //没有历史记录
@@ -97,13 +119,18 @@ public class History {
             HistoryNode next = iterator.next();
             if(OperaType.UPDATE.equals(next.getOperaType())){
                 next.setAfter(service.getNode(next.getNode().getId(),user.getId()));
-            }else if(OperaType.CREATE.equals(next.getOperaType())){
-                next.setAfter(next.getNode());
-                next.setNode(null);
             }
             historyNodeList.add(next);
         }
         return historyNodeList;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }
 

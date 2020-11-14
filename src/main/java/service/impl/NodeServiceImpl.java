@@ -67,7 +67,7 @@ public class NodeServiceImpl implements NodeService {
         }
         int i = nodeDao.updateOne(node);
         addUserAsContributors(i,node.getLastEditId());
-        return i==0 ? StatusCode.LOST : StatusCode.OK;
+        return i;
     }
 
     @Override
@@ -115,5 +115,10 @@ public class NodeServiceImpl implements NodeService {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public int updateId(int preId, int afterId) {
+        return nodeDao.updateId(preId,afterId);
     }
 }
