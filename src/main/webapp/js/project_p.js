@@ -1,7 +1,5 @@
 // ————————————全局————————————
 
-const { exception } = require("console");
-
 // 设置文本不可选中
 var tool = new Tool(document, window);
 tool.textProhibition();
@@ -1324,8 +1322,9 @@ classic.addEventListener('click', function () {
 // 快捷键列表相关操作
 // 开发中
 
-var shortcutKeyBox = getDom('.shortcutKeyBox');
-// var shortcutKeyClose = shortcutKeyBox.getDom('.');
+var shortcutKeyBox = getDom('.shortcutKeyBox'); // 快捷键列表的盒子
+var shortcutKeyClose = shortcutKeyBox.getDom('.shortcutKeyClose'); // 快捷键列表盒子的关闭按钮
+shortcutKeyBox.state = false;
 
 // 隐藏快捷键列表盒子
 function shortcutKeyBoxHide() {
@@ -1337,13 +1336,24 @@ function shortcutKeyBoxShow() {
     shortcutKeyBox.style.transform = "translate(0%,0)";
 }
 
+function shortcutKeyFunction() {
+    if (operationRecordBox.state) {
+        operationRecordHide();
+        operationRecordBox.state = false;
+    } else {
+        operationRecordShow();
+        operationRecordBox.state = true;
+        getHistory();
+    }
+}
+
 shortcutKey.addEventListener('click', function () { });
 
 // 点击关闭按钮隐藏快捷键列表
-// shortcutKeyClose.addEventListener('click', function () {
-//     shortcutKeyBoxHide();
-//     shortcutKeyBox.state = false;
-// });
+shortcutKeyClose.addEventListener('click', function () {
+    shortcutKeyBoxHide();
+    shortcutKeyBox.state = false;
+});
 
 // 点击空白处隐藏快捷键列表
 document.addEventListener('click', function (e) {
