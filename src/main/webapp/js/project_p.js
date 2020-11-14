@@ -1281,8 +1281,8 @@ function backHistory(historyLi) {
 // 导出项目相关操作
 
 var exportProjectBox = getDom('.exportProjectBox'); // 导出项目的弹框
-// var exportProjectClose = exportProjectBox.getDom('.'); // 导出项目弹框的关闭按钮
-// var exportProjectSubmit = exportProjectBox.getDom('.'); // 导出项目弹框的提交按钮
+var exportProjectClose = exportProjectBox.getDom('.exportProjectClose'); // 导出项目弹框的关闭按钮
+var exportProjectSubmit = exportProjectBox.getDom('.exportProjectBtn'); // 导出项目弹框的提交按钮
 exportProjectBox.state = false;
 
 // 隐藏导出项目弹框
