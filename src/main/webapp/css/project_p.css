@@ -646,20 +646,20 @@
 
 .contributorsBox ul::-webkit-scrollbar,
 .historyBox ul::-webkit-scrollbar,
-.shortcutKeyBox dl::-webkit-scrollbar {
+.shortcutKeyBox ul::-webkit-scrollbar {
     width: 5px;
 }
 
 .contributorsBox ul::-webkit-scrollbar-thumb,
 .historyBox ul::-webkit-scrollbar-thumb,
-.shortcutKeyBox dl::-webkit-scrollbar-thumb {
+.shortcutKeyBox ul::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #777;
 }
 
 .contributorsBox ul::-webkit-scrollbar-track,
 .historyBox ul::-webkit-scrollbar-track,
-.shortcutKeyBox dl::-webkit-scrollbar-track {
+.shortcutKeyBox ul::-webkit-scrollbar-track {
     border-radius: 10px;
     background: #555;
 }
@@ -760,9 +760,23 @@
     transition: transform .5s;
     z-index: 57;
 }
-.shortcutKeyBox dl {
-    max-height: 80%;
+.shortcutKeyBox ul {
+    max-height: 85%;
     overflow: auto;
+}
+.shortcutKeyBox li{
+    width: 100%;
+    padding-bottom: 5px;
+    font-size: 15px;
+    color: rgb(208, 208, 209);
+}
+.shortcutKeyBox li i{
+    float: right;
+    padding: 1px;
+    font-size: 10px;
+    font-style: normal;
+    border: solid 1px;
+    border-radius: 2px;
 }
 
 .transparentBaffle {
