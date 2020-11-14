@@ -62,7 +62,7 @@ public class MarkdownUtil {
                 }
             }
             resp.setContentType("multipart/form-data;charset=UTF-8;");
-            resp.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xmind");
+            resp.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".md");
             byte[] bytes = md.getBytes();
             outputStream.write(bytes);
         }catch (Exception e){
@@ -78,12 +78,12 @@ public class MarkdownUtil {
     public static void writeProject(int projectId, int userId, HttpServletResponse resp){
         project = projectService.getProject(projectId);
         String md = build(project.getHeadNodeId(), userId, 1);
-        back(resp,md+addFootNote());
+        back(resp,md+addFootNote(userId));
     }
 
     public static String writeProject(int projectId, int userId){
         project = projectService.getProject(projectId);
-        return build(project.getHeadNodeId(), userId, 1)+addFootNote();
+        return build(project.getHeadNodeId(), userId, 1)+addFootNote(userId);
     }
 
     private static String build(int root,int userId, int level){
@@ -94,7 +94,7 @@ public class MarkdownUtil {
         int[] children = node.getChildren();
         String s = oneNodeString(node, level);
         for(int child : children){
-           s += build(child,userId,++level);
+           s += build(child,userId,level+1);
         }
         return s;
     }
@@ -103,6 +103,7 @@ public class MarkdownUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix(level,node.getTheme()));
         sb.append("\n");
+        sb.append(addSpace(level, 1));
         sb.append("> "+node.getContent()+"  ");
         sb.append("\n");
         sb.append("\n");
@@ -124,7 +125,7 @@ public class MarkdownUtil {
             sb.append(s);
         }
         project = projectService.getProject(root.getProjectId());
-        sb.append(addFootNote());
+        sb.append(addFootNote(userId));
         return sb.toString();
     }
 
@@ -132,7 +133,7 @@ public class MarkdownUtil {
      * 添加项目脚注
      * @return
      */
-    private static String addFootNote(){
+    private static String addFootNote(int userId){
         StringBuilder sb = new StringBuilder();
         sb.append("-----\n");
         sb.append("作者: `"+new UserServiceImpl().getUser(project.getAuthor()).getName() +"`  \n");
@@ -140,11 +141,23 @@ public class MarkdownUtil {
         date.setTime(Long.valueOf(project.getCreateTime()));
         sb.append("项目创建时间: `"+new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date)+"`  \n");
         if(project.isPublic()){
-            sb.append("** 此为开源项目,未经作者同意不得用于商业用途! **  \n");
+            sb.append("**此为开源项目，未经作者同意不得用于商业用途！**  \n");
+        }else if(project.getAuthor()!=userId){
+            sb.append("**您不是项目的作者，请合理使用项目哦！**  \n");
         }
         return sb.toString();
     }
 
+    private static String addSpace(int level,int index){
+        StringBuilder sb = new StringBuilder();
+        if(level>index){
+            String space = "  ";
+            for (int le=level; le>index; le--){
+                sb.append(space);
+            }
+        }
+        return sb.toString();
+    }
 
     /**
      * 加markdown修饰符
@@ -153,21 +166,23 @@ public class MarkdownUtil {
      * @return
      */
     private static String prefix(int level,String msg){
+        StringBuilder sb = new StringBuilder();
+        sb.append(addSpace(level, 2));
         switch (level){
             case 1:
-                return "## " + msg + "  ";
+                 sb.append("# " + msg);
+                 break;
             case 2:
-                return "### " + msg + "  ";
+                sb.append("- ## " + msg);
+                break;
             case 3:
-                return "#### " + msg + "  ";
-            case 4:
-                return "##### " + msg + "  ";
-            case 5:
-                return "###### " + msg + "  ";
-            case 6:
-                return "** " + msg + " **  ";
+                sb.append("- ### " + msg);
+                break;
             default:
-                return "* " + msg + " *  ";
+                sb.append("- **" + msg + "**");
+                break;
         }
+        sb.append("  ");
+        return sb.toString();
     }
 }
