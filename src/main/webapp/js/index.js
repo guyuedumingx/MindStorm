@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () {}
+        error: function () { }
     });
 
 
@@ -183,7 +183,7 @@ nameBox.inputEnterEvent(function () {
             'Content-Type': 'application/json'
         }, // 请求头
         success: function (res) {
-            
+
         }
     });
     nameBox.value = nameBox.value;
@@ -672,3 +672,8 @@ var timer = setInterval(function () {
 }, 100)
 
 start();
+
+// 计算进度条的函数
+function jdt(createTime, deadline) {
+    return (1 - (deadline - Date.now()) / (deadline - createTime)) * 100;
+}
