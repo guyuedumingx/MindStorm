@@ -424,8 +424,6 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
     spanTxt.title = introduce;
     var divDdl = document.createElement("div");
     divDdl.className = "ddl";
-    divDdl.style.padding = "0";
-    divDdl.style.width = projectTime + "%";
     var divBot = document.createElement("div");
     divBot.className = "bot cleafix";
     var divAut = document.createElement("div");
@@ -444,6 +442,8 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
     li.appendChild(divIn);
     divIn.appendChild(spanTxt);
     li.appendChild(divDdl);
+    divDdl.style.padding = "0";
+    divDdl.style.width = projectTime + "%";
     li.appendChild(divBot);
     divBot.appendChild(divAut);
     divAut.appendChild(spanName);
