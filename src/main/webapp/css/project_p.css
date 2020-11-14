@@ -641,7 +641,7 @@
 }
 
 .contributorsBox ul,
-.historyBox ul{
+.historyBox ul {
     max-height: 80%;
     overflow: auto;
 }
@@ -762,22 +762,26 @@
     transition: transform .5s;
     z-index: 57;
 }
+
 .shortcutKeyBox ul {
     max-height: 89%;
     overflow: auto;
     cursor: default;
 }
-.shortcutKeyBox li{
+
+.shortcutKeyBox li {
     width: 100%;
-    padding:4px 2px;
+    padding: 4px 2px;
     font-size: 14px;
     box-sizing: border-box;
     color: rgb(208, 208, 209);
 }
-.shortcutKeyBox li:hover{
+
+.shortcutKeyBox li:hover {
     background-color: rgb(82, 81, 81);
 }
-.shortcutKeyBox li i{
+
+.shortcutKeyBox li i {
     float: right;
     /* padding: 1px; */
     padding: 0 2px;
@@ -787,6 +791,7 @@
     border: solid 1px;
     border-radius: 2px;
 }
+
 /* 导出项目 */
 .exportProjectBox {
     position: absolute;
@@ -798,32 +803,39 @@
     color: rgb(163, 175, 190);
     background-color: #444;
     box-sizing: border-box;
-    /* transform: translate(-100%, 0); */
+    transform: translate(-100%, 0);
     transition: transform .5s;
     z-index: 57;
 }
-.exportProjectBox p{
+
+.exportProjectBox p {
     margin: 20px 0 0 0;
     padding: 5px;
     font-size: 18px;
     color: #eee;
     cursor: pointer;
 }
-.exportProjectBox p:hover,.exportProjectBox ul li:hover{
-    background-color:  rgba(92, 93, 94, 0.452);
+
+.exportProjectBox p:hover,
+.exportProjectBox ul li:hover {
+    background-color: rgba(92, 93, 94, 0.452);
 }
-.exportProjectBox ul{
+
+.exportProjectBox ul {
     display: none;
     padding-left: 20px;
 }
-.exportProjectBox ul li{
+
+.exportProjectBox ul li {
     padding: 5px;
     color: #eee;
     cursor: pointer;
 }
-.exportProjectBox .choiceColor{
+
+.exportProjectBox .choiceColor {
     background-color: #666666;
 }
+
 .exportProjectBox .exportBut {
     position: absolute;
     right: 20px;
@@ -834,6 +846,7 @@
     /* display: none; */
     cursor: pointer;
 }
+
 .transparentBaffle {
     display: none;
     position: fixed;
