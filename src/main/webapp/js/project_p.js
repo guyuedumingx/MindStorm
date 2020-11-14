@@ -1216,7 +1216,6 @@ function backHistory(historyLi) {
         },
         success: function (res) {
             if (res.status_code == '200') {
-                console.log(res.node_id);
                 if (type == 'N') {
 
                     // 如果撤销的是创建节点的记录，则删除节点
