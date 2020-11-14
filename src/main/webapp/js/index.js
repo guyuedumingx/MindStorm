@@ -443,7 +443,9 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
     divIn.appendChild(spanTxt);
     li.appendChild(divDdl);
     // divDdl.style.padding = "0";
-    // divDdl.style.width = projectTime + "%";
+    if (projectTime >= 100)
+        projectTime = 100;
+    divDdl.style.width = projectTime + "%";
     li.appendChild(divBot);
     divBot.appendChild(divAut);
     divAut.appendChild(spanName);
