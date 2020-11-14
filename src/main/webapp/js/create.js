@@ -286,8 +286,8 @@ onOffP.addEventListener('click', function () {
         onOffP.children[0].style.left = '1.5px';
         onOffP.children[0].style.backgroundColor = ' #46607b';
         onOffP.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
-        passwordC.style.color = "rgb(190, 190, 190)";
-        projectPassword.style.color = "rgb(190, 190, 190)";
+        passwordC.style.color = "#214B5B";
+        projectPassword.style.color = "#214B5B";
         passwordC.style.pointerEvents= "none";
     } else {
         onOffP.state = true;
@@ -325,8 +325,13 @@ function joinButClick() {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
+                    if (res.hasPassword) {
+                        var joinPassword = res.password;
+                        password(idnum,joinPassword);
+                    } else {
+                        window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
+                    }
                 } else {
                     topAlert("该房间不存在");
                 }
@@ -335,39 +340,26 @@ function joinButClick() {
     }
 }
 
-function but2() {
+function but2(idnum,joinPassword) {
     if (inputID.value == "") {
         alert("请输入密码");
     } else {
-        var idnum = inputID.value;
-        ajax({
-            type: 'get',
-            url: '/util/project',
-            data: {
-                id: idnum
-            },
-            header: {
-                'Content-Type': 'application/json'
-            }, // 请求头
-            success: function (res) {
-                if (res.status_code == '200') {
-                    window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
-                    // "test2.html?"+"txt="+encodeURI(s.value);
-                } else {
-                    topAlert("该房间不存在");
-                }
-            }
-        });
+        var inputPass = inputID.value;
+        if (inputPass == joinPassword) {
+            window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
+        } else {
+            topAlert("密码错误");
+        }
     }
 }
 // 输入密码
-function password() {
+function password(idnum,joinPassword) {
     joinBut.style.display = "none";
     joinBut2.style.display = "block";
     inputID.type = "password";
     inputTips(inputID, "", "idTips");
     getDom(".join_til").innerText = "项目密码";
-    joinBut2.addEventListener("click", but2)
+    joinBut2.addEventListener("click", but2(idnum,joinPassword))
 }
 
 
@@ -437,12 +429,14 @@ var rankInput = getDom("#projectRank");
 var timeArr = [86400000, 259200000, 604800000, 2592000000, 7776000000, 15552000000, 31104000000];
 
 estBut.addEventListener("click", function () {
+    	console.log(passwordPP);
     if (inputName.value == "") {
         inputName.style.color = "rgb(196, 60, 60)";
         inputName.style.boxShadow = "0 0 5px rgb(196, 60, 60)";
     }else if(introduceInput.value.length > 200){
         topAlert("超字数啦啦啦啦！")
-    }else {
+    } else {
+        var passwordPP = projectPassword.value;
         var createTime = Date.now();
         var name = inputName.value;
         var indu = introduceInput.value;
@@ -465,8 +459,8 @@ estBut.addEventListener("click", function () {
                 deadline: createTime + time,
                 rank: rank,
                 createTime: createTime,
-                introduction: indu
-                
+                introduction: indu,
+                password:passwordPP
             },
             header: {
                 'Content-Type': 'application/json'
