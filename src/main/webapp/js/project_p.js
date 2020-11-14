@@ -1190,7 +1190,7 @@ function getHistory() {
                 } else if (li.operaType == 'D') {
                     span.innerText = '删除了节点   \'' + nodeBefore.theme + '\'';
                 } else {
-                    topAlert('出bug啦');
+                    topAlert('发生未知错误！');
                 }
                 li.appendChild(span);
                 li.appendChild(btn);
@@ -1205,7 +1205,7 @@ function getHistory() {
 }
 
 function backHistory(historyLi) {
-    var type = historyLi.type;
+    var type = historyLi.operaType;
     var index = historyLi.index;
     ajax({
         type: 'post',
@@ -1265,7 +1265,7 @@ function backHistory(historyLi) {
                         }
                     });
                 } else {
-                    topAlert('出bug啦！');
+                    topAlert('发生未知错误！');
                 }
 
                 // 更新操作记录
