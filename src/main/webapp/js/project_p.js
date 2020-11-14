@@ -743,60 +743,6 @@ function setBtnEvent(btn, fun) {
     }
 }
 
-// 隐藏无关节点间线条
-setBtnEvent(hideLine, hideLineClick);
-
-// 隐藏无关节点主题
-setBtnEvent(hideTheme, function () {
-    if (hideTheme.state) {
-        ergodicTree(function (node) {
-            node.addClass('hideTheme');
-        });
-        if (nowNode) {
-            var t = nowNode;
-            t.removeClass('hideTheme');
-            while (t.father) {
-                t = t.father;
-                t.removeClass('hideTheme');
-            }
-            changeChild(nowNode, function (node) {
-                node.removeClass('hideTheme');
-            });
-        }
-    } else {
-        ergodicTree(function (node) {
-            node.removeClass('hideTheme');
-        });
-    }
-});
-
-// 固定所有节点
-setBtnEvent(lockingNode, function () {
-    if (standard.state) {
-        btnChange(standard);
-    }
-});
-
-// 节点根据层级显示不同颜色
-setBtnEvent(layerColor, function () {
-    if (layerColor.state) {
-        layerColor.colorArr = [];
-        layerColor.colorArr.push(randomColor(120, 180));
-        for (var i = 0; i < 20; i++) {
-            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ')');
-            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ')');
-            layerColor.colorArr.push('rgb(' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ')');
-        }
-        for (var i = 0; i < nodeSet.length; i++) {
-            nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
-        }
-    } else {
-        nodeSet[0].style.backgroundColor = randomColor(120, 180);
-        for (var i = 1; i < nodeSet.length; i++) {
-            nodeSet[i].style.backgroundColor = randomColor(160, 220);
-        }
-    }
-});
 
 // 隐藏无关节点间线条函数
 function hideLineClick() {
@@ -833,6 +779,97 @@ function hideLineClick() {
         }
     }
 }
+
+// 隐藏无关节点间线条
+setBtnEvent(hideLine, hideLineClick);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'q' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(hideLine);
+        hideLineClick();
+    }
+});
+
+// 隐藏无关节点主题相关操作
+function hideThemeFunction() {
+    if (hideTheme.state) {
+        ergodicTree(function (node) {
+            node.addClass('hideTheme');
+        });
+        if (nowNode) {
+            var t = nowNode;
+            t.removeClass('hideTheme');
+            while (t.father) {
+                t = t.father;
+                t.removeClass('hideTheme');
+            }
+            changeChild(nowNode, function (node) {
+                node.removeClass('hideTheme');
+            });
+        }
+    } else {
+        ergodicTree(function (node) {
+            node.removeClass('hideTheme');
+        });
+    }
+}
+
+setBtnEvent(hideTheme, hideThemeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'w' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(hideTheme);
+        hideThemeFunction();
+    }
+});
+
+// 固定所有节点相关操作
+function lockingNodeFunction() {
+    if (standard.state) {
+        btnChange(standard);
+    }
+}
+
+setBtnEvent(lockingNode, lockingNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'e' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(lockingNode);
+        lockingNodeFunction();
+    }
+});
+
+// 节点根据层级显示不同颜色
+function layerColorFunction() {
+    if (layerColor.state) {
+        layerColor.colorArr = [];
+        layerColor.colorArr.push(randomColor(120, 180));
+        for (var i = 0; i < 20; i++) {
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ')');
+        }
+        for (var i = 0; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
+        }
+    } else {
+        nodeSet[0].style.backgroundColor = randomColor(120, 180);
+        for (var i = 1; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = randomColor(160, 220);
+        }
+    }
+}
+
+setBtnEvent(layerColor, layerColorFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'r' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(layerColor);
+        layerColorFunction();
+    }
+});
+
+// 一键规范化相关操作
 
 var leafSet; // 叶节点数组
 var treeDepth; // 树的深度
@@ -884,7 +921,7 @@ function generateDepth() {
     }
 }
 
-setBtnEvent(standard, function () {
+function standardBtnFunction() {
     if (standard.state) {
         if (!lockingNode.state) {
             btnChange(lockingNode);
@@ -892,8 +929,16 @@ setBtnEvent(standard, function () {
         }
         standardCoordinates();
     }
-});
+}
 
+setBtnEvent(standard, standardBtnFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'f' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(standard);
+        standardBtnFunction();
+    }
+});
 
 // 第三组按钮
 var thirdbtnArr = getDomA('.mainBox .third div');
