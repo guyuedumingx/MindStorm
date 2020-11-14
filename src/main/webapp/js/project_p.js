@@ -743,60 +743,6 @@ function setBtnEvent(btn, fun) {
     }
 }
 
-// 隐藏无关节点间线条
-setBtnEvent(hideLine, hideLineClick);
-
-// 隐藏无关节点主题
-setBtnEvent(hideTheme, function () {
-    if (hideTheme.state) {
-        ergodicTree(function (node) {
-            node.addClass('hideTheme');
-        });
-        if (nowNode) {
-            var t = nowNode;
-            t.removeClass('hideTheme');
-            while (t.father) {
-                t = t.father;
-                t.removeClass('hideTheme');
-            }
-            changeChild(nowNode, function (node) {
-                node.removeClass('hideTheme');
-            });
-        }
-    } else {
-        ergodicTree(function (node) {
-            node.removeClass('hideTheme');
-        });
-    }
-});
-
-// 固定所有节点
-setBtnEvent(lockingNode, function () {
-    if (standard.state) {
-        btnChange(standard);
-    }
-});
-
-// 节点根据层级显示不同颜色
-setBtnEvent(layerColor, function () {
-    if (layerColor.state) {
-        layerColor.colorArr = [];
-        layerColor.colorArr.push(randomColor(120, 180));
-        for (var i = 0; i < 20; i++) {
-            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ')');
-            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ')');
-            layerColor.colorArr.push('rgb(' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ')');
-        }
-        for (var i = 0; i < nodeSet.length; i++) {
-            nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
-        }
-    } else {
-        nodeSet[0].style.backgroundColor = randomColor(120, 180);
-        for (var i = 1; i < nodeSet.length; i++) {
-            nodeSet[i].style.backgroundColor = randomColor(160, 220);
-        }
-    }
-});
 
 // 隐藏无关节点间线条函数
 function hideLineClick() {
@@ -834,6 +780,97 @@ function hideLineClick() {
     }
 }
 
+// 隐藏无关节点间线条
+setBtnEvent(hideLine, hideLineClick);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'q' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(hideLine);
+        hideLineClick();
+    }
+});
+
+// 隐藏无关节点主题相关操作
+function hideThemeFunction() {
+    if (hideTheme.state) {
+        ergodicTree(function (node) {
+            node.addClass('hideTheme');
+        });
+        if (nowNode) {
+            var t = nowNode;
+            t.removeClass('hideTheme');
+            while (t.father) {
+                t = t.father;
+                t.removeClass('hideTheme');
+            }
+            changeChild(nowNode, function (node) {
+                node.removeClass('hideTheme');
+            });
+        }
+    } else {
+        ergodicTree(function (node) {
+            node.removeClass('hideTheme');
+        });
+    }
+}
+
+setBtnEvent(hideTheme, hideThemeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'w' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(hideTheme);
+        hideThemeFunction();
+    }
+});
+
+// 固定所有节点相关操作
+function lockingNodeFunction() {
+    if (standard.state) {
+        btnChange(standard);
+    }
+}
+
+setBtnEvent(lockingNode, lockingNodeFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'e' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(lockingNode);
+        lockingNodeFunction();
+    }
+});
+
+// 节点根据层级显示不同颜色
+function layerColorFunction() {
+    if (layerColor.state) {
+        layerColor.colorArr = [];
+        layerColor.colorArr.push(randomColor(120, 180));
+        for (var i = 0; i < 20; i++) {
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(160, 220) + ',' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ')');
+            layerColor.colorArr.push('rgb(' + getIntRandom(100, 120) + ',' + getIntRandom(160, 220) + ',' + getIntRandom(160, 220) + ')');
+        }
+        for (var i = 0; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = layerColor.colorArr[nodeSet[i].layer];
+        }
+    } else {
+        nodeSet[0].style.backgroundColor = randomColor(120, 180);
+        for (var i = 1; i < nodeSet.length; i++) {
+            nodeSet[i].style.backgroundColor = randomColor(160, 220);
+        }
+    }
+}
+
+setBtnEvent(layerColor, layerColorFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'r' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(layerColor);
+        layerColorFunction();
+    }
+});
+
+// 一键规范化相关操作
+
 var leafSet; // 叶节点数组
 var treeDepth; // 树的深度
 
@@ -842,7 +879,6 @@ function standardCoordinates() {
     leafSet = [];
     searchLeaf(root);
     generateDepth();
-    console.log(treeDepth);
     x = treeBox.offsetWidth / (treeDepth + 2);
     y = treeBox.offsetHeight / (leafSet.length + 1);
     // standardX
@@ -885,7 +921,7 @@ function generateDepth() {
     }
 }
 
-setBtnEvent(standard, function () {
+function standardBtnFunction() {
     if (standard.state) {
         if (!lockingNode.state) {
             btnChange(lockingNode);
@@ -893,8 +929,16 @@ setBtnEvent(standard, function () {
         }
         standardCoordinates();
     }
-});
+}
 
+setBtnEvent(standard, standardBtnFunction);
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'f' && e.altKey && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        btnChange(standard);
+        standardBtnFunction();
+    }
+});
 
 // 第三组按钮
 var thirdbtnArr = getDomA('.mainBox .third div');
@@ -1339,11 +1383,11 @@ var treeFullScreenOnOff = getDom('.treeBox .treeBoxFullScreen'); // 树盒子全
 treeFullScreenOnOff.addEventListener('click', function () {
     if (treeFullScreenState) {
         cancelFullscreen();
-        this.style.backgroundImage = 'url(img/project_fullScreen.png)';
+        this.style.backgroundImage = 'url(img/project_p_fullScreen.png)';
         treeFullScreenState = false;
     } else {
         domFullScreen(treeBox);
-        this.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+        this.style.backgroundImage = 'url(img/project_p_cancelFullScreen.png)';
         treeFullScreenState = true;
     }
 });
@@ -1354,7 +1398,7 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
         if (!treeFullScreenState) {
             domFullScreen(treeBox);
-            treeFullScreenOnOff.style.backgroundImage = 'url(img/project_cancelFullScreen.png)';
+            treeFullScreenOnOff.style.backgroundImage = 'url(img/project_p_cancelFullScreen.png)';
             treeFullScreenState = true;
         }
     }
@@ -1367,7 +1411,7 @@ function checkFull() {
 window.addEventListener('resize', function () {
     if (!checkFull()) {
         //要执行的动作
-        treeFullScreenOnOff.style.backgroundImage = 'url(img/project_fullScreen.png)';
+        treeFullScreenOnOff.style.backgroundImage = 'url(img/project_p_fullScreen.png)';
         treeFullScreenState = false;
     }
 });
@@ -1821,6 +1865,9 @@ var nodeRequetTimer = setInterval(function () {
             maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
         }
 
+        // 规范化初始坐标
+        standardCoordinates();
+
         // 初始化所有节点
         for (var i = 0; i < nodeSet.length; i++) {
 
@@ -1828,8 +1875,8 @@ var nodeRequetTimer = setInterval(function () {
             nodeSet[i].style.width = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
             nodeSet[i].style.height = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
             nodeSet[i].style.borderRadius = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) / 2 + 'px';
-            nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
-            nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+            // nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
+            // nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
             nodeSet[i].style.display = 'block';
             nodeSet[i].x = nodeSet[i].offsetLeft;
             nodeSet[i].y = nodeSet[i].offsetTop;
@@ -2067,6 +2114,9 @@ function treeReload() {
                 maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
             }
 
+            // 规范化初始坐标
+            standardCoordinates();
+
             // 初始化所有节点
             for (var i = 0; i < nodeSet.length; i++) {
 
@@ -2074,8 +2124,8 @@ function treeReload() {
                 nodeSet[i].style.width = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
                 nodeSet[i].style.height = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) + 'px';
                 nodeSet[i].style.borderRadius = ((nodeMaxSize - nodeMinSize) * nodeSet[i].star / maxStar + nodeMinSize) / 2 + 'px';
-                nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
-                nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
+                // nodeSet[i].style.left = getIntRandom(leftBoundary + 3 * boundaryMinLength, rightBoundary - 3 * boundaryMinLength) + 'px';
+                // nodeSet[i].style.top = getIntRandom(topBoundary + 1.5 * boundaryMinLength, bottomBoundary - 1.5 * boundaryMinLength) + 'px';
                 nodeSet[i].style.display = 'block';
                 nodeSet[i].x = nodeSet[i].offsetLeft;
                 nodeSet[i].y = nodeSet[i].offsetTop;
