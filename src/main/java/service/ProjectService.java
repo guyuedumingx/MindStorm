@@ -58,7 +58,7 @@ import java.util.List;
     /**
      * 项目是否存在
      */
-    int existProject(int projectId);
+    Project existProject(int projectId);
 
     /**
      * 根据关键词搜索项目

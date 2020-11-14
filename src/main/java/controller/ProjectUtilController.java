@@ -14,8 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -38,9 +36,17 @@ public class ProjectUtilController extends BaseController {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Result result = new Result();
         int id = Integer.valueOf(req.getParameter("id"));
-        int statusCode = service.existProject(id);
-        WebUtil.renderMap(resp,"status_code",statusCode+"");
+        Project project = service.existProject(id);
+        int statusCode = StatusCode.nullObjcet(project);
+        result.setStatus_code(statusCode);
+        if(project!=null){
+            boolean hasPassword = "".equals(project.getPassword());
+            result.put("hasPassword",hasPassword+"");
+            result.put("password",project.getPassword());
+        }
+        WebUtil.renderJson(resp,result);
     }
 
 
