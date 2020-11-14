@@ -1216,7 +1216,6 @@ function backHistory(historyLi) {
         },
         success: function (res) {
             if (res.status_code == '200') {
-                console.log(res.node_id);
                 if (type == 'N') {
 
                     // 如果撤销的是创建节点的记录，则删除节点
@@ -1280,13 +1279,37 @@ function backHistory(historyLi) {
 }
 
 // 导出项目相关操作
+
+var exportProjectBox = getDom('.'); // 导出项目的弹框
+// var exportProjectClose = exportProjectBox.getDom('.'); // 导出项目弹框的关闭按钮
+// var exportProjectSubmit = exportProjectBox.getDom('.'); // 导出项目弹框的提交按钮
+
+// 隐藏导出项目弹框
+function exportProjectHide() {
+    // 芷欣
+}
+
+// 显示导出项目弹框
+function exportProjectShow() {
+    // 芷欣
+}
+
 exportProject.addEventListener('click', function () {
-    tipsState = 'exportProject';
-    tipsTitle.innerText = '导出项目';
-    tipsContent.innerText = '项目将会导出到本地，是否继续';
-    tipsBox.show();
-    transparentBaffle.show();
+
 })
+
+// 此测试代码仅供开发阶段使用
+document.addEventListener('keydown', function (e) {
+    if (e.altKey) {
+        if (e.key == 'u') {
+            window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
+        } else if (e.key == 'i') {
+            window.location = '/util/xmind?project_id=' + projectId + '&type=md';
+        } else if (e.key == 'o') {
+            window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
+        }
+    }
+});
 
 // 退出项目相关操作
 signOutProject.addEventListener('click', function () {
