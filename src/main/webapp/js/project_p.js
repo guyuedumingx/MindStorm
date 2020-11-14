@@ -284,6 +284,7 @@ function addNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+        // 用webSocket发请求
     }
 }
 
@@ -307,6 +308,7 @@ function removeNodeFunction() {
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
         transparentBaffle.show();
+        // 用websocket发请求
     }
 }
 
@@ -345,6 +347,7 @@ function changeNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+        // 用webSocket发请求
     }
 }
 
@@ -948,7 +951,8 @@ var operationRecord = thirdbtnArr[2]; // 操作记录按钮
 var exportProject = thirdbtnArr[3]; // 导出项目按钮
 var signOutProject = thirdbtnArr[4]; // 退出项目按钮
 var deleteProject = thirdbtnArr[5]; // 删除项目按钮
-var classic = thirdbtnArr[6]; // 返回经典模式按钮
+var classic = thirdbtnArr[6]; // 返回主页按钮
+var shortcutKey = thirdbtnArr[7]; // 快捷键列表按钮
 
 cycleSprite(thirdbtnArr, 0, 0, 30);
 
@@ -1186,7 +1190,7 @@ function getHistory() {
                 } else if (li.operaType == 'D') {
                     span.innerText = '删除了节点   \'' + nodeBefore.theme + '\'';
                 } else {
-                    topAlert('出bug啦');
+                    topAlert('发生未知错误！');
                 }
                 li.appendChild(span);
                 li.appendChild(btn);
@@ -1199,14 +1203,9 @@ function getHistory() {
         }
     });
 }
-document.addEventListener('keydown', function (e) {
-    if (e.key == 'h') {
-        getHistory();
-    }
-});
 
 function backHistory(historyLi) {
-    var type = historyLi.type;
+    var type = historyLi.operaType;
     var index = historyLi.index;
     ajax({
         type: 'post',
@@ -1266,7 +1265,7 @@ function backHistory(historyLi) {
                         }
                     });
                 } else {
-                    topAlert('出bug啦！');
+                    topAlert('发生未知错误！');
                 }
 
                 // 更新操作记录
@@ -1313,9 +1312,50 @@ deleteProject.addEventListener('click', function () {
     }
 });
 
-// 返回经典模式相关操作
+// 返回首页模式相关操作
 classic.addEventListener('click', function () {
-    window.location = 'project.html?project_id=' + projectId;
+    window.location = 'index.html';
+});
+
+// 快捷键列表相关操作
+// 开发中
+
+var shortcutKeyBox = getDom('.shortcutKeyBox');
+// var shortcutKeyClose = shortcutKeyBox.getDom('.');
+
+// 隐藏快捷键列表盒子
+function shortcutKeyBoxHide() {
+    shortcutKeyBox.style.transform = "translate(-100%,0)";
+}
+
+// 显示快捷键列表盒子
+function shortcutKeyBoxShow() {
+    shortcutKeyBox.style.transform = "translate(0%,0)";
+}
+
+shortcutKey.addEventListener('click', function () { });
+
+// 点击关闭按钮隐藏快捷键列表
+// shortcutKeyClose.addEventListener('click', function () {
+//     shortcutKeyBoxHide();
+//     shortcutKeyBox.state = false;
+// });
+
+// 点击空白处隐藏快捷键列表
+document.addEventListener('click', function (e) {
+    e = e || window.event;
+    if (!isParent(e.target, shortcutKeyBox) && e.target != shortcutKey) {
+        shortcutKeyBoxHide();
+        shortcutKeyBox.state = false;
+    }
+});
+
+// 按ESC隐藏快捷键列表
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        shortcutKeyBoxHide();
+        shortcutKeyBox.state = false;
+    }
 });
 
 // ——————————————中间——————————————
@@ -2501,6 +2541,10 @@ websocket.onmessage = function (e) {
                 socketNode.stared = res.stared;
             }
         });
+    } else if (back.type == "E") {
+        // 新增正在操作的用户
+    } else if (back.type == "C") {
+        // 删除正在操作的用户
     } else {
         topAlert('发生未知错误');
     }
@@ -2512,6 +2556,6 @@ websocket.onclose = function () {
 }
 
 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-window.onbeforeunload = function () {
+window.onbeforeunload = function (e) {
     websocket.close();
 }
