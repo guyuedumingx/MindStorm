@@ -325,7 +325,7 @@ function joinButClick() {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    if (res.hasPassword) {
+                    if (res.hasPassword=="true") {
                         var joinPassword = res.password;
                         password(idnum,joinPassword);
                     } else {
@@ -359,7 +359,9 @@ function password(idnum,joinPassword) {
     inputID.type = "password";
     inputTips(inputID, "", "idTips");
     getDom(".join_til").innerText = "项目密码";
-    joinBut2.addEventListener("click", but2(idnum,joinPassword))
+    joinBut2.addEventListener("click", function () {
+        but2(idnum, joinPassword);
+    })
 }
 
 
