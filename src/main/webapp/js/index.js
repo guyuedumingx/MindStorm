@@ -470,7 +470,9 @@ function create(project, projectLength, liArr) {
         var author = project[i].creatorName;
         var numbers = project[i].numbers;
         var projectID = project[i].id;
-        
+        var createTime = project[i].createTime;
+        var deadline = project[i].deadline;
+        var projectTime=jdt(createTime, deadline);
         //将内容放进去
         addLi(liArr[i], name, introduce, author, numbers, projectID,projectTime);
     }
