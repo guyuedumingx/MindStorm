@@ -247,6 +247,8 @@ var onOff = getDom(".onOffBorder");
 var onOffRod = getDom(".onOffRod");
 //初始状态
 onOff.state = false;
+//设置密码框
+var passwordChoice = getDom(".passwordChoice");
 
 //点击改变
 onOff.addEventListener('click', function () {
@@ -256,12 +258,46 @@ onOff.addEventListener('click', function () {
         onOff.children[0].style.left = '1.5px';
         onOff.children[0].style.backgroundColor = ' #46607b';
         onOff.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
+        introduceInput.style.height = "180px";
+        passwordChoice.style.display = "none";
     } else {
         onOff.state = true;
         onOff.style.backgroundColor = '#16a085';
         onOff.children[0].style.left = '23.5px';
         onOff.children[0].style.backgroundColor = '#1abc9c';
         onOff.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
+        introduceInput.style.height = "141px";
+        passwordChoice.style.display = "flex";
+    }
+})
+//是否设置密码-----------
+var onOffP = getDom(".onOffBorderP");
+var onOffRodP = getDom(".onOffRodP");
+//初始状态
+onOffP.state = false;
+//密码框架
+var passwordC = getDom(".passwordC");
+var projectPassword = getDom("#projectPassword");
+//点击改变
+onOffP.addEventListener('click', function () {
+    if (onOffP.state) {
+        onOffP.state = false;
+        onOffP.style.backgroundColor = '#2c3e50';
+        onOffP.children[0].style.left = '1.5px';
+        onOffP.children[0].style.backgroundColor = ' #46607b';
+        onOffP.children[0].style.backgroundImage = 'url(img/public_onOffFalse.png)';
+        passwordC.style.color = "rgb(190, 190, 190)";
+        projectPassword.style.color = "rgb(190, 190, 190)";
+        passwordC.style.pointerEvents= "none";
+    } else {
+        onOffP.state = true;
+        onOffP.style.backgroundColor = '#16a085';
+        onOffP.children[0].style.left = '23.5px';
+        onOffP.children[0].style.backgroundColor = '#1abc9c';
+        onOffP.children[0].style.backgroundImage = 'url(img/public_onOffTrue.png)';
+        passwordC.style.color = "#000";
+        projectPassword.style.color = "#000";
+        passwordC.style.pointerEvents= "auto";
     }
 })
 
@@ -430,6 +466,7 @@ estBut.addEventListener("click", function () {
                 rank: rank,
                 createTime: createTime,
                 introduction: indu
+                
             },
             header: {
                 'Content-Type': 'application/json'

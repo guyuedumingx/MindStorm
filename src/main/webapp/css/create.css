@@ -585,7 +585,7 @@ body .mainBox {
 
 /*时间、 等级 */
 #projectRank,
-#projectTime {
+#projectTime  {
     float: right;
     padding: 2px 5px;
     border-radius: 5px;
@@ -594,7 +594,7 @@ body .mainBox {
 
 /* 是否选择 */
 /* 按钮 */
-.onOffBorder {
+.onOffBorder,.onOffBorderP {
     float: right;
     position: relative;
     width: 40px;
@@ -609,7 +609,7 @@ body .mainBox {
     vertical-align: middle;
 }
 
-.onOffBorder .onOffRod {
+.onOffBorder .onOffRod,.onOffBorderP .onOffRodP {
     position: absolute;
     top: 1.5px;
     left: 1.5px;
@@ -628,7 +628,25 @@ body .mainBox {
     background-size: 75%;
     background-position: center;
 }
+.mainBox .Box .est_bigBox .passwordChoice{
+    display: none;
+}
+.passwordC{
+    color: rgb(190, 190, 190);
+    pointer-events: none;
+}
+#projectPassword  {
+    float: right;
+    width: 210px;
+    margin-top: 3px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 10px;
+    border: solid 1px;
+    color: rgb(190, 190, 190);
+}
 
+/* 按钮 */
 .mainBox .Box .est_bigBox .est_but input {
     display: inline-block;
     width: 120px;
