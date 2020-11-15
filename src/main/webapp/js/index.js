@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () {}
+        error: function () { }
     });
 
 
@@ -682,4 +682,23 @@ start();
 // 计算进度条的函数
 function jdt(createTime, deadline) {
     return (1 - (deadline - Date.now()) / (deadline - createTime)) * 100;
+}
+
+// 根据百分比获取渐变颜色
+class getGradientColor {
+    constructor(startColor, endColor) {
+        startColor = startColor.replace(/ /i, '');
+        endColor = endColor.replace(/ /i, '');
+        var startColorArr = startColor.split('(')[1].split(')')[0].split(',');
+        var endColorArr = endColor.split('(')[1].split(')')[0].split(',');
+        this.sr = startColorArr[0] - 0;
+        this.sg = startColorArr[1] - 0;
+        this.sb = startColorArr[2] - 0;
+        this.er = endColorArr[0] - 0;
+        this.eg = endColorArr[1] - 0;
+        this.eb = endColorArr[2] - 0;
+        this.get = function (percentage) {
+            return 'rgb(' + (this.sr + (this.er - this.sr) * percentage) + ',' + (this.sg + (this.eg - this.sg) * percentage) + ',' + (this.sb + (this.eb - this.sb) * percentage) + ')';
+        }
+    }
 }
