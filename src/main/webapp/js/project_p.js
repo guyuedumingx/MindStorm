@@ -469,6 +469,7 @@ function operationNodeBoxSubmitFunction() {
                 }
                 operationNodeBoxCloseFunction();
                 addNodeState = false;
+                getHistory();
             }
         });
     } else if (nowOperation == 'change') {
@@ -513,6 +514,7 @@ function operationNodeBoxSubmitFunction() {
                 }
                 operationNodeBoxCloseFunction();
                 changeNodeState = false;
+                getHistory();
             }
         });
     } else {
@@ -654,6 +656,7 @@ function tipsYesFunction() {
                     topAlert('删除失败');
                 }
                 removeNodeState = false;
+                getHistory();
             }
         });
     } else if (tipsState == 'exportProject') {
