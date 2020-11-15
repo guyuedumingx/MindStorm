@@ -12,26 +12,29 @@ public class OnlineUsers {
 
     private static OnlineUsers list = new OnlineUsers();
     //projectId,Set<userId>
-    private Map<Integer, Set<Integer>> projectMap = new HashMap<>();
+    private Map<Integer, Set<Integer>> projectMap = null;
     //userId,NodeSocket
-    private Map<Integer,NodeSocket> socketMap = new HashMap<>();
+    private Map<Integer,NodeSocket> socketMap = null;
 
-    private OnlineUsers(){}
+    private OnlineUsers(){
+        this.projectMap = new HashMap<>();
+        this.socketMap = new HashMap<>();
+    }
 
     public void add(NodeSocket socket){
         int projectId = socket.getProjectId();
         Set<Integer> set = null;
-        if(projectMap.containsKey(projectId)){
-            set = projectMap.get(projectId);
+        if(this.projectMap.containsKey(projectId)){
+            set = this.projectMap.get(projectId);
         }else {
             set = new HashSet<>();
         }
         set.add(socket.getUserId());
-        if(socketMap.containsKey(socket.getUserId())){
-            socketMap.remove(socket.getUserId());
+        if(this.socketMap.containsKey(socket.getUserId())){
+            this.socketMap.remove(socket.getUserId());
         }
-        projectMap.put(projectId,set);
-        socketMap.put(socket.getUserId(),socket);
+        this.projectMap.put(projectId,set);
+        this.socketMap.put(socket.getUserId(),socket);
     }
 
     public void remove(NodeSocket socket){
