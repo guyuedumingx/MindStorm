@@ -163,21 +163,26 @@ headBox.style.backgroundImage = "url(" + url + ")";
 head.style.backgroundImage = "url(" + url + ")";
 inPic.addEventListener("change", UpladFile);
 
-
+//修改---------------------------------
 //获取修改按钮
 var modifyN = getDom(".modifyN");
+var modifyS = getDom(".modifyS");
 //点击修改
 modifyN.addEventListener("click", function () {
     nameBox.readOnly = false;
     nameBox.style.borderBottom = "solid 1px";
 });
+modifyS.addEventListener("click", function () {
+    perSig.readOnly = false;
+    perSig.style.borderBottom = "solid 1px";
+});
 //回车修改cookie
 nameBox.inputEnterEvent(function () {
     ajax({
-        type: 'put',
-        url: '/project',
+        type: 'post',
+        url: '/user',
         data: {
-            key: content
+            userName: nameBox.value
         },
         header: {
             'Content-Type': 'application/json'
@@ -190,6 +195,24 @@ nameBox.inputEnterEvent(function () {
     nameU.innerText = nameBox.value;
     nameBox.readOnly = true;
     nameBox.style.borderBottom = "";
+});
+perSig.inputEnterEvent(function () {
+    ajax({
+        type: 'put',
+        url: '/project',
+        data: {
+            userIntroduce: perSig.value
+        },
+        header: {
+            'Content-Type': 'application/json'
+        }, // 请求头
+        success: function (res) {
+
+        }
+    });
+    perSig.value = perSig.value;
+    perSig.readOnly = true;
+    perSig.style.borderBottom = "";
 });
 
 //搜索---------------------------
@@ -637,10 +660,10 @@ function getPublic(page) {
 }
 // 先请求两页
 getPublic(1);
-var timerp = setInterval(function () {
+var getTimerp = setInterval(function () {
     if (pdqq == 0) {
         getPublic(2);
-        clearInterval(timerp);
+        clearInterval(getTimerp);
     }
 }, 100)
 

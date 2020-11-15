@@ -670,7 +670,7 @@
 .historyBox ul::-webkit-scrollbar-track,
 .shortcutKeyBox ul::-webkit-scrollbar-track {
     border-radius: 10px;
-    background: #555;
+    background: #444;
 }
 
 .contributorsBox ul li,
@@ -771,7 +771,7 @@
 }
 
 .shortcutKeyBox ul {
-    max-height: 89%;
+    max-height: 80%;
     overflow: auto;
     cursor: default;
 }
@@ -790,6 +790,7 @@
 
 .shortcutKeyBox li i {
     float: right;
+    margin-right: 5px;
     /* padding: 1px; */
     padding: 0 2px;
     font-size: 8px;
