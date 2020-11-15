@@ -2549,6 +2549,7 @@ window.onload = function () {
             // progressContent.style.width = progress + '%';
             // progressWave.style.left = progress + '%';
             createRoot(res.headNodeId);
+            getHistory();
         }
     });
 }
