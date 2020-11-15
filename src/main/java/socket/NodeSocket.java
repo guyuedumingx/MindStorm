@@ -52,14 +52,6 @@ public class NodeSocket {
         error.printStackTrace();
     }
 
-    public OnlineUsers getOnlineUsers() {
-        return onlineUsers;
-    }
-
-    public void setOnlineUsers(OnlineUsers onlineUsers) {
-        this.onlineUsers = onlineUsers;
-    }
-
     public int getUserId() {
         return userId;
     }

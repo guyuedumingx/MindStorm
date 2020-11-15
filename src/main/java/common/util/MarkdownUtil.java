@@ -141,7 +141,7 @@ public class MarkdownUtil {
         date.setTime(Long.valueOf(project.getCreateTime()));
         sb.append("项目创建时间: `"+new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date)+"`  \n");
         if(project.isPublic()){
-            sb.append("**此为开源项目，未经作者同意不得用于商业用途！**  \n");
+            sb.append("[*此为开源项目，未经作者同意不得用于商业用途！*](http://www.mindsotrm.work)  \n");
         }else if(project.getAuthor()!=userId){
             sb.append("**您不是项目的作者，请合理使用项目哦！**  \n");
         }
