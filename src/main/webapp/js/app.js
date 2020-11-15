@@ -13,6 +13,31 @@ app.use(bodyParser.json());
 var url = __dirname.substring(0, __dirname.length - 3);
 // app.use(express.static('C:\\Users\\Lenovo\\Desktop\\111\\111'));
 app.use(express.static(url));
+/**
+ * 
+ * 函数功能：生成一个以左右端点为界的随机小数
+ * 
+ * @param {number} l 左端点
+ * @param {number} r 右端点
+ * @returns {number} 返回生成的随机数
+ * @author 60rzvvbj
+ */
+function getDoubleRandom(l, r) {
+    return l + Math.random() * (r - l + 1);
+}
+
+/**
+ * 
+ * 函数功能：生成一个以左右端点为界的随机整数
+ * 
+ * @param {number} l 左端点
+ * @param {number} r 右端点
+ * @returns {number} 返回生成的随机数
+ * @author 60rzvvbj
+ */
+function getIntRandom(l, r) {
+    return parseInt(getDoubleRandom(l, r));
+}
 var user = new Array();
 user.push({
     author: 1,
@@ -383,6 +408,8 @@ app.put('/util/project', function (req, res) {
             name: '第' + page + '页项目' + i,
             introduction: '简介',
             creatorName: '创建者',
+            createTime: new Date('2020-11-' + getIntRandom(1, 14) + ' 8:8:8').valueOf(),
+            deadline: new Date('2020-11-' + getIntRandom(16, 30) + ' 8:8:8').valueOf(),
             numbers: 12,
             id: 123456789
         });

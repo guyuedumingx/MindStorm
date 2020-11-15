@@ -364,10 +364,12 @@ function liStyle(liArr) {
         }
     }
 }
+
 //左右移动
 function move(y, projectNav) {
     //获取project显示框架
     var projectWidth = projectNav.offsetWidth;
+    projectNav.moveFlag = true;
     var rightBut = getDom(".rightBut", projectNav);
     var leftBut = getDom(".leftBut", projectNav);
     var projectLiA = getDom(".projectLi", projectNav);
@@ -376,7 +378,14 @@ function move(y, projectNav) {
         leftBut.style.display = "none";
     }
     rightBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10);
+        console.log(projectNav.moveFlag);
+        if (!projectNav.moveFlag) {
+            return;
+        }
+        projectNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10, function () {
+            projectNav.moveFlag = true;
+        });
         x++;
         leftBut.style.display = "block";
         if (x == y) {
@@ -384,7 +393,13 @@ function move(y, projectNav) {
         }
     })
     leftBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10);
+        if (!projectNav.moveFlag) {
+            return;
+        }
+        projectNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10, function () {
+            projectNav.moveFlag = true;
+        });
         x--;
         rightBut.style.display = "block";
         if (x == 1) {
@@ -409,7 +424,7 @@ function butStyle(projectNav, liArr, x) {
         });
     }
 }
-
+var ddlColor = new getGradientColor("rgb(100,255,100)", "rgb(255,100,100)");
 //项目添加---------
 function addLi(li, name, introduce, author, number, projectID, projectTime) {
     var divName = document.createElement("div");
@@ -443,9 +458,11 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
     divIn.appendChild(spanTxt);
     li.appendChild(divDdl);
     // divDdl.style.padding = "0";
-    if (projectTime >= 100)
+    if (projectTime > 100)
         projectTime = 100;
     divDdl.style.width = projectTime + "%";
+    divDdl.style.backgroundColor = ddlColor.get(projectTime / 100);
+    console.log(ddlColor.get(projectTime / 100));
     li.appendChild(divBot);
     divBot.appendChild(divAut);
     divAut.appendChild(spanName);
@@ -453,10 +470,10 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
     divMan.appendChild(iMan);
     divMan.appendChild(spanMan);
     li.addEventListener("click", function () {
-        window.location = "project.html?project_id=" + projectID;
+        window.location = "project_p.html?project_id=" + projectID;
     })
-
 }
+
 //删除内容
 function removeLi() {
     var searchNav = getDom(".searchNav");
@@ -613,7 +630,6 @@ function getPublic(page) {
 
                     addLiShareBox(shareProjectLength, shareProject, shareNav)
                     allPage++;
-                    console.log(allPage + "a");
                 }
             } else {
                 // topAlert("发生未知错误");
@@ -626,6 +642,7 @@ getPublic(1);
 getPublic(2);
 
 function sharePage() {
+    shareNav.moveFlag = true;
     var page = 1;
     var projectWidth = personalNav.offsetWidth;
     var rightBut = getDom(".rightBut", shareNav);
@@ -637,7 +654,13 @@ function sharePage() {
     if (page == allPage || allPage == 0)
         rightBut.style.display = "none";
     rightBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10);
+        if (!shareNav.moveFlag) {
+            return;
+        }
+        shareNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10, function () {
+            shareNav.moveFlag = true;
+        });
         //当前页数加一等于总页数
         if (page + 1 == allPage) {
             //获取下一页的项目
@@ -658,7 +681,13 @@ function sharePage() {
         console.log(page);
     })
     leftBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10);
+        if (!shareNav.moveFlag) {
+            return;
+        }
+        shareNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10, function () {
+            shareNav.moveFlag = true;
+        });
         //页数减少
         page--;
         // 右箭头显示
@@ -682,23 +711,4 @@ start();
 // 计算进度条的函数
 function jdt(createTime, deadline) {
     return (1 - (deadline - Date.now()) / (deadline - createTime)) * 100;
-}
-
-// 根据百分比获取渐变颜色
-class getGradientColor {
-    constructor(startColor, endColor) {
-        startColor = startColor.replace(/ /i, '');
-        endColor = endColor.replace(/ /i, '');
-        var startColorArr = startColor.split('(')[1].split(')')[0].split(',');
-        var endColorArr = endColor.split('(')[1].split(')')[0].split(',');
-        this.sr = startColorArr[0] - 0;
-        this.sg = startColorArr[1] - 0;
-        this.sb = startColorArr[2] - 0;
-        this.er = endColorArr[0] - 0;
-        this.eg = endColorArr[1] - 0;
-        this.eb = endColorArr[2] - 0;
-        this.get = function (percentage) {
-            return 'rgb(' + (this.sr + (this.er - this.sr) * percentage) + ',' + (this.sg + (this.eg - this.sg) * percentage) + ',' + (this.sb + (this.eb - this.sb) * percentage) + ')';
-        }
-    }
 }
