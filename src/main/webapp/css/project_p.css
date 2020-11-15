@@ -827,7 +827,7 @@
 
 .exportProjectBox ul {
     margin-top: 10px;
-    /* display: none; */
+    display: none;
     padding-left: 20px;
 }
 
