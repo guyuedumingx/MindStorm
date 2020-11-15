@@ -217,6 +217,20 @@ function btnCancelDisable(btn) {
 function changeNodeEvent() {
     if (nowNode) {
         nowNode.list.children[0].addClass('treeListHeightLight');
+        var nowHeight = nowNode.list.index * nowNode.list.children[0].offsetHeight;
+        // console.log('nowHeight: ', nowHeight);
+        var boxStart = treeListMain.scrollTop;
+        // console.log('boxStart: ', boxStart);
+        var boxEnd = boxStart + treeListMain.offsetHeight;
+        // console.log('boxEnd: ', boxEnd);
+        var listHeight = nowNode.list.children[0].offsetHeight;
+        // console.log('listHeight: ', listHeight);
+        // console.log('----------------------华丽的分割线----------------------');
+        if (nowHeight < boxStart) {
+            treeListMain.scrollTo(0, nowHeight);
+        } else if (nowHeight + listHeight > boxEnd) {
+            treeListMain.scrollTo(0, nowHeight - treeListMain.offsetHeight + listHeight);
+        }
         // nowNodeBox.children[0].innerText = nowNode.children[0].innerText;
         // nowNodeBox.children[1].style.backgroundColor = getCSS(nowNode, 'background-color');
         // nowNodeBox.children[1].style.width = nowNode.offsetWidth + 'px';
@@ -2241,6 +2255,12 @@ function treeAppendNode(father, nodeData) {
     appendNode.list.next = appendNode.list.last.next;
     appendNode.list.next.last = appendNode.list;
     appendNode.list.last.next = appendNode.list;
+    appendNode.list.index = appendNode.list.last.index + 1;
+    var list = appendNode.list;
+    while (list.next != root.list) {
+        list = list.next;
+        list.index++;
+    }
     if (standard.state) {
         standardCoordinates();
     }
@@ -2251,6 +2271,11 @@ function treeRemoveNode(node) {
     removeDom(node.list);
     node.list.last.next = node.list.next;
     node.list.next.last = node.list.last;
+    var list = node.list;
+    while (list.next != root.list) {
+        list = list.next;
+        list.index--;
+    }
     if (node.childArr.length == 0 && node.father) {
         var father = node.father;
 
@@ -2506,6 +2531,9 @@ var listArr; // 列表数组
 function addListContext() {
     listArr = new Array();
     addListContextRecursion(root);
+    for (var i = 0; i < listArr.length; i++) {
+        listArr[i].index = i;
+    }
 
     // 构建双向循环链表
     for (var i = 1; i < listArr.length - 1; i++) {
