@@ -889,6 +889,9 @@ function standardCoordinates() {
     x = treeBox.offsetWidth / (treeDepth + 2);
     y = treeBox.offsetHeight / (leafSet.length + 1);
     // standardX
+    for (var i = 0; i < nodeSet.length; i++) {
+        nodeSet[i].isLeaf = false;
+    }
     for (var i = 0; i < leafSet.length; i++) {
         leafSet[i].standardY = (i + 1) * y;
         leafSet[i].standardX = x * (leafSet[i].layer + 2);
@@ -1440,17 +1443,17 @@ exportProjectSubmit.addEventListener('click', function () {
 });
 
 // 此测试代码仅供开发阶段使用
-document.addEventListener('keydown', function (e) {
-    if (e.altKey) {
-        if (e.key == 'u') {
-            window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
-        } else if (e.key == 'i') {
-            window.location = '/util/xmind?project_id=' + projectId + '&type=md';
-        } else if (e.key == 'o') {
-            window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
-        }
-    }
-});
+// document.addEventListener('keydown', function (e) {
+//     if (e.altKey) {
+//         if (e.key == 'u') {
+//             window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
+//         } else if (e.key == 'i') {
+//             window.location = '/util/xmind?project_id=' + projectId + '&type=md';
+//         } else if (e.key == 'o') {
+//             window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
+//         }
+//     }
+// });
 
 // 退出项目相关操作
 signOutProject.addEventListener('click', function () {
@@ -1500,18 +1503,18 @@ function shortcutKeyBoxShow() {
     shortcutKeyBox.style.transform = "translate(0%,0)";
 }
 
+// 快捷键列表相关操作
 function shortcutKeyFunction() {
-    if (operationRecordBox.state) {
-        operationRecordHide();
-        operationRecordBox.state = false;
+    if (shortcutKeyBox.state) {
+        shortcutKeyBoxHide();
+        shortcutKeyBox.state = false;
     } else {
-        operationRecordShow();
-        operationRecordBox.state = true;
-        getHistory();
+        shortcutKeyBoxShow();
+        shortcutKeyBox.state = true;
     }
 }
 
-shortcutKey.addEventListener('click', function () { });
+shortcutKey.addEventListener('click', shortcutKeyFunction);
 
 // 点击关闭按钮隐藏快捷键列表
 shortcutKeyClose.addEventListener('click', function () {
@@ -2294,6 +2297,7 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
+        standardCoordinates();
     } else {
         topAlert('删除失败');
     }
