@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () {}
+        error: function () { }
     });
 
 
@@ -364,10 +364,12 @@ function liStyle(liArr) {
         }
     }
 }
+
 //左右移动
 function move(y, projectNav) {
     //获取project显示框架
     var projectWidth = projectNav.offsetWidth;
+    projectNav.moveFlag = true;
     var rightBut = getDom(".rightBut", projectNav);
     var leftBut = getDom(".leftBut", projectNav);
     var projectLiA = getDom(".projectLi", projectNav);
@@ -376,7 +378,13 @@ function move(y, projectNav) {
         leftBut.style.display = "none";
     }
     rightBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10);
+        if (!projectNav.moveFlag) {
+            return;
+        }
+        projectNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10, function () {
+            projectNav.moveFlag = true;
+        });
         x++;
         leftBut.style.display = "block";
         if (x == y) {
@@ -384,7 +392,13 @@ function move(y, projectNav) {
         }
     })
     leftBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10);
+        if (!projectNav.moveFlag) {
+            return;
+        }
+        projectNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10, function () {
+            projectNav.moveFlag = true;
+        });
         x--;
         rightBut.style.display = "block";
         if (x == 1) {
@@ -409,7 +423,7 @@ function butStyle(projectNav, liArr, x) {
         });
     }
 }
-var ddlColor = new getGradientColor("rgb(6,41,46)", "rgb(255,0,0)");
+var ddlColor = new getGradientColor("rgb(100,255,100)", "rgb(255,100,100)");
 //项目添加---------
 function addLi(li, name, introduce, author, number, projectID, projectTime) {
     var divName = document.createElement("div");

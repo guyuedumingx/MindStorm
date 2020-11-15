@@ -511,8 +511,8 @@ class GoTopEffect {
 // 根据百分比获取渐变颜色
 class getGradientColor {
     constructor(startColor, endColor) {
-        startColor = startColor.replace(/ /i, '');
-        endColor = endColor.replace(/ /i, '');
+        startColor = startColor.replace(/ /g, '');
+        endColor = endColor.replace(/ /g, '');
         var startColorArr = startColor.split('(')[1].split(')')[0].split(',');
         var endColorArr = endColor.split('(')[1].split(')')[0].split(',');
         this.sr = startColorArr[0] - 0;
