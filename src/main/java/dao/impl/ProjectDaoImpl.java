@@ -32,7 +32,7 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project> implements ProjectDao {
     public List<Project> getPublicProjectsFromPages(int pages, int numsForPage) {
         int index = pages*numsForPage-numsForPage;
         String sql = "select * from t_project as p where public=true order by (select count(*) from t_star where node_id" +
-                " = p.head_id) limit "+index+" ,"+(index+numsForPage);
+                " = p.head_id) DESC limit "+index+" ,"+(index+numsForPage);
         return this.select(new Project(), sql);
     }
 }
