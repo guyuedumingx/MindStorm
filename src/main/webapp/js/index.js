@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () { }
+        error: function () {}
     });
 
 
@@ -378,7 +378,6 @@ function move(y, projectNav) {
         leftBut.style.display = "none";
     }
     rightBut.addEventListener("click", function () {
-        console.log(projectNav.moveFlag);
         if (!projectNav.moveFlag) {
             return;
         }
@@ -424,7 +423,7 @@ function butStyle(projectNav, liArr, x) {
         });
     }
 }
-var ddlColor = new getGradientColor("rgb(100,255,100)", "rgb(255,100,100)");
+var ddlColor = new getGradientColor("rgb(189, 204, 210)", "rgb(33, 75, 91)");
 //项目添加---------
 function addLi(li, name, introduce, author, number, projectID, projectTime) {
     var divName = document.createElement("div");
@@ -462,7 +461,6 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
         projectTime = 100;
     divDdl.style.width = projectTime + "%";
     divDdl.style.backgroundColor = ddlColor.get(projectTime / 100);
-    console.log(ddlColor.get(projectTime / 100));
     li.appendChild(divBot);
     divBot.appendChild(divAut);
     divAut.appendChild(spanName);
@@ -678,7 +676,6 @@ function sharePage() {
         }, 100)
         // 点击右页数增加
         page++;
-        console.log(page);
     })
     leftBut.addEventListener("click", function () {
         if (!shareNav.moveFlag) {
@@ -695,7 +692,6 @@ function sharePage() {
         // 当第一页时左箭头隐藏
         if (page == 1)
             leftBut.style.display = "none";
-        console.log(page);
     })
 
 }

@@ -1307,16 +1307,81 @@ function backHistory(historyLi) {
 var exportProjectBox = getDom('.exportProjectBox'); // 导出项目的弹框
 var exportProjectClose = exportProjectBox.getDom('.exportProjectClose'); // 导出项目弹框的关闭按钮
 var exportProjectSubmit = exportProjectBox.getDom('.exportProjectBtn'); // 导出项目弹框的提交按钮
+var exportProjectXMind = exportProjectBox.getDom('.xMind'); // XMind盒子
+var exportProjectMarkDown = exportProjectBox.getDom('.markDown'); // MarkDown盒子
+var exportProjectMDChoice = exportProjectBox.getDom('.mdChoice'); // md选择盒子
+var exportProjectMDProject = exportProjectMDChoice.children[0]; // 导出整个项目
+var exportProjectMDBranch = exportProjectMDChoice.children[1]; // 导出当前分支
+
+// 添加导出项目高亮样式
+function exportProjectAddHeightLight(dom) {
+    dom.addClass('choiceColor');
+}
+
+// 删除导出项目高亮样式
+function exportProjectRemoveHeightLight(dom) {
+    dom.removeClass('choiceColor');
+}
+
+// 导出状态
+var exportProjectChoiceState = 'null';
+var exportProjectMDChoiceState = 'null';
+
+// 导出项目弹框的状态
 exportProjectBox.state = false;
+
+// XMind按钮
+exportProjectXMind.addEventListener('click', function () {
+    exportProjectChoiceState = 'XMind';
+    exportProjectRemoveHeightLight(exportProjectMarkDown);
+    exportProjectAddHeightLight(exportProjectXMind);
+    exportProjectMDChoice.hide();
+    exportProjectMDChoiceState = 'null';
+    exportProjectRemoveHeightLight(exportProjectMDProject);
+    exportProjectRemoveHeightLight(exportProjectMDBranch);
+});
+
+// MarkDown按钮
+exportProjectMarkDown.addEventListener('click', function () {
+    exportProjectChoiceState = 'MarkDown';
+    exportProjectRemoveHeightLight(exportProjectXMind);
+    exportProjectAddHeightLight(exportProjectMarkDown);
+    exportProjectMDChoice.show();
+    exportProjectMDChoiceState = 'Project';
+    exportProjectAddHeightLight(exportProjectMDProject);
+});
+
+// 导出整个项目按钮
+exportProjectMDProject.addEventListener('click', function () {
+    exportProjectAddHeightLight(exportProjectMDProject);
+    exportProjectRemoveHeightLight(exportProjectMDBranch);
+    exportProjectMDChoiceState = 'Project';
+});
+
+// 导出当前分支按钮
+exportProjectMDBranch.addEventListener('click', function () {
+    exportProjectAddHeightLight(exportProjectMDBranch);
+    exportProjectRemoveHeightLight(exportProjectMDProject);
+    exportProjectMDChoiceState = 'Branch';
+});
 
 // 隐藏导出项目弹框
 function exportProjectHide() {
     exportProjectBox.style.transform = "translate(-100%,0)";
+    exportProjectRemoveHeightLight(exportProjectXMind);
+    exportProjectRemoveHeightLight(exportProjectMarkDown);
+    exportProjectChoiceState = 'null';
+    exportProjectMDChoice.hide();
+    exportProjectMDChoiceState = 'null';
+    exportProjectRemoveHeightLight(exportProjectMDProject);
+    exportProjectRemoveHeightLight(exportProjectMDBranch);
 }
 
 // 显示导出项目弹框
 function exportProjectShow() {
     exportProjectBox.style.transform = "translate(0%,0)";
+    exportProjectAddHeightLight(exportProjectXMind);
+    exportProjectChoiceState = 'XMind';
 }
 
 // 点击按钮 打开/关闭 导出项目盒子
@@ -1353,6 +1418,26 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// 导出项目确认按钮事件
+exportProjectSubmit.addEventListener('click', function () {
+    if (exportProjectChoiceState == 'XMind') {
+        window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
+    } else if (exportProjectChoiceState == 'MarkDown') {
+        if (exportProjectMDChoiceState == 'Project') {
+            window.location = '/util/xmind?project_id=' + projectId + '&type=md';
+        } else if (exportProjectMDChoiceState == 'Branch') {
+            if (nowNode) {
+                window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
+            } else {
+                topAlert('请先选择要导出的分支');
+            }
+        } else {
+            throw new DOMException();
+        }
+    } else {
+        throw new DOMException();
+    }
+});
 
 // 此测试代码仅供开发阶段使用
 document.addEventListener('keydown', function (e) {

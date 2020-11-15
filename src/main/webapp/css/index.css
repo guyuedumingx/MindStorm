@@ -531,6 +531,7 @@ body .header {
     background-color:  #214B5B;
     transition: width 1s;
 }
+
 .mainBox .projectBox .projectLi .bot{
     position: relative;
     height: 24.3%;
