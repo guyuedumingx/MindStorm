@@ -80,7 +80,7 @@ function userMess(head, headBox, emailBox, perSig) {
             perSig.value = userIntroduce;
             addLiBox(userProjectLength, userProject, personalNav)
         },
-        error: function () { }
+        error: function () {}
     });
 
 
@@ -423,7 +423,7 @@ function butStyle(projectNav, liArr, x) {
         });
     }
 }
-var ddlColor = new getGradientColor("rgb(100,255,100)", "rgb(255,100,100)");
+var ddlColor = new getGradientColor("rgb(189, 204, 210)", "rgb(33, 75, 91)");
 //项目添加---------
 function addLi(li, name, introduce, author, number, projectID, projectTime) {
     var divName = document.createElement("div");
