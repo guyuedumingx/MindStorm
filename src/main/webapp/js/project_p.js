@@ -217,7 +217,15 @@ function btnCancelDisable(btn) {
 function changeNodeEvent() {
     if (nowNode) {
         nowNode.list.children[0].addClass('treeListHeightLight');
-        var nowHeight = nowNode.list.index * nowNode.list.children[0].offsetHeight;
+        var realIndex = nowNode.list.index;
+        var list = nowNode.list;
+        while (list.last != root.list) {
+            list = list.last;
+            if (judgeListHide(list)) {
+                realIndex--;
+            }
+        }
+        var nowHeight = realIndex * nowNode.list.children[0].offsetHeight;
         // console.log('nowHeight: ', nowHeight);
         var boxStart = treeListMain.scrollTop;
         // console.log('boxStart: ', boxStart);
