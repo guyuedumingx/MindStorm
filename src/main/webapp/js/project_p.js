@@ -1440,17 +1440,17 @@ exportProjectSubmit.addEventListener('click', function () {
 });
 
 // 此测试代码仅供开发阶段使用
-document.addEventListener('keydown', function (e) {
-    if (e.altKey) {
-        if (e.key == 'u') {
-            window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
-        } else if (e.key == 'i') {
-            window.location = '/util/xmind?project_id=' + projectId + '&type=md';
-        } else if (e.key == 'o') {
-            window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
-        }
-    }
-});
+// document.addEventListener('keydown', function (e) {
+//     if (e.altKey) {
+//         if (e.key == 'u') {
+//             window.location = '/util/xmind?project_id=' + projectId + '&type=xmind';
+//         } else if (e.key == 'i') {
+//             window.location = '/util/xmind?project_id=' + projectId + '&type=md';
+//         } else if (e.key == 'o') {
+//             window.location = '/util/xmind?node_id=' + nowNode.id + '&type=md';
+//         }
+//     }
+// });
 
 // 退出项目相关操作
 signOutProject.addEventListener('click', function () {
