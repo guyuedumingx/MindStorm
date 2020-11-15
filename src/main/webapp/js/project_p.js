@@ -1205,7 +1205,27 @@ function getHistory() {
     });
 }
 
+// ctrl + z 撤销上一步操作
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'z' && ctrlState && transparentBaffle.getCSS('display') == 'none') {
+        e.preventDefault();
+        if (operationRecordUl.children.length > 0) {
+            backHistory(operationRecordUl.children[operationRecordUl.children.length - 1]);
+        }
+    }
+});
+
+// 撤销历史记录
+
+// 节流阀
+var revokeOperationFlag = false;
+
+// 撤销操作记录函数
 function backHistory(historyLi) {
+    if (revokeOperationFlag) {
+        return;
+    }
+    revokeOperationFlag = true;
     var type = historyLi.operaType;
     var index = historyLi.index;
     ajax({
@@ -1274,6 +1294,7 @@ function backHistory(historyLi) {
             } else {
                 topAlert('撤销失败！');
             }
+            revokeOperationFlag = false;
         }
     });
 }
