@@ -470,7 +470,7 @@ function addLi(li, name, introduce, author, number, projectID, projectTime) {
     divMan.appendChild(iMan);
     divMan.appendChild(spanMan);
     li.addEventListener("click", function () {
-        window.location = "project.html?project_id=" + projectID;
+        window.location = "project_p.html?project_id=" + projectID;
     })
 }
 
@@ -630,7 +630,6 @@ function getPublic(page) {
 
                     addLiShareBox(shareProjectLength, shareProject, shareNav)
                     allPage++;
-                    console.log(allPage + "a");
                 }
             } else {
                 // topAlert("发生未知错误");

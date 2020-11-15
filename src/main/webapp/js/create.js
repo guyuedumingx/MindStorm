@@ -329,7 +329,7 @@ function joinButClick() {
                         var joinPassword = res.password;
                         password(idnum, joinPassword);
                     } else {
-                        window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
+                        window.location.href = "/project_p.html?" + "project_id=" + idnum; //跳转页面
                         // "test2.html?"+"txt="+encodeURI(s.value);
                     }
                 } else {
@@ -346,7 +346,7 @@ function but2(idnum, joinPassword) {
     } else {
         var inputPass = inputID.value;
         if (inputPass == joinPassword) {
-            window.location.href = "/project.html?" + "project_id=" + idnum; //跳转页面
+            window.location.href = "/project_p.html?" + "project_id=" + idnum; //跳转页面
         } else {
             topAlert("口令错误");
         }
@@ -477,7 +477,7 @@ estBut.addEventListener("click", function () {
             }, // 请求头
             success: function (res) {
                 if (res.status_code == '200') {
-                    window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                    window.location.href = "/project_p.html?project_id=" + res.project_id; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
                     topAlert("项目创建失败");
@@ -533,7 +533,7 @@ function UpladXmind() {
             // header: {"Content-Type": "multipart/form-data;boundary="+getIntRandom(1,10)},
             success: function (res) {
                 if (res.status_code == '200') {
-                    window.location.href = "/project.html?project_id=" + res.project_id; //跳转页面
+                    window.location.href = "/project_p.html?project_id=" + res.project_id; //跳转页面
                     // "test2.html?"+"txt="+encodeURI(s.value);
                 } else {
                     topAlert("导入失败");
