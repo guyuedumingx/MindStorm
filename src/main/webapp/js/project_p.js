@@ -1503,18 +1503,18 @@ function shortcutKeyBoxShow() {
     shortcutKeyBox.style.transform = "translate(0%,0)";
 }
 
+// 快捷键列表相关操作
 function shortcutKeyFunction() {
-    if (operationRecordBox.state) {
-        operationRecordHide();
-        operationRecordBox.state = false;
+    if (shortcutKeyBox.state) {
+        shortcutKeyBoxHide();
+        shortcutKeyBox.state = false;
     } else {
-        operationRecordShow();
-        operationRecordBox.state = true;
-        getHistory();
+        shortcutKeyBoxShow();
+        shortcutKeyBox.state = true;
     }
 }
 
-shortcutKey.addEventListener('click', function () { });
+shortcutKey.addEventListener('click', shortcutKeyFunction);
 
 // 点击关闭按钮隐藏快捷键列表
 shortcutKeyClose.addEventListener('click', function () {
