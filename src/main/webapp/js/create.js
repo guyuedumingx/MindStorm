@@ -356,7 +356,7 @@ function but2(idnum, joinPassword) {
 function password(idnum, joinPassword) {
     joinBut.style.display = "none";
     joinBut2.style.display = "block";
-    inputID.type = "password";
+    // inputID.type = "password";
     inputTips(inputID, "", "idTips");
     getDom(".join_til").innerText = "项目口令";
     joinBut2.addEventListener("click", function () {
@@ -392,7 +392,7 @@ back[1].addEventListener("click", function () {
         joinBig.style.display = "none";
         inputID.removeClass("idPd");
     } else {
-        inputID.type = "text";
+        // inputID.type = "text";
         inputTips(inputID, "请输入项目ID", "idTips");
         getDom(".join_til").innerText = "加入项目";
         inputID.removeClass("idPd");
