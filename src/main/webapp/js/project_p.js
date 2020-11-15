@@ -1306,7 +1306,7 @@ function backHistory(historyLi) {
 
 var exportProjectBox = getDom('.exportProjectBox'); // 导出项目的弹框
 var exportProjectClose = exportProjectBox.getDom('.exportProjectClose'); // 导出项目弹框的关闭按钮
-var exportProjectSubmit = exportProjectBox.getDom('。exportBut'); // 导出项目弹框的提交按钮
+var exportProjectSubmit = exportProjectBox.getDom('.exportBut'); // 导出项目弹框的提交按钮
 var exportProjectXMind = exportProjectBox.getDom('.xMind'); // XMind盒子
 var exportProjectMarkDown = exportProjectBox.getDom('.markDown'); // MarkDown盒子
 var exportProjectMDChoice = exportProjectBox.getDom('.mdChoice'); // md选择盒子
