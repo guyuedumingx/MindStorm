@@ -637,7 +637,7 @@ function getPublic(page) {
 }
 // 先请求两页
 getPublic(1);
-setInterval(function () {
+var timerp = setInterval(function () {
     if (pdqq == 0) {
         getPublic(2);
         clearInterval(timerp);
