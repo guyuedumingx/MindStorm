@@ -2330,7 +2330,9 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
-        standardCoordinates();
+        if (standard.state) {
+            standardCoordinates();
+        }
     } else {
         topAlert('删除失败');
     }
