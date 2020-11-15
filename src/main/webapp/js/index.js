@@ -378,6 +378,7 @@ function move(y, projectNav) {
         leftBut.style.display = "none";
     }
     rightBut.addEventListener("click", function () {
+        console.log(projectNav.moveFlag);
         if (!projectNav.moveFlag) {
             return;
         }
@@ -642,6 +643,7 @@ getPublic(1);
 getPublic(2);
 
 function sharePage() {
+    shareNav.moveFlag = true;
     var page = 1;
     var projectWidth = personalNav.offsetWidth;
     var rightBut = getDom(".rightBut", shareNav);
@@ -653,7 +655,13 @@ function sharePage() {
     if (page == allPage || allPage == 0)
         rightBut.style.display = "none";
     rightBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10);
+        if (!shareNav.moveFlag) {
+            return;
+        }
+        shareNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (-projectWidth), projectWidth / 10, function () {
+            shareNav.moveFlag = true;
+        });
         //当前页数加一等于总页数
         if (page + 1 == allPage) {
             //获取下一页的项目
@@ -674,7 +682,13 @@ function sharePage() {
         console.log(page);
     })
     leftBut.addEventListener("click", function () {
-        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10);
+        if (!shareNav.moveFlag) {
+            return;
+        }
+        shareNav.moveFlag = false;
+        moveLeftRight(projectLiA, "left", (projectWidth), projectWidth / 10, function () {
+            shareNav.moveFlag = true;
+        });
         //页数减少
         page--;
         // 右箭头显示
