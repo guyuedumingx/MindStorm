@@ -637,10 +637,10 @@ function getPublic(page) {
 }
 // 先请求两页
 getPublic(1);
-var timerp = setInterval(function () {
+var getTimerp = setInterval(function () {
     if (pdqq == 0) {
         getPublic(2);
-        clearInterval(timerp);
+        clearInterval(getTimerp);
     }
 }, 100)
 
