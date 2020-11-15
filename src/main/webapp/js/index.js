@@ -637,7 +637,13 @@ function getPublic(page) {
 }
 // 先请求两页
 getPublic(1);
-getPublic(2);
+setInterval(function () {
+    if (pdqq == 0) {
+        getPublic(2);
+        clearInterval(timerp);
+    }
+}, 100)
+
 
 function sharePage() {
     shareNav.moveFlag = true;
