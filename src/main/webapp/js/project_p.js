@@ -889,6 +889,9 @@ function standardCoordinates() {
     x = treeBox.offsetWidth / (treeDepth + 2);
     y = treeBox.offsetHeight / (leafSet.length + 1);
     // standardX
+    for (var i = 0; i < nodeSet.length; i++) {
+        nodeSet[i].isLeaf = false;
+    }
     for (var i = 0; i < leafSet.length; i++) {
         leafSet[i].standardY = (i + 1) * y;
         leafSet[i].standardX = x * (leafSet[i].layer + 2);
@@ -2294,6 +2297,7 @@ function treeRemoveNode(node) {
 
         // 将节点从树盒子中删除
         treeBoxMain.removeChild(node);
+        standardCoordinates();
     } else {
         topAlert('删除失败');
     }
