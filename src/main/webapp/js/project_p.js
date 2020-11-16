@@ -33,7 +33,7 @@ document.addEventListener('keydown', function (e) {
                             node.addClass('hideTheme');
                         });
                     }
-                    nowNode.list.children[0].removeClass('treeListHeightLight');
+                    nowNode.list.removeClass('treeListHeightLight');
                     nowNode = null;
                     changeNodeEvent();
                 }
@@ -216,7 +216,7 @@ function btnCancelDisable(btn) {
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
-        nowNode.list.children[0].addClass('treeListHeightLight');
+        nowNode.list.addClass('treeListHeightLight');
         var realIndex = nowNode.list.index;
         var list = nowNode.list;
         while (list.last != root.list) {
@@ -1628,7 +1628,7 @@ treeBoxMain.addEventListener('mousedown', function (e) {
                 node.addClass('hideTheme');
             });
         }
-        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode.list.removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
     }
@@ -1962,7 +1962,7 @@ function addTreeConstraint(root, n) {
                 t = t.father;
             }
             changeChild(nowNode, removeHeightLight);
-            nowNode.list.children[0].removeClass('treeListHeightLight');
+            nowNode.list.removeClass('treeListHeightLight');
             nowNode = null;
             changeNodeEvent();
         }
@@ -2349,7 +2349,7 @@ function treeReload() {
 
     // 将当前选中节点置空
     if (nowNode) {
-        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode.list.removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
     }
@@ -2466,7 +2466,7 @@ function listClick(e, node) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
-        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode.list.removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
     }

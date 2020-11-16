@@ -420,7 +420,8 @@ body .mainBox {
 }
 
 /* 点击进入 */
-.mainBox .Box .join_bigBox .click_join,.mainBox .Box .join_bigBox .click2 {
+.mainBox .Box .join_bigBox .click_join,
+.mainBox .Box .join_bigBox .click2 {
     float: right;
     width: 60px;
     height: 60px;
@@ -430,10 +431,13 @@ body .mainBox {
     background-position: center;
     background-repeat: no-repeat;
 }
-.mainBox .Box .join_bigBox .click2{
+
+.mainBox .Box .join_bigBox .click2 {
     display: none;
 }
-.mainBox .Box .join_bigBox .click_join:hover,.mainBox .Box .join_bigBox .click2:hover {
+
+.mainBox .Box .join_bigBox .click_join:hover,
+.mainBox .Box .join_bigBox .click2:hover {
     cursor: pointer;
     background-image: url(../img/join_logo.png);
 }
@@ -524,7 +528,8 @@ body .mainBox {
     resize: none;
     /*不可调节*/
 }
-.mainBox .Box .est_bigBox .introduction textarea::-webkit-scrollbar{
+
+.mainBox .Box .est_bigBox .introduction textarea::-webkit-scrollbar {
     width: 5px;
 }
 
@@ -537,6 +542,7 @@ body .mainBox {
     border-radius: 50px;
     background: transparent;
 }
+
 .mainBox .Box .est_bigBox .introduction {
     position: relative;
 }
@@ -585,7 +591,7 @@ body .mainBox {
 
 /*时间、 等级 */
 #projectRank,
-#projectTime  {
+#projectTime {
     float: right;
     padding: 2px 5px;
     border-radius: 5px;
@@ -594,7 +600,8 @@ body .mainBox {
 
 /* 是否选择 */
 /* 按钮 */
-.onOffBorder,.onOffBorderP {
+.onOffBorder,
+.onOffBorderP {
     float: right;
     position: relative;
     width: 40px;
@@ -609,7 +616,8 @@ body .mainBox {
     vertical-align: middle;
 }
 
-.onOffBorder .onOffRod,.onOffBorderP .onOffRodP {
+.onOffBorder .onOffRod,
+.onOffBorderP .onOffRodP {
     position: absolute;
     top: 1.5px;
     left: 1.5px;
@@ -628,14 +636,17 @@ body .mainBox {
     background-size: 75%;
     background-position: center;
 }
-.mainBox .Box .est_bigBox .passwordChoice{
+
+.mainBox .Box .est_bigBox .passwordChoice {
     display: none;
 }
-.passwordC{
+
+.passwordC {
     color: rgb(190, 190, 190);
     pointer-events: none;
 }
-#projectPassword  {
+
+#projectPassword {
     float: right;
     width: 210px;
     margin-top: 3px;
