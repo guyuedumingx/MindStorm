@@ -4,9 +4,12 @@ import com.alibaba.fastjson.JSON;
 import common.dto.Result;
 import common.dto.StatusCode;
 import common.container.OnlineUsers;
+import org.mortbay.util.IO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.User;
+import redis.clients.jedis.Jedis;
+import socket.NodeSession;
 import socket.NodeSocket;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +17,9 @@ import javax.websocket.Session;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 与前端交互的工具类
@@ -65,24 +70,36 @@ public class WebUtil {
      */
     public static void renderForContributors(User user, Object object){
         int id = user.getId();
-        OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
         String s = JSON.toJSONString(object);
-        NodeSocket uSocket = onlineUsers.get(id);
-        if (uSocket != null) {
-            int projectId = uSocket.getProjectId();
-            List<NodeSocket> socketForProject = onlineUsers.getSocketForProject(projectId);
-            for (NodeSocket socket : socketForProject) {
+        Jedis jedis = RedisUtil.getJedis();
+//        NodeSocket uSocket = OnlineUsers.get(id);
+        byte[] bytes = jedis.get((id+"").getBytes());
+        Set<byte[]> smembers = jedis.smembers(bytes);
+        Iterator<byte[]> iterator = smembers.iterator();
+        while (iterator.hasNext()){
+            NodeSession nodeSession = (NodeSession) SerializeUtil.unSerialize(iterator.next());
+            if(nodeSession.getUserId()!=id){
                 try {
-                    if (socket.getUserId() != id) {
-                        socket.getSession().getBasicRemote().sendText(s);
-                    }
-                } catch (IOException e) {
+                    nodeSession.getSession().getBasicRemote().sendText(s);
+                }catch (IOException e){
                     logger.error(e.getMessage());
                 }
             }
-        } else {
-            logger.error("没有用户在线错误");
         }
+//        if (uSocket != null) {
+//            int projectId = uSocket.getProjectId();
+//            List<NodeSocket> socketForProject = OnlineUsers.getSocketForProject(projectId);
+//            for (NodeSocket socket : socketForProject) {
+//                try {
+//                    if (socket.getUserId() != id) {
+//                        socket.getSession().getBasicRemote().sendText(s);
+//                    }
+//                } catch (IOException e) {
+//                }
+//            }
+//        } else {
+//            logger.error("没有用户在线错误");
+//        }
     }
 
     /**

@@ -1,11 +1,13 @@
 package socket;
 
-import common.container.OnlineUsers;
 import common.dto.OperaType;
 import common.dto.Result;
+import common.util.RedisUtil;
+import common.util.SerializeUtil;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.Jedis;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -15,22 +17,27 @@ import java.io.IOException;
 @ServerEndpoint(value="/node/socket/{userId}/{projectId}")
 public class NodeSocket {
     static Logger logger = LoggerFactory.getLogger(NodeSocket.class);
-    private OnlineUsers onlineUsers = OnlineUsers.getOnlineUsers();
-    private int userId;
-    private int projectId;
-    private Session session;
+    String projectId;
+    String userId;
 
     @OnOpen
     public void onOpen(@PathParam("userId") String userId,@PathParam("projectId") String projectId, Session session) throws IOException {
-        this.userId =Integer.valueOf(userId);
-        this.projectId = Integer.valueOf(projectId);
-        this.session = session;
-        onlineUsers.add(this);
+        this.projectId = projectId;
+        this.userId = userId;
+        int uid =Integer.valueOf(userId);
+        int pid = Integer.valueOf(projectId);
+        NodeSession nodeSession = new NodeSession(session, uid, pid);
+//        OnlineUsers.add(nodeSession);
+        Jedis jedis = RedisUtil.getJedis();
+        jedis.set(userId.getBytes(), SerializeUtil.serialize(nodeSession));
+        jedis.sadd(projectId.getBytes(),userId.getBytes());
     }
 
     @OnClose
     public void onClose(){
-        onlineUsers.remove(this);
+//        OnlineUsers.remove(this);
+        Jedis jedis = RedisUtil.getJedis();
+        jedis.srem((projectId+"").getBytes(),(userId+"").getBytes());
     }
 
     /**
@@ -49,30 +56,6 @@ public class NodeSocket {
 
     @OnError
     public void onError(Session session, Throwable error){
-        error.printStackTrace();
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
+        logger.error(error.getLocalizedMessage());
     }
 }
