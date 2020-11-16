@@ -4,10 +4,13 @@ import javax.websocket.Session;
 import java.io.Serializable;
 
 public class NodeSession implements Serializable {
-    private static final long serialVersionUID=1L;
+    static final long serialVersionUID=1L;
     private int userId;
     private int projectId;
     private Session session;
+
+    public NodeSession(){
+    }
 
     public NodeSession(Session session,int userId, int projectId){
         this.session = session;

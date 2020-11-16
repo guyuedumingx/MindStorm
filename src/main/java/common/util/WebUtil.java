@@ -64,45 +64,6 @@ public class WebUtil {
     }
 
     /**
-     * 将更改发送给参与者
-     * @param user
-     * @param object
-     */
-    public static void renderForContributors(User user, Object object){
-        int id = user.getId();
-        String s = JSON.toJSONString(object);
-        Jedis jedis = RedisUtil.getJedis();
-//        NodeSocket uSocket = OnlineUsers.get(id);
-        byte[] bytes = jedis.get((id+"").getBytes());
-        Set<byte[]> smembers = jedis.smembers(bytes);
-        Iterator<byte[]> iterator = smembers.iterator();
-        while (iterator.hasNext()){
-            NodeSession nodeSession = (NodeSession) SerializeUtil.unSerialize(iterator.next());
-            if(nodeSession.getUserId()!=id){
-                try {
-                    nodeSession.getSession().getBasicRemote().sendText(s);
-                }catch (IOException e){
-                    logger.error(e.getMessage());
-                }
-            }
-        }
-//        if (uSocket != null) {
-//            int projectId = uSocket.getProjectId();
-//            List<NodeSocket> socketForProject = OnlineUsers.getSocketForProject(projectId);
-//            for (NodeSocket socket : socketForProject) {
-//                try {
-//                    if (socket.getUserId() != id) {
-//                        socket.getSession().getBasicRemote().sendText(s);
-//                    }
-//                } catch (IOException e) {
-//                }
-//            }
-//        } else {
-//            logger.error("没有用户在线错误");
-//        }
-    }
-
-    /**
      * 渲染字符串
      * @param resp
      * @param key
