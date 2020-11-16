@@ -3,6 +3,8 @@ package common.container;
 import socket.NodeSocket;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 在线用户列表
@@ -22,6 +24,8 @@ public class OnlineUsers {
      */
     private Map<Integer,NodeSocket> socketMap = null;
 
+    private Lock lock = new ReentrantLock();
+
     /**
      * 单例
      */
@@ -35,19 +39,24 @@ public class OnlineUsers {
      * @param socket
      */
     public void add(NodeSocket socket){
-        int projectId = socket.getProjectId();
-        Set<Integer> set = null;
-        if(this.projectMap.containsKey(projectId)){
-            set = this.projectMap.get(projectId);
-        }else {
-            set = new HashSet<>();
+        lock.lock();
+        try {
+            int projectId = socket.getProjectId();
+            Set<Integer> set = null;
+            if (this.projectMap.containsKey(projectId)) {
+                set = this.projectMap.get(projectId);
+            } else {
+                set = new HashSet<>();
+            }
+            set.add(socket.getUserId());
+            if (this.socketMap.containsKey(socket.getUserId())) {
+                this.socketMap.remove(socket.getUserId());
+            }
+            this.projectMap.put(projectId, set);
+            this.socketMap.put(socket.getUserId(), socket);
+        }finally {
+            lock.unlock();
         }
-        set.add(socket.getUserId());
-        if(this.socketMap.containsKey(socket.getUserId())){
-            this.socketMap.remove(socket.getUserId());
-        }
-        this.projectMap.put(projectId,set);
-        this.socketMap.put(socket.getUserId(),socket);
     }
 
     /**
@@ -55,14 +64,19 @@ public class OnlineUsers {
      * @param socket
      */
     public void remove(NodeSocket socket){
-        int projectId = socket.getProjectId();
-        int userId = socket.getUserId();
-        if(projectMap.containsKey(projectId)){
-            Set<Integer> set = projectMap.get(projectId);
-            set.remove(userId);
-            if(socketMap.containsKey(userId)){
-                socketMap.remove(userId);
+        lock.lock();
+        try {
+            int projectId = socket.getProjectId();
+            int userId = socket.getUserId();
+            if (projectMap.containsKey(projectId)) {
+                Set<Integer> set = projectMap.get(projectId);
+                set.remove(userId);
+                if (socketMap.containsKey(userId)) {
+                    socketMap.remove(userId);
+                }
             }
+        }finally {
+            lock.unlock();
         }
     }
 
