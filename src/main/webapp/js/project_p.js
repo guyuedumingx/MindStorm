@@ -993,6 +993,11 @@ var projectName = projectMessage.getDom('.project_name span'); // 项目名
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
+var projectStar = projectMessage.getDom('.star'); // 项目点赞盒子
+var projectStarBtn = projectStar.getDom('.starPhoto'); // 点赞按钮
+var projectStarNumberBox = projectStar.getDom('.starNumber'); // 点赞数盒子
+
+// 初始项目ID
 projectIdBox.innerText = projectId;
 
 // 弹框状态
@@ -1006,6 +1011,12 @@ function projectMessageHide() {
 // 显示项目信息盒子
 function projectMessageShow() {
     projectMessage.style.transform = "translate(0%,0)";
+    if (root.stared) {
+        projectStarBtn.replaceClass('starFalse', 'starTrue');
+    } else {
+        projectStarBtn.replaceClass('starTrue', 'starFalse');
+    }
+    projectStarNumberBox.innerText = root.star;
 }
 
 // 项目信息相关操作
@@ -1050,8 +1061,47 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// 节流阀
+projectStarBtn.flag = false;
+projectStarBtn.addEventListener('click', function () {
+    if (projectStarBtn.flag) {
+        return;
+    }
+    projectStarBtn.flag = true;
+    ajax({
+        type: 'put',
+        url: '/util',
+        data: {
+            nodeId: root.id
+        },
+        header: {
+            'Content-Type': 'application/json',
+            "X-HTTP-Method-Override": "PUT"
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                if (root.stared) {
+                    root.star--;
+                    projectStarNumberBox.innerText = root.star;
+                    root.stared = false;
+                    projectStarBtn.replaceClass('starTrue', 'starFalse');
+                } else {
+                    root.star++;
+                    projectStarNumberBox.innerText = root.star;
+                    root.stared = true;
+                    projectStarBtn.replaceClass('starFalse', 'starTrue');
+                }
+            } else {
+                topAlert('操作失败');
+            }
+            setTimeout(function () {
+                projectStarBtn.flag = false;
+            }, 1000);
+        }
+    });
+});
+
 // 贡献者列表相关操作
-// 开发中
 
 var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
 var contributorsClose = contributorsBox.getDom('.contributClose'); // 关闭按钮
@@ -2118,9 +2168,9 @@ var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
 
-        // 求出最大的点赞数
+        // 求出除根节点外其它节点最大的点赞数
         var maxStar = 0;
-        for (var i = 0; i < nodeSet.length; i++) {
+        for (var i = 1; i < nodeSet.length; i++) {
             maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
         }
 
@@ -2159,6 +2209,8 @@ var nodeRequetTimer = setInterval(function () {
         // 清除定时器
         clearInterval(nodeRequetTimer);
         treeReloadFlag = false;
+
+        // 创建右侧列表
         addList(treeListMain, root);
         addListContext();
     }
