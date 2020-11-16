@@ -7,12 +7,14 @@ import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.Project;
+import pojo.User;
 import service.ProjectService;
 import service.impl.ProjectServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +27,15 @@ import java.util.List;
 public class ProjectUtilController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(ProjectUtilController.class);
-    ProjectService service = new ProjectServiceImpl();
+    ProjectService service = null;
+    User user = null;
+
+    @Override
+    protected void before(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = req.getSession();
+        user = (User)session.getAttribute("user");
+        service = new ProjectServiceImpl(user);
+    }
 
     /**
      * 检测项目是否存在

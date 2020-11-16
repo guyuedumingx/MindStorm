@@ -2,6 +2,7 @@ package controller;
 
 import common.dto.Result;
 import common.dto.StatusCode;
+import common.util.MarkdownUtil;
 import common.util.WebUtil;
 import common.util.XmindUtil;
 import org.apache.commons.fileupload.FileItem;
@@ -48,8 +49,23 @@ public class XmindController extends BaseController {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer projectId = Integer.valueOf(req.getParameter("project_id"));
-        XmindUtil.write(projectId,resp);
+        String type = req.getParameter("type");
+        if("md".equals(type)){
+            String nodeId = req.getParameter("node_id");
+            if(nodeId!=null&&!"".equals(nodeId)){
+                Integer id = Integer.valueOf(nodeId);
+                MarkdownUtil.writePart(id,user.getId(),resp);
+            }else {
+                String projectId = req.getParameter("project_id");
+                if(projectId!=null&&!"".equals(projectId)){
+                    int id = Integer.valueOf(projectId);
+                    MarkdownUtil.writeProject(id, user.getId(),resp);
+                }
+            }
+        }else {
+            Integer projectId = Integer.valueOf(req.getParameter("project_id"));
+            XmindUtil.write(projectId,resp);
+        }
     }
 
     /**

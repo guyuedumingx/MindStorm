@@ -671,7 +671,12 @@
     border-radius: 10px;
     background: #777;
 }
-
+.contributorsBox ul::-webkit-scrollbar-thumb:hover,
+.historyBox ul::-webkit-scrollbar-thumb:hover,
+.shortcutKeyBox ul::-webkit-scrollbar-thumb:hover{
+    border-radius: 10px;
+    background: #888;
+}
 .contributorsBox ul::-webkit-scrollbar-track,
 .historyBox ul::-webkit-scrollbar-track,
 .shortcutKeyBox ul::-webkit-scrollbar-track {

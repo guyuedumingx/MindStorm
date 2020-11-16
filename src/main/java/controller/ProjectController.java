@@ -87,8 +87,8 @@ public class ProjectController extends BaseController{
             history = new History(user,id);
             historyMap.put(id,history);
             session.setAttribute("history",historyMap);
-            session.setAttribute("projectId",id);
         }
+        session.setAttribute("projectId",id);
     }
 
     /**
