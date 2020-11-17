@@ -182,7 +182,7 @@ nameBox.inputEnterEvent(function () {
         type: 'post',
         url: '/user',
         data: {
-            userName: nameBox.value
+            user_name: nameBox.value
         },
         header: {
             'Content-Type': 'application/json'
