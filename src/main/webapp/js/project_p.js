@@ -1626,17 +1626,8 @@ var treeMultiple = 100; // 树盒子缩放倍数
 var nowEditorList; // 正在编辑的人的列表
 
 // 初始化正在编辑的人的列表
-function initializationNowEditorList() {
-    ajax({
-        type: '',
-        url: '',
-        data: {
-
-        },
-        success: function (res) {
-
-        }
-    })
+function initializationNowEditorList(arr) {
+    nowEditorList = arr;
 }
 
 // 动态添加正在编辑的人
@@ -2736,6 +2727,7 @@ function getTreeNode(id) {
     }
     return null;
 }
+
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
 
@@ -2764,9 +2756,6 @@ window.onload = function () {
 
             // 获取历史记录
             getHistory();
-
-            // 初始化正在编辑的人
-            initializationNowEditorList();
         }
     });
 }
@@ -2785,7 +2774,11 @@ websocket.onerror = function () {
 };
 
 //连接成功建立的回调方法
-websocket.onopen = function (event) {
+websocket.onopen = function (e) {
+    var back = JSON.parse(e.data);
+
+    // 初始化正在编辑的人
+    initializationNowEditorList(back);
     console.log("open");
 }
 
@@ -2832,7 +2825,10 @@ function changeEditor(type, nodeId) {
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
     var back = JSON.parse(e.data);
-    var socketNode = getTreeNode(back.node_id);
+    var socketNode;
+    if (back.node_id) {
+        socketNode = getTreeNode(back.node_id);
+    }
     if (back.type == "N") {
 
         // 实时响应动态添加节点
@@ -2868,12 +2864,14 @@ websocket.onmessage = function (e) {
         });
     } else if (back.type == "E") {
 
+        console.log(back);
         // 新增正在操作的用户
         nowEditorListPush({
 
         });
     } else if (back.type == "C") {
 
+        console.log(back);
         // 删除正在操作的用户
         nowEditorListPop(back.id);
     } else {
