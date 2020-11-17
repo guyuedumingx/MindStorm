@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
+import static socket.NodeSocket.renderForContributors;
+
 /**
  * 负责处理有关于节点的请求
  * @author yohoyes
@@ -74,7 +76,7 @@ public class NodeController extends BaseController{
             result.setStatus_code(StatusCode.LOST);
         }
 
-        WebUtil.renderForContributors(user,msg);
+        renderForContributors(user,msg);
         WebUtil.renderJson(resp,result);
         afterOpera(req);
     }
@@ -97,7 +99,7 @@ public class NodeController extends BaseController{
         if(StatusCode.OK==statusCode){
             msg.setChangeId(nodeId);
             history.addDelNodeHistory(node);
-            WebUtil.renderForContributors(user,msg);
+            renderForContributors(user,msg);
         }
         afterOpera(request);
     }
@@ -120,7 +122,7 @@ public class NodeController extends BaseController{
         if(StatusCode.OK==statusCode){
             msg.setChangeId(node.getId());
             history.addUpdateNodeHistory(historyNode);
-            WebUtil.renderForContributors(user,msg);
+            renderForContributors(user,msg);
         }
         afterOpera(request);
     }

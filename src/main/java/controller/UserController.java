@@ -12,6 +12,7 @@ import service.UserService;
 import service.impl.ProjectServiceImpl;
 import service.impl.UserServiceImpl;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -55,9 +56,9 @@ public class UserController extends BaseController{
         user.setUserSignature(userSignature);
         user.setName(userName);
         int code = userService.updateUser(user);
-        request.getSession().setAttribute("user",user);
-        int statusCode = StatusCode.isZero(code);
-        WebUtil.renderJson(response,statusCode);
+//        request.getSession().setAttribute("user",user);
+//        int statusCode = StatusCode.isZero(code);
+//        WebUtil.renderJson(response,statusCode);
     }
 
     /**

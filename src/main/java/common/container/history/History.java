@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static socket.NodeSocket.renderForContributors;
+
 /**
  * 保存用户的历史记录
  * @author yohoyes
@@ -97,7 +99,7 @@ public class History {
             if(back==0){
                 list.add(pop);
             }
-            WebUtil.renderForContributors(user,msg);
+            renderForContributors(user,msg);
             return back;
         }
         //没有历史记录
