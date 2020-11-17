@@ -182,7 +182,8 @@ nameBox.inputEnterEvent(function () {
         type: 'post',
         url: '/user',
         data: {
-            userName: nameBox.value
+            user_Name: nameBox.value,
+            user_signature: perSig.value
         },
         header: {
             'Content-Type': 'application/json'
@@ -191,6 +192,7 @@ nameBox.inputEnterEvent(function () {
 
         }
     });
+    document.cookie = "user_name=" + nameBox.value;
     nameBox.value = nameBox.value;
     nameU.innerText = nameBox.value;
     nameBox.readOnly = true;
@@ -201,7 +203,8 @@ perSig.inputEnterEvent(function () {
         type: 'put',
         url: '/project',
         data: {
-            userIntroduce: perSig.value
+            user_Name: nameBox.value,
+            user_signature: perSig.value
         },
         header: {
             'Content-Type': 'application/json'
