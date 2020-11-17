@@ -45,7 +45,7 @@ user.push({
     theme: '节点主题一',
     content: '节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容节点内容',
     children: [2, 3, 4, 8, 5, 6, 7],
-    star: 22,
+    star: 1000,
     stared: false,
     banAppend: false,
     lastEditName: '张三',
