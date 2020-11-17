@@ -51,8 +51,8 @@ public class UserController extends BaseController{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userName = request.getParameter("user_name");
-        String userSignature = request.getParameter("user_signature");
+        String userName = request.getParameter("name");
+        String userSignature = request.getParameter("signature");
         user.setUserSignature(userSignature);
         user.setName(userName);
         int code = userService.updateUser(user);

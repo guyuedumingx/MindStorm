@@ -182,8 +182,8 @@ nameBox.inputEnterEvent(function () {
         type: 'post',
         url: '/user',
         data: {
-            user_name: nameBox.value,
-            user_signature: perSig.value
+            name: nameBox.value,
+            signature: perSig.value
         },
         header: {
             'Content-Type': 'application/json'
@@ -200,11 +200,11 @@ nameBox.inputEnterEvent(function () {
 });
 perSig.inputEnterEvent(function () {
     ajax({
-        type: 'put',
-        url: '/project',
+        type: 'post',
+        url: '/user',
         data: {
-            user_name: nameBox.value,
-            user_signature: perSig.value
+            name: nameBox.value,
+            signature: perSig.value
         },
         header: {
             'Content-Type': 'application/json'
