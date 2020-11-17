@@ -1,5 +1,7 @@
 package controller;
 
+import common.dto.Result;
+import common.dto.StatusCode;
 import common.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import java.util.List;
 @WebServlet("/user")
 public class UserController extends BaseController{
     Logger logger = LoggerFactory.getLogger(UserController.class);
+    UserService userService = new UserServiceImpl();
     User user = null;
 
     @Override
@@ -47,7 +50,14 @@ public class UserController extends BaseController{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        String userName = request.getParameter("user_name");
+        String userSignature = request.getParameter("user_signature");
+        user.setUserSignature(userSignature);
+        user.setName(userName);
+        int code = userService.updateUser(user);
+        request.getSession().setAttribute("user",user);
+        int statusCode = StatusCode.isZero(code);
+        WebUtil.renderJson(response,statusCode);
     }
 
     /**
@@ -71,7 +81,6 @@ public class UserController extends BaseController{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String str = request.getParameter("id");
         ProjectService projectService = new ProjectServiceImpl();
-        UserService userService = new UserServiceImpl();
         if(str==null){
             List<Project> recentProjectList = projectService.getRecentProjectList(user.getId());
             user.setRecentProject(recentProjectList);
