@@ -1449,13 +1449,15 @@ exportProjectMDBranch.addEventListener('click', function () {
 // 隐藏导出项目弹框
 function exportProjectHide() {
     exportProjectBox.style.transform = "translate(-100%,0)";
-    exportProjectRemoveHeightLight(exportProjectXMind);
-    exportProjectRemoveHeightLight(exportProjectMarkDown);
-    exportProjectChoiceState = 'null';
-    exportProjectMDChoice.hide();
-    exportProjectMDChoiceState = 'null';
-    exportProjectRemoveHeightLight(exportProjectMDProject);
-    exportProjectRemoveHeightLight(exportProjectMDBranch);
+    setTimeout(function () {
+        exportProjectRemoveHeightLight(exportProjectXMind);
+        exportProjectRemoveHeightLight(exportProjectMarkDown);
+        exportProjectChoiceState = 'null';
+        exportProjectMDChoice.hide();
+        exportProjectMDChoiceState = 'null';
+        exportProjectRemoveHeightLight(exportProjectMDProject);
+        exportProjectRemoveHeightLight(exportProjectMDBranch);
+    }, 500);
 }
 
 // 显示导出项目弹框
