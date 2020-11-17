@@ -2747,25 +2747,26 @@ window.onload = function () {
             id: projectId
         },
         success: function (res) {
+
+            // 初始化项目信息
             projectHeadNodeId = res.headNodeId;
             introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
-            generateContributes(res.contributors);
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
-            // var date = new Date(res.createTime - 0);
-            // var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-            // creationDate.innerText = str;
-            // date = new Date(res.deadline - 0);
-            // str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-            // closingDate.innerText = str;
-            // progressCountDown.innerText = calculateRemainingTime(res.deadline - Date.now());
-            // var progress = (1 - (res.deadline - Date.now()) / (res.deadline - res.createTime)) * 100;
-            // progressContent.style.width = progress + '%';
-            // progressWave.style.left = progress + '%';
+
+            // 初始化贡献者列表
+            generateContributes(res.contributors);
+
+            // 创建树
             createRoot(res.headNodeId);
+
+            // 获取历史记录
             getHistory();
+
+            // 初始化正在编辑的人
+            initializationNowEditorList();
         }
     });
 }
