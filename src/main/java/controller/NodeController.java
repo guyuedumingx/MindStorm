@@ -135,13 +135,13 @@ public class NodeController extends BaseController{
         //敏感词过滤
         theme = filter.replaceSensitiveWord(theme,1,"*");
         content = filter.replaceSensitiveWord(content,1,"*");
-        boolean editable = Boolean.valueOf(request.getParameter("editable"));
+        boolean banAppend = Boolean.valueOf(request.getParameter("banAppend"));
         int projectId = Integer.valueOf(request.getParameter("projectId"));
         Node node = new Node();
         node.setId(id);
         node.setTheme(theme);
         node.setContent(content);
-        node.setBanAppend(editable);
+        node.setBanAppend(banAppend);
         node.setProjectId(projectId);
         node.setLastEditId(user.getId());
         return node;
