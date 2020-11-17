@@ -185,9 +185,9 @@ nameBox.inputEnterEvent(function () {
             name: nameBox.value,
             signature: perSig.value
         },
-        header: {
-            'Content-Type': 'application/json'
-        }, // 请求头
+        // header: {
+        //     'Content-Type': 'application/json'
+        // }, // 请求头
         success: function (res) {
 
         }
@@ -206,9 +206,9 @@ perSig.inputEnterEvent(function () {
             name: nameBox.value,
             signature: perSig.value
         },
-        header: {
-            'Content-Type': 'application/json'
-        }, // 请求头
+        // header: {
+        //     'Content-Type': 'application/json'
+        // }, // 请求头
         success: function (res) {
 
         }
