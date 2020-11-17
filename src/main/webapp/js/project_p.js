@@ -33,7 +33,7 @@ document.addEventListener('keydown', function (e) {
                             node.addClass('hideTheme');
                         });
                     }
-                    nowNode.list.children[0].removeClass('treeListHeightLight');
+                    nowNode.list.removeClass('treeListHeightLight');
                     nowNode = null;
                     changeNodeEvent();
                 }
@@ -182,6 +182,9 @@ function operationNodeBoxCloseFunction() {
             operationNodeBoxSubmit.hide();
         }
     }, 500);
+
+    // 用webSocket发请求
+    changeEditor('C', nowNode.id);
 }
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
@@ -216,7 +219,7 @@ function btnCancelDisable(btn) {
 // 改变当前节点的函数
 function changeNodeEvent() {
     if (nowNode) {
-        nowNode.list.children[0].addClass('treeListHeightLight');
+        nowNode.list.addClass('treeListHeightLight');
         var realIndex = nowNode.list.index;
         var list = nowNode.list;
         while (list.last != root.list) {
@@ -306,7 +309,9 @@ function addNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+
         // 用webSocket发请求
+        changeEditor('E', nowNode.id);
     }
 }
 
@@ -330,7 +335,6 @@ function removeNodeFunction() {
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
         transparentBaffle.show();
-        // 用websocket发请求
     }
 }
 
@@ -369,7 +373,9 @@ function changeNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+
         // 用webSocket发请求
+        changeEditor('E', nowNode.id);
     }
 }
 
@@ -993,6 +999,11 @@ var projectName = projectMessage.getDom('.project_name span'); // 项目名
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
+var projectStar = projectMessage.getDom('.star'); // 项目点赞盒子
+var projectStarBtn = projectStar.getDom('.starPhoto'); // 点赞按钮
+var projectStarNumberBox = projectStar.getDom('.starNumber'); // 点赞数盒子
+
+// 初始项目ID
 projectIdBox.innerText = projectId;
 
 // 弹框状态
@@ -1006,6 +1017,12 @@ function projectMessageHide() {
 // 显示项目信息盒子
 function projectMessageShow() {
     projectMessage.style.transform = "translate(0%,0)";
+    if (root.stared) {
+        projectStarBtn.replaceClass('starFalse', 'starTrue');
+    } else {
+        projectStarBtn.replaceClass('starTrue', 'starFalse');
+    }
+    projectStarNumberBox.innerText = root.star;
 }
 
 // 项目信息相关操作
@@ -1050,8 +1067,47 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// 节流阀
+projectStarBtn.flag = false;
+projectStarBtn.addEventListener('click', function () {
+    if (projectStarBtn.flag) {
+        return;
+    }
+    projectStarBtn.flag = true;
+    ajax({
+        type: 'put',
+        url: '/util',
+        data: {
+            nodeId: root.id
+        },
+        header: {
+            'Content-Type': 'application/json',
+            "X-HTTP-Method-Override": "PUT"
+        }, // 请求头
+        success: function (res) {
+            if (res.status_code == '200') {
+                if (root.stared) {
+                    root.star--;
+                    projectStarNumberBox.innerText = root.star;
+                    root.stared = false;
+                    projectStarBtn.replaceClass('starTrue', 'starFalse');
+                } else {
+                    root.star++;
+                    projectStarNumberBox.innerText = root.star;
+                    root.stared = true;
+                    projectStarBtn.replaceClass('starFalse', 'starTrue');
+                }
+            } else {
+                topAlert('操作失败');
+            }
+            setTimeout(function () {
+                projectStarBtn.flag = false;
+            }, 1000);
+        }
+    });
+});
+
 // 贡献者列表相关操作
-// 开发中
 
 var contributorsBox = getDom('.contributorsBox'); // 贡献者列表盒子
 var contributorsClose = contributorsBox.getDom('.contributClose'); // 关闭按钮
@@ -1567,6 +1623,28 @@ var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子
 var treeBoxPercentageTips = getDom('.treeBox .treeBoxPercentageTips'); // 提示树盒子缩放倍数的盒子
 var treeBoxState = false; // 鼠标是否在树盒子中
 var treeMultiple = 100; // 树盒子缩放倍数
+var nowEditorList; // 正在编辑的人的列表
+
+// 初始化正在编辑的人的列表
+function initializationNowEditorList(arr) {
+    nowEditorList = arr;
+}
+
+// 动态添加正在编辑的人
+function nowEditorListPush(editor) {
+    nowEditorList.push(editor);
+}
+
+// 动态删除正在编辑的人
+function nowEditorListPop(editorId) {
+    var arr = [];
+    for (var i = 0; i < nowEditorList.length; i++) {
+        if (nowEditorList[i].id != editorId) {
+            arr.push(nowEditorList[i]);
+        }
+    }
+    nowEditorList = arr;
+}
 
 // 显示树盒子缩放倍数提示盒子
 function percentageTips(num) {
@@ -1628,7 +1706,7 @@ treeBoxMain.addEventListener('mousedown', function (e) {
                 node.addClass('hideTheme');
             });
         }
-        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode.list.removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
     }
@@ -1962,7 +2040,7 @@ function addTreeConstraint(root, n) {
                 t = t.father;
             }
             changeChild(nowNode, removeHeightLight);
-            nowNode.list.children[0].removeClass('treeListHeightLight');
+            nowNode.list.removeClass('treeListHeightLight');
             nowNode = null;
             changeNodeEvent();
         }
@@ -2118,9 +2196,9 @@ var nodeRequetTimer = setInterval(function () {
     if (nodeRequest == 0) {
         addTreeConstraint(root, 0);
 
-        // 求出最大的点赞数
+        // 求出除根节点外其它节点最大的点赞数
         var maxStar = 0;
-        for (var i = 0; i < nodeSet.length; i++) {
+        for (var i = 1; i < nodeSet.length; i++) {
             maxStar = maxStar > nodeSet[i].star ? maxStar : nodeSet[i].star;
         }
 
@@ -2159,6 +2237,8 @@ var nodeRequetTimer = setInterval(function () {
         // 清除定时器
         clearInterval(nodeRequetTimer);
         treeReloadFlag = false;
+
+        // 创建右侧列表
         addList(treeListMain, root);
         addListContext();
     }
@@ -2349,7 +2429,7 @@ function treeReload() {
 
     // 将当前选中节点置空
     if (nowNode) {
-        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode.list.removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
     }
@@ -2466,7 +2546,7 @@ function listClick(e, node) {
             t = t.father;
         }
         changeChild(nowNode, removeHeightLight);
-        nowNode.list.children[0].removeClass('treeListHeightLight');
+        nowNode.list.removeClass('treeListHeightLight');
         nowNode = null;
         changeNodeEvent();
     }
@@ -2647,6 +2727,7 @@ function getTreeNode(id) {
     }
     return null;
 }
+
 // ——————————页面加载完之后发送请求——————————
 window.onload = function () {
 
@@ -2658,24 +2739,22 @@ window.onload = function () {
             id: projectId
         },
         success: function (res) {
+
+            // 初始化项目信息
             projectHeadNodeId = res.headNodeId;
             introduceP.innerText = res.introduction;
             projectCreatorId = res.author;
             projectCreatorName.innerText = res.creatorName;
-            generateContributes(res.contributors);
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
-            // var date = new Date(res.createTime - 0);
-            // var str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-            // creationDate.innerText = str;
-            // date = new Date(res.deadline - 0);
-            // str = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-            // closingDate.innerText = str;
-            // progressCountDown.innerText = calculateRemainingTime(res.deadline - Date.now());
-            // var progress = (1 - (res.deadline - Date.now()) / (res.deadline - res.createTime)) * 100;
-            // progressContent.style.width = progress + '%';
-            // progressWave.style.left = progress + '%';
+
+            // 初始化贡献者列表
+            generateContributes(res.contributors);
+
+            // 创建树
             createRoot(res.headNodeId);
+
+            // 获取历史记录
             getHistory();
         }
     });
@@ -2695,7 +2774,11 @@ websocket.onerror = function () {
 };
 
 //连接成功建立的回调方法
-websocket.onopen = function (event) {
+websocket.onopen = function (e) {
+    var back = JSON.parse(e.data);
+
+    // 初始化正在编辑的人
+    initializationNowEditorList(back);
     console.log("open");
 }
 
@@ -2731,11 +2814,24 @@ function recursionAppendNode(res) {
     }
 }
 
+// 用webSocket发请求
+function changeEditor(type, nodeId) {
+    websocket.send({
+        type: type,
+        nodeId: nodeId
+    });
+}
+
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
     var back = JSON.parse(e.data);
-    var socketNode = getTreeNode(back.node_id);
+    var socketNode;
+    if (back.node_id) {
+        socketNode = getTreeNode(back.node_id);
+    }
     if (back.type == "N") {
+
+        // 实时响应动态添加节点
         ajax({
             type: 'get',
             url: '/node',
@@ -2745,8 +2841,12 @@ websocket.onmessage = function (e) {
             success: recursionAppendNode
         });
     } else if (back.type == "D") {
+
+        // 实时响应动态删除节点
         treeRemoveNode(socketNode);
     } else if (back.type == "U") {
+
+        // 实时响应动态修改节点
         ajax({
             type: 'get',
             url: '/node',
@@ -2763,9 +2863,17 @@ websocket.onmessage = function (e) {
             }
         });
     } else if (back.type == "E") {
+
+        console.log(back);
         // 新增正在操作的用户
+        nowEditorListPush({
+
+        });
     } else if (back.type == "C") {
+
+        console.log(back);
         // 删除正在操作的用户
+        nowEditorListPop(back.id);
     } else {
         topAlert('发生未知错误');
     }
