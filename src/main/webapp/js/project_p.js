@@ -182,6 +182,9 @@ function operationNodeBoxCloseFunction() {
             operationNodeBoxSubmit.hide();
         }
     }, 500);
+
+    // 用webSocket发请求
+    changeEditor('C', nowNode.id);
 }
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
@@ -306,7 +309,9 @@ function addNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+
         // 用webSocket发请求
+        changeEditor('E', nowNode.id);
     }
 }
 
@@ -330,7 +335,6 @@ function removeNodeFunction() {
         tipsContent.innerText = '该操作不可恢复，是否继续';
         tipsBox.show();
         transparentBaffle.show();
-        // 用websocket发请求
     }
 }
 
@@ -369,7 +373,9 @@ function changeNodeFunction() {
         operationNodeBoxStarBox.hide();
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
+
         // 用webSocket发请求
+        changeEditor('E', nowNode.id);
     }
 }
 
@@ -1617,6 +1623,37 @@ var treeBoxMain = getDom('.treeBox .treeBoxMain'); // 树盒子
 var treeBoxPercentageTips = getDom('.treeBox .treeBoxPercentageTips'); // 提示树盒子缩放倍数的盒子
 var treeBoxState = false; // 鼠标是否在树盒子中
 var treeMultiple = 100; // 树盒子缩放倍数
+var nowEditorList; // 正在编辑的人的列表
+
+// 初始化正在编辑的人的列表
+function initializationNowEditorList() {
+    ajax({
+        type: '',
+        url: '',
+        data: {
+
+        },
+        success: function (res) {
+
+        }
+    })
+}
+
+// 动态添加正在编辑的人
+function nowEditorListPush(editor) {
+    nowEditorList.push(editor);
+}
+
+// 动态删除正在编辑的人
+function nowEditorListPop(editorId) {
+    var arr = [];
+    for (var i = 0; i < nowEditorList.length; i++) {
+        if (nowEditorList[i].id != editorId) {
+            arr.push(nowEditorList[i]);
+        }
+    }
+    nowEditorList = arr;
+}
 
 // 显示树盒子缩放倍数提示盒子
 function percentageTips(num) {
@@ -2783,11 +2820,21 @@ function recursionAppendNode(res) {
     }
 }
 
+// 用webSocket发请求
+function changeEditor(type, nodeId) {
+    websocket.send({
+        type: type,
+        nodeId: nodeId
+    });
+}
+
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
     var back = JSON.parse(e.data);
     var socketNode = getTreeNode(back.node_id);
     if (back.type == "N") {
+
+        // 实时响应动态添加节点
         ajax({
             type: 'get',
             url: '/node',
@@ -2797,8 +2844,12 @@ websocket.onmessage = function (e) {
             success: recursionAppendNode
         });
     } else if (back.type == "D") {
+
+        // 实时响应动态删除节点
         treeRemoveNode(socketNode);
     } else if (back.type == "U") {
+
+        // 实时响应动态修改节点
         ajax({
             type: 'get',
             url: '/node',
@@ -2815,9 +2866,15 @@ websocket.onmessage = function (e) {
             }
         });
     } else if (back.type == "E") {
+
         // 新增正在操作的用户
+        nowEditorListPush({
+
+        });
     } else if (back.type == "C") {
+
         // 删除正在操作的用户
+        nowEditorListPop(back.id);
     } else {
         topAlert('发生未知错误');
     }
