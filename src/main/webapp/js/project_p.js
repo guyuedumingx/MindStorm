@@ -1272,7 +1272,7 @@ function getHistory() {
                 if (li.operaType == 'N') {
                     span.innerText = '创建了节点   \'' + nodeBefore.theme + '\'';
                 } else if (li.operaType == 'U') {
-                    span.innerText = '修改了节点   \'' + nodeAfter.theme + '\'';
+                    span.innerText = '修改了节点   \'' + nodeBefore.theme + '\'';
                 } else if (li.operaType == 'D') {
                     span.innerText = '删除了节点   \'' + nodeBefore.theme + '\'';
                 } else {
