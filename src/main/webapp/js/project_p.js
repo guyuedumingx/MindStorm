@@ -2797,8 +2797,10 @@ websocket.onerror = function () {
 websocket.onopen = function (e) {
     var back = JSON.parse(e.data);
 
+    // 开发中
+
     // 初始化正在编辑的人
-    initializationNowEditorList(back);
+    // initializationNowEditorList(back);
     console.log("open");
 }
 
@@ -2893,16 +2895,20 @@ websocket.onmessage = function (e) {
         });
     } else if (back.type == "E") {
 
-        console.log(back);
-        // 新增正在操作的用户
-        nowEditorListPush({
+        // 开发中
 
-        });
+        // console.log(back);
+        // // 新增正在操作的用户
+        // nowEditorListPush({
+
+        // });
     } else if (back.type == "C") {
 
-        console.log(back);
-        // 删除正在操作的用户
-        nowEditorListPop(back.id);
+        // 开发中
+
+        // console.log(back);
+        // // 删除正在操作的用户
+        // nowEditorListPop(back.id);
     } else {
         topAlert('发生未知错误');
     }
