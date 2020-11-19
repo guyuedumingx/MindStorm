@@ -482,6 +482,7 @@ app.get('/project', function (req, res) {
     res.send({
         id: 123456789,
         name: '绝不互相甩锅',
+        // password: 123456,
         isPublic: false,
         rank: 3,
         author: 1,

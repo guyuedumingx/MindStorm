@@ -996,6 +996,7 @@ var projectMessage = getDom('.message'); // 项目信息盒子
 var projectMessageClose = projectMessage.getDom('.mesClose'); //项目信息盒子关闭按钮
 var projectCreatorName = projectMessage.getDom('.project_aut span'); // 项目创建者
 var projectName = projectMessage.getDom('.project_name span'); // 项目名
+var projectPassword = projectMessage.getDom('.project_password span'); // 项目口令
 var projectLevel = projectMessage.getDom('.project_rank span'); // 获取项目等级盒子
 var introduceP = projectMessage.getDom('p'); // 项目简介内容
 var projectIdBox = projectMessage.getDom('.project_id span'); // 项目ID
@@ -2749,6 +2750,7 @@ window.onload = function () {
             projectCreatorName.innerText = res.creatorName;
             projectName.innerText = res.name;
             projectLevel.innerText = res.rank;
+            projectPassword.innerText = res.password ? res.password : '无';
 
             // 初始化贡献者列表
             generateContributes(res.contributors);
