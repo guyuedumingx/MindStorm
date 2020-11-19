@@ -2666,7 +2666,7 @@ function addListContextRecursion(node) {
 
 // 判断当前列表元素是否被隐藏了
 function judgeListHide(list) {
-    if (list.fatherlist) {
+    if (list && list.fatherlist) {
         if (list.fatherlist.children[1].getCSS('display') == 'none' || judgeListHide(list.fatherlist)) {
             return true;
         } else {
@@ -2722,11 +2722,13 @@ document.addEventListener('keydown', function (e) {
             listClick(null, nowList.node);
         } else if (e.key == 'ArrowLeft') {
             e.preventDefault();
-            nowList = nowList.fatherlist;
-            while (judgeListHide(nowList)) {
+            if (nowList.node != root) {
                 nowList = nowList.fatherlist;
+                while (judgeListHide(nowList)) {
+                    nowList = nowList.fatherlist;
+                }
+                listClick(null, nowList.node);
             }
-            listClick(null, nowList.node);
         } else if (e.key == 'ArrowRight') {
             listFold(nowList.getDom('h4 span'));
         }
