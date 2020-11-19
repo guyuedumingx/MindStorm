@@ -534,7 +534,15 @@ function operationNodeBoxSubmitFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     nowNode.children[0].innerText = inpTheme;
+                    var span = document.createElement('span');
+                    span.addEventListener('click', function () {
+                        listFold(this);
+                    });
+                    if (nowNode.list.foldState) {
+                        span.style.transform = 'translate(0, -50%) rotate(0deg)';
+                    }
                     nowNode.list.getDom('h4').innerText = inpTheme;
+                    nowNode.list.getDom('h4').appendChild(span);
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
                 } else {
@@ -1337,7 +1345,15 @@ function backHistory(historyLi) {
                         },
                         success: function (res) {
                             node.children[0].innerText = res.theme;
+                            var span = document.createElement('span');
+                            span.addEventListener('click', function () {
+                                listFold(this);
+                            });
+                            if (node.list.foldState) {
+                                span.style.transform = 'translate(0, -50%) rotate(0deg)';
+                            }
                             node.list.getDom('h4').innerText = res.theme;
+                            node.list.getDom('h4').appendChild(span);
                             node.content = res.content;
                             node.editable = res.banAppend;
                         }
@@ -2859,6 +2875,15 @@ websocket.onmessage = function (e) {
             },
             success: function (res) {
                 socketNode.getDom('.theme').innerText = res.theme;
+                var span = document.createElement('span');
+                span.addEventListener('click', function () {
+                    listFold(this);
+                });
+                if (socketNode.list.foldState) {
+                    span.style.transform = 'translate(0, -50%) rotate(0deg)';
+                }
+                socketNode.list.getDom('h4').innerText = res.theme;
+                socketNode.list.getDom('h4').appendChild(span);
                 socketNode.content = res.content;
                 socketNode.lastEditName = res.lastEditName;
                 socketNode.lastEditTime = res.lastEditTime;
