@@ -229,14 +229,9 @@ function changeNodeEvent() {
             }
         }
         var nowHeight = realIndex * nowNode.list.children[0].offsetHeight;
-        // console.log('nowHeight: ', nowHeight);
         var boxStart = treeListMain.scrollTop;
-        // console.log('boxStart: ', boxStart);
         var boxEnd = boxStart + treeListMain.offsetHeight;
-        // console.log('boxEnd: ', boxEnd);
         var listHeight = nowNode.list.children[0].offsetHeight;
-        // console.log('listHeight: ', listHeight);
-        // console.log('----------------------华丽的分割线----------------------');
         if (nowHeight < boxStart) {
             treeListMain.scrollTo(0, nowHeight);
         } else if (nowHeight + listHeight > boxEnd) {
@@ -1201,7 +1196,6 @@ document.addEventListener('keydown', function (e) {
     }
 });
 // 操作记录相关操作
-// 开发中
 
 var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
 var operationRecordClose = operationRecordBox.getDom('.historyClose'); // 操作记录盒子中关闭按钮 
@@ -1584,7 +1578,6 @@ classic.addEventListener('click', function () {
 });
 
 // 快捷键列表相关操作
-// 开发中
 
 var shortcutKeyBox = getDom('.shortcutKeyBox'); // 快捷键列表的盒子
 var shortcutKeyClose = shortcutKeyBox.getDom('.shortcutKeyClose'); // 快捷键列表盒子的关闭按钮
@@ -2790,7 +2783,7 @@ if ('WebSocket' in window) {
 
 //连接发生错误的回调方法
 websocket.onerror = function () {
-    console.log("error");
+    // console.log("error");
 };
 
 //连接成功建立的回调方法
@@ -2801,7 +2794,7 @@ websocket.onopen = function (e) {
 
     // 初始化正在编辑的人
     // initializationNowEditorList(back);
-    console.log("open");
+    // console.log("open");
 }
 
 // 递归动态添加节点
@@ -2916,7 +2909,7 @@ websocket.onmessage = function (e) {
 
 //连接关闭的回调方法
 websocket.onclose = function () {
-    console.log("close");
+    // console.log("close");
 }
 
 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
