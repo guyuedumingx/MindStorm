@@ -2778,7 +2778,7 @@ if ('WebSocket' in window) {
     //8.129.110.151/MindStorm-1.0-SNAPSHOT
     websocket = new WebSocket("ws://" + window.document.domain + ":8080/node/socket/" + user.userId + "/" + projectId);
 } else {
-    alert('Not support websocket')
+    // alert('Not support websocket');
 }
 
 //连接发生错误的回调方法
