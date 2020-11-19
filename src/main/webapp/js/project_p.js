@@ -183,8 +183,9 @@ function operationNodeBoxCloseFunction() {
         }
     }, 500);
 
+    // 开发中
     // 用webSocket发请求
-    changeEditor('C', nowNode.id);
+    // changeEditor('C', nowNode.id);
 }
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
@@ -305,8 +306,9 @@ function addNodeFunction() {
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
 
+        // 开发中
         // 用webSocket发请求
-        changeEditor('E', nowNode.id);
+        // changeEditor('E', nowNode.id);
     }
 }
 
@@ -369,8 +371,9 @@ function changeNodeFunction() {
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
 
+        // 开发中
         // 用webSocket发请求
-        changeEditor('E', nowNode.id);
+        // changeEditor('E', nowNode.id);
     }
 }
 
@@ -2829,13 +2832,14 @@ function recursionAppendNode(res) {
     }
 }
 
+// 开发中
 // 用webSocket发请求
-function changeEditor(type, nodeId) {
-    websocket.send({
-        type: type,
-        nodeId: nodeId
-    });
-}
+// function changeEditor(type, nodeId) {
+//     websocket.send({
+//         type: type,
+//         nodeId: nodeId
+//     });
+// }
 
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
