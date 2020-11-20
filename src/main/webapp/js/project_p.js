@@ -2793,10 +2793,10 @@ websocket.onerror = function () {
 
 //连接成功建立的回调方法
 websocket.onopen = function (e) {
-    var back = JSON.parse(e.data);
 
     // 开发中
 
+    // var back = JSON.parse(e.data);
     // 初始化正在编辑的人
     // initializationNowEditorList(back);
     // console.log("open");
