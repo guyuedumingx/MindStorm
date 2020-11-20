@@ -44,6 +44,9 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public int delNode(int nodeId, int operatorId) {
         Node node = nodeDao.selectOne(new Node(nodeId));
+        if(node==null){
+            return StatusCode.LOST;
+        }
         //如果存在子节点,不能删除
         if(node.getChildren()!=null && node.getChildren().length!=0 && node.getParentId()==0){
             return StatusCode.LOST;

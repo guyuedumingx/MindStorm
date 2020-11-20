@@ -4,6 +4,7 @@ import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
 import common.container.OnlineUsers;
 import common.dto.OperaType;
 import common.dto.Result;
+import common.dto.StatusCode;
 import common.util.WebUtil;
 import pojo.Node;
 import pojo.User;
@@ -73,9 +74,12 @@ public class History {
                 msg.setChangeType(OperaType.DELETE);
                 Node parent = service.getNode(operaNode.getParentId(), user.getId());
                 if(parent!=null){
-                    service.delNode(operaNode.getId(), operaNode.getAuthor());
-
-                    back = operaNode.getId();
+                    int code = service.delNode(operaNode.getId(), operaNode.getAuthor());
+                    if(code == StatusCode.LOST){
+                        back = 0;
+                    }else {
+                        back = operaNode.getId();
+                    }
                 }
             }else if(OperaType.UPDATE.equals(pop.getOperaType())){
                 msg.setChangeType(OperaType.UPDATE);
