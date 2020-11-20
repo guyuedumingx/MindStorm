@@ -183,8 +183,9 @@ function operationNodeBoxCloseFunction() {
         }
     }, 500);
 
+    // 开发中
     // 用webSocket发请求
-    changeEditor('C', nowNode.id);
+    // changeEditor('C', nowNode.id);
 }
 
 operationNodeBoxClose.addEventListener('click', operationNodeBoxCloseFunction);
@@ -229,14 +230,9 @@ function changeNodeEvent() {
             }
         }
         var nowHeight = realIndex * nowNode.list.children[0].offsetHeight;
-        // console.log('nowHeight: ', nowHeight);
         var boxStart = treeListMain.scrollTop;
-        // console.log('boxStart: ', boxStart);
         var boxEnd = boxStart + treeListMain.offsetHeight;
-        // console.log('boxEnd: ', boxEnd);
         var listHeight = nowNode.list.children[0].offsetHeight;
-        // console.log('listHeight: ', listHeight);
-        // console.log('----------------------华丽的分割线----------------------');
         if (nowHeight < boxStart) {
             treeListMain.scrollTo(0, nowHeight);
         } else if (nowHeight + listHeight > boxEnd) {
@@ -310,8 +306,9 @@ function addNodeFunction() {
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
 
+        // 开发中
         // 用webSocket发请求
-        changeEditor('E', nowNode.id);
+        // changeEditor('E', nowNode.id);
     }
 }
 
@@ -374,8 +371,9 @@ function changeNodeFunction() {
         operationNodeBoxShow();
         operationNodeBoxTheme.focus();
 
+        // 开发中
         // 用webSocket发请求
-        changeEditor('E', nowNode.id);
+        // changeEditor('E', nowNode.id);
     }
 }
 
@@ -534,7 +532,15 @@ function operationNodeBoxSubmitFunction() {
             success: function (res) {
                 if (res.status_code == '200') {
                     nowNode.children[0].innerText = inpTheme;
+                    var span = document.createElement('span');
+                    span.addEventListener('click', function () {
+                        listFold(this);
+                    });
+                    if (nowNode.list.foldState) {
+                        span.style.transform = 'translate(0, -50%) rotate(0deg)';
+                    }
                     nowNode.list.getDom('h4').innerText = inpTheme;
+                    nowNode.list.getDom('h4').appendChild(span);
                     nowNode.content = inpContent;
                     nowNode.editable = operationNodeBoxJurisdiction.state;
                 } else {
@@ -1193,7 +1199,6 @@ document.addEventListener('keydown', function (e) {
     }
 });
 // 操作记录相关操作
-// 开发中
 
 var operationRecordBox = getDom('.historyBox'); // 操作记录盒子
 var operationRecordClose = operationRecordBox.getDom('.historyClose'); // 操作记录盒子中关闭按钮 
@@ -1337,7 +1342,15 @@ function backHistory(historyLi) {
                         },
                         success: function (res) {
                             node.children[0].innerText = res.theme;
+                            var span = document.createElement('span');
+                            span.addEventListener('click', function () {
+                                listFold(this);
+                            });
+                            if (node.list.foldState) {
+                                span.style.transform = 'translate(0, -50%) rotate(0deg)';
+                            }
                             node.list.getDom('h4').innerText = res.theme;
+                            node.list.getDom('h4').appendChild(span);
                             node.content = res.content;
                             node.editable = res.banAppend;
                         }
@@ -1568,7 +1581,6 @@ classic.addEventListener('click', function () {
 });
 
 // 快捷键列表相关操作
-// 开发中
 
 var shortcutKeyBox = getDom('.shortcutKeyBox'); // 快捷键列表的盒子
 var shortcutKeyClose = shortcutKeyBox.getDom('.shortcutKeyClose'); // 快捷键列表盒子的关闭按钮
@@ -2654,7 +2666,7 @@ function addListContextRecursion(node) {
 
 // 判断当前列表元素是否被隐藏了
 function judgeListHide(list) {
-    if (list.fatherlist) {
+    if (list && list.fatherlist) {
         if (list.fatherlist.children[1].getCSS('display') == 'none' || judgeListHide(list.fatherlist)) {
             return true;
         } else {
@@ -2710,11 +2722,13 @@ document.addEventListener('keydown', function (e) {
             listClick(null, nowList.node);
         } else if (e.key == 'ArrowLeft') {
             e.preventDefault();
-            nowList = nowList.fatherlist;
-            while (judgeListHide(nowList)) {
+            if (nowList.node != root) {
                 nowList = nowList.fatherlist;
+                while (judgeListHide(nowList)) {
+                    nowList = nowList.fatherlist;
+                }
+                listClick(null, nowList.node);
             }
-            listClick(null, nowList.node);
         } else if (e.key == 'ArrowRight') {
             listFold(nowList.getDom('h4 span'));
         }
@@ -2769,21 +2783,23 @@ if ('WebSocket' in window) {
     //8.129.110.151/MindStorm-1.0-SNAPSHOT
     websocket = new WebSocket("ws://" + window.document.domain + ":8080/node/socket/" + user.userId + "/" + projectId);
 } else {
-    alert('Not support websocket')
+    // alert('Not support websocket');
 }
 
 //连接发生错误的回调方法
 websocket.onerror = function () {
-    console.log("error");
+    // console.log("error");
 };
 
 //连接成功建立的回调方法
 websocket.onopen = function (e) {
     var back = JSON.parse(e.data);
 
+    // 开发中
+
     // 初始化正在编辑的人
-    initializationNowEditorList(back);
-    console.log("open");
+    // initializationNowEditorList(back);
+    // console.log("open");
 }
 
 // 递归动态添加节点
@@ -2818,13 +2834,14 @@ function recursionAppendNode(res) {
     }
 }
 
+// 开发中
 // 用webSocket发请求
-function changeEditor(type, nodeId) {
-    websocket.send({
-        type: type,
-        nodeId: nodeId
-    });
-}
+// function changeEditor(type, nodeId) {
+//     websocket.send({
+//         type: type,
+//         nodeId: nodeId
+//     });
+// }
 
 //接收到消息的回调方法
 websocket.onmessage = function (e) {
@@ -2859,6 +2876,15 @@ websocket.onmessage = function (e) {
             },
             success: function (res) {
                 socketNode.getDom('.theme').innerText = res.theme;
+                var span = document.createElement('span');
+                span.addEventListener('click', function () {
+                    listFold(this);
+                });
+                if (socketNode.list.foldState) {
+                    span.style.transform = 'translate(0, -50%) rotate(0deg)';
+                }
+                socketNode.list.getDom('h4').innerText = res.theme;
+                socketNode.list.getDom('h4').appendChild(span);
                 socketNode.content = res.content;
                 socketNode.lastEditName = res.lastEditName;
                 socketNode.lastEditTime = res.lastEditTime;
@@ -2868,16 +2894,20 @@ websocket.onmessage = function (e) {
         });
     } else if (back.type == "E") {
 
-        console.log(back);
-        // 新增正在操作的用户
-        nowEditorListPush({
+        // 开发中
 
-        });
+        // console.log(back);
+        // // 新增正在操作的用户
+        // nowEditorListPush({
+
+        // });
     } else if (back.type == "C") {
 
-        console.log(back);
-        // 删除正在操作的用户
-        nowEditorListPop(back.id);
+        // 开发中
+
+        // console.log(back);
+        // // 删除正在操作的用户
+        // nowEditorListPop(back.id);
     } else {
         topAlert('发生未知错误');
     }
@@ -2885,7 +2915,7 @@ websocket.onmessage = function (e) {
 
 //连接关闭的回调方法
 websocket.onclose = function () {
-    console.log("close");
+    // console.log("close");
 }
 
 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
