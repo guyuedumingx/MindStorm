@@ -65,8 +65,11 @@ public class NodeServiceImpl implements NodeService {
         //设置节点的最近编辑时间
         node.setLastEditTime(System.currentTimeMillis()+"");
         Node preNode = nodeDao.selectOne(new Node(node.getId()));
+        if(preNode==null){
+            return 0;
+        }
         if(preNode.getAuthor()!=node.getLastEditId()){
-            return StatusCode.LOST;
+            return 0;
         }
         int i = nodeDao.updateOne(node);
         addUserAsContributors(i,node.getLastEditId());

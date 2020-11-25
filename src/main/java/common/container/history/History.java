@@ -1,11 +1,8 @@
 package common.container.history;
 
-import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
-import common.container.OnlineUsers;
 import common.dto.OperaType;
 import common.dto.Result;
 import common.dto.StatusCode;
-import common.util.WebUtil;
 import pojo.Node;
 import pojo.User;
 import service.NodeService;
@@ -13,7 +10,6 @@ import service.impl.NodeServiceImpl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import static socket.NodeSocket.renderForContributors;
 
 /**
@@ -99,7 +95,7 @@ public class History {
                 }
             }
             if(back==0){
-                list.add(pop);
+                list.add(index,pop);
             }
             renderForContributors(user,msg);
             return back;
