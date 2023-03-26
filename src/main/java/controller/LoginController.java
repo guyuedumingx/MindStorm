@@ -29,10 +29,10 @@ public class LoginController extends BaseController {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-//        String email = request.getParameter("email");
-//        String password = request.getParameter("password");
-        String email = "11@qq.com";
-        String password = "111";
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+//        String email = "11@qq.com";
+//        String password = "111";
         UserService service = new UserServiceImpl();
         User user = service.login(email, password);
         int isSuccess = StatusCode.nullObjcet(user);

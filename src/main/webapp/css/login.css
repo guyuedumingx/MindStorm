@@ -60,7 +60,7 @@ body::after {
     box-sizing: border-box;
     background-color: #fff;
     transition: transform .5s;
-    /*transform-style: preserve-3d;*/
+    transform-style: preserve-3d;
 }
 
 .mainBox .emailTips {
@@ -114,6 +114,7 @@ body::after {
     padding: 50px 85px;
     border-radius: 5px;
     box-sizing: border-box;
+    transform-style: preserve-3d;
 }
 
 .mainBox .login h4 {
@@ -147,6 +148,7 @@ body::after {
 
 .mainBox .login div {
     position: relative;
+    transform-style: preserve-3d;
 }
 
 .mainBox .login .email::before {
@@ -263,9 +265,8 @@ body::after {
     border-radius: 5px;
     box-sizing: border-box;
     background-color: #fff;
-    /*transform: rotateY(180deg);*/
-    /*transform-style: preserve-3d;*/
-    transform-style: initial;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
 }
 
 .mainBox .register div {
@@ -273,8 +274,8 @@ body::after {
     width: 110%;
     height: 26.5px;
     margin-top: 25px;
-    /*transform: translate3d(-5%, 0, 60px);*/
-    /*transform-style: preserve-3d;*/
+    transform: translate3d(-5%, 0, 60px);
+    transform-style: preserve-3d;
 }
 
 .mainBox .register div span {
@@ -330,7 +331,7 @@ body::after {
 }
 
 .mainBox .register .vc>div {
-    /*transform: translate3d(0, 0, 60px);*/
+    transform: translate3d(0, 0, 60px);
 }
 
 .mainBox .register .VC {

@@ -9,7 +9,7 @@ import java.io.IOException;
  * 登录验证过滤器
  * @author yohoyes
  */
-@WebFilter("*.html")
+//@WebFilter("*.html")
 public class LoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

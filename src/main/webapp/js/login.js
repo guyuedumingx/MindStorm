@@ -422,6 +422,7 @@ function registerGetVC(node) {
             success: function (res) {
                 if (res.status_code == "200") {
                     registerRealVerificationCode = res.auth_code;
+                    alert(`验证码为：${registerRealVerificationCode}`);
                 } else {
                     topAlert("验证码发送失败");
                 }
