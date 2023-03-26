@@ -92,7 +92,7 @@ public class EmailUtil {
             msg.setFrom(new InternetAddress(nick+" <"+from+">"));
 
             transport = session.getTransport();
-            transport.connect(from,password );
+            transport.connect(from,password);
             transport.sendMessage(msg, new Address[]{new InternetAddress(to)});
             return StatusCode.OK;
         } catch (Exception e) {

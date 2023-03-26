@@ -28,7 +28,6 @@ import static socket.NodeSocket.renderForContributors;
  */
 @WebServlet("/node")
 public class NodeController extends BaseController{
-    Logger logger = LoggerFactory.getLogger(NodeController.class);
     User user = null;
     NodeService service = new NodeServiceImpl();
     SensitiveWordUtil filter = SensitiveWordUtil.getInstance();
